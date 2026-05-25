@@ -1,287 +1,287 @@
-# Anime Tracker MVP Design
+# 動漫追番網站 MVP 設計
 
-## Goal
+## 目標
 
-Build the first usable version of an anime tracking website. The MVP focuses on Google OAuth login, personal anime lists, ratings, watched status, public sharing, responsive mobile support, Docker-based local development, and a deployment path where secrets do not leak into the repository or frontend bundle.
+建立第一版可實際使用的動漫追番網站。MVP 聚焦在 Google OAuth 登入、個人動漫清單、評價、是否看過、公開分享、手機版支援、Docker 本機開發，以及部署時避免密鑰外流。
 
-Future AI crawling, seasonal anime ingestion, external popularity ranking, and AI recommendations are intentionally outside the MVP implementation path. The MVP should leave clear extension points for those features.
+未來的 AI 爬取、每季動漫自動匯入、外部熱門排行榜、AI 推薦都不放進 MVP 主線。MVP 只需要保留清楚的擴充點，方便後續接上這些功能。
 
-## Scope
+## 範圍
 
-### In Scope
+### MVP 內含
 
-- Vue single-page frontend deployed to GitHub Pages.
-- PHP REST API deployed separately on GCP.
-- MySQL database.
-- Docker Compose for local development.
-- Google OAuth login using Google ID token verification on the backend.
-- Backend-issued JWT for API authorization.
-- Personal anime list management:
-  - Add anime to user list.
-  - Track watched status.
-  - Store user rating.
-  - Store optional personal note.
-- Anime catalog records:
-  - Name.
-  - Description.
-  - Image URL.
-  - Optional aliases.
-- Public share page for a user's anime list.
-- Responsive layouts for desktop and mobile.
-- `.env.example` files and documentation for required environment variables.
+- Vue 單頁前端，部署到 GitHub Pages。
+- PHP REST API，獨立部署到 GCP。
+- MySQL 資料庫。
+- 使用 Docker Compose 進行本機開發。
+- Google OAuth 登入，後端驗證 Google ID token。
+- 後端簽發 JWT 作為 API 授權憑證。
+- 個人動漫清單管理：
+  - 將動漫加入個人清單。
+  - 標記是否看過。
+  - 儲存個人評價。
+  - 儲存可選的個人備註。
+- 動漫資料：
+  - 名稱。
+  - 敘述。
+  - 圖片 URL。
+  - 可選別名。
+- 使用者個人清單公開分享頁。
+- 桌機與手機版響應式版面。
+- `.env.example` 與必要環境變數說明。
 
-### Out of Scope for MVP
+### MVP 不包含
 
-- AI-generated recommendations.
-- AI web search or web crawling.
-- Automated seasonal anime ingestion.
-- External popularity ranking.
-- Email/password login.
-- Password reset.
-- Social graph, follows, comments, or likes.
-- Native mobile apps.
+- AI 產生推薦。
+- AI 網路搜尋或網頁爬取。
+- 每季動漫自動匯入。
+- 外部熱門排行榜。
+- Email/密碼登入。
+- 忘記密碼流程。
+- 社交關係、追蹤、留言、按讚。
+- 原生手機 App。
 
-## Architecture
+## 架構
 
-The system uses a separated frontend and backend.
+系統採用前後端分離。
 
-- Frontend: Vue SPA served from GitHub Pages.
-- Backend: PHP REST API running in a container on GCP Cloud Run.
-- Database: MySQL. Local development uses a Docker MySQL container. Production should use Cloud SQL MySQL.
-- Authentication:
-  - Browser completes Google sign-in and receives a Google ID token.
-  - Frontend posts the ID token to `POST /auth/google`.
-  - Backend verifies the ID token against Google's public keys and configured client ID.
-  - Backend upserts the user, then returns an application JWT.
-  - Frontend stores the JWT and sends it in `Authorization: Bearer <token>`.
+- 前端：Vue SPA，由 GitHub Pages 提供靜態檔案。
+- 後端：PHP REST API，以容器形式部署到 GCP Cloud Run。
+- 資料庫：MySQL。本機開發使用 Docker MySQL 容器，正式環境建議使用 Cloud SQL MySQL。
+- 驗證流程：
+  - 瀏覽器完成 Google 登入並取得 Google ID token。
+  - 前端將 ID token 送到 `POST /auth/google`。
+  - 後端使用 Google 公開金鑰與設定的 client ID 驗證 ID token。
+  - 後端建立或更新使用者資料，接著回傳本系統的 JWT。
+  - 前端後續呼叫 API 時帶上 `Authorization: Bearer <token>`。
 
-The frontend never receives backend secrets. Public client IDs may be present in the frontend build. Private keys, JWT signing secret, database credentials, and Google verification configuration belong only in backend environment variables or GCP Secret Manager.
+前端不應取得任何後端私密資訊。公開的 client ID 可以放在前端建置結果中；私密金鑰、JWT 簽章密鑰、資料庫帳密、Google 驗證相關私密設定都只能存在後端環境變數或 GCP Secret Manager。
 
-The MVP should not issue refresh tokens to the browser. Because the frontend is hosted as a public static app on GitHub Pages, the backend JWT should be short-lived. When it expires, the frontend should ask the user to sign in with Google again.
+MVP 不應向瀏覽器簽發 refresh token。因為前端部署在公開靜態環境 GitHub Pages，後端 JWT 應設為短效。JWT 過期後，前端應要求使用者重新使用 Google 登入。
 
-## Frontend Design
+## 前端設計
 
-### Pages
+### 頁面
 
 - `Login`
-  - Google sign-in button.
-  - Minimal unauthenticated state.
+  - Google 登入按鈕。
+  - 簡潔的未登入狀態。
 - `Home`
-  - Lightweight anime discovery section using local catalog data.
-  - Entry points to search and user's list.
+  - 使用本地動漫資料顯示簡單探索區。
+  - 提供搜尋與個人清單入口。
 - `Catalog/Search`
-  - Search anime by name or alias.
-  - Add anime to personal list.
-  - If an anime is missing, allow manual creation with name, description, and image URL.
+  - 依名稱或別名搜尋動漫。
+  - 將動漫加入個人清單。
+  - 若找不到動漫，允許手動建立名稱、敘述、圖片 URL。
 - `My List`
-  - Shows user's saved anime.
-  - Filters by all, watched, unwatched.
-  - Edits watched status, rating, and note.
-  - Provides copyable public share link.
+  - 顯示使用者已儲存的動漫。
+  - 可依全部、已看、未看篩選。
+  - 可編輯是否看過、評價、備註。
+  - 提供可複製的公開分享連結。
 - `Public List`
-  - Read-only public page by share slug or user public ID.
-  - Shows anime name, image, description, watched status, and rating.
+  - 依分享 slug 或使用者公開 ID 顯示唯讀公開頁。
+  - 顯示動漫名稱、圖片、敘述、是否看過、評價。
 - `Settings`
-  - Show account profile from Google.
-  - Regenerate public share slug.
-  - Logout.
+  - 顯示 Google 帳號資訊。
+  - 重新產生公開分享 slug。
+  - 登出。
 
-### Mobile Behavior
+### 手機版行為
 
-- Navigation collapses to a bottom tab bar or compact header menu.
-- Anime cards use stable image dimensions to avoid layout shifts.
-- List editing controls remain reachable on small screens without horizontal scrolling.
-- Forms use single-column layout on mobile.
+- 導覽列在小螢幕改為底部分頁列或精簡 header menu。
+- 動漫卡片使用固定比例圖片區塊，避免載入圖片時版面跳動。
+- 清單編輯控制項在小螢幕仍需容易操作，不應出現水平捲動。
+- 表單在手機版採單欄排列。
 
-## Backend Design
+## 後端設計
 
-### API Style
+### API 形式
 
-Use JSON REST endpoints. All protected routes require a valid application JWT.
+使用 JSON REST API 端點。所有受保護路由都需要有效的本系統 JWT。
 
-Suggested route groups:
+建議路由群組：
 
 - `POST /auth/google`
-  - Request: Google ID token.
-  - Response: application JWT and user profile.
+  - 請求：Google ID token。
+  - 回應：本系統 JWT 與使用者資料。
 - `GET /me`
-  - Returns current user profile.
+  - 回傳目前登入使用者資料。
 - `GET /anime`
-  - Query catalog by search term.
+  - 依搜尋字串查詢動漫資料。
 - `POST /anime`
-  - Create manual catalog entry.
+  - 建立手動動漫資料。
 - `GET /my/anime-list`
-  - Return authenticated user's list.
+  - 回傳登入使用者的個人清單。
 - `POST /my/anime-list`
-  - Add anime to list.
+  - 將動漫加入個人清單。
 - `PATCH /my/anime-list/{itemId}`
-  - Update watched status, rating, or note.
+  - 更新是否看過、評價或備註。
 - `DELETE /my/anime-list/{itemId}`
-  - Remove from user's list.
+  - 從個人清單移除。
 - `GET /public/lists/{slug}`
-  - Return public read-only list.
+  - 回傳公開唯讀清單。
 - `POST /me/share-slug/regenerate`
-  - Regenerate public share slug.
+  - 重新產生公開分享 slug。
 
-### Error Handling
+### 錯誤處理
 
-- Return structured JSON errors:
-  - `code`: stable machine-readable code.
-  - `message`: user-safe message.
-  - `details`: optional validation details.
-- Use appropriate HTTP status codes:
-  - `400` for malformed requests.
-  - `401` for missing or invalid auth.
-  - `403` for forbidden access.
-  - `404` for missing records.
-  - `409` for duplicate list entries.
-  - `422` for validation failures.
-  - `500` for unexpected server errors.
-- Log internal details on the backend without returning secrets or stack traces to the frontend.
+- 回傳結構化 JSON 錯誤：
+  - `code`：穩定的機器可讀錯誤代碼。
+  - `message`：可安全顯示給使用者的訊息。
+  - `details`：可選的驗證細節。
+- 使用合適的 HTTP 狀態碼：
+  - `400`：請求格式錯誤。
+  - `401`：缺少或無效的登入資訊。
+  - `403`：沒有權限。
+  - `404`：資料不存在。
+  - `409`：重複加入清單。
+  - `422`：驗證失敗。
+  - `500`：未預期的伺服器錯誤。
+- 後端紀錄內部錯誤細節，但不得將密鑰或 stack trace 回傳給前端。
 
-## Data Model
+## 資料模型
 
 ### `users`
 
-- `id` bigint primary key.
-- `google_sub` varchar unique, required.
-- `email` varchar, required.
-- `display_name` varchar.
-- `avatar_url` text.
-- `public_slug` varchar unique, required.
-- `created_at` datetime.
-- `updated_at` datetime.
+- `id` bigint primary key。
+- `google_sub` varchar unique，必填。
+- `email` varchar，必填。
+- `display_name` varchar。
+- `avatar_url` text。
+- `public_slug` varchar unique，必填。
+- `created_at` datetime。
+- `updated_at` datetime。
 
 ### `anime`
 
-- `id` bigint primary key.
-- `name` varchar, required.
-- `description` text.
-- `image_url` text.
-- `source` enum-like varchar, values such as `manual`, `seed`, `future_import`.
-- `created_by_user_id` bigint nullable.
-- `created_at` datetime.
-- `updated_at` datetime.
+- `id` bigint primary key。
+- `name` varchar，必填。
+- `description` text。
+- `image_url` text。
+- `source` 類 enum 的 varchar，值可為 `manual`、`seed`、`future_import`。
+- `created_by_user_id` bigint nullable。
+- `created_at` datetime。
+- `updated_at` datetime。
 
 ### `anime_aliases`
 
-- `id` bigint primary key.
-- `anime_id` bigint foreign key.
-- `alias` varchar, required.
+- `id` bigint primary key。
+- `anime_id` bigint foreign key。
+- `alias` varchar，必填。
 
 ### `user_anime_list_items`
 
-- `id` bigint primary key.
-- `user_id` bigint foreign key.
-- `anime_id` bigint foreign key.
-- `watched` boolean default false.
-- `rating` tinyint nullable, expected range `1` to `10`.
-- `note` text nullable.
-- `created_at` datetime.
-- `updated_at` datetime.
-- Unique constraint on `(user_id, anime_id)`.
+- `id` bigint primary key。
+- `user_id` bigint foreign key。
+- `anime_id` bigint foreign key。
+- `watched` boolean，預設 false。
+- `rating` tinyint nullable，允許範圍為 `1` 到 `10`。
+- `note` text nullable。
+- `created_at` datetime。
+- `updated_at` datetime。
+- `(user_id, anime_id)` 需有唯一限制。
 
-### Indexes
+### 索引
 
-- `users.google_sub` unique.
-- `users.public_slug` unique.
-- `anime.name`.
-- `anime_aliases.alias`.
-- `user_anime_list_items.user_id`.
-- `user_anime_list_items.anime_id`.
-- `user_anime_list_items(user_id, anime_id)` unique.
+- `users.google_sub` unique。
+- `users.public_slug` unique。
+- `anime.name`。
+- `anime_aliases.alias`。
+- `user_anime_list_items.user_id`。
+- `user_anime_list_items.anime_id`。
+- `user_anime_list_items(user_id, anime_id)` unique。
 
-## Security
+## 安全性
 
-- Store JWT signing secret only in backend environment variables.
-- Use short-lived application JWTs and do not store refresh tokens in the browser for the MVP.
-- Store database credentials only in backend environment variables or GCP Secret Manager.
-- Do not commit `.env` files.
-- Commit only `.env.example` with placeholder values.
-- Validate Google ID token audience against the configured Google OAuth client ID.
-- Validate all backend inputs:
-  - Rating must be `1` to `10` or null.
-  - Anime name must be non-empty and length-limited.
-  - Image URL must be a valid HTTP or HTTPS URL when provided.
-- Configure CORS to allow the GitHub Pages frontend origin and local dev origin only.
-- Use HTTPS in production.
-- Avoid placing any private API key in the Vue build.
+- JWT 簽章密鑰只能存在後端環境變數。
+- MVP 使用短效 JWT，不在瀏覽器儲存 refresh token。
+- 資料庫帳密只能存在後端環境變數或 GCP Secret Manager。
+- 不提交 `.env` 檔案。
+- 只提交帶有範例值的 `.env.example`。
+- 驗證 Google ID token 的 audience 必須符合設定的 Google OAuth client ID。
+- 後端需驗證所有輸入：
+  - 評價必須是 `1` 到 `10` 或 null。
+  - 動漫名稱不可為空，且需限制長度。
+  - 圖片 URL 若有提供，必須是有效的 HTTP 或 HTTPS URL。
+- CORS 只允許 GitHub Pages 前端來源與本機開發來源。
+- 正式環境必須使用 HTTPS。
+- 不得將任何私密 API key 放進 Vue 建置結果。
 
-## Docker and Local Development
+## Docker 與本機開發
 
-Local Docker Compose should include:
+本機 Docker Compose 應包含：
 
-- `frontend`: Vue dev server.
-- `backend`: PHP API server.
-- `mysql`: MySQL database.
-- Optional `phpmyadmin` for local inspection.
+- `frontend`：Vue 開發伺服器。
+- `backend`：PHP API 伺服器。
+- `mysql`：MySQL 資料庫。
+- 可選 `phpmyadmin`：本機資料檢視工具。
 
-The backend container should run migrations before or during development setup through an explicit command. Production migrations should be executed as a controlled deploy step, not implicitly on every request.
+後端容器應透過明確指令在開發時執行 migration。正式環境 migration 應作為受控部署步驟執行，不應在每次請求時隱式執行。
 
-## Deployment
+## 部署
 
-### Frontend
+### 前端
 
-- Build Vue static assets.
-- Deploy to GitHub Pages.
-- Configure frontend environment with:
-  - Public API base URL.
-  - Public Google OAuth client ID.
+- 建置 Vue 靜態檔案。
+- 部署到 GitHub Pages。
+- 前端環境設定包含：
+  - 公開 API base URL。
+  - 公開 Google OAuth client ID。
 
-### Backend
+### 後端
 
-- Build PHP backend container.
-- Deploy to GCP Cloud Run.
-- Configure runtime environment variables or Secret Manager bindings:
-  - Database host, port, name, user, password.
-  - JWT signing secret.
-  - Google OAuth client ID.
-  - Allowed frontend origins.
+- 建置 PHP 後端容器。
+- 部署到 GCP Cloud Run。
+- 使用執行環境變數或 Secret Manager 綁定：
+  - 資料庫 host、port、name、user、password。
+  - JWT 簽章密鑰。
+  - Google OAuth client ID。
+  - 允許的前端來源。
 
-### Database
+### 資料庫
 
-- Use Cloud SQL MySQL for production.
-- Restrict network access to backend service.
-- Backups should be enabled before real user data is stored.
+- 正式環境使用 Cloud SQL MySQL。
+- 限制資料庫網路存取，只允許後端服務連線。
+- 在儲存真實使用者資料前，應啟用備份。
 
-## Future Extension Points
+## 未來擴充點
 
-- `anime.source = future_import` allows later ingestion from seasonal anime sources.
-- Additional table `anime_popularity_snapshots` can store future rankings.
-- Additional table `recommendation_runs` can store future AI recommendation metadata.
-- Existing catalog/list split lets AI recommendations reference catalog anime without changing personal list ownership.
+- `anime.source = future_import` 可支援後續每季動漫來源匯入。
+- 未來可新增 `anime_popularity_snapshots` 表儲存排行榜資料。
+- 未來可新增 `recommendation_runs` 表儲存 AI 推薦執行紀錄。
+- 現有動漫資料與個人清單分離，讓 AI 推薦可引用動漫資料，不會影響個人清單歸屬。
 
-## Testing Strategy
+## 測試策略
 
-### Backend
+### 後端
 
-- Unit tests for validation rules.
-- Integration tests for auth-protected list routes.
-- Tests for duplicate list item handling.
-- Tests for public list access without JWT.
-- Tests for Google auth verification should mock Google token validation.
+- 驗證規則單元測試。
+- 受保護清單路由整合測試。
+- 重複加入清單處理測試。
+- 不帶 JWT 存取公開清單測試。
+- Google 登入驗證測試應 mock Google token 驗證。
 
-### Frontend
+### 前端
 
-- Component tests for list item edit states.
-- Route guard tests for authenticated pages.
-- API client tests for authorization header handling.
-- Responsive smoke checks for primary pages.
+- 清單項目編輯狀態的元件測試。
+- 需登入頁面的路由守衛測試。
+- API 呼叫工具自動帶入授權標頭測試。
+- 主要頁面的手機版響應式基本檢查。
 
-### Deployment Safety
+### 部署安全檢查
 
-- Verify `.env` is ignored.
-- Verify frontend bundle does not contain private backend secrets.
-- Verify backend rejects requests from disallowed origins.
-- Verify production uses HTTPS API URL.
+- 確認 `.env` 已被忽略。
+- 確認前端建置結果不包含後端私密資訊。
+- 確認後端拒絕不允許來源的請求。
+- 確認正式環境使用 HTTPS API URL。
 
-## Success Criteria
+## 成功標準
 
-- A user can sign in with Google.
-- A user can search or manually create an anime.
-- A user can add anime to their list.
-- A user can update watched status and rating.
-- A user can open and share a public read-only list URL.
-- The site works on mobile-sized screens without horizontal scrolling.
-- Local development runs through Docker Compose.
-- No private key or secret is committed to the repository or bundled into frontend assets.
+- 使用者可以用 Google 登入。
+- 使用者可以搜尋或手動建立動漫資料。
+- 使用者可以將動漫加入個人清單。
+- 使用者可以更新是否看過與評價。
+- 使用者可以開啟並分享公開唯讀清單 URL。
+- 網站在手機尺寸下可使用，且不出現水平捲動。
+- 本機開發可透過 Docker Compose 啟動。
+- 沒有私密金鑰或密鑰被提交到 repository，或被打包進前端建置結果。
