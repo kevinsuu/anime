@@ -47,12 +47,19 @@ function renderGoogleButton() {
 }
 
 onMounted(() => {
-  const script = document.createElement('script')
-  script.src = 'https://accounts.google.com/gsi/client'
-  script.async = true
-  script.defer = true
-  script.onload = renderGoogleButton
-  document.head.appendChild(script)
+  if (window.google) {
+    renderGoogleButton()
+    return
+  }
+  if (!document.getElementById('google-gsi-script')) {
+    const script = document.createElement('script')
+    script.id = 'google-gsi-script'
+    script.src = 'https://accounts.google.com/gsi/client'
+    script.async = true
+    script.defer = true
+    script.onload = renderGoogleButton
+    document.head.appendChild(script)
+  }
 })
 </script>
 

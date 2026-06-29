@@ -2,7 +2,7 @@
 definePageMeta({ middleware: 'auth' })
 
 const api = useApi()
-const { session, setUser } = useSession()
+const { session, setUser, clearSession } = useSession()
 
 const notice = ref('')
 const error = ref('')
@@ -14,11 +14,15 @@ const shareUrl = computed(() => {
 
 async function copyShareUrl() {
   if (!shareUrl.value) return
+  error.value = ''
+  notice.value = ''
   await navigator.clipboard.writeText(shareUrl.value)
   notice.value = '分享連結已複製'
 }
 
 async function regenerateSlug() {
+  error.value = ''
+  notice.value = ''
   try {
     const result = await api.regenerateSlug()
     setUser(result.user)
@@ -26,6 +30,11 @@ async function regenerateSlug() {
   } catch (err: any) {
     error.value = err.message || '更新失敗'
   }
+}
+
+async function logout() {
+  clearSession()
+  await navigateTo('/')
 }
 </script>
 
@@ -43,6 +52,7 @@ async function regenerateSlug() {
       </div>
       <h2 class="text-lg font-bold">{{ session.user?.display_name || '未命名使用者' }}</h2>
       <p class="text-sm text-gray-500">{{ session.user?.email }}</p>
+      <UButton class="mt-4" color="error" variant="outline" @click="logout">登出</UButton>
     </UCard>
 
     <UCard>
