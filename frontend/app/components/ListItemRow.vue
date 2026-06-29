@@ -82,7 +82,7 @@ function updateNote(value: string) {
         </UButton>
         <div v-else class="flex gap-2">
           <UButton color="neutral" variant="ghost" :disabled="disabled" @click="confirmingRemove = false">取消</UButton>
-          <UButton color="error" :disabled="disabled" @click="confirmingRemove = false; $emit('remove')">確認移除</UButton>
+          <UButton color="error" :disabled="disabled" @click="confirmingRemove = false; emit('remove')">確認移除</UButton>
         </div>
       </div>
     </div>
