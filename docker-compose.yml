@@ -10,8 +10,6 @@ services:
       - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
-      - ./backend/database/migrations/001_init.sql:/docker-entrypoint-initdb.d/10-init.sql:ro
-      - ./backend/database/seed.sql:/docker-entrypoint-initdb.d/20-seed.sql:ro
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot_password"]
       interval: 5s
@@ -22,34 +20,52 @@ services:
     build:
       context: ./backend
     environment:
+      APP_NAME: AnimeTracker
+      APP_ENV: local
+      APP_KEY: base64:SvqiJHNzmqzb2P4GkXwQNDqU6pMDecKto2Xrdk6yTJY=
+      APP_DEBUG: "true"
+      APP_URL: http://localhost:8080
+      DB_CONNECTION: mysql
       DB_HOST: mysql
       DB_PORT: 3306
-      DB_NAME: anime_tracker
-      DB_USER: anime
+      DB_DATABASE: anime_tracker
+      DB_USERNAME: anime
       DB_PASSWORD: anime_password
+      CACHE_STORE: file
+      SESSION_DRIVER: file
+      QUEUE_CONNECTION: sync
       JWT_SECRET: local-dev-change-this-secret
       JWT_TTL_SECONDS: 3600
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
-      ALLOWED_ORIGINS: http://localhost:5173
+      ALLOWED_ORIGINS: http://localhost:3000
       DEV_AUTH_BYPASS: "true"
+      BANGUMI_API_BASE_URL: https://api.bgm.tv
+      BANGUMI_USER_AGENT: anime-tracker/1.0
+      HTTP_TIMEOUT_SECONDS: 10
     ports:
       - "8080:8080"
+    volumes:
+      - ./backend:/app
+      - backend-vendor:/app/vendor
     depends_on:
       mysql:
         condition: service_healthy
 
   frontend:
-    image: node:20-alpine
+    image: node:22-alpine
     working_dir: /app
     command: sh -c "npm install && npm run dev"
     environment:
-      VITE_API_BASE_URL: http://localhost:8080
-      VITE_GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
-      VITE_ENABLE_DEV_LOGIN: "true"
+      NUXT_PUBLIC_API_BASE_URL: http://localhost:8080
+      NUXT_PUBLIC_GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      NUXT_PUBLIC_ENABLE_DEV_LOGIN: "true"
+      CHOKIDAR_USEPOLLING: "true"
+      WATCHPACK_POLLING: "true"
     ports:
-      - "5173:5173"
+      - "3000:3000"
     volumes:
       - ./frontend:/app
+      - frontend-node-modules:/app/node_modules
     depends_on:
       - backend
 
@@ -67,3 +83,5 @@ services:
 
 volumes:
   mysql-data:
+  backend-vendor:
+  frontend-node-modules:
