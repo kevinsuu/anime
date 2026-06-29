@@ -18,7 +18,6 @@ const emit = defineEmits<{
   'update:category': [value: string]
   'update:status': [value: string]
   sync: []
-  apply: []
 }>()
 
 const seasonOptions = [
