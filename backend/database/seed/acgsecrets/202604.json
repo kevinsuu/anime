@@ -1,0 +1,3710 @@
+[
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "黃泉雙使",
+        "title_ja": "黄泉のツガイ",
+        "aliases": [
+            "黃泉使者",
+            "黃泉的使者",
+            "Yomi no Tsugai",
+            "Daemons of the Shadow Realm",
+            "黄泉的使者",
+            "黄泉使者",
+            "黄泉双使"
+        ],
+        "summary": "居於深山小村落的少年月落(台譯:尤爾)， 以狩獵野鳥為生，在大自然之中過著寧靜的生活。 但是，月落的雙胞胎妹妹亞晨(台:阿薩)， 卻不知何故在村子深處的牢籠之中， 執行「任務」。 就像被幽禁一般… 平穩的村莊浮現不自然謎團， 這條村莊到底隱藏了甚麼秘密…!?",
+        "cover_image": "https://static.acgsecrets.hk/img/41/410fc01630291e5a45830d7a7e6560d2/63dfb687fdac7f28a14c92c7784001fa60014344bbc71e8ae476fb61d29c4c87.jpg",
+        "air_date_text": "4月4日起／每週六／23時30分4月4日起／每週六／23時30分",
+        "air_date": "2026-04-04",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "2季度",
+            "高期待",
+            "動作",
+            "冒險",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114038"
+            },
+            {
+                "region": "香港",
+                "platform": "viu.com",
+                "url": "https://www.viu.com/ott/hk/zh/vod/3029308/"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114038"
+            }
+        ],
+        "external_ids": {
+            "mal": "62001",
+            "bangumi": "568572"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "關於我轉生變成史萊姆這檔事 第4季 第一部份",
+        "title_ja": "転生したらスライムだった件 第4期",
+        "aliases": [
+            "Tensei shitara Slime Datta Ken 4th Season",
+            "That Time I Got Reincarnated as a Slime Season 4",
+            "关于我转生变成史莱姆这档事 第四季 第1部份史萊姆動畫版第4季。第四季合計共播放5個季度",
+            "首先是連續播放兩個季度。",
+            "关于我转生变成史莱姆这档事 第四季 第1部份"
+        ],
+        "summary": "坦派斯特開國祭順利落幕，利姆路下一個目標是加盟西方諸國評議會，並以此作為開端，更加擴大經濟圈。然而西方評議會暗中的支配者──「貪婪」的瑪莉安貝爾警戒著利姆路強大的力量，決定在無法控制之前擊潰對方。在各種思慮交錯之下，企圖消滅利姆路的策略靜靜展開……",
+        "cover_image": "https://static.acgsecrets.hk/img/b7/b7bffa02e57beb05d40928ce000523a7/38dac0c6a1dc68c5c5b29703bf5dbfeb966ada2c2f26bf0cf4bcc271ce711bcc.jpg",
+        "air_date_text": "4月3日起／每週五／23時0分4月3日起／每週五／23時0分",
+        "air_date": "2026-04-03",
+        "tags": [
+            "小說改編",
+            "續作",
+            "2季度",
+            "高期待",
+            "動作",
+            "喜劇",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114040"
+            },
+            {
+                "region": "香港",
+                "platform": "viu.com",
+                "url": "https://www.viu.com/ott/hk/zh/vod/3029209/"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114040"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfrM1jieZdbsZWqZU11RfuC7"
+            }
+        ],
+        "external_ids": {
+            "mal": "59970",
+            "bangumi": "515594"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "關於我在無意間被隔壁的天使變成廢柴這件事 第2季",
+        "title_ja": "お隣の天使様にいつの間にか駄目人間にされていた件 第2期",
+        "aliases": [
+            "Otonari no Tenshi-sama ni Itsunomanika Dame Ningen ni Sareteita Ken 2",
+            "The Angel Next Door Spoils Me Rotten Season 2",
+            "关于我在无意间被隔壁的天使变成废柴这件事 第2季"
+        ],
+        "summary": "因為照顧感冒的真晝，周與真晝之間，已經建立起互相依賴、互相扶持的關係。時序來到二月，情人節即將來臨。在街頭充滿粉紅色浪漫氛圍之際，真晝似乎也在準備著什麼──！？接著，真晝與父母之間的關係終於即將揭曉…？",
+        "cover_image": "https://static.acgsecrets.hk/img/28/285cb7e4957afd6171e08b9895049ab7/0af39724ca734be0e6e7493a70542851942d9972c557f126cc581f6c7ba967a9.jpg",
+        "air_date_text": "4月3日起／每週五／22時30分4月3日起／每週五／22時30分",
+        "air_date": "2026-04-03",
+        "tags": [
+            "小說改編",
+            "續作",
+            "高期待",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114017"
+            },
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtR1Jvy3yWXqHYZqVbfpACyF"
+            },
+            {
+                "region": "台灣",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114017"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtR1Jvy3yWXqHYZqVbfpACyF"
+            }
+        ],
+        "external_ids": {
+            "mal": "56876",
+            "bangumi": "458684"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "Re:從零開始的異世界生活 第4季",
+        "title_ja": "Re：ゼロから始める異世界生活 4th Season",
+        "aliases": [
+            "Re:Zero kara Hajimeru Isekai Seikatsu 4th Season",
+            "Re:ZERO -Starting Life in Another World- Season 4",
+            "Re:从零开始的异世界生活 第4季《RE:0》系列第四季。跟上季一樣",
+            "採用切成前後半",
+            "中間停播數週的播放模式。",
+            "Re:从零开始的异世界生活 第4季"
+        ],
+        "summary": "與魔女教之間的戰鬥終於落幕，但水門都市留下了深刻傷痕。為了拯救失去日常生活和被搶走「名字」的眾人，昴一行人決定踏上旅程，前往位在邊陲境地的「賢者」之塔。但在那之前要想辦法穿越魔獸的巢穴，飄盪著濃密瘴氣的奧吉拉沙丘。而要橫越前人未到、宛如海洋的沙漠，關鍵在於被俘的「魔獸使者」──。失去回憶的鬼族姊妹，名字跟「魔女」一樣的人工精靈，以及失去「名字」的「最優秀騎士」，伴著這些人，一同挑戰普萊迪斯監視塔！「希望妳醒來時，最先看到的是我。──這八成是我的自私吧。」",
+        "cover_image": "https://static.acgsecrets.hk/img/6c/6cff746ef04cd80aea2fda23a89d7985/27ddfceb4c47d772147ff7c7a17f22bcebfacb82da29ad173f62e5033d349aa7.jpg",
+        "air_date_text": "4月8日起／每週三／22時0分(喪失篇全11話)4月8日起／每週三／22時0分(喪失篇全11話)8月12日起／每週三／22時0分(奪還篇全8話)8月12日起／每週三／22時0分(奪還篇全8話)",
+        "air_date": "2026-04-08",
+        "tags": [
+            "小說改編",
+            "續作",
+            "2季度(19集)",
+            "高期待",
+            "戲劇",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114044"
+            },
+            {
+                "region": "香港",
+                "platform": "viu.com",
+                "url": "https://www.viu.com/ott/hk/zh/vod/3036512/"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114044"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfor6SdQvoC7pr7Hwfowmr5Q"
+            }
+        ],
+        "external_ids": {
+            "mal": "61316",
+            "bangumi": "547888"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "魔法帽的工作室",
+        "title_ja": "とんがり帽子のアトリエ",
+        "aliases": [
+            "尖帽子的魔法工坊",
+            "尖帽子的魔法工房",
+            "Tongari Boushi no Atelier",
+            "Witch Hat Atelier"
+        ],
+        "summary": "一名出身小村莊的少女．可可，自幼便對魔法師憧憬不已。然而，除了註定生為魔法師的人，其他人既無法成為魔法師，也不能目睹施展魔法的瞬間……因此她放棄了成為魔法師的夢想。沒想到在某天，可可撞見了造訪村莊的魔法師．奇夫利使用魔法的模樣——這是降臨在嚮往當魔法師的少女身上，絕望與希望的故事。。",
+        "cover_image": "https://static.acgsecrets.hk/img/6d/6d72d6ba0d4de12fa30525b339d6baf5/c1f54d1792fb74045ddc59f1e0cde14e5f9ebb87538224dd861c0571f0afe2e0.jpg",
+        "air_date_text": "4月6日起／每週一／23時0分4月6日起／每週一／23時0分",
+        "air_date": "2026-04-06",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "高期待",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Netflix",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "Netflix",
+                "url": null
+            }
+        ],
+        "external_ids": {
+            "mal": "51553",
+            "bangumi": "377130"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "春夏秋冬代行者 春之舞",
+        "title_ja": "春夏秋冬代行者 春の舞",
+        "aliases": [
+            "Shunkashuutou Daikousha: Haru no Mai",
+            "Agents of the Four Seasons: Dance of Spring"
+        ],
+        "summary": "在只有冬季的世界裡，難忍孤獨的冬天削減自己的生命，創造了春天。後來為順應大地的心願，夏天與秋天隨之誕生，形成四季。季節轉換的重責落在人類之子身上，負責的人稱為「四季代行者」──此時，一名少女神正懷抱著使命感挺身而出。四季之神賜與她的季節為『春季』，母親授與她的名字是「雛菊」。她就是十年前消失在這個國家的春天。雛菊克服千辛萬苦，以現人神之姿重返世上。為應戰綁架自己、使自己長年來飽受屈辱的對手，她與隨從少女一同前進。她在內心深處，如同神話那般戀慕著冬天。",
+        "cover_image": "https://static.acgsecrets.hk/img/6d/6d4d13972d50f26c5c2740b30f192bf0/43021852fd88a57c9939047551ada9036be569a3b9032af355a4ee9edecd5577.jpg",
+        "air_date_text": "3月28日起／每週六深夜／24時0分3月29日起／每週日凌晨／0時0分",
+        "air_date": "2026-03-28",
+        "tags": [
+            "小說改編",
+            "新作",
+            "高期待",
+            "戲劇",
+            "奇幻",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114043"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114043"
+            }
+        ],
+        "external_ids": {
+            "mal": "61443",
+            "bangumi": "551455"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "杖與劍的魔劍譚 第2季",
+        "title_ja": "杖と剣のウィストリア 第2期",
+        "aliases": [
+            "Tsue to Tsurugi no Wistoria Season 2",
+            "Wistoria: Wand and Sword Season 2",
+            "杖与剑的魔剑谭 第2季"
+        ],
+        "summary": "因未能通過愛德沃的考試，威爾·賽爾佛特未能修滿升入『塔』所需的學分。他與柯蕾特等人分開，獨自一人佇立著。迎接新年的「境界祭」讓央都熱鬧非凡……然而，令人恐懼的災變時刻，已經迫在眉睫！！",
+        "cover_image": "https://static.acgsecrets.hk/img/1e/1e0296d5de133dc812c4764152ac6624/9b8ca14297ed21b2177e05a1e04076727dbbe72aa4ddcdc468b417e773660bb3.jpg",
+        "air_date_text": "4月12日起／每週日／16時30分4月12日起／每週日／16時30分",
+        "air_date": "2026-04-12",
+        "tags": [
+            "漫畫改編",
+            "續作",
+            "高期待",
+            "動作",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114036"
+            },
+            {
+                "region": "香港",
+                "platform": "viu.com",
+                "url": "https://www.viu.com/ott/hk/zh/vod/3042355/"
+            },
+            {
+                "region": "台灣",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114036"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfppV3iCQ5hA6KYvNsBYR20q"
+            }
+        ],
+        "external_ids": {
+            "mal": "59983",
+            "bangumi": "515856"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "歡迎來到實力至上主義的教室 二年級生篇 第一學期",
+        "title_ja": "ようこそ実力至上主義の教室へ ４th Season 2年生1学期",
+        "aliases": [
+            "歡迎來到實力至上主義的教室 第四季 二年級生篇 第一學期",
+            "歡迎來到實力至上主義的教室 第四季",
+            "Youkoso Jitsuryoku Shijou Shugi no Kyoushitsu e 4th Season: 2-nensei-hen 1 Gakki",
+            "Classroom of the Elite IV",
+            "欢迎来到实力至上主义的教室 第四季 二年级生篇 第一学期"
+        ],
+        "summary": "綾小路等人的Ｄ班迎接了在高度育成高中裡的第二次春天。等著他們的不只有考試，還有很具個性的新一年級生──國中時期跟龍園同樣惡名昭彰的寶泉和臣、自稱與櫛田出自同所國中並接近她的八神拓也、陰晴不定且到處拖著綾小路走的天澤一夏。接著，四月的第一場特別考試，是一二年級生搭檔的筆試。如果搭檔總分低於基準，將只有二年級生會被退學。甚至，南雲還搭載了會顯示各個學生能力的新手機ＡＰＰ。由於內容會公開給所有學生，學力高的學生因而聚集了人氣。二年Ｄ班陷入了苦境。此外，不只是需要搭檔，綾小路還陷入若沒識破來自White Room的一年級生，就會立刻遭到退學的狀況──！",
+        "cover_image": "https://static.acgsecrets.hk/img/3f/3ff3f4bab27417c4c31f307afaa5d55e/4cd145a4aa373f79084e22939929d2331a046b020659017c993e88b75ec0ea3e.jpg",
+        "air_date_text": "4月1日／週三／20時30分(#1～4)4月1日／週三／20時30分(#1～4)4月8日起／每週三／21時30分(#5～)4月8日起／每週三／21時30分(#5～)",
+        "air_date": "2026-04-01",
+        "tags": [
+            "小說改編",
+            "續作",
+            "高期待",
+            "戲劇"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114045"
+            },
+            {
+                "region": "香港",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLuxqoToY7UcgOsqvHTZq_u-nFFgCJcDb4"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114045"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfrovYvVuugbKfSUOYN5OEoO"
+            }
+        ],
+        "external_ids": {
+            "mal": "59708",
+            "bangumi": "510710"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "你又被殺了呢，偵探大人",
+        "title_ja": "また殺されてしまったのですね、探偵様",
+        "aliases": [
+            "Mata Korosarete Shimatta no desu ne",
+            "Tantei-sama",
+            "Killed Again",
+            "Mr. Detective.",
+            "你又被杀了呢",
+            "侦探大人"
+        ],
+        "summary": "追月朔也的父親是個傳說中的名偵探，但他自己則還是個半吊子的高中生偵探。今天他也一如往常地接受委託，意氣風發地幹些外遇調查或是尋貓之類的平凡工作，但不管到哪裡總會莫名其妙被捲入殺人事件之中。而且「被害者」竟然是他自己！？ 朔也每次靠著特殊體質復活時，總會有優秀的助手莉莉忒雅用膝枕迎接他醒來。「你又被殺了呢，偵探大人。」「……看來是這樣。」身為偵探，也身為被害者，朔也總是拼上性命解決一件又一件的疑難事件──！",
+        "cover_image": "https://static.acgsecrets.hk/img/17/173162223cde127dc31b0c30e36df9b1/99d88b2c875a6fe4595c7c670fea3e5215118cc23c1b8aef56ec19e32bde2c05.jpg",
+        "air_date_text": "4月2日起／每週四深夜／25時58分4月3日起／每週五凌晨／1時58分",
+        "air_date": "2026-04-02",
+        "tags": [
+            "小說改編",
+            "新作",
+            "高期待",
+            "神秘",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "曼迪",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114057"
+            },
+            {
+                "region": "香港",
+                "platform": "曼迪YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL2ql078AibHXaLYfdXwG_u8bzL4Q4lXin"
+            },
+            {
+                "region": "台灣",
+                "platform": "曼迪",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114057"
+            },
+            {
+                "region": "台灣",
+                "platform": "曼迪YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL2ql078AibHXaLYfdXwG_u8bzL4Q4lXin"
+            }
+        ],
+        "external_ids": {
+            "mal": "62964",
+            "bangumi": "608227"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "小書痴的下剋上 領主的養女",
+        "title_ja": "本好きの下剋上〜司書になるためには手段を選んでられません〜 領主の養女",
+        "aliases": [
+            "愛書的下剋上 第4季",
+            "Honzuki no Gekokujou: Shisho ni Naru Tame ni wa Shudan wo Erandeiraremasen - Ryoushu no Youjo",
+            "Ascendance of a Bookworm: Adopted Daughter of an Archduke",
+            "爱书的下克上 第4季",
+            "爱书的下克上 领主的养女《小書痴》系列第四季。動畫製作公司由亞細亞堂更改為做《巨人》的WIT STUDIO。",
+            "爱书的下克上 领主的养女"
+        ],
+        "summary": "為了保護心愛的家人和朋友，梅茵離開平民區，以領主養女「羅潔梅茵」的新身分展開貴族的生活。然而，她的行程表被必須學習的新事物塞滿，連一點看書的時間都沒有，更要壓抑對家人的思念，讓她感到滿腹挫折。即使如此，梅茵還是不停地創造奇蹟，她先是端出了令上級貴族也折服的全新餐點，緊接著又為了建造新的孤兒院兼印刷工坊，開始籌辦艾倫菲斯特史無前例的慈善音樂會！但頻頻昏倒卻替梅茵帶來諸多不便，神官長說梅茵的狀況其實有藥可解，不過她必須親自到藥材產地用自己的魔力採集製作藥水的材料，而首先她得要學會用魔石製作出屬於自己的騎獸……",
+        "cover_image": "https://static.acgsecrets.hk/img/89/891540e6cfd716d2f2de69f0062bdd24/dab7a78a04e4bfb0d9b6786db5da4d42bd894a24eb64362b16a85b432826ff19.jpg",
+        "air_date_text": "4月4日起／每週六／17時30分4月4日起／每週六／17時30分",
+        "air_date": "2026-04-04",
+        "tags": [
+            "小說改編",
+            "續作",
+            "2季度",
+            "高期待",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "曼迪",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114058"
+            },
+            {
+                "region": "台灣",
+                "platform": "曼迪",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114058"
+            }
+        ],
+        "external_ids": {
+            "mal": "57466",
+            "bangumi": "469104"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "灰原同學重返過去，開啟所向無敵的第二輪青春遊戲",
+        "title_ja": "灰原くんの強くて青春ニューゲーム",
+        "aliases": [
+            "灰原君的青春二周目",
+            "Haibara-kun no Tsuyokute Seishun New Game",
+            "Haibara's Teenage New Game+",
+            "灰原同学重返过去",
+            "开启所向无敌的第二轮青春游戏"
+        ],
+        "summary": "如今已是大四生的青年灰原夏希，在剛進入高中時曾經努力試圖改頭換面，卻弄巧成拙地導致自己淪為班上的邊緣人。就在他即將步入社會的時候，有一天突然就穿越回了七年前──亦即高中入學的前夕!!高中生活滿是遺憾的夏希，由此獲得了「重新來過」的寶貴機會。於是他活用過去的經驗，成功地打進了班上的核心團體，成了最受矚目的俊男美女六人組的其中一員！而且在這個小團體之中，甚至還包括了他曾經暗戀的美少女‧陽花里……!?",
+        "cover_image": "https://static.acgsecrets.hk/img/7c/7cfa3432af9ce5c73f9c179e24211036/4f46d8a31f525def370b9fe751debfc20a45df8592550eeb85fbc97a98b8418f.jpg",
+        "air_date_text": "4月2日起／每週四深夜／25時28分4月3日起／每週五凌晨／1時28分",
+        "air_date": "2026-04-02",
+        "tags": [
+            "小說改編",
+            "新作",
+            "喜劇",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Crunchyroll",
+                "url": "https://www.crunchyroll.com/series/GT00371668/"
+            },
+            {
+                "region": "台灣",
+                "platform": "Crunchyroll",
+                "url": "https://www.crunchyroll.com/series/GT00371668/"
+            }
+        ],
+        "external_ids": {
+            "mal": "61943",
+            "bangumi": "567418"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "我和班上第二可愛的女生成為朋友",
+        "title_ja": "クラスで２番目に可愛い女の子と友だちになった",
+        "aliases": [
+            "和班级第二可爱的女孩子成为了朋友",
+            "Class de 2-banme ni Kawaii Onnanoko to Tomodachi ni Natta",
+            "I Became Friends with the Second Cutest Girl in the Class.",
+            "我和班上第二可爱的女生成为朋友"
+        ],
+        "summary": "連點頭之交都沒幾個的我──前原真樹交到了第一個朋友——朝凪海。男生們都說朝凪同學是「班上第二可愛」，而且很照顧天真爛漫的No.1美少女天海同學。這樣的她只有在週五的放學後，會偷偷來我家玩。從平常能幹的模樣，實在難以想像私底下的她這麼率直又愛撒嬌。這是低調男與第二女主角之間的真實「朋友」戀愛喜劇。",
+        "cover_image": "https://static.acgsecrets.hk/img/94/94bb7fb319f3bbe6a135f18237895c54/372d7a5255c72bb98d55b994ea25526c88b9a59960386ff35bebef86df34b169.jpg",
+        "air_date_text": "4月7日起／每週二／23時30分4月7日起／每週二／23時30分",
+        "air_date": "2026-04-07",
+        "tags": [
+            "小說改編",
+            "新作",
+            "高期待",
+            "喜劇",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Aniplus",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114007"
+            },
+            {
+                "region": "台灣",
+                "platform": "Aniplus",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114007"
+            }
+        ],
+        "external_ids": {
+            "mal": "56734",
+            "bangumi": "456079"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "上伊那牡丹，醉姿如百合",
+        "title_ja": "上伊那ぼたん、酔へる姿は百合の花",
+        "aliases": [
+            "上伊那牡丹",
+            "酒醉身姿似百合花般",
+            "Kamiina Botan",
+            "Yoeru Sugata wa Yuri no Hana",
+            "the Drunken Appearance Is a Lily Flower"
+        ],
+        "summary": "二十歲的大學生．上伊那牡丹一喝醉就會變得有點大膽，並對共飲的學姐們說出令人心跳加速的一句話…？",
+        "cover_image": "https://static.acgsecrets.hk/img/d4/d497c2c9da63dae8230e9680e01b5b35/335e4e1b6b5274460cfcafc23d3cf89ec9ea6c41cfd3b023f2305f0d83637393.jpg",
+        "air_date_text": "4月10日起／每週五深夜／24時0分4月11日起／每週六凌晨／0時0分",
+        "air_date": "2026-04-10",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "喜劇"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114039"
+            },
+            {
+                "region": "香港",
+                "platform": "viu.com",
+                "url": "https://www.viu.com/ott/hk/zh/vod/3037786/"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114039"
+            }
+        ],
+        "external_ids": {
+            "mal": "61186",
+            "bangumi": "543360"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "GHOST CONCERT: missing Songs",
+        "title_ja": "ゴーストコンサート : missing Songs",
+        "aliases": [
+            "Ghost Concert: Missing Songs",
+            "GHOST CONCERT : missing Songs操刀《戰姬絕唱》全部作中曲的 Elements Garden",
+            "其「Song Battle系列」的新一作。簡單點說就是戰姬絕唱風的原創新作啦。",
+            "GHOST CONCERT : missing Songs"
+        ],
+        "summary": "2045年，歌唱被禁止的世界──。創造和演奏音樂，已經由音樂APP《MiucS》取代人類全權負責。少女・相葉芹亜與朋友們外出時，竟聽見了本該被禁止的歌聲。循著歌聲而去，芹亜看見的是，一個幽靈。從現世之外顯現的偉人──「大幽靈(Great Ghost)」。靈能力者集團──「TERA」。以及隨之響起的──「憑依鎮魂歌」。 「這是，直到我成為幽靈為止的故事。」",
+        "cover_image": "https://static.acgsecrets.hk/img/5c/5cb9dae8aed184e0a7de2478783eae95/a57a00f3927c6bcd61e60b2b47dc90fec9e7a4cdad0e142dd26e5876ad84ad5e.jpg",
+        "air_date_text": "4月5日起／每週日深夜／24時30分4月6日起／每週一凌晨／0時30分",
+        "air_date": "2026-04-05",
+        "tags": [
+            "原創作品",
+            "新作",
+            "動作",
+            "科幻",
+            "超自然"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114030"
+            },
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtRRUG_roSQ9XhatSfsP6cOG"
+            },
+            {
+                "region": "台灣",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114030"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtRRUG_roSQ9XhatSfsP6cOG"
+            },
+            {
+                "region": "台灣",
+                "platform": "Crunchyroll",
+                "url": "https://www.crunchyroll.com/series/GT00374796/"
+            }
+        ],
+        "external_ids": {
+            "mal": "62852",
+            "bangumi": "600675"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "ROOSTER FIGHTER 怒火雞頭",
+        "title_ja": "ニワトリ・ファイター",
+        "aliases": [
+            "雞鬥士",
+            "Niwatori Fighter",
+            "Rooster Fighter",
+            "鸡斗士",
+            "怒火鸡头"
+        ],
+        "summary": "神秘巨大生物「鬼獸」，突然於日本現身。街道大受破壞，人類亦陷入絕望之中⋯⋯此時，某個身影竟擋在鬼獸前方──！這是一隻公雞拯救世界的故事!!",
+        "cover_image": "https://static.acgsecrets.hk/img/59/59d2a8b1e08b655ba5f5cc395a747590/4b0cb0d30a1f1198f206c2a1587ba3f5c7185a8ec8050b41fc95bfcf6b0a2831.jpg",
+        "air_date_text": "4月5日起／每週日深夜／24時0分4月6日起／每週一凌晨／0時0分",
+        "air_date": "2026-04-05",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "動作",
+            "喜劇"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "viu.com",
+                "url": "https://www.viu.com/ott/hk/zh/vod/2994262/"
+            },
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtS5foMNzf5rNYedrbWZFshI"
+            },
+            {
+                "region": "台灣",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "Hami Video",
+                "url": "https://hamivideo.hinet.net/product/319798.do"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtS5foMNzf5rNYedrbWZFshI"
+            }
+        ],
+        "external_ids": {
+            "mal": "59393",
+            "bangumi": "505258"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "哪裡有溫柔對待阿宅的辣妹！？",
+        "title_ja": "オタクに優しいギャルはいない!?",
+        "aliases": [
+            "沒有辣妹會對阿宅溫柔!?",
+            "Otaku ni Yasashii Gal wa Inai!?",
+            "Gals Can't Be Kind to Otaku!?",
+            "没有辣妹会对阿宅温柔!?",
+            "哪里有温柔对待阿宅的辣妹！ ？"
+        ],
+        "summary": "瀨尾卓也是個不起眼的平凡高一生，但他有個不可告人的小秘密：他是一部適合小女孩觀賞的動畫「閃亮萌寵」的狂熱粉絲。有一天他帶著參加抽獎幸運抽中的閃萌橡皮擦到學校，坐在他前面的辣妹．伊地知琴子突然說要借橡皮擦，便順手抽走他手中的閃萌橡皮擦。想不到另一個走酷帥路線的辣妹．天音慶居然一眼就看出那是閃萌周邊，令瀨尾忍不住大吃一驚……",
+        "cover_image": "https://static.acgsecrets.hk/img/fb/fb6e90759336687443e3f8fd36c0bd4c/b2a09a5232cd6240f7f116a075fca4afaeb3b6858a154815b1c0cd7bae12e515.jpg",
+        "air_date_text": "4月8日起／每週三／23時45分4月8日起／每週三／23時45分",
+        "air_date": "2026-04-08",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "高期待",
+            "喜劇",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Crunchyroll",
+                "url": "https://www.crunchyroll.com/series/GT00371662/"
+            },
+            {
+                "region": "台灣",
+                "platform": "Crunchyroll",
+                "url": "https://www.crunchyroll.com/series/GT00371662/"
+            }
+        ],
+        "external_ids": {
+            "mal": "62604",
+            "bangumi": "590393"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "容易對付的惡魔大人",
+        "title_ja": "カナン様はあくまでチョロい",
+        "aliases": [
+            "迦楠大人的白給是惡魔級",
+            "Kanan-sama wa Akumade Choroi",
+            "Mistress Kanan is Devilishly Easy",
+            "迦楠大人的白给是恶魔级",
+            "容易对付的恶魔大人"
+        ],
+        "summary": "女惡魔˙果南為了品嚐美味的靈魂，潛入人間世界的高中。雖然鎖定了一個男學生，但回過神來，卻變成跟他訂下了戀人契約？可是根本沒談過戀愛的果南，一直接觸到未知的感情！",
+        "cover_image": "https://static.acgsecrets.hk/img/42/424d54a5b1e7badb0a1663cf66bfd042/764de6c11298f61dcd1dd502c5671a3dbd138b3c5e0e41dea16d404c2fa04689.jpg",
+        "air_date_text": "4月4日起／每週六深夜／25時0分4月5日起／每週日凌晨／1時0分",
+        "air_date": "2026-04-04",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "高期待",
+            "喜劇",
+            "浪漫",
+            "超自然"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114026"
+            },
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtTh8sYeXdgSF20_47YJcbCH"
+            },
+            {
+                "region": "台灣",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114026"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtTh8sYeXdgSF20_47YJcbCH"
+            }
+        ],
+        "external_ids": {
+            "mal": "61501",
+            "bangumi": "552589"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "黑貓與魔女的教室",
+        "title_ja": "黒猫と魔女の教室",
+        "aliases": [
+            "黑貓與魔女的課堂",
+            "Kuroneko to Majo no Kyoushitsu",
+            "The Classroom of a Black Cat and a Witch",
+            "黑猫和魔女的课堂",
+            "黑猫与魔女的教室"
+        ],
+        "summary": "絲碧卡・瓦戈的目標是考上「戴安娜魔術學校」，成為一等魔術師。但卻一直無法成功使用魔法飛行。某一天她遇到了一隻會講人話的黑貓，沒想到那隻黑貓的真實身份竟然是失蹤的魔術大師克勞德！克勞德為了解開詛咒，必須要借用絲碧卡的魔力。然而目前絲碧卡的魔力還遠遠不夠，因此克勞德便開始教導絲碧卡練習魔法、增強實力，讓她朝著成為一等魔術師的目標前進！",
+        "cover_image": "https://static.acgsecrets.hk/img/f2/f2075ec76ede1a0354779114699b7ef1/00f3393323c27cb9a2f8e216f1d015356182e180eefbb6f0f8381ab4e2668693.jpg",
+        "air_date_text": "4月12日起／每週日／23時30分4月12日起／每週日／23時30分",
+        "air_date": "2026-04-12",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "2季度",
+            "喜劇",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114029"
+            },
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtRA_zHD1Pifp0PZmw9psdU2"
+            },
+            {
+                "region": "台灣",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114029"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtRA_zHD1Pifp0PZmw9psdU2"
+            }
+        ],
+        "external_ids": {
+            "mal": "62171",
+            "bangumi": "576351"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "出租女友 第5季",
+        "title_ja": "彼女、お借りします 第5期",
+        "aliases": [
+            "租借女友 第5季",
+            "Kanojo",
+            "Okarishimasu 5th Season",
+            "Rent-a-Girlfriend Season 5"
+        ],
+        "summary": "Hawaiians旅行即將進入尾聲。然而「出租女友」水原千鶴的個人檔案圖片，被麻美公開，氣氛立刻變得詭譎混亂！面對驚人的事實，和女士與和也的父母、瑠夏、木部、栗林等人的反應是？和也跟水原能不能在無路可逃的困境中脫身呢？",
+        "cover_image": "https://static.acgsecrets.hk/img/ab/ab63139011c523e612c310a0d0813287/30ee6a3b4a43ac1506fb7a9f8ab125b49a6db624f432e3b02001ba8e371656a1.jpg",
+        "air_date_text": "電視台首播4月10日起／每週五深夜／26時23分4月11日起／每週六凌晨／2時23分串流平台首播4月8日起／每週三／22時0分4月8日起／每週三／22時0分",
+        "air_date": "2026-04-10",
+        "tags": [
+            "漫畫改編",
+            "續作",
+            "喜劇",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Crunchyroll",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "Crunchyroll",
+                "url": "https://www.crunchyroll.com/series/G6QWV3976"
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114014"
+            },
+            {
+                "region": "台灣",
+                "platform": "Crunchyroll",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "Crunchyroll",
+                "url": "https://www.crunchyroll.com/series/G6QWV3976"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114014"
+            }
+        ],
+        "external_ids": {
+            "mal": "62485",
+            "bangumi": "533027"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "女騎士成為蠻族新娘",
+        "title_ja": "姫騎士は蛮族の嫁",
+        "aliases": [
+            "姬騎士是蠻族的新娘",
+            "Himekishi wa Barbaroi no Yome",
+            "The Warrior Princess and the Barbaric King",
+            "姬骑士是蛮族的新娘",
+            "女骑士成为蛮族新娘"
+        ],
+        "summary": "時值辰曆１３４２年，西方的伊魯德連王國持續７年的第十七次東征再次宣告失敗。第一騎士團團長”水晶盔”賽拉為了在友軍撤退時斷後而與體型巨大的敵方將領單挑落敗，醒來後發現自己變成了被枷鎖銬住的俘虜。但接下來等待她的並不是敵人的拷問或凌辱，而是求婚……",
+        "cover_image": "https://static.acgsecrets.hk/img/87/87170a8485d2ea061ac2149c00039e45/0fdf3131ac4a6a4d0361434aa67c27c6166dcaec55d10df7a2eff240fef8fb10.jpg",
+        "air_date_text": "4月9日起／每週四／21時30分4月9日起／每週四／21時30分",
+        "air_date": "2026-04-09",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "高期待",
+            "喜劇",
+            "奇幻",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Crunchyroll",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "Crunchyroll",
+                "url": "https://www.crunchyroll.com/series/GT00362253/"
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114011"
+            },
+            {
+                "region": "台灣",
+                "platform": "Crunchyroll",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "Crunchyroll",
+                "url": "https://www.crunchyroll.com/series/GT00362253/"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114011"
+            }
+        ],
+        "external_ids": {
+            "mal": "60028",
+            "bangumi": "516543"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "夜櫻家大作戰 第2季",
+        "title_ja": "夜桜さんちの大作戦 第2期",
+        "aliases": [
+            "Yozakura-san Chi no Daisakusen 2nd Season",
+            "Mission: Yozakura Family Season 2",
+            "夜樱家大作战 第2季"
+        ],
+        "summary": "夜桜つぼみ在太陽的意識裡現身。她懇求「請殺了我」，並告訴太陽必須準備的兩樣東西。依照つぼみ的指示，太陽決定挑戰銀級間諜考試。然而，擔任考官的竟然是兄妹們……!?",
+        "cover_image": "https://static.acgsecrets.hk/img/01/015074d57467db6215d01f75a764984f/406104e1f4bd8d25813a81cbf7743b6ae2466a46fa043ca737dcf3f68e71ed81.jpg",
+        "air_date_text": "4月12日起／每週日／17時0分4月12日起／每週日／17時0分",
+        "air_date": "2026-04-12",
+        "tags": [
+            "漫畫改編",
+            "續作",
+            "動作",
+            "喜劇"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114050"
+            },
+            {
+                "region": "香港",
+                "platform": "viu.com",
+                "url": "https://www.viu.com/ott/hk/zh/vod/3042646/"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114050"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfrDTBsbdtPEx2tXf4QI6_yE"
+            }
+        ],
+        "external_ids": {
+            "mal": "60055",
+            "bangumi": "517027"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "異世界悠閒農家2",
+        "title_ja": "異世界のんびり農家２",
+        "aliases": [
+            "異世界悠閒農家 第2季",
+            "Isekai Nonbiri Nouka 2",
+            "Farming Life in Another World Season 2",
+            "异世界悠闲农家2",
+            "异世界悠闲农家 第2季"
+        ],
+        "summary": "在過去體弱多病、孤獨度日的青年・火樂，蒙受神明眷顧轉生到了異世界。他在森林深處建立的小小農場，隨著吸血鬼、精靈、獸人、天使族……各式各樣的夥伴聚集，如今已成長為被稱為「大樹村」的熱鬧聚落。耕種田地、飼養家畜，與夥伴們一同歡笑的平靜日常。然而，訪客絡繹不絕，村子也越來越忙碌！新的作物、新的夥伴，以及新的騷動，為火樂的慢活生活增添了色彩。悠閒但又不失熱鬧，歡樂喧騰卻也和樂融融，「專屬自己的理想田園生活」，規模仍在持續擴大中！洋溢著笑容與美味料理，異世界農業生活第二幕，就此揭幕――！。",
+        "cover_image": "https://static.acgsecrets.hk/img/b0/b0016843e03441bef0d9f268d3b9762a/e8c9e56a7e2dc0237d6583ae6d6547f1db36f133c4d56725f71a8dcc0bb9d005.jpg",
+        "air_date_text": "4月6日起／每週一／22時30分4月6日起／每週一／22時30分",
+        "air_date": "2026-04-06",
+        "tags": [
+            "小說改編",
+            "續作",
+            "高期待",
+            "奇幻",
+            "日常"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114042"
+            },
+            {
+                "region": "香港",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLuxqoToY7Ucg7UKNCijxCy8QTLtCGv0h7"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114042"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfo1gYyvMgvZN9w9iWyqcHa5"
+            }
+        ],
+        "external_ids": {
+            "mal": "62146",
+            "bangumi": "575057"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "女神「異世界轉生想成為什麼」我「勇者的肋骨」",
+        "title_ja": "女神「異世界転生何になりたいですか」 俺「勇者の肋骨で」",
+        "aliases": [
+            "Megami \"Isekai Tensei Nani ni Naritai desu ka\" Ore \"Yuusha no Rokkotsu de\"",
+            "Goddess: \"What Do You Want to Turn Into When You're Reincarnated in Another World?\" Me: \"Into a Hero's Rib\"",
+            "女神“异世界转生想成为什么”我“勇者的肋骨”"
+        ],
+        "summary": "故事舞台設定在一個可以自由選擇轉生去處的世界。——然而近來申請者暴增，「開掛後宮勇者」的排隊等待時間竟長達五萬年！就連轉生成為「魔王」都得以千年為單位排隊等候。於是主角另闢蹊徑，選擇的轉生地點竟然是「坐擁後宮且快樂結局的外掛勇者，的肋骨」！之後他更是接連投胎成「寄居蟹」、「蔬菜」，甚至是「用來炸掉現充的炸藥」等各種稀奇古怪的存在！？",
+        "cover_image": "https://static.acgsecrets.hk/img/eb/eb363a9380af524eb6b4c97937bf2715/2b6c17f19493f2505177dd4846e05c22182a9ecf339a3e91740bfa2f10cba146.jpg",
+        "air_date_text": "4月7日起／每週二深夜／25時59分4月8日起／每週三凌晨／1時59分",
+        "air_date": "2026-04-07",
+        "tags": [
+            "小說改編",
+            "新作",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "智寶",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114033"
+            },
+            {
+                "region": "香港",
+                "platform": "回歸線YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLoGVqODys23Cwak1wu9SaMxAlf9RPUevY"
+            },
+            {
+                "region": "台灣",
+                "platform": "智寶",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114033"
+            },
+            {
+                "region": "台灣",
+                "platform": "回歸線YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLoGVqODys23Cwak1wu9SaMxAlf9RPUevY"
+            }
+        ],
+        "external_ids": {
+            "mal": "63376",
+            "bangumi": "623854"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "想結束這場「我愛你」的遊戲",
+        "title_ja": "愛してるゲームを終わらせたい",
+        "aliases": [
+            "想讓「我愛你」遊戲快點結束",
+            "想讓我愛你遊戲快點結束",
+            "Aishiteru Game wo Owarasetai",
+            "I Want to End This Love Game",
+            "想让“我爱你”游戏快点结束",
+            "想让我爱你游戏快点结束",
+            "想结束这场「我爱你」的游戏"
+        ],
+        "summary": "互相暗戀的青梅竹馬。距離越近，越喜歡對方。距離越近，越是說不出口。無法坦率的兩人，連繫著他們的是…從孩提時期就持續到現在的『我愛你遊戲』。〝害羞就輸了〞這般幼稚的遊戲，兩人為此投注滿滿的青澀情感，不能輸的比賽，從此開始。",
+        "cover_image": "https://static.acgsecrets.hk/img/cb/cbdc343aa6c9a7d9d56ada961d5139a4/8216e5b853622023c91c04d090f2e942164e50d3d66234d475ec134d20f93f6b.jpg",
+        "air_date_text": "4月14日起／每週二／23時0分4月14日起／每週二／23時0分",
+        "air_date": "2026-04-14",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "高期待",
+            "喜劇",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114055"
+            },
+            {
+                "region": "香港",
+                "platform": "曼迪YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL2ql078AibHWaHxyd6ALN0961g8YogOka"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114055"
+            },
+            {
+                "region": "台灣",
+                "platform": "曼迪YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL2ql078AibHWaHxyd6ALN0961g8YogOka"
+            }
+        ],
+        "external_ids": {
+            "mal": "61839",
+            "bangumi": "564289"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "霧尾粉絲後援會",
+        "title_ja": "霧尾ファンクラブ",
+        "aliases": [
+            "霧尾粉絲俱樂部",
+            "Kirio Fanclub",
+            "雾尾粉丝俱乐部"
+        ],
+        "summary": "女高中生三好藍美和染谷波，有個很在意的人。那就是和她們同班的「霧尾同學」。是朋友也是競爭對手的兩人，話題焦點總是被他占據。互相搶奪「霧尾同學」的制服外套、舉行可以夢見「霧尾同學」的神祕儀式、妄想與「霧尾同學」約會的情景…",
+        "cover_image": "https://static.acgsecrets.hk/img/3a/3ac172679512f5095f335d83ea6da26e/424c41d64b05d58ee3a06f44f8f54ba0a21fd4f0f9068aa66887f7940f52c5da.jpg",
+        "air_date_text": "4月2日起／每週四深夜／24時26分4月3日起／每週五凌晨／0時26分",
+        "air_date": "2026-04-02",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "喜劇"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114013"
+            },
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtTA4hrvpNPl5Onjt-yAKR6p"
+            },
+            {
+                "region": "台灣",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114013"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtTA4hrvpNPl5Onjt-yAKR6p"
+            }
+        ],
+        "external_ids": {
+            "mal": "59835",
+            "bangumi": "513208"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "溜掉的大魚比不上自己釣到的魚",
+        "title_ja": "逃がした魚は大きかったが釣りあげた魚が大きすぎた件",
+        "aliases": [
+            "关于虽然逃走的鱼很大",
+            "但钓上来的鱼却太大了这件事",
+            "Nigashita Sakana wa Ookikatta ga Tsuriageta Sakana ga Ookisugita Ken",
+            "The Fish I Missed Was Big",
+            "But I Caught Another Fish Was Too Big.",
+            "溜掉的大鱼比不上自己钓到的鱼"
+        ],
+        "summary": "公爵大小姐瑪莉亞因為弟弟誕生的關係，突然失去繼承人的地位。但是國內的貴族子弟，都已經悉數被預約了。這樣下去會嫁不出去的！於是她就去找遠親，前往鄰國留學，並且努力的進行婚活，結果卻被素未謀面的第一王子當面宣言要毀掉從未跟對方訂下的婚約？咦？我都還沒有訂下婚約啊？嫁不出去的大小姐的幸福婚活愛情喜劇！",
+        "cover_image": "https://static.acgsecrets.hk/img/84/84175c924553a72f3bc5eca22b505c42/b8aab643899c85a8f4a8a71b1a108bb49cc6ee31f944c1256f7fad7c78510c28.jpg",
+        "air_date_text": "4月1日起／每週三深夜／24時0分4月2日起／每週四凌晨／0時0分",
+        "air_date": "2026-04-01",
+        "tags": [
+            "小說改編",
+            "新作",
+            "喜劇",
+            "奇幻",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114048"
+            },
+            {
+                "region": "香港",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLuxqoToY7Ucit61wS6rMFN20UqTQI3JYP"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114048"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfoCIyywvjwHGMeEpLFVlQcS"
+            }
+        ],
+        "external_ids": {
+            "mal": "62893",
+            "bangumi": "604307"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "女僕小姐的貪吃日常",
+        "title_ja": "メイドさんは食べるだけ",
+        "aliases": [
+            "吃貨女僕",
+            "Maid-san wa Taberu dake",
+            "The Food Diary of Miss Maid",
+            "吃货女仆",
+            "女仆小姐的贪吃日常"
+        ],
+        "summary": "原先於英國宅邸擔任女僕的雀，基於某些原因來到日本一角的小小公寓展開新生活。儘管有許多需要操心的事情，不過對日本食物充滿好奇的雀，瀟灑地離開公寓去尋找美食…！",
+        "cover_image": "https://static.acgsecrets.hk/img/1e/1e7ae3dbc40d558616f590dd4be81e33/4a76d2c55da92fa9de52df4a587974aa5a4c45d96dd42f9bf6a821148ae2421f.jpg",
+        "air_date_text": "電視台首播4月5日起／每週日／22時0分4月5日起／每週日／22時0分串流平台首播3月31日／週二深夜／24時0分(#1)4月1日／週三凌晨／0時0分(#1)4月5日起／每週日／22時0分(#2~)4月5日起／每週日／22時0分(#2~)",
+        "air_date": "2026-04-05",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "日常"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "曼迪",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "Crunchyroll",
+                "url": "https://www.crunchyroll.com/series/GT00375170/"
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114056"
+            },
+            {
+                "region": "香港",
+                "platform": "曼迪YouTube",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "曼迪",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "Crunchyroll",
+                "url": "https://www.crunchyroll.com/series/GT00375170/"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114056"
+            },
+            {
+                "region": "台灣",
+                "platform": "曼迪YouTube",
+                "url": null
+            }
+        ],
+        "external_ids": {
+            "mal": "62342",
+            "bangumi": "580473"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "半坪漫咖宿生活！",
+        "title_ja": "一畳間まんきつ暮らし！",
+        "aliases": [
+            "一疊間漫畫咖啡廳日常",
+            "一疊間漫畫咖啡屋生活！",
+            "Ichijouma Mankitsugurashi!",
+            "Living Life to the Fullest in a Tiny One-Tatami-Mat-Sized Room",
+            "一叠间漫画咖啡屋生活！",
+            "一叠间漫画咖啡屋日常"
+        ],
+        "summary": "住在秋田的高中生森田芽衣子，某天被選為貴族女校「天宮女學院」的特別轉學生！懷抱著對憧憬已久的東京學生生活的期待與不安，芽衣子來到了東京——。然而等待著她的，竟然是漫畫咖啡廳「Hedgehog」！在這間兼作學生宿舍的漫畫咖啡廳裡，她竟然要和個性鮮明的住宿生們一起以在店裡打工進行勞動服務！？就這樣，芽衣子有點不可思議的「一塊榻榻米大小的漫畫咖啡廳生活」就此展開！",
+        "cover_image": "https://static.acgsecrets.hk/img/b9/b9f320ee07b5ea8842e3007e0d2cba5a/ccab1324f74e61dc3759d804ede0a6f31bb951c66bd828f72c5b6bc6b0b826f9.jpg",
+        "air_date_text": "4月11日起／每週六深夜／26時0分4月12日起／每週日凌晨／2時0分",
+        "air_date": "2026-04-11",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "喜劇",
+            "家長指引"
+        ],
+        "streams": [
+            {
+                "region": "台灣",
+                "platform": "REMOW",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114025"
+            }
+        ],
+        "external_ids": {
+            "mal": "62018",
+            "bangumi": "569161"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "朱音落語",
+        "title_ja": "あかね噺",
+        "aliases": [
+            "落語朱音",
+            "Akane-banashi",
+            "落语朱音",
+            "朱音落语"
+        ],
+        "summary": "朱音從小就非常崇拜身為落語家的父親，經常在門後偷看父親練習的模樣。然而，父親參加「真打」晉升測驗卻遭到無情地逐出師門之後，澈底放棄了落語，但是此舉卻點燃了朱音內心想成為落語家的那把火。6年後，已經是高中生的她主動找上阿良川志熊拜師學藝，對方被她的熱情所感動，終於答應讓她加入。正式入門的她將要面臨什麼樣的考驗呢？",
+        "cover_image": "https://static.acgsecrets.hk/img/0c/0c92e9b7f99bb10e63dec89b75ddb154/944e0778b5c4e1c4621e0490d0aacfa693a40ed4fb13b305ec85331a3aba776a.jpg",
+        "air_date_text": "4月4日起／每週六／23時30分4月4日起／每週六／23時30分",
+        "air_date": "2026-04-04",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "戲劇"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114023"
+            },
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtRIjX7F8WQ1wBSDMNN33F_R"
+            },
+            {
+                "region": "台灣",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114023"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtRIjX7F8WQ1wBSDMNN33F_R"
+            }
+        ],
+        "external_ids": {
+            "mal": "62164",
+            "bangumi": "576121"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "輪迴的花瓣",
+        "title_ja": "リィンカーネーションの花弁",
+        "aliases": [
+            "Reincarnation no Kaben",
+            "Petals of Reincarnation",
+            "轮回的花瓣"
+        ],
+        "summary": "告別吧！被人罵說無能的日子!!覺醒吧！沉睡於體內的前世才能!!宮本武藏之劍術、數學家的超高速演算、連環殺手的殺人技術──三方激烈對撞！牛頓、愛因斯坦、畢卡索、南丁格爾……天才、異才、鬼才接連登場！超人們的異能，將蹂躪日常！！",
+        "cover_image": "https://static.acgsecrets.hk/img/7f/7fd5d1979dd64518a6f630a59f7187ea/1596017ec0a5b161c0fc78a3632146ad7af085a58bea94058ac674e895c89d39.jpg",
+        "air_date_text": "4月2日起／每週四深夜／24時30分4月3日起／每週五凌晨／0時30分",
+        "air_date": "2026-04-02",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "動作",
+            "神秘",
+            "超自然"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114015"
+            },
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtReeyIi2dfUXIrORNrnLKpR"
+            },
+            {
+                "region": "台灣",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114015"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtReeyIi2dfUXIrORNrnLKpR"
+            }
+        ],
+        "external_ids": {
+            "mal": "59443",
+            "bangumi": "506149"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "成為悲劇元兇的最強異端，最後頭目女王為了人民犧牲奉獻 第2季",
+        "title_ja": "悲劇の元凶となる最強外道ラスボス女王は民の為に尽くします。第2期",
+        "aliases": [
+            "Higeki no Genkyou to Naru Saikyou Gedou Last Boss Joou wa Tami no Tame ni Tsukushimasu. Season 2",
+            "The Most Heretical Last Boss Queen: From Villainess to Savior Season 2",
+            "成为悲剧元凶的最强异端",
+            "最后头目女王为了人民牺牲奉献 第2季"
+        ],
+        "summary": "我轉生成遊戲中窮凶極惡的最後頭目女王普萊朵，為了避免帶給眾人不幸的未來，驅使人望、權威和作弊能力，一路努力至今……儘管算是成功跟周圍建立圓滿關係，但在我正式成年的16歲的生日宴會時，出現在我面前的是我的未婚夫，也是同盟國的里昂王子。我一定會讓即將面臨絕望未來的他幸福！",
+        "cover_image": "https://static.acgsecrets.hk/img/bc/bcbf805f7304754ea5574992a7e563a7/6fd49cb65ecaeab30f624cc2c2303d10d0db91beac6f0365594861026ec5f74c.jpg",
+        "air_date_text": "4月7日起／每週二／22時0分4月7日起／每週二／22時0分",
+        "air_date": "2026-04-07",
+        "tags": [
+            "小說改編",
+            "續作",
+            "高期待",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114049"
+            },
+            {
+                "region": "香港",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLuxqoToY7UcisUVk0o-vTHA_Y7vH7fPKl"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114049"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfqRLfW1AdqjPjy_1kUdHF_j"
+            }
+        ],
+        "external_ids": {
+            "mal": "61931",
+            "bangumi": "567234"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "最強的職業不是勇者也不是賢者好像是鑑定士（暫）的樣子？",
+        "title_ja": "最強の職業は勇者でも賢者でもなく鑑定士（仮）らしいですよ？",
+        "aliases": [
+            "最強的職業不是勇者也不是賢者好像是鑑定士（偽）的樣子？",
+            "Saikyou no Shokugyou wa Yuusha demo Kenja demo Naku Kanteishi (Kari) Rashii desu yo?",
+            "The Strongest Job is Apparently Not a Hero or a Sage",
+            "but an Appraiser (Provisional)!",
+            "最强的职业不是勇者也不是贤者好像是鉴定士（伪）的样子？",
+            "最强的职业不是勇者也不是贤者好像是鉴定士（暂）的样子？"
+        ],
+        "summary": "平凡的男高中生・真名部響生，某天突然被轉移到了潛伏著魔物的異世界遼闊草原。在這個前所未見的奇幻世界中漫無目的地徘徊的響生，發現自己被賦予了『鑑定』技能以及『鑑定士（暫）』這個職業……。（暫）是怎麼回事……！？之後，在在草原上相遇的金髮精靈・エマリア的指引下，響生成為了冒險者。與受詛咒的獸人・クロード、未來的賢者・リリアン、白貓聖獸・ヴェネ一一同行動，一邊逐漸變強，一邊尋找返回原本世界的方法──究竟他能否平安回到原來的世界？他能符合標題，成為最強的一天真的會到來嗎！？",
+        "cover_image": "https://static.acgsecrets.hk/img/af/af752bf8031cee3dadeff8534051b250/c331dd7433b519ec2b000f702c5f667d9833103e5e6450bbad1c9ab5c70db931.jpg",
+        "air_date_text": "電視台首播4月4日起／每週六／22時0分4月4日起／每週六／22時0分串流平台首播3月31日／週二深夜／24時0分(#1)4月1日／週三凌晨／0時0分(#1)4月4日起／每週六／22時30分(#2~)4月4日起／每週六／22時30分(#2~)",
+        "air_date": "2026-04-04",
+        "tags": [
+            "小說改編",
+            "新作",
+            "動作",
+            "喜劇",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Crunchyroll",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "Crunchyroll",
+                "url": null
+            }
+        ],
+        "external_ids": {
+            "mal": "62825",
+            "bangumi": "599171"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "魔法姊妹露露特莉莉",
+        "title_ja": "魔法の姉妹ルルットリリィ",
+        "aliases": [
+            "Mahou no Shimai Lulutto Lilly",
+            "Magical Sisters Lulutto Lilly"
+        ],
+        "summary": "野野山風是個期待暑假到來的純真小學生。野野山流則是個性內向但很努力的初中生。以前感情融洽的兩姊妹，心靈的距離最近卻似乎變得有些遙遠……。某天，風遇見了一艘不可思議的宇宙船，並被賦予了魔法之力。另一邊，流也獲得了美好的魔法力量。風與流變身成了她們所憧憬的大人模樣。不過，有兩條規則。「期限為一年」、「絕不能讓任何人知道魔法的事」。就這樣，兩人在不知道彼此秘密的情況下，各自以偶像的身分活躍了起來——！",
+        "cover_image": "https://static.acgsecrets.hk/img/4b/4b1bc60660dad080c2923389a0c0eb1f/dd2c2703000f76dc71340adcf24b3b75627eeb7d0af2bea689282d7ffe506ce0.jpg",
+        "air_date_text": "4月5日起／每週日／22時30分4月5日起／每週日／22時30分",
+        "air_date": "2026-04-05",
+        "tags": [
+            "原創作品",
+            "新作",
+            "魔法少女"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114028"
+            },
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtQSl_ucLwx_HB4oOrJDplmF"
+            },
+            {
+                "region": "台灣",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114028"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtQSl_ucLwx_HB4oOrJDplmF"
+            }
+        ],
+        "external_ids": {
+            "mal": "59176",
+            "bangumi": "501796"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "婚姻劇毒",
+        "title_ja": "マリッジトキシン",
+        "aliases": [
+            "婚姻毒素",
+            "Marriagetoxin",
+            "Marriage Toxin",
+            "婚姻剧毒"
+        ],
+        "summary": "青年‧下呂擔任家業延續數百年的殺手『用毒人』。從事見不得光的工作，又不擅長跟女性交流，他認為自己不該結婚。然而，為了延續『用毒人』的血統，老家宣布將強制要求他的妹妹生下接班人。此時，下呂遇見了原本是工作目標的婚姻騙子‧城崎…？「那樣的提案〈求婚〉，還是頭一遭。」把婚姻騙子當成提供建議的人，展開了殺手的婚姻活動！目標是最棒的婚姻…",
+        "cover_image": "https://static.acgsecrets.hk/img/8b/8bd72b5d4ee9e7cf88e64a86c9c58c1d/8a5ce694991c9a5b8b825ff15c0ca4168ce59943e7597c842ec84da2700b4c4d.jpg",
+        "air_date_text": "4月7日起／每週二／23時0分4月7日起／每週二／23時0分",
+        "air_date": "2026-04-07",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "動作"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114037"
+            },
+            {
+                "region": "香港",
+                "platform": "viu.com",
+                "url": "https://www.viu.com/ott/hk/zh/vod/3029378/"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114037"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfp_bDKTPlU8kHMf0-W_W450"
+            }
+        ],
+        "external_ids": {
+            "mal": "62601",
+            "bangumi": "590353"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "複製品的我也會談戀愛。",
+        "title_ja": "レプリカだって、恋をする。",
+        "aliases": [
+            "即使是複製人",
+            "也會戀愛。",
+            "Replica datte",
+            "Koi wo Suru.",
+            "Even a Replica Can Fall in Love",
+            "即使是复制人",
+            "也会恋爱。",
+            "复制品的我也会谈恋爱。"
+        ],
+        "summary": "十六歲夏天，第一個青春。身體不舒服的日子，有麻煩值日生工作的日子，要定期考試的日子……碰到不想去學校的日子會被叫出來的分身，那就是我。沒辦法自由外出，人生的使命便是代替本尊工作。原本明明應該如此，我卻墜入情網了。為了讓心儀的他可以分辨出我，我開始綁起公主頭。會翹掉學校課業，兩人偷偷單獨去遠足。接著約定明天、後天，以及之後也要見面。原本空無一物，名字、身體，所有一切都是借用的我，只有這份愛意專屬於我。",
+        "cover_image": "https://static.acgsecrets.hk/img/37/3737b12e40fcf1fe90e5802dff46bdcb/e8af885b72b4bf262a2b63094aeaca58506ce54da283bdafa97470a4ae23ca20.jpg",
+        "air_date_text": "4月7日起／每週二／23時30分4月7日起／每週二／23時30分",
+        "air_date": "2026-04-07",
+        "tags": [
+            "小說改編",
+            "新作",
+            "戲劇",
+            "浪漫",
+            "超自然"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Crunchyroll",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "Crunchyroll",
+                "url": "https://www.crunchyroll.com/series/GT00374288/"
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114059"
+            },
+            {
+                "region": "台灣",
+                "platform": "Crunchyroll",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "Crunchyroll",
+                "url": "https://www.crunchyroll.com/series/GT00374288/"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114059"
+            }
+        ],
+        "external_ids": {
+            "mal": "61013",
+            "bangumi": "537722"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "終末起點 第2季",
+        "title_ja": "最強の王様、二度目の人生は何をする？ Season2",
+        "aliases": [
+            "三歲開始做王者 第2季",
+            "最強王者的第二人生 第2季",
+            "Saikyou no Ousama",
+            "Nidome no Jinsei wa Nani wo Suru? Season 2",
+            "The Beginning After the End Season 2",
+            "最强王者的第二人生 第2季",
+            "三岁开始做王者 第2季",
+            "终末起点 第2季"
+        ],
+        "summary": "其他名稱：三歲開始做王者 第2季、最強王者的第二人生 第2季、Saikyou no Ousama, Nidome no Jinsei wa Nani wo Suru? Season 2、The Beginning After the End Season 2、最强王者的第二人生 第2季、三岁开始做王者 第2季、终末起点 第2季",
+        "cover_image": "https://static.acgsecrets.hk/img/f1/f1bbdf6e48d0696420aeab7930543736/8efbc99067d35b6b95a7cd2d3e6c6f2cae4b8f3ae001e14a842cb4d392e11361.jpg",
+        "air_date_text": "4月1日起／每週三／23時30分4月1日起／每週三／23時30分",
+        "air_date": "2026-04-01",
+        "tags": [
+            "小說改編",
+            "續作",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md387131088"
+            },
+            {
+                "region": "台灣",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md387131088"
+            }
+        ],
+        "external_ids": {
+            "mal": "61831",
+            "bangumi": "565304"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "弱弱老師",
+        "title_ja": "よわよわ先生",
+        "aliases": [
+            "Yowayowa Sensei",
+            "Yowayowa Teacher",
+            "弱弱老师"
+        ],
+        "summary": "毫無體力，聲音虛弱，各種身體狀態都最弱的「弱弱老師」，鶸村日和老師。她受到學生恐懼，被誤會成是個心情一不好就會詛咒人的『咒恨老師』，但仍然還是為了學生而努力向上！如此弱弱又可愛的老師，所帶來的有點刺激的愛情喜劇！",
+        "cover_image": "https://static.acgsecrets.hk/img/e2/e2f196c9855516de62c890432ae215b8/becbf6f8124f0718a8280033e084545e9877a250aee9ebce2d0fbf7682846fd0.jpg",
+        "air_date_text": "4月11日起／每週六／21時30分4月11日起／每週六／21時30分",
+        "air_date": "2026-04-11",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "喜劇",
+            "家長指引",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114020"
+            },
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtQ8kVITflpbi0_oqZEmEHjj"
+            },
+            {
+                "region": "台灣",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114020"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtQ8kVITflpbi0_oqZEmEHjj"
+            }
+        ],
+        "external_ids": {
+            "mal": "60444",
+            "bangumi": "526789"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "主播女孩重度依賴",
+        "title_ja": "NEEDY GIRL OVERDOSE",
+        "aliases": [
+            "Needy Girl Overdose",
+            "主播女孩重度依赖"
+        ],
+        "summary": "立志成為最強主播、同時迫切想要得到他人認可的女孩，與支持她的「P」共同度過 30 天的故事。",
+        "cover_image": "https://static.acgsecrets.hk/img/e9/e908f87fb695ab3e095a6f82abcdd994/8db8a4cb288ea863eea29e645e5d36756990a2477e996e9b4de98ec690d6fce7.jpg",
+        "air_date_text": "4月4日起／每週六深夜／24時0分4月5日起／每週日凌晨／0時0分",
+        "air_date": "2026-04-04",
+        "tags": [
+            "遊戲改編",
+            "新作",
+            "高期待"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114027"
+            },
+            {
+                "region": "香港",
+                "platform": "myTV SUPER",
+                "url": "https://www.mytvsuper.com/tc/programme/needygirloverdose_146143/"
+            },
+            {
+                "region": "台灣",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114027"
+            }
+        ],
+        "external_ids": {
+            "mal": "62913",
+            "bangumi": "606263"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "冰之城牆",
+        "title_ja": "氷の城壁",
+        "aliases": [
+            "冰之城壁",
+            "Koori no Jouheki",
+            "The Ramparts of Ice",
+            "冰之城墙"
+        ],
+        "summary": "不擅與人相處，在自己跟別人之間築牆的冰川小雪，在高中總是獨來獨往，不跟人打交道。有一天，小雪跟莫名其妙主動拉近距離的雨宮湊相遇了？自願選擇獨處的女生‧小雪、學校的萬人迷‧美姬，沒有人我距離觀念的男生‧湊，悠哉體貼的陽太…４位個性有點麻煩的學生，青春頻率互相干擾的故事！",
+        "cover_image": "https://static.acgsecrets.hk/img/dc/dc4e178df9d99bbd266598689c3daf81/5eaccd52df6f4f65bfdfee1e10f75c2f0bcecf069d1d6b40bec1f7bbbbf16d11.jpg",
+        "air_date_text": "4月2日起／每週四／23時56分4月2日起／每週四／23時56分",
+        "air_date": "2026-04-02",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "高期待",
+            "喜劇",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Netflix",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "Netflix",
+                "url": null
+            }
+        ],
+        "external_ids": {
+            "mal": "60852",
+            "bangumi": "535669"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "淡島百景",
+        "title_ja": "淡島百景",
+        "aliases": [
+            "Awajima Hyakkei",
+            "Scenes from Awajima",
+            "淡岛百景"
+        ],
+        "summary": "懷抱著站上舞台夢想的少女們，從全國各地聚集到了淡島歌劇學校。憧憬成為音樂劇明星而入學的新生若菜。背負著摯友心願持續求學的宿舍長絹枝。散發著壓倒性存在感的美麗特待生絵美。以及對繪美既憧憬又嫉妒、不斷渴求其關注的桂子與其家人——。隨著敘事視角的切換，她們那無可替代的歲月在交錯中緩緩相連。這是一部描繪活在當下的少女們，清新而鮮烈的青春塗鴉。",
+        "cover_image": "https://static.acgsecrets.hk/img/73/735d00bc5048e7a4305e47959f2c1e7c/1ea7ba0f27c4e6f6e9c156c0c62a0e359440b452b3bdd4b678ce5e9febf2d04f.jpg",
+        "air_date_text": "4月9日起／每週四深夜／25時45分4月10日起／每週五凌晨／1時45分",
+        "air_date": "2026-04-09",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "戲劇"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114018"
+            },
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtT4Zio1sPOVC4nnRqzt7LVk"
+            },
+            {
+                "region": "台灣",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114018"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtT4Zio1sPOVC4nnRqzt7LVk"
+            },
+            {
+                "region": "台灣",
+                "platform": "Crunchyroll",
+                "url": "https://www.crunchyroll.com/series/GT00374363/"
+            }
+        ],
+        "external_ids": {
+            "mal": "58820",
+            "bangumi": "493724"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "自稱惡役千金的未婚妻觀察紀錄。",
+        "title_ja": "自称悪役令嬢な婚約者の観察記録。",
+        "aliases": [
+            "自稱惡役大小姐的婚約者觀察紀錄",
+            "Jishou Akuyaku Reijou na Konyakusha no Kansatsu Kiroku.",
+            "Observation Records of My Fiancée: The Misadventures of a Self-Proclaimed Villainess",
+            "An Observation Log of My Fiancée Who Calls Herself a Villainess",
+            "自称恶役大小姐的婚约者观察记录",
+            "自称恶役千金的未婚妻观察纪录。"
+        ],
+        "summary": "王太子．賽希爾因太過優秀，而過著簡單模式度日。他和侯爵千金．芭蒂雅訂下婚約，然而某天，芭蒂雅卻突然說出了奇怪的話…「賽希爾殿下！我是惡役千金！！」……芭蒂雅說她擁有前世記憶，而這裡是『少女遊戲』的世界，她是為了拆散賽希爾和女主角的『惡役千金』。芭蒂雅以成為完美反派並遭解除婚約為目標，橫衝直撞的她開始將面對聊生活的賽希爾一次次捲入騷動之中——？",
+        "cover_image": "https://static.acgsecrets.hk/img/51/51b6d11f9d182320a90e5c8d5dcb019d/2db10d3b9a56e135fbad515ed7f74bd1f7d08f96c16ab3551cb25441a4ae943f.jpg",
+        "air_date_text": "電視台首播4月6日起／每週一／22時0分4月6日起／每週一／22時0分串流平台首播4月3日起／每週五／22時0分4月3日起／每週五／22時0分",
+        "air_date": "2026-04-06",
+        "tags": [
+            "小說改編",
+            "新作",
+            "高期待",
+            "喜劇",
+            "奇幻",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Crunchyroll",
+                "url": "https://www.crunchyroll.com/series/GT00371887/"
+            },
+            {
+                "region": "台灣",
+                "platform": "Crunchyroll",
+                "url": "https://www.crunchyroll.com/series/GT00371887/"
+            }
+        ],
+        "external_ids": {
+            "mal": "61687",
+            "bangumi": "558088"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "凍結地球",
+        "title_ja": "スノウボールアース",
+        "aliases": [
+            "全球凍結",
+            "Snowball Earth",
+            "全球冻结",
+            "冻结地球"
+        ],
+        "summary": "一名有溝通障礙，卻被眾人稱為救世主的內向少年，駕駛一架具備自主意識的大型機器人，跟隨宇宙戰艦離開地球，踏上消滅銀河怪獸的旅程。不料卻在最終決戰時意外落敗，當下大型機器人決定啟動自爆機能，並利用逃生艙將少年送回地球。只不過當少年平安抵達地球後，映入眼中的竟是一片雪白、毫無生機的結凍地球……",
+        "cover_image": "https://static.acgsecrets.hk/img/ff/ff0aea62cf8290ad1eb7af2af938e623/7efd86c94437d70acbfe12dfa6ddbbdcb3f1db0b4efeda42e94685697502c2c1.jpg",
+        "air_date_text": "4月3日起／每週五／23時30分4月3日起／每週五／23時30分",
+        "air_date": "2026-04-03",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "動作",
+            "科幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "viu.com",
+                "url": "https://www.viu.com/ott/hk/zh/vod/3029227/"
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114051"
+            },
+            {
+                "region": "香港",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLuxqoToY7UcgM-eazdqnvvGvwYtCvKNcq"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114051"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfrTUtEoM7jlCdmtvJn67wHu"
+            }
+        ],
+        "external_ids": {
+            "mal": "62068",
+            "bangumi": "571555"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "庫茲馬唱歌的家",
+        "title_ja": "クジマ歌えば家ほろろ",
+        "aliases": [
+            "庫吉馬唱歌的家",
+            "庫茲馬唱歌的話家裡哆囉囉",
+            "Kujima Utaeba Ie Hororo",
+            "Kujima: Why Sing",
+            "When You Can Warble?",
+            "库兹马唱歌的话家里哆啰啰",
+            "库吉马唱歌的家"
+        ],
+        "summary": "某一天突然來到家裡的，是既非鳥也非人、來歷不明的「庫茲馬(クジマ)」。會說話。會唱歌。會鳴叫。時而帶來歡笑，時而惹人落淚。僅僅是待在那裡，它的存在，就悄悄改寫了家人相處的時光。這是一部由小小的「謎團」所編織而成，既虛幻又溫暖的家庭故事。",
+        "cover_image": "https://static.acgsecrets.hk/img/c9/c9600eab58fb61eb5f078f08b2706a65/e49f817bcb627f6baa68f7837bc8b6feb7a6a29aaaf711801db3d09dc2af1001.jpg",
+        "air_date_text": "4月9日起／每週四／22時30分4月9日起／每週四／22時30分",
+        "air_date": "2026-04-09",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "喜劇",
+            "超自然"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114012"
+            },
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtT-RBT2W6hEFJ1ACZp0_e0E"
+            },
+            {
+                "region": "台灣",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114012"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtT-RBT2W6hEFJ1ACZp0_e0E"
+            }
+        ],
+        "external_ids": {
+            "mal": "58832",
+            "bangumi": "493804"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "左撇子艾倫",
+        "title_ja": "左ききのエレン",
+        "aliases": [
+            "Hidarikiki no Eren",
+            "Eren the Southpaw",
+            "左撇子艾伦"
+        ],
+        "summary": "高中生涯已過半，正值每個人都開始認真思考未來出路的時候。為了成為設計師而立志考取美大的朝倉光一，某天被一幅粗暴地塗到美術館牆上的塗鴉深深震撼。繪製這幅畫的，是一位因某起事件而封印自身天賦的左撇子女高中生——山岸艾倫。不知不覺間，兩人透過「繪畫」互相認同，光一邁向設計師之路，艾倫則踏上畫家之途，然而——。",
+        "cover_image": "https://static.acgsecrets.hk/img/f7/f767402040b0ea4f62d6ba4e4bdb0940/b8ff85542646e65cdb8b279489604ab7a292021af7966ac1de07a0e60715d480.jpg",
+        "air_date_text": "4月7日起／每週二深夜／24時0分4月8日起／每週三凌晨／0時0分",
+        "air_date": "2026-04-07",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "戲劇"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114008"
+            },
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtRawn_hHrv7EON7yFWjEXev"
+            },
+            {
+                "region": "香港",
+                "platform": "myTV SUPER",
+                "url": "https://www.mytvsuper.com/tc/programme/erenthesouthpaw_146151/"
+            },
+            {
+                "region": "台灣",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114008"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtRawn_hHrv7EON7yFWjEXev"
+            }
+        ],
+        "external_ids": {
+            "mal": "53732",
+            "bangumi": "409468"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "殺手青春",
+        "title_ja": "キルアオ",
+        "aliases": [
+            "Kill Ao",
+            "Kill Blue",
+            "杀手青春"
+        ],
+        "summary": "大狼十三離過一次婚，還有個孩子，他是從小被組織撿回去養大的傳說級殺手。十三在某次出任務時被神秘的生物兵器刺中，因此變成了中學生的模樣，這樣的他將去上中學…內在是個大叔的中學生，學園暗殺者人生重來的喜劇開始了！",
+        "cover_image": "https://static.acgsecrets.hk/img/1d/1dcb5295f0b4aadec94e8f38b47d61ed/a98b6ff292c0af218684b2c85ba117da19a09bfe6aa1b0bdf29af76aa4f6d2a3.jpg",
+        "air_date_text": "4月11日起／每週六／23時0分4月11日起／每週六／23時0分",
+        "air_date": "2026-04-11",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "動作",
+            "喜劇"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114021"
+            },
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtQPT_yZ0va94-eCxOx8t1U2"
+            },
+            {
+                "region": "台灣",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114021"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtQPT_yZ0va94-eCxOx8t1U2"
+            }
+        ],
+        "external_ids": {
+            "mal": "62391",
+            "bangumi": "581284"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "轉生成自動販賣機的我今天也在迷宮徘徊 第3季",
+        "title_ja": "自動販売機に生まれ変わった俺は迷宮を彷徨う 3rd season",
+        "aliases": [
+            "Jidou Hanbaiki ni Umarekawatta Ore wa Meikyuu wo Samayou 3rd Season",
+            "Reborn as a Vending Machine",
+            "I Now Wander the Dungeon Season 3",
+            "转生成自动贩卖机的我今天也在迷宫徘徊 第3季"
+        ],
+        "summary": "其他名稱：Jidou Hanbaiki ni Umarekawatta Ore wa Meikyuu wo Samayou 3rd Season、Reborn as a Vending Machine, I Now Wander the Dungeon Season 3、转生成自动贩卖机的我今天也在迷宫徘徊 第3季",
+        "cover_image": "https://static.acgsecrets.hk/img/f6/f6c6d5ecbf586bc2886b16af9bcd85fe/2a159c5f36f684dc61c5dcf253646eebbfbcb07cae6f932978f177b10fa99aa1.jpg",
+        "air_date_text": "4月1日起／每週三／22時0分4月1日起／每週三／22時0分",
+        "air_date": "2026-04-01",
+        "tags": [
+            "小說改編",
+            "續作",
+            "喜劇",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Crunchyroll",
+                "url": "https://www.crunchyroll.com/series/GVDHX8504/"
+            },
+            {
+                "region": "台灣",
+                "platform": "Crunchyroll",
+                "url": "https://www.crunchyroll.com/series/GVDHX8504/"
+            }
+        ],
+        "external_ids": {
+            "mal": "62512",
+            "bangumi": "585790"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "楠木邸的神明庭院",
+        "title_ja": "神の庭付き楠木邸",
+        "aliases": [
+            "Kami no Niwatsuki Kusunoki-tei",
+            "Kusunoki's Garden of Gods"
+        ],
+        "summary": "楠木湊成了鄉下一座新建宅院的管理員。原本是座有惡靈寄宿其中、非常「不乾淨」的院落大宅，然而身懷超強驅除邪祟力量的楠木卻在不知不覺間將之消滅殆盡！徹底淨化過後的楠木邸變得萬分舒適宜居，諸多各有個性的神明紛紛為之而來！愛吃甜食的山神、還有毛茸茸的眷族、嗜酒的靈龜……待他察覺到的時候，宅院庭院竟已成了四季如春的神域！？甚至連現代陰陽師都會為了藉助楠木驅除邪祟的力量前來造訪……與山神鄰居們溫馨的山林樂居生活，才正要拉開序幕。",
+        "cover_image": "https://static.acgsecrets.hk/img/50/504fbecffbd72fc5572be3d1e9f2916b/0b926b44a4b32a294c3c14133f6476fda122e49778216f7f664cd6e757d5e664.jpg",
+        "air_date_text": "4月4日起／每週六深夜／25時30分4月5日起／每週日凌晨／1時30分",
+        "air_date": "2026-04-04",
+        "tags": [
+            "小說改編",
+            "新作",
+            "奇幻",
+            "日常"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114022"
+            },
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtRzMEcHGcw3EGiv_Zk2MyWu"
+            },
+            {
+                "region": "台灣",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114022"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtRzMEcHGcw3EGiv_Zk2MyWu"
+            }
+        ],
+        "external_ids": {
+            "mal": "62050",
+            "bangumi": "570584"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "日本三國",
+        "title_ja": "日本三國",
+        "aliases": [
+            "Nippon Sangoku",
+            "日本三国"
+        ],
+        "summary": "因核戰、天災及暴政引發革命，導致文明崩壞的近未來日本。國家一分為三，進入了爭奪霸權的三國時代。原本只是個不起眼地方官吏的三角青輝，立志「再統一日本」，憑其過人的辯才和博識，在亂世中嶄露頭角。這位日後被稱為奇才軍師的男人，其傳說就此拉開序幕——！",
+        "cover_image": "https://static.acgsecrets.hk/img/58/5865e4a8f833500f70e67e58d4fa92ca/c2c1d30b8856d8d7dc0d91a27b102089a8fc342278101f45ba81684280399e22.jpg",
+        "air_date_text": "電視台首播4月6日起／每週一深夜／24時0分4月7日起／每週二凌晨／0時0分串流平台首播4月5日起／每週日／21時0分4月5日起／每週日／21時0分",
+        "air_date": "2026-04-06",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "軍事"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Amazon Prime Video",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "Amazon Prime Video",
+                "url": null
+            }
+        ],
+        "external_ids": {
+            "mal": "155209",
+            "bangumi": "623851"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "我回來了，他又來打擾了！",
+        "title_ja": "ただいま、おじゃまされます！",
+        "aliases": [
+            "當前",
+            "正被打擾中！",
+            "Tadaima",
+            "Ojamasaremasu!",
+            "Pardon the Intrusion",
+            "I'm Home!",
+            "当前",
+            "正被打扰中！",
+            "我回来了",
+            "他又来打扰了！"
+        ],
+        "summary": "24歲的OL凛子是一個獨居的隱性御宅族。在忙碌日子的空檔裡，她總是靠著最最最喜歡的動畫和漫畫來治癒平日的疲憊。然而，每當她看動畫時，住在右邊單位的鄰居就會傳來猛烈的抗議「壁咚」聲！凛子想請住在左邊單位的清爽紳士・佐槻幫忙，試著隔著牆來與對方溝通，沒想到踢破牆壁現身的，竟然是凛子最喜歡的漫畫《うさねこ部》的原作者・ウサ春兔春老師！？不僅如此，本名右沙田的ウサ春老師，甚至還連佐槻房間的牆壁都給弄壞了……。",
+        "cover_image": "https://static.acgsecrets.hk/img/c7/c7ad1059cb1867b0a48c6be920b35891/0226692b57ff9cde40f51a9e106b8c9e872335fc3c47b942ab580eef8f064309.jpg",
+        "air_date_text": "4月7日起／每週二深夜／25時29分4月8日起／每週三凌晨／1時29分",
+        "air_date": "2026-04-07",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "喜劇",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "智寶",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114034"
+            },
+            {
+                "region": "香港",
+                "platform": "回歸線YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLoGVqODys23C2t5byRlXGYi3d0KQ7-54R"
+            },
+            {
+                "region": "台灣",
+                "platform": "智寶",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114034"
+            },
+            {
+                "region": "台灣",
+                "platform": "回歸線YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLoGVqODys23C2t5byRlXGYi3d0KQ7-54R"
+            }
+        ],
+        "external_ids": {
+            "mal": "63014",
+            "bangumi": "610703"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "木頭風紀委員和迷你裙JK的故事",
+        "title_ja": "ポンコツ風紀委員とスカート丈が不適切なJKの話",
+        "aliases": [
+            "一根筋的风纪委员与裙长不当的JK",
+            "Ponkotsu Fuuki Iin to Skirt-take ga Futekisetsu na JK no Hanashi",
+            "The Story Between a Dumb Prefect and a High School Girl with an Inappropriate Skirt Length",
+            "木头风纪委员和迷你裙JK的故事"
+        ],
+        "summary": "過度認真的風紀委員櫻大門每日的工作就是，負責開關校門與監督同學們的服裝儀容。而他每次都會特別警告的問題學生，就是頂著染過的頭髮，又穿著迷你裙的小日向。本來很討厭總是糾正自己的櫻大門的小日向，意外地發現櫻大門其實是個腦袋僵硬的可愛木頭。不只如此，這個學校的委員會成員們個個都問題很大？",
+        "cover_image": "https://static.acgsecrets.hk/img/42/42bcb57534d0561d4f1019f9047c6774/c08f9d0af78dfbeb2e0808ed19b2eccafdb0619bc984d31c449504894b4a0d85.jpg",
+        "air_date_text": "4月6日起／每週一／23時24分4月6日起／每週一／23時24分",
+        "air_date": "2026-04-06",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "喜劇",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Aniplus",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114005"
+            },
+            {
+                "region": "台灣",
+                "platform": "Aniplus",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114005"
+            }
+        ],
+        "external_ids": {
+            "mal": "61425",
+            "bangumi": "551123"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "加油! 中村同學!!",
+        "title_ja": "ガンバレ！中村くん！！",
+        "aliases": [
+            "加油吧！中村君！！",
+            "加油！中村同學！！",
+            "Ganbare! Nakamura-kun!!",
+            "Go For It",
+            "Nakamura!",
+            "加油! 中村同学!!",
+            "加油！中村同学！！"
+        ],
+        "summary": "內向的高中男生‧中村在入學典禮一眼愛上同班的廣瀨，鼓起勇氣示好卻常常失敗。上素描課，廣瀨當模特兒，中村把握機會使勁地觀察使勁地畫，然而隔壁女生川村畫得更美！於是自稱是川村的粉絲，把她畫的廣瀨素描畫要走了…有一次中村和廣瀨一起放學，廣瀨遇到不良少年，中村挺身相救…在校外教學的時候，兩人有了重大進展！？",
+        "cover_image": "https://static.acgsecrets.hk/img/8c/8cabd52d0ec6daa4887536dbda1616db/a34869f195f001e798ebe85f31f1cb771a7a3f70cfa9eb4580d3fbbc905a501a.jpg",
+        "air_date_text": "4月1日起／每週三深夜／24時30分4月2日起／每週四凌晨／0時30分",
+        "air_date": "2026-04-01",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "校園"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114010"
+            },
+            {
+                "region": "台灣",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114010"
+            }
+        ],
+        "external_ids": {
+            "mal": "59551",
+            "bangumi": "508455"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "MAO摩緒",
+        "title_ja": "MAO",
+        "aliases": [
+            "Mao",
+            "MAO摩绪"
+        ],
+        "summary": "七歲時，黃葉菜花被捲入一起意外事故，全家只有自己一個人倖存下來。升上中學三年級的她，再度回到事故現場，卻不知何故穿越到大正時代！為了解開自身的「謎團」，菜花決定和新結識的少年陰陽師‧摩緒，聯手展開行動──「命中註定」相遇的兩人，迎向「未知命運」的大正怪奇伏妖冒險，就此揭幕！",
+        "cover_image": "https://static.acgsecrets.hk/img/98/98048411ee25e8b5f509bbed4fd2705b/fd5166fb35f328d126a7f602b848b399b8049be5332cd3806d0f6bf66fbf6e46.jpg",
+        "air_date_text": "4月4日起／每週六／23時45分4月4日起／每週六／23時45分",
+        "air_date": "2026-04-04",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "2季度",
+            "神秘",
+            "超自然"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "愛奇藝",
+                "url": "https://www.iq.com/album/1gudun0kf0l"
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114024"
+            },
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtSCwgFDBvBpzvZp9oZwYDKA"
+            },
+            {
+                "region": "台灣",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "愛奇藝",
+                "url": "https://www.iq.com/album/1gudun0kf0l"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114024"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtSCwgFDBvBpzvZp9oZwYDKA"
+            }
+        ],
+        "external_ids": {
+            "mal": "62048",
+            "bangumi": "570448"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "入間同學入魔了！第四季",
+        "title_ja": "魔入りました！入間くん 第４シリーズ",
+        "aliases": [
+            "Mairimashita! Iruma-kun 4th Season",
+            "Welcome to Demon School! Iruma-kun Season 4",
+            "入间同学入魔了！第四季"
+        ],
+        "summary": "其他名稱：Mairimashita! Iruma-kun 4th Season、Welcome to Demon School! Iruma-kun Season 4、入间同学入魔了！第四季",
+        "cover_image": "https://static.acgsecrets.hk/img/b7/b7475fba6e82eabd2e463bd8a953fc92/b7af83bfff2fa9d0fffc9285748610194531d0a82fc25c61fbb47b3049577565.jpg",
+        "air_date_text": "4月4日起／每週六／18時25分4月4日起／每週六／18時25分",
+        "air_date": "2026-04-04",
+        "tags": [
+            "漫畫改編",
+            "續作",
+            "2季度(24集)",
+            "喜劇",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114041"
+            },
+            {
+                "region": "香港",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLuxqoToY7UcjQ6G1KGRYKUSRyTW5wa-tR"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114041"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfqN3eyl6PIwUzG-6OLz7wRK"
+            }
+        ],
+        "external_ids": {
+            "mal": "60310",
+            "bangumi": "524486"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "鑽石王牌 actⅡ第2季",
+        "title_ja": "ダイヤのA actII -Second Season-",
+        "aliases": [
+            "Diamond no Ace: Act II Second Season",
+            "Ace of Diamond Act II Season 2",
+            "钻石王牌 actⅡ第2季上一季是在2019年4月的年番動畫的新一季。",
+            "钻石王牌 actⅡ第2季"
+        ],
+        "summary": "其他名稱：Diamond no Ace: Act II Second Season、Ace of Diamond Act II Season 2、钻石王牌 actⅡ第2季上一季是在2019年4月的年番動畫的新一季。",
+        "cover_image": "https://static.acgsecrets.hk/img/d3/d32347cc58179f638482a1aad5a9d19c/e4ef4c25f6193ac62a9e4f6d47d2e73164040b154f07f3fd74020683a2042c23.jpg",
+        "air_date_text": "4月5日起／每週日／17時30分4月5日起／每週日／17時30分",
+        "air_date": "2026-04-05",
+        "tags": [
+            "漫畫改編",
+            "續作",
+            "校園",
+            "運動"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114047"
+            },
+            {
+                "region": "香港",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLuxqoToY7UchZ2QzsPQN831Kzq4Ck5mup"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114047"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfrEG6SwZldtQ0ji-61uhuOx"
+            }
+        ],
+        "external_ids": {
+            "mal": "58877",
+            "bangumi": "495238"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "Dr.STONE 新石紀 SCIENCE FUTURE 第3季度",
+        "title_ja": "Dr.STONE SCIENCE FUTURE 第3クール",
+        "aliases": [
+            "Dr.STONE SCIENCE FUTURE 最終シーズン第3クール",
+            "Dr. Stone: Science Future Part 3",
+            "石紀元 第4期 第3季度"
+        ],
+        "summary": "其他名稱：Dr.STONE SCIENCE FUTURE 最終シーズン第3クール、Dr. Stone: Science Future Part 3、石紀元 第4期 第3季度",
+        "cover_image": "https://static.acgsecrets.hk/img/ee/ee8cf2d231af21eae839f6a172cffcc7/60641349121370dd5d2e6e0ab1958a28b73c17029b960350978183669aa190da.jpg",
+        "air_date_text": "4月2日起／每週四／22時0分4月2日起／每週四／22時0分",
+        "air_date": "2026-04-02",
+        "tags": [
+            "漫畫改編",
+            "續作",
+            "冒險",
+            "喜劇"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=113701"
+            },
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtRH5DnE3OZ6Ov-_SNn73dOQ"
+            },
+            {
+                "region": "香港",
+                "platform": "Netflix",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=113701"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtRH5DnE3OZ6Ov-_SNn73dOQ"
+            },
+            {
+                "region": "台灣",
+                "platform": "Netflix",
+                "url": null
+            }
+        ],
+        "external_ids": {
+            "mal": "62568",
+            "bangumi": "508004"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "LIAR GAME",
+        "title_ja": "LIAR GAME",
+        "aliases": [
+            "LIAR GAME 詐欺遊戲",
+            "欺詐遊戲",
+            "Liar Game",
+            "欺诈游戏",
+            "LIAR GAME 诈欺游戏"
+        ],
+        "summary": "某天突然送到家裏的小郵包。郵包裡有一封寫着「恭喜妳。妳剛成功通過10萬分之1的機會，入選參與Liar Game Tournament。」的信，以及現金1億円。那就是Liar Game的開始。30日後當遊戲完結之前，要交還持有人所持有的1億円。遊戲規則只有這一項。成功奪取對手所持款項的勝利者就能夠得到1億円，敗者則要負擔1億円的債項…。應該要信任誰？絕對不能相信的又是誰… ？在巨款面前動搖，一語道破人類心理的問題作品！",
+        "cover_image": "https://static.acgsecrets.hk/img/be/bee68b84760b417a78b4e0cafce9d4a6/af569812148a94ab1af3bd3c8c0b538574fe18219d387fa5ba7be9eb656c0958.jpg",
+        "air_date_text": "4月6日起／每週一深夜／24時0分4月7日起／每週二凌晨／0時0分",
+        "air_date": "2026-04-06",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "2季度",
+            "戲劇"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Crunchyroll",
+                "url": "https://www.crunchyroll.com/series/GT00371851/"
+            },
+            {
+                "region": "台灣",
+                "platform": "Crunchyroll",
+                "url": "https://www.crunchyroll.com/series/GT00371851/"
+            }
+        ],
+        "external_ids": {
+            "mal": "62331",
+            "bangumi": "580133"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "神之水滴",
+        "title_ja": "神の雫",
+        "aliases": [
+            "神之雫",
+            "Kami no Shizuku",
+            "The Drops of God"
+        ],
+        "summary": "父親是超有名紅酒評論家神咲豊多香的神咲雫，在拿到父親遺書的時候發現父親在臨死前又認了一名年輕的天才紅酒評論家當養子，只要其中一人能猜中他生前收藏的十二瓶酒及所謂「神之雫」的紅酒，就可以繼承他這些珍藏品。",
+        "cover_image": "https://static.acgsecrets.hk/img/4b/4b660b3fe2bbe89e54f45977a2b71f7d/b732b4a86c59724f3c891cfe75a05dfd4c8b5a6104d86aa3cb4c057f211da384.jpg",
+        "air_date_text": "4月10日起／每週五／23時30分4月10日起／每週五／23時30分",
+        "air_date": "2026-04-10",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "2季度",
+            "戲劇",
+            "神秘"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "智寶",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114032"
+            },
+            {
+                "region": "香港",
+                "platform": "回歸線YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLoGVqODys23BdDdC5fMx3A0TzRwRMYavc"
+            },
+            {
+                "region": "台灣",
+                "platform": "智寶",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114032"
+            },
+            {
+                "region": "台灣",
+                "platform": "回歸線YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLoGVqODys23BdDdC5fMx3A0TzRwRMYavc"
+            }
+        ],
+        "external_ids": {
+            "mal": "62981",
+            "bangumi": "609175"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "願望的偶像公主",
+        "title_ja": "おねがいアイプリ",
+        "aliases": [
+            "Onegai AiPri",
+            "愿望的偶像公主"
+        ],
+        "summary": "其他名稱：Onegai AiPri、愿望的偶像公主",
+        "cover_image": "https://static.acgsecrets.hk/img/e6/e6cd952c91d48dd72c965e3adc4584fd/fa14a594b05c9e4765dbd00a11c39df0f797cc622cc302e8301429899fda19a7.jpg",
+        "air_date_text": "4月5日起／每週日／9時30分4月5日起／每週日／9時30分",
+        "air_date": "2026-04-05",
+        "tags": [
+            "原創作品",
+            "新作",
+            "音樂"
+        ],
+        "streams": [],
+        "external_ids": {
+            "mal": "63352",
+            "bangumi": "622634"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "Candy Caries",
+        "title_ja": "キャンディーカリエス",
+        "aliases": [],
+        "summary": "《天竺鼠車車》導演見里朝希新作。",
+        "cover_image": "https://static.acgsecrets.hk/img/bd/bd7c0d01e3ee60cef844fddf98183fa2/a1ec19e16feebfef9c28ecda4c2354b7eaee30f6010e6888f3766d66ae64a2f7.jpg",
+        "air_date_text": "4月15日起／每週三／23時56分4月15日起／每週三／23時56分",
+        "air_date": "2026-04-15",
+        "tags": [
+            "原創作品",
+            "新作",
+            "喜劇",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114052"
+            },
+            {
+                "region": "香港",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLuxqoToY7UchUEpjQsMY9Z37u_pOoUsut"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114052"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfpFQmaZaPEPUz8h-75z2oPJ"
+            }
+        ],
+        "external_ids": {
+            "mal": "63276",
+            "bangumi": "621449"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "小鯊鯊出門去 第2季",
+        "title_ja": "おでかけ子ザメ シーズン2",
+        "aliases": [
+            "Odekake Kozame 2nd Season",
+            "Little Shark's Outings Season 2",
+            "小鲨鲨出门去 第2季第一季在23年8月在網絡播出的兒童漫畫改編動畫第二季。",
+            "小鲨鲨出门去 第2季"
+        ],
+        "summary": "其他名稱：Odekake Kozame 2nd Season、Little Shark's Outings Season 2、小鲨鲨出门去 第2季第一季在23年8月在網絡播出的兒童漫畫改編動畫第二季。",
+        "cover_image": "https://static.acgsecrets.hk/img/12/12ade481075f1979382a2c6907129dfc/9e54dde436b1819c1bb0b4174870303426f73ba30d6ad68e951f98436ef8be93.jpg",
+        "air_date_text": "4月12日起／每週日／7時0分4月12日起／每週日／7時0分",
+        "air_date": "2026-04-12",
+        "tags": [
+            "漫畫改編",
+            "續作",
+            "日常"
+        ],
+        "streams": [],
+        "external_ids": {
+            "mal": "63125",
+            "bangumi": "616378"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "三年生阿貝 QQ小芝麻",
+        "title_ja": "小３アシベ QQゴマちゃん",
+        "aliases": [
+            "Shou 3 Ashibe QQ Goma-chan",
+            "三年生阿贝 QQ小芝麻"
+        ],
+        "summary": "其他名稱：Shou 3 Ashibe QQ Goma-chan、三年生阿贝 QQ小芝麻",
+        "cover_image": "https://static.acgsecrets.hk/img/46/46c4aae488c3ecaff0a7e327f2832391/91015e5807c984763902ba2dbcf451efed2192ded24d775c9bca4d959c02601d.jpg",
+        "air_date_text": "4月12日起／每週日／7時0分4月12日起／每週日／7時0分",
+        "air_date": "2026-04-12",
+        "tags": [
+            "漫畫改編",
+            "續作",
+            "喜劇"
+        ],
+        "streams": [],
+        "external_ids": {
+            "mal": "62933",
+            "bangumi": "607043"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "Kumarba 第3季",
+        "title_ja": "クマーバ シーズン3",
+        "aliases": [
+            "Kumarba Season 3"
+        ],
+        "summary": "其他名稱：Kumarba Season 3",
+        "cover_image": "https://static.acgsecrets.hk/img/e1/e1a31bdc1d430ea03f132c66af168f00/79b66c5f0ee73b0671da24974d4713a64ffe3f550c2d6b9bd73e33640dbfb314.jpg",
+        "air_date_text": "4月12日起／每週日／7時0分4月12日起／每週日／7時0分",
+        "air_date": "2026-04-12",
+        "tags": [
+            "原創作品",
+            "續作"
+        ],
+        "streams": [],
+        "external_ids": {
+            "bangumi": "532772"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "米之神！女孩們",
+        "title_ja": "こめかみっ！ Girl’s",
+        "aliases": [
+            "こめかみっ!ガールズ",
+            "Komekami!Girls",
+            "米之神！女孩们"
+        ],
+        "summary": "其他名稱：こめかみっ!ガールズ、Komekami!Girls、米之神！女孩们",
+        "cover_image": "https://static.acgsecrets.hk/img/ce/cefd8d120d55147cf414d237baf72c1a/7fd197a005c5468ffde3255395e0bac57a37ea8c82000533031771772a4a6f37.jpg",
+        "air_date_text": "4月2日起／每週四深夜／25時50分4月3日起／每週五凌晨／1時50分",
+        "air_date": "2026-04-02",
+        "tags": [
+            "原創作品",
+            "新作"
+        ],
+        "streams": [],
+        "external_ids": {
+            "bangumi": "282118"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "鼠小弟的小背心",
+        "title_ja": "ねずみくんのチョッキ",
+        "aliases": [
+            "Nezumi-kun no Chokki"
+        ],
+        "summary": "其他名稱：Nezumi-kun no Chokki",
+        "cover_image": "https://static.acgsecrets.hk/img/a2/a225e8f955aad6e4cc9c3b822db5b62f/018ee02c1b38669c4da9df59b19f587754a64181d9dad2147d75a3b15ec65e1d.jpg",
+        "air_date_text": "4月4日起／每週六／9時30分4月4日起／每週六／9時30分",
+        "air_date": "2026-04-04",
+        "tags": [
+            "漫畫改編",
+            "新作"
+        ],
+        "streams": [],
+        "external_ids": {
+            "mal": "62495",
+            "bangumi": "582598"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "鬆弛熊",
+        "title_ja": "リラックマ",
+        "aliases": [
+            "拉拉熊",
+            "輕鬆小熊",
+            "懶懶熊",
+            "輕鬆熊",
+            "Rilakkuma",
+            "轻松熊",
+            "懒懒熊",
+            "松弛熊",
+            "轻松小熊"
+        ],
+        "summary": "其他名稱：輕鬆小熊、懶懶熊、輕鬆熊、Rilakkuma、轻松熊、懒懒熊、松弛熊、轻松小熊",
+        "cover_image": "https://static.acgsecrets.hk/img/e4/e4c524db716087fdb55b6581297da8a2/f930eafef606dd1ed7c07d126ef235c754d309574763f357ddef5d695fe29d8d.jpg",
+        "air_date_text": "4月4日起／每週六／9時25分4月4日起／每週六／9時25分",
+        "air_date": "2026-04-04",
+        "tags": [
+            "改編作品",
+            "新作",
+            "日常"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114053"
+            },
+            {
+                "region": "香港",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLuxqoToY7Ucgn83TzRdR98rUJAhvuHPvl"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114053"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfrv1a0ONSsJd8hM-_HElQf5"
+            }
+        ],
+        "external_ids": {
+            "mal": "60153",
+            "bangumi": "520633"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "淫獄團地",
+        "title_ja": "インゴクダンチ",
+        "aliases": [
+            "淫獄小區",
+            "淫獄住宅區",
+            "Ingoku Danchi",
+            "Perverts' Apartment Complex",
+            "淫狱团地",
+            "YY小区",
+            "淫狱小区",
+            "淫狱住宅区"
+        ],
+        "summary": "從變態人妻的威脅中守護住宅區的和平吧，新人管理員ヨシダ！",
+        "cover_image": "https://static.acgsecrets.hk/img/22/22ef17a0f3bd8a0eafbecc85152c0507/4800fe225a18d3a845e94af6c08869031c1ad5b81fb45437e7e1eb4bda0ce02d.jpg",
+        "air_date_text": "4月5日起／每週日深夜／25時10分4月6日起／每週一凌晨／1時10分",
+        "air_date": "2026-04-05",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "喜劇",
+            "家長指引",
+            "超自然"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "智寶",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114035"
+            },
+            {
+                "region": "台灣",
+                "platform": "智寶",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114035"
+            }
+        ],
+        "external_ids": {
+            "mal": "63310",
+            "bangumi": "621602"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "這樣高大的女孩子你喜歡嗎？",
+        "title_ja": "大きい女の子は好きですか？",
+        "aliases": [
+            "Ookii Onnanoko wa Suki desu ka?",
+            "Do You Like Big Girls?",
+            "这样高大的女孩子你喜欢吗？本季僧侶檔。",
+            "这样高大的女孩子你喜欢吗？"
+        ],
+        "summary": "其他名稱：Ookii Onnanoko wa Suki desu ka?、Do You Like Big Girls?、这样高大的女孩子你喜欢吗？本季僧侶檔。",
+        "cover_image": "https://static.acgsecrets.hk/img/91/91ff568655471fb4871282cbdcb91226/7319f09b5b3273d06e20c8283ebfe488a072d3a2030c70482e6cedd8be8ba006.jpg",
+        "air_date_text": "電視台首播4月5日起／每週日深夜／25時5分4月6日起／每週一凌晨／1時5分串流平台首播3月13日／週五／17時0分3月13日／週五／17時0分4月12日起／每週日深夜／25時5分4月13日起／每週一凌晨／1時5分",
+        "air_date": "2026-04-05",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "家長指引",
+            "運動"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "OceanVeil",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "OceanVeil",
+                "url": null
+            }
+        ],
+        "external_ids": {
+            "mal": "63248",
+            "bangumi": "616453"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "茉莉花醬的好感度正在崩壞",
+        "title_ja": "茉莉花ちゃんの好感度はぶっ壊れている",
+        "aliases": [
+            "茉莉花同學的好感度壞得很徹底",
+            "Marika-chan no Koukando wa Bukkowareteiru",
+            "Marika's Love Meter Malfunction",
+            "茉莉花酱的好感度正在崩坏本季僧侶檔其二。",
+            "茉莉花酱的好感度正在崩坏"
+        ],
+        "summary": "其他名稱：茉莉花同學的好感度壞得很徹底、Marika-chan no Koukando wa Bukkowareteiru、Marika's Love Meter Malfunction、茉莉花酱的好感度正在崩坏本季僧侶檔其二。",
+        "cover_image": "https://static.acgsecrets.hk/img/d5/d50f883162a56e3ee36922ee5ee51e5a/82532828505b6685eea7310c678b579ff2063ac5c8cb1dfc415b813296ba0218.jpg",
+        "air_date_text": "4月5日起／每週日深夜／25時0分4月6日起／每週一凌晨／1時0分",
+        "air_date": "2026-04-05",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "喜劇",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Aniplus",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114031"
+            },
+            {
+                "region": "台灣",
+                "platform": "Aniplus",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=114031"
+            }
+        ],
+        "external_ids": {
+            "mal": "62983",
+            "bangumi": "609183"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "勇者之渣",
+        "title_ja": "勇者のクズ",
+        "aliases": [
+            "勇者人渣",
+            "勇者的廢棄物",
+            "Yuusha no Kuzu",
+            "Scum of the Brave",
+            "勇者的废弃物"
+        ],
+        "summary": "「所謂勇者，不過是最下賤的人渣才會做的行當。」21世紀中葉，東京的黑社會被那些透過以太（魔力）強化手術化身為《魔王》的黑幫所支配。負責打倒這些魔王的賞金獵人——那正是《勇者》！勇者以名為《Ｅ３》（イースリー）的藥劑強化以太能力，對抗魔王。這類殺傷行為被合法化，勇者可說成了名副其實的「殺人」職業。此時，一名自稱「弟子」的少女強行找上了自由身勇者《死神》矢代。她是勇者見習生的女高中生・城ヶ峰。ヤシロ無奈收下她，卻一步步被捲入一樁又一樁的爛事！人渣「師父」與自稱「弟子」——超重量級現代異能動作劇，就此揭開序幕！",
+        "cover_image": "https://static.acgsecrets.hk/img/a0/a08f067c2e761f7698365e91cddc84e7/3839dc6ea425a1639174ddacc68265781afc45bfc3af622cb982e96bb229949b.jpg",
+        "air_date_text": "每週六深夜／24時55分每週日凌晨／0時55分",
+        "air_date": null,
+        "tags": [
+            "小說改編",
+            "新作",
+            "2季度",
+            "動作",
+            "科幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=113944"
+            },
+            {
+                "region": "香港",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLuxqoToY7Uchjr_oNe9Vn-LZXA-uhxTgo"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeRef.php?sn=113944"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfoCw9upcroz0eSEuTHb91P8"
+            }
+        ],
+        "external_ids": {
+            "mal": "61217",
+            "bangumi": "544372"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "元祖！BanG Dream醬",
+        "title_ja": "元祖！バンドリちゃん",
+        "aliases": [
+            "Ganzo! Bandori-chan",
+            "BanG Dream-chan",
+            "元祖！BanG Dream酱"
+        ],
+        "summary": "其他名稱：Ganzo! Bandori-chan、BanG Dream-chan、元祖！BanG Dream酱",
+        "cover_image": "https://static.acgsecrets.hk/img/4a/4a9c174a6dc3e8b4379a1c7df1da1b14/43c291084561073b6d61d8193e39c11f3c83aceb98c5ebd862d8f07cc1397791.jpg",
+        "air_date_text": "每週四／23時25分每週四／23時25分每週四／22時0分每週四／22時0分",
+        "air_date": null,
+        "tags": [
+            "改編作品",
+            "新作",
+            "4季度",
+            "音樂"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "YouTube",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "YouTube",
+                "url": null
+            },
+            {
+                "region": "中國大陸",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/video/BV1xGHHzgEMY/"
+            }
+        ],
+        "external_ids": {
+            "mal": "61107",
+            "bangumi": "540449"
+        }
+    },
+    {
+        "season": "202604",
+        "season_year": 2026,
+        "season_code": "spring",
+        "title_zh": "DIGIMON BEATBREAK",
+        "title_ja": "DIGIMON BEATBREAK",
+        "aliases": [
+            "數碼寶貝BEATBREAK",
+            "數碼暴龍BEATBREAK",
+            "Digimon Beatbreak",
+            "数码宝贝BEATBREAK",
+            "数码暴龙BEATBREAK"
+        ],
+        "summary": "由人類的思考與情感所產生的「e-パルス」，被用作AI輔助裝置「サポタマ」的能量來源。在其飛躍發展的背後，可怕的怪物現身——吞噬「e-パルス」而進化的生命體「DIGIMON」。天馬トモロウ因與自「サポタマ」中突然現身的「ゲッコーモン」相遇，而被捲入非日常的世界。在與以賞金獵人為業的團隊「ゴールデンドーン」的沢城キョウ等人共同生活的日子裡，トモロウ重新立下了決心。人類與DIGIMON所描繪的嶄新未來，究竟會是——",
+        "cover_image": "https://static.acgsecrets.hk/img/46/461be70abb9a47bed4f18bd6f7c281c5/d5f674c015c47e7eacd87e7adf9c4b411a0507c058d72c5cc473f39511d42939.jpg",
+        "air_date_text": "每週日／9時0分每週日／9時0分",
+        "air_date": null,
+        "tags": [
+            "遊戲改編",
+            "新作",
+            "4季度",
+            "動作",
+            "冒險",
+            "喜劇",
+            "奇幻"
+        ],
+        "streams": [],
+        "external_ids": {
+            "mal": "61269",
+            "bangumi": "545499"
+        }
+    }
+]

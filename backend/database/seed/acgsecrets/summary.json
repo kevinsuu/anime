@@ -1,0 +1,12 @@
+{
+    "generated_at": "2026-06-30T13:12:14+00:00",
+    "seasons": {
+        "202604": {
+            "count": 71,
+            "missing_title_zh": 0,
+            "missing_summary": 0,
+            "missing_cover": 0
+        }
+    },
+    "failed": []
+}
