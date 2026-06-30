@@ -1,0 +1,90 @@
+<h2>單張作品卡片要顯示什麼資訊？</h2>
+<p class="subtitle">星期分頁下的網格，每一格代表一部動畫，這格要放多少資訊</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>純封面（極簡，類似 acgsecrets 圖卡）</h3>
+      <p>只有封面圖 + hover/點擊才顯示片名。最大化視覺瀏覽速度，類似海報牆逛圖的感覺。</p>
+      <div class="mockup">
+        <div class="mockup-body">
+          <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:6px;">
+            <div class="placeholder" style="aspect-ratio:3/4;"></div>
+            <div class="placeholder" style="aspect-ratio:3/4;"></div>
+            <div class="placeholder" style="aspect-ratio:3/4;"></div>
+            <div class="placeholder" style="aspect-ratio:3/4;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>封面 + 片名 + 時間（目前 guide-card 的精簡版）</h3>
+      <p>封面下方/疊加片名與首播時間，加一個小角標表示「已加入清單／已看」狀態。保留你現有的疊字設計，但縮小尺寸提高密度。</p>
+      <div class="mockup">
+        <div class="mockup-body">
+          <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:6px;">
+            <div style="position:relative;">
+              <div class="placeholder" style="aspect-ratio:3/4;"></div>
+              <div style="position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,.6); padding:3px; font-size:9px;">作品名稱</div>
+              <div style="position:absolute; top:2px; right:2px; background:#facc15; color:#000; font-size:8px; padding:1px 3px; border-radius:3px;">23:00</div>
+            </div>
+            <div style="position:relative;">
+              <div class="placeholder" style="aspect-ratio:3/4;"></div>
+              <div style="position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,.6); padding:3px; font-size:9px;">作品名稱</div>
+            </div>
+            <div style="position:relative;">
+              <div class="placeholder" style="aspect-ratio:3/4;"></div>
+              <div style="position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,.6); padding:3px; font-size:9px;">作品名稱</div>
+            </div>
+            <div style="position:relative;">
+              <div class="placeholder" style="aspect-ratio:3/4;"></div>
+              <div style="position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,.6); padding:3px; font-size:9px;">作品名稱</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>封面 + 完整資訊條（片名/集數/分類/加入按鈕都在卡片內）</h3>
+      <p>每格資訊最完整：封面、片名、集數、分類標籤、加入清單按鈕都顯示在卡片內，不用點進去就能操作。卡片會比較高，同畫面顯示數量較少。</p>
+      <div class="mockup">
+        <div class="mockup-body">
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px;">
+            <div class="placeholder" style="padding:4px;">
+              <div style="aspect-ratio:3/4; background:#555; margin-bottom:4px;"></div>
+              <div style="font-size:9px;">作品名稱</div>
+              <div style="font-size:8px; color:#999;">12集 · 奇幻</div>
+              <button class="mock-button" style="font-size:8px; padding:2px 4px; margin-top:3px; width:100%;">加入</button>
+            </div>
+            <div class="placeholder" style="padding:4px;">
+              <div style="aspect-ratio:3/4; background:#555; margin-bottom:4px;"></div>
+              <div style="font-size:9px;">作品名稱</div>
+              <div style="font-size:8px; color:#999;">24集 · 戀愛</div>
+              <button class="mock-button" style="font-size:8px; padding:2px 4px; margin-top:3px; width:100%;">加入</button>
+            </div>
+            <div class="placeholder" style="padding:4px;">
+              <div style="aspect-ratio:3/4; background:#555; margin-bottom:4px;"></div>
+              <div style="font-size:9px;">作品名稱</div>
+              <div style="font-size:8px; color:#999;">13集 · 動作</div>
+              <button class="mock-button" style="font-size:8px; padding:2px 4px; margin-top:3px; width:100%;">加入</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <p class="label">提示</p>
+  <p>B 是密度與資訊量的平衡點，跟你選的「星期 Tab + 小封面網格」骨架最搭。C 比較像現在 catalog 頁的 AnimeCard，資訊完整但佔位較大。</p>
+</div>

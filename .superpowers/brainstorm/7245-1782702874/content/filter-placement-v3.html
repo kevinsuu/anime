@@ -1,0 +1,59 @@
+<h2>確認 v3：星期 Tab 獨立一行，篩選按鈕在下一行右側</h2>
+<p class="subtitle">一～日 Tab 列自己佔滿一整行，篩選按鈕另起一行，靠右對齊</p>
+
+<div class="mockup">
+  <div class="mockup-header">Desktop 寬螢幕</div>
+  <div class="mockup-body">
+    <div style="display:flex; gap:4px; border-bottom:1px solid #444; padding-bottom:8px;">
+      <span class="placeholder" style="padding:5px 14px; font-size:11px;">一</span>
+      <span class="placeholder" style="padding:5px 14px; font-size:11px; background:#4a5568;">二</span>
+      <span class="placeholder" style="padding:5px 14px; font-size:11px;">三</span>
+      <span class="placeholder" style="padding:5px 14px; font-size:11px;">四</span>
+      <span class="placeholder" style="padding:5px 14px; font-size:11px;">五</span>
+      <span class="placeholder" style="padding:5px 14px; font-size:11px;">六</span>
+      <span class="placeholder" style="padding:5px 14px; font-size:11px;">日</span>
+    </div>
+    <div style="display:flex; justify-content:flex-end; margin-top:6px;">
+      <button class="mock-button" style="font-size:11px; padding:5px 10px;">⚙ 篩選 (2)</button>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(6,1fr); gap:6px; margin-top:8px;">
+      <div class="placeholder" style="height:60px;"></div><div class="placeholder" style="height:60px;"></div><div class="placeholder" style="height:60px;"></div><div class="placeholder" style="height:60px;"></div><div class="placeholder" style="height:60px;"></div><div class="placeholder" style="height:60px;"></div>
+    </div>
+  </div>
+</div>
+
+<div class="mockup" style="margin-top:16px;">
+  <div class="mockup-header">Mobile 窄螢幕（一～日可橫向滑動，篩選按鈕在下一行右側）</div>
+  <div class="mockup-body" style="max-width:340px;">
+    <div style="display:flex; gap:4px; overflow-x:auto; border-bottom:1px solid #444; padding-bottom:8px;">
+      <span class="placeholder" style="padding:4px 10px; font-size:10px; white-space:nowrap;">一</span>
+      <span class="placeholder" style="padding:4px 10px; font-size:10px; white-space:nowrap; background:#4a5568;">二</span>
+      <span class="placeholder" style="padding:4px 10px; font-size:10px; white-space:nowrap;">三</span>
+      <span class="placeholder" style="padding:4px 10px; font-size:10px; white-space:nowrap;">四</span>
+      <span class="placeholder" style="padding:4px 10px; font-size:10px; white-space:nowrap;">五</span>
+      <span class="placeholder" style="padding:4px 10px; font-size:10px; white-space:nowrap;">六</span>
+      <span class="placeholder" style="padding:4px 10px; font-size:10px; white-space:nowrap;">日</span>
+    </div>
+    <div style="display:flex; justify-content:flex-end; margin-top:6px;">
+      <button class="mock-button" style="font-size:10px; padding:4px 8px;">⚙ 篩選 (2)</button>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:5px; margin-top:8px;">
+      <div class="placeholder" style="height:55px;"></div><div class="placeholder" style="height:55px;"></div><div class="placeholder" style="height:55px;"></div>
+    </div>
+  </div>
+</div>
+
+<div class="options" style="margin-top:20px;">
+  <div class="option" data-choice="confirm" onclick="toggleSelect(this)">
+    <div class="letter">✓</div>
+    <div class="content">
+      <h3>對了，這個方向</h3>
+    </div>
+  </div>
+  <div class="option" data-choice="adjust" onclick="toggleSelect(this)">
+    <div class="letter">✗</div>
+    <div class="content">
+      <h3>還要調整</h3>
+    </div>
+  </div>
+</div>

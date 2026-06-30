@@ -2,11 +2,13 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** 把 `frontend/` 從 Vue 3 + Vite SPA 整套改寫為 Nuxt 3 + Nuxt UI 專案，並把新番表／資料庫搜尋／我的清單三個頁面改成密度更高的論壇風格版面（參考 acgsecrets.hk），同時保留現有的所有功能行為（登入、清單操作、新番同步等）與後端 API 完全不變。
+**Goal:** 把 `frontend/` 從 Vue 3 + Vite SPA 整套改寫為 Nuxt 4 + Nuxt UI 專案，並把新番表／資料庫搜尋／我的清單三個頁面改成密度更高的論壇風格版面（參考 acgsecrets.hk），同時保留現有的所有功能行為（登入、清單操作、新番同步等）與後端 API 完全不變。
 
-**Architecture:** Nuxt 3 在 SPA 模式（`ssr: false`）下運作，維持「純前端靜態檔案部署到 GitHub Pages、呼叫獨立部署的 Laravel API」的架構。檔案式路由（`app/pages/`）取代手寫 hash router。`@nuxt/ui` 提供元件與 Tailwind 樣式，取代手寫 CSS。既有的 API client、normalize 邏輯、session 管理原樣搬遷到 Nuxt composables/utils，行為不變。
+**Architecture:** Nuxt 4 在 SPA 模式（`ssr: false`）下運作，維持「純前端靜態檔案部署到 GitHub Pages、呼叫獨立部署的 Laravel API」的架構。檔案式路由（`app/pages/`）取代手寫 hash router。`@nuxt/ui` 提供元件與 Tailwind 樣式，取代手寫 CSS。既有的 API client、normalize 邏輯、session 管理原樣搬遷到 Nuxt composables/utils，行為不變。
 
-**Tech Stack:** Nuxt 3.x（SPA 模式）、@nuxt/ui（含 Tailwind CSS、lucide icon）、Vue 3、Node.js 20+、Vitest（取代 node:test 做元件測試，因為 Nuxt 元件需要 Vue Test Utils 編譯）。
+**Tech Stack:** Nuxt 4.x（SPA 模式）、@nuxt/ui v4（含 Tailwind CSS、lucide icon）、Vue 3、Node.js **22+**（Nuxt 4 工具鏈的 engine 要求，比原計畫假設的 Node 20 更新；本機與 Docker 都需要升級，見 Task 11）、Vitest（取代 node:test 做元件測試，因為 Nuxt 元件需要 Vue Test Utils 編譯）。
+
+> **版本修正記錄（執行 Task 1 後）：** 原計畫假設 Nuxt 3.x，但 `npx nuxi@latest init` 目前（截至執行時）已不再提供 Nuxt 3 template，預設產生 Nuxt 4.4.8。決定跟隨現況改用 Nuxt 4，並將 Node 版本需求由 20+ 提升到 22+。下方所有任務中提及 "Nuxt 3" 的描述性文字，實作時請理解為 Nuxt 4 — API 與檔案結構（`app/pages/`、`app/composables/`、`definePageMeta` 等）相容，差異主要在 `vue-router` 升級到 v5 與 engine 要求。
 
 ---
 
@@ -2092,7 +2094,7 @@ Read 目前的 `docker-compose.yml`，用 Edit 把 frontend service 區塊改為
 
 ```yaml
   frontend:
-    image: node:20-alpine
+    image: node:22-alpine
     working_dir: /app
     command: sh -c "npm install && npm run dev"
     environment:
@@ -2110,7 +2112,7 @@ Read 目前的 `docker-compose.yml`，用 Edit 把 frontend service 區塊改為
       - backend
 ```
 
-注意：只改了 port 從 `5173:5173` 變成 `3000:3000`（Nuxt 預設 port），環境變數前綴從 `VITE_` 改成 `NUXT_PUBLIC_`，其他部分不變。
+注意：image 從 `node:20-alpine` 改成 `node:22-alpine`（Nuxt 4 工具鏈要求 Node 22+），port 從 `5173:5173` 變成 `3000:3000`（Nuxt 預設 port），環境變數前綴從 `VITE_` 改成 `NUXT_PUBLIC_`，其他部分不變。
 
 - [ ] **Step 4: 刪除不再需要的 index.html 與 vite.config.js**
 

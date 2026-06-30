@@ -1,0 +1,71 @@
+<h2>篩選功能放哪裡？</h2>
+<p class="subtitle">選了「頂部星期 Tab + 小封面網格」，現在的分類/狀態/我的觀看篩選要怎麼收納</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>頂部 Tab 下方加一條篩選 Bar（常駐顯示）</h3>
+      <p>星期 Tab 下方緊接著一條橫向篩選列：分類 chips（奇幻/戀愛/校園...）+ 狀態 chips（已看/待補/已加入）。永遠可見，不用點開。手機版可橫向滑動。</p>
+      <div class="mockup">
+        <div class="mockup-body">
+          <div class="mock-nav" style="font-size:11px;">一 | 二 | 三 | 四 | 五 | 六 | 日</div>
+          <div style="display:flex; gap:4px; margin-top:6px; overflow-x:auto;">
+            <span class="placeholder" style="padding:3px 8px; font-size:10px; white-space:nowrap;">全部</span>
+            <span class="placeholder" style="padding:3px 8px; font-size:10px; white-space:nowrap;">奇幻</span>
+            <span class="placeholder" style="padding:3px 8px; font-size:10px; white-space:nowrap;">戀愛</span>
+            <span class="placeholder" style="padding:3px 8px; font-size:10px; white-space:nowrap;">已加入</span>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(6,1fr); gap:6px; margin-top:8px;">
+            <div class="placeholder" style="height:50px;"></div><div class="placeholder" style="height:50px;"></div><div class="placeholder" style="height:50px;"></div><div class="placeholder" style="height:50px;"></div><div class="placeholder" style="height:50px;"></div><div class="placeholder" style="height:50px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>右上「篩選」按鈕，點開側拉面板（Drawer）</h3>
+      <p>畫面保持乾淨，星期 Tab 旁邊一個「篩選」按鈕 + 已套用篩選數量徽章。點下去從右側滑出一個面板，裡面是年份/季度/分類/狀態。手機與桌機行為一致，不佔用版面空間。</p>
+      <div class="mockup">
+        <div class="mockup-body">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div class="mock-nav" style="font-size:11px; margin:0;">一 | 二 | 三 | 四 | 五 | 六 | 日</div>
+            <button class="mock-button" style="font-size:10px; padding:4px 8px;">篩選 (2)</button>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(6,1fr); gap:6px; margin-top:8px;">
+            <div class="placeholder" style="height:50px;"></div><div class="placeholder" style="height:50px;"></div><div class="placeholder" style="height:50px;"></div><div class="placeholder" style="height:50px;"></div><div class="placeholder" style="height:50px;"></div><div class="placeholder" style="height:50px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>保留左側窄欄（桌機常駐，手機收進 Drawer）</h3>
+      <p>桌機維持一個左側細長篩選欄（年份/季度/分類/狀態都在），不需要點開。手機螢幕窄，自動切換成可滑出的 Drawer。等於 A 方案 + B 方案的混合，依裝置切換。</p>
+      <div class="mockup">
+        <div class="mockup-body">
+          <div style="display:flex; gap:8px;">
+            <div class="mock-sidebar" style="width:90px; font-size:10px;">年度<br>季度<br>分類<br>狀態</div>
+            <div style="flex:1;">
+              <div class="mock-nav" style="font-size:11px;">一 | 二 | 三 | 四 | 五</div>
+              <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:6px;">
+                <div class="placeholder" style="height:50px;"></div><div class="placeholder" style="height:50px;"></div><div class="placeholder" style="height:50px;"></div><div class="placeholder" style="height:50px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <p class="label">提示</p>
+  <p>B 方案最符合「乾淨、密度高」的論壇風格目標；C 方案在桌機上更接近原本 acgsecrets 的常駐篩選體驗，但手機/桌機要寫兩套邏輯。</p>
+</div>
