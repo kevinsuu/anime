@@ -5,24 +5,34 @@
 
 ## 目標
 
-從 [acgsecrets.hk](https://acgsecrets.hk/bangumi/list/) 爬取歷年(2016 Q1 ~ 2025 Q4,約 40 季、~2800 部)新番資料,建檔進現有 Laravel 後端,並每週自動同步最新季度,保持資料即時。
+從 [acgsecrets.hk](https://acgsecrets.hk/bangumi/list/) 爬取歷年(2016 Q1 ~ 2025 Q4,約 40 季、~2800 部)新番資料,**以 JSON 實體檔案落地保存為資料來源真相(source of truth)**,並每週自動同步最新季度,保持資料即時。
 
 資料來源選定 acgsecrets 的理由:它提供**原生繁體中文**的片名與故事大綱(含台譯標註)、封面圖、播放日期/時段、台港串流平台、以及外部資料庫 ID(MAL / Bangumi),品質明顯優於需要簡轉繁的 Bangumi API 或無中文的 AniList / Jikan。
 
 非營利、個人使用前提下,以遵守爬蟲禮節(降速、自訂 User-Agent、尊重 robots.txt、僅每週抓最新季)為原則。
 
+### 核心策略:JSON 為真相,爬蟲與匯入解耦
+
+爬蟲只負責**產生 / 更新 JSON 檔**;DB 匯入則**完全只讀 JSON**,不直接連 acgsecrets。兩者解耦帶來:
+
+- 歷史只需爬一次,JSON 檔進 git 版控長期保留。
+- **上線後直接 clone 倉庫從 JSON 倒入,無需再連 acgsecrets**。
+- DB 可隨時由 JSON 一鍵重建,不依賴外部網站存活。
+- 每週更新只抓最新季 → 更新該季 JSON → 倒入,**不重爬歷史**。
+
 ## 範圍
 
 ### 本次要做
 1. 重構:移除既有 Bangumi 簡轉繁爬取系統,並清空既有資料庫資料重建。
-2. 階段一:Scraper + Parser,輸出 JSON 供人工驗證資料品質。
-3. 階段二:Importer,將 JSON upsert 進既有資料表(新增一張串流平台表)。
-4. 每週排程同步(當季 + 上一季)。
+2. 階段一:Scraper + Parser,輸出 JSON 實體檔(進 git 版控),供人工驗證資料品質。
+3. 階段二:Importer,**只讀 JSON** upsert 進既有資料表(新增一張串流平台表)。
+4. 每週排程同步(當季 + 上一季):更新該季 JSON 後倒入。
+5. 前端串接:既有 `seasonal.vue` / `catalog.vue` 改吃新資料,顯示串流平台/別名/標籤等新欄位;移除舊的手動 sync 按鈕。
 
 ### 不在範圍
 - 下載/重製封面圖檔(本設計只儲存圖片 URL;是否落地存圖為日後決定)。
-- 前端展示變更。
 - 公開上線時的大綱版權處理(僅在文件記錄注意事項)。
+- 前端版面重新設計(僅在既有頁面結構上接資料 + 新欄位呈現)。
 
 ## 重構:移除既有 Bangumi 系統
 
@@ -115,15 +125,30 @@
   - `anime_external_ids`:mal / bangumi(含 url、last_synced_at、payload_hash)。
   - `anime_streams`(新表):region、platform、url。
 
-### 4. Command `anime:sync-acgsecrets`
-- `--all`:抓索引全部季度(全量回補)。
-- 無參數:只抓當季 + 上一季(`SeasonResolver::current` 推算)。
-- `--json-only`:只輸出 JSON 到 `storage/app/scrape/`,不寫 DB(階段一驗證用)。
-- `--season=YYYYMM`:指定單季(除錯/重跑用)。
-- 每季產出統計,全部跑完輸出 `summary.json`(各季筆數、各欄位缺漏率、失敗季清單)。
+### 4. JSON 檔案儲存(資料來源真相)
+- 位置:`backend/database/seed/acgsecrets/`(進 git 版控,非 `storage/`)。
+- 每季一檔 `YYYYMM.json`(含該季所有 AnimeRecord),外加 `summary.json`(各季筆數、各欄位缺漏率、失敗季清單)。
+- 由爬蟲 command 產生 / 更新;匯入 command 只讀此目錄。
 
-### 5. 排程
-- 在 `routes/console.php` 註冊 `Schedule::command('anime:sync-acgsecrets')->weeklyOn(1, '05:00')`(每週一 05:00)。
+### 5. Command(兩個,職責分離)
+
+**`anime:scrape-acgsecrets`(連外網,產生 JSON)**
+- `--all`:抓索引全部季度,寫入全部 `YYYYMM.json`(全量回補,執行一次)。
+- 無參數:只抓當季 + 上一季(`SeasonResolver::current` 推算),更新對應 JSON(每週用)。
+- `--season=YYYYMM`:指定單季(除錯 / 重跑)。
+- 輸出 / 更新 `summary.json`。
+
+**`anime:import-acgsecrets`(不連外網,JSON → DB)**
+- 讀 `database/seed/acgsecrets/*.json`,upsert 進資料表。
+- `--fresh`:匯入前先清空 anime 相關表(全面重建用)。
+- 上線部署時只跑這個,不需連 acgsecrets。
+
+### 6. 排程
+- 在 `routes/console.php` 註冊每週一 05:00:先 `anime:scrape-acgsecrets`(更新最新季 JSON),再 `anime:import-acgsecrets`(倒入 DB)。
+  ```php
+  Schedule::command('anime:scrape-acgsecrets')->weeklyOn(1, '05:00')
+      ->then(fn () => Artisan::call('anime:import-acgsecrets'));
+  ```
 
 ## 資料結構(JSON / AnimeRecord)
 
@@ -168,6 +193,30 @@ Schema::create('anime_streams', function (Blueprint $table): void {
 
 對應新增 `App\Models\AnimeStream` 與 `Anime::streams()` 關聯。
 
+## 前端串接
+
+既有前端已具備所需骨架,串接以「沿用現有 API 合約 + 補新欄位」為原則,不重做版面。
+
+### API 回應擴充
+`GET /anime`(`AnimeController::index`)目前回傳 anime 基本欄位。擴充為 eager-load 並回傳:
+- `streams`:`[{region, platform, url}]`(來自 `anime_streams`)
+- `aliases`:`[string]`(來自 `anime_aliases`)
+- `titles`:`[{locale, title, is_primary}]`(來自 `anime_titles`,供顯示日文原名)
+保持既有 `items` 陣列結構與既有欄位不變,只新增欄位 → 不破壞既有前端。
+
+### 後端移除
+- `AnimeController::syncSeasonal()` 與 `POST /anime/sync-seasonal` 路由移除(資料改由 JSON 預先匯入,使用者不再手動觸發爬取)。
+
+### 前端調整
+- `frontend/app/composables/useApi.ts`:移除 `syncSeasonalAnime`。
+- `frontend/app/utils/normalize.ts`:`Anime` interface 與 `normalizeAnime` 新增 `streams` / `aliases` / `titleJa` 欄位。
+- `frontend/app/pages/seasonal.vue`:移除「同步」按鈕與 `syncSeasonal()` / `syncResult` 相關狀態;在卡片呈現串流平台連結(台港可看平台)與日文原名。
+- `frontend/app/pages/catalog.vue`:卡片同步顯示新欄位(串流/別名)。
+- 既有 `loadSeasonal()` 走 `searchAnime('', {year, season})` 的流程不變。
+
+### 前端測試
+- 既有 `frontend/test/` 用 vitest;為 `normalizeAnime` 新欄位補測,確保 snake_case / camelCase 兩種後端鍵都能正確映射(沿用既有測試風格)。
+
 ## 錯誤處理
 
 - 解析層:單欄缺漏不致命,記入 summary 缺漏統計。
@@ -190,10 +239,14 @@ Schema::create('anime_streams', function (Blueprint $table): void {
 
 ## 待辦階段順序
 
-1. 重構移除舊 Bangumi 程式碼 + 改 config + 清空既有資料庫資料(migrate:fresh)。
-2. 實作 Parser(TDD,fixture)。
-3. 實作 Client。
-4. 實作 Command `--json-only`,跑 202604 → 人工驗證 JSON 品質。【驗證閘門】
-5. 新增 `anime_streams` 表 + model,重構 ImportService。
-6. 接通 DB 匯入,跑全量回補。
-7. 註冊每週排程。
+1. 重構移除舊 Bangumi 程式碼(Client / Normalizer / ChineseTextConverter / 舊 command / 舊 API)+ 改 config。
+2. 實作 `AcgSecretsParser`(TDD,fixture)。
+3. 實作 `AcgSecretsClient`。
+4. 實作 `anime:scrape-acgsecrets`,跑 202604 單季 → 人工驗證 `202604.json` 品質。【驗證閘門】
+5. 全量爬取,產生全部 `YYYYMM.json` + `summary.json`,commit 進 git。
+6. 新增 `anime_streams` migration + `AnimeStream` model;重構 `AnimeImportService` 改讀 JSON。
+7. 實作 `anime:import-acgsecrets`(`--fresh`);清空 DB 後全量匯入。
+8. 註冊每週排程(scrape → import)。
+9. 後端 API:`AnimeController::index` 擴充回傳 streams/aliases/titles;移除 `syncSeasonal`。
+10. 前端:更新 `useApi` / `normalize` / `seasonal.vue` / `catalog.vue`,移除同步按鈕、呈現新欄位;補 vitest。
+11. 端對端驗證:啟動 backend + frontend,確認新番表正確顯示繁中名、大綱、圖、串流平台。
