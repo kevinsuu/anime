@@ -64,6 +64,14 @@ final class AcgSecretsParserTest extends TestCase
         $this->assertNotSame('', $record['air_date_text']);
         // "4月4日起" with season year 2026 -> 2026-04-04.
         $this->assertSame('2026-04-04', $record['air_date']);
+
+        // The onair area repeats time_today and a hidden time_tomorrow div with identical
+        // text; air_date_text must capture it once, not doubled.
+        $this->assertSame(
+            1,
+            substr_count($record['air_date_text'], '4月4日起'),
+            'air_date_text should not duplicate the onair text'
+        );
     }
 
     public function test_parse_anime_block_extracts_streams(): void

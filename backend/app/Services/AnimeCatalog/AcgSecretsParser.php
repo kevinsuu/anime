@@ -70,7 +70,13 @@ final class AcgSecretsParser
 
         $coverImage = $this->coverImage($xpath);
 
-        $airDateText = $this->firstNonEmpty($xpath, './/div[contains(@class,"onair_times")]');
+        // The onair area repeats the same text in time_today and a hidden time_tomorrow div;
+        // read the visible time_today entry so air_date_text isn't doubled. Fall back to the
+        // whole onair_times block for layouts that lack the time_today wrapper.
+        $airDateText = $this->firstNonEmpty($xpath, './/div[contains(@class,"time_today")]');
+        if ($airDateText === '') {
+            $airDateText = $this->firstNonEmpty($xpath, './/div[contains(@class,"onair_times")]');
+        }
         $airDate = $this->parseAirDate($airDateText, $year);
 
         return [
