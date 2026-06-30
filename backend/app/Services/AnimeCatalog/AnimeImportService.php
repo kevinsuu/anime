@@ -216,6 +216,8 @@ final class AnimeImportService
                 continue;
             }
 
+            // updateOrCreate (not create) so duplicate (region, platform) pairs within a
+            // single record collapse to one row instead of hitting uniq_anime_stream.
             AnimeStream::query()->updateOrCreate([
                 'anime_id' => $anime->id,
                 'region' => (string) ($stream['region'] ?? ''),
