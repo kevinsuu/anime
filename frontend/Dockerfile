@@ -1,23 +1,24 @@
-FROM node:20-alpine AS build
+FROM node:22-alpine AS build
 
 WORKDIR /app
 
-COPY package.json ./
-RUN npm install
+COPY package.json package-lock.json ./
+RUN npm ci
 
-COPY index.html ./
-COPY src ./src
+COPY app ./app
+COPY nuxt.config.ts tsconfig.json ./
+COPY public ./public
 
-ARG VITE_API_BASE_URL
-ARG VITE_GOOGLE_CLIENT_ID
-ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
-ENV VITE_GOOGLE_CLIENT_ID=$VITE_GOOGLE_CLIENT_ID
+ARG NUXT_PUBLIC_API_BASE_URL
+ARG NUXT_PUBLIC_GOOGLE_CLIENT_ID
+ENV NUXT_PUBLIC_API_BASE_URL=$NUXT_PUBLIC_API_BASE_URL
+ENV NUXT_PUBLIC_GOOGLE_CLIENT_ID=$NUXT_PUBLIC_GOOGLE_CLIENT_ID
 
 RUN npm run build
 
 FROM nginx:1.27-alpine
 
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build /app/.output/public /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80

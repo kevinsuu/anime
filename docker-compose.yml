@@ -22,7 +22,7 @@ services:
     environment:
       APP_NAME: AnimeTracker
       APP_ENV: local
-      APP_KEY: base64:SvqiJHNzmqzb2P4GkXwQNDqU6pMDecKto2Xrdk6yTJY=
+      APP_KEY: base64:bG9jYWwtZGV2LWNoYW5nZS10aGlzLWFwcC1rZXk=
       APP_DEBUG: "true"
       APP_URL: http://localhost:8080
       DB_CONNECTION: mysql
