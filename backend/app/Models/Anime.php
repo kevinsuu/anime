@@ -36,4 +36,9 @@ final class Anime extends Model
     {
         return $this->hasMany(AnimeExternalId::class);
     }
+
+    public function streams(): HasMany
+    {
+        return $this->hasMany(AnimeStream::class);
+    }
 }
