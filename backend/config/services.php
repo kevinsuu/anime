@@ -52,6 +52,7 @@ return [
         'min_delay_ms' => (int) env('ACGSECRETS_MIN_DELAY_MS', 1000),
         'max_delay_ms' => (int) env('ACGSECRETS_MAX_DELAY_MS', 3000),
         'retries' => (int) env('ACGSECRETS_RETRIES', 2),
+        'retry_delay_ms' => (int) env('ACGSECRETS_RETRY_DELAY_MS', 1000),
     ],
 
     'http' => [

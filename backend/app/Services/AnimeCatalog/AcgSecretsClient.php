@@ -24,10 +24,14 @@ final class AcgSecretsClient
     {
         $url = (string) config('services.acgsecrets.base_url').$path;
         $retries = (int) config('services.acgsecrets.retries');
+        $retryDelayMs = (int) config('services.acgsecrets.retry_delay_ms');
 
+        // Http::retry()'s first argument is the total attempt count, so retries + 1
+        // turns "2 retries" into "3 attempts". throw: false lets us inspect the final
+        // response and raise our own descriptive error below.
         $response = Http::timeout((int) config('services.http.timeout_seconds'))
             ->withUserAgent((string) config('services.acgsecrets.user_agent'))
-            ->retry($retries + 1, 1000, throw: false)
+            ->retry($retries + 1, $retryDelayMs, throw: false)
             ->get($url);
 
         if (! $response->successful()) {

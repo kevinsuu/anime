@@ -7,6 +7,7 @@ use App\Services\AnimeCatalog\AcgSecretsParser;
 use App\Services\AnimeCatalog\SeasonResolver;
 use DateTimeImmutable;
 use Illuminate\Console\Command;
+use RuntimeException;
 use Throwable;
 
 final class ScrapeAcgSecrets extends Command
@@ -18,8 +19,10 @@ final class ScrapeAcgSecrets extends Command
     public function handle(AcgSecretsClient $client, AcgSecretsParser $parser): int
     {
         $dir = database_path('seed/acgsecrets');
-        if (! is_dir($dir)) {
-            mkdir($dir, 0775, true);
+        if (! is_dir($dir) && ! mkdir($dir, 0775, true) && ! is_dir($dir)) {
+            $this->error("Cannot create directory: {$dir}");
+
+            return self::FAILURE;
         }
 
         $seasons = $this->resolveSeasons($client, $parser);
@@ -29,8 +32,8 @@ final class ScrapeAcgSecrets extends Command
             try {
                 $html = $client->fetchSeason($yyyymm);
                 $records = $parser->parseSeasonPage($html, $yyyymm);
-                file_put_contents("{$dir}/{$yyyymm}.json",
-                    json_encode($records, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+                $this->writeJson("{$dir}/{$yyyymm}.json", $records,
+                    JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
                 $summary['seasons'][$yyyymm] = [
                     'count' => count($records),
                     'missing_title_zh' => count(array_filter($records, fn ($r) => $r['title_zh'] === '')),
@@ -44,10 +47,24 @@ final class ScrapeAcgSecrets extends Command
             }
         }
 
-        file_put_contents("{$dir}/summary.json",
-            json_encode($summary, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+        $this->writeJson("{$dir}/summary.json", $summary, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
         return empty($summary['failed']) ? self::SUCCESS : self::FAILURE;
+    }
+
+    /**
+     * Encode data to JSON and write it, throwing if encoding or the write fails
+     * so a silent filesystem error cannot be reported as success.
+     */
+    private function writeJson(string $path, mixed $data, int $flags): void
+    {
+        $json = json_encode($data, $flags);
+        if ($json === false) {
+            throw new RuntimeException("Failed to encode JSON for {$path}: ".json_last_error_msg());
+        }
+        if (file_put_contents($path, $json) === false) {
+            throw new RuntimeException("Failed to write {$path}");
+        }
     }
 
     /** @return array<int, string> */
