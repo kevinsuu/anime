@@ -1,0 +1,3500 @@
+[
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "葬送的芙莉蓮",
+        "title_ja": "葬送のフリーレン",
+        "aliases": [
+            "Sousou no Frieren",
+            "Frieren: Beyond Journey's End",
+            "葬送的芙莉莲《少年Sunday》漫畫的改編動畫版。動畫公司是製作過《天國大魔境》的MADHOUSE",
+            "導演是去年做過《孤獨搖滾》的斎藤圭一郎。",
+            "葬送的芙莉莲"
+        ],
+        "summary": "身為精靈族的芙莉蓮與同伴欣梅爾、艾冉、海塔花了10年打倒了魔王凱旋回到王都，眾人接受了國王接見與表揚。正值每隔50年出現一次的半世紀流星雨，芙莉蓮還天真地說下次要帶大家去一個很棒的地方欣賞流星。然而50年對於身為精靈的她根本不算什麼，然而下次見面時欣梅爾已經成了老頭子，還自嘲這是最後一次跟大家相聚。後來欣梅爾的離世讓芙莉蓮開始思考時間與生命的意義…。",
+        "cover_image": "https://static.acgsecrets.hk/img/90/902b716c284529d1f6dfac2eb856e00a/2f15f3ca2d393a7df92c4dd63bfabf59c1e723917d6cca7747f559ce0ab6d7b2.jpg",
+        "air_date_text": "2023年9月29日／週五／21時0分(#1(2小時特別篇))",
+        "air_date": "2023-09-29",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "2季度",
+            "高期待",
+            "高評價",
+            "冒險",
+            "戲劇",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "Netflix",
+                "url": "https://www.netflix.com/title/81726714"
+            },
+            {
+                "region": "香港",
+                "platform": "viu.com",
+                "url": "https://www.viu.com/ott/hk/zh/vod/2247878/"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "Netflix",
+                "url": "https://www.netflix.com/title/81726714"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35241"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfpHlIkQd-mHKo6pBQYEPDV-"
+            },
+            {
+                "region": "台灣",
+                "platform": "愛奇藝",
+                "url": "https://www.iq.com/album/21lp0js6d2p"
+            },
+            {
+                "region": "中國大陸",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md21087073"
+            },
+            {
+                "region": "中國大陸",
+                "platform": "愛奇藝",
+                "url": "http://www.iqiyi.com/v_1odkapiz700.html"
+            }
+        ],
+        "external_ids": {
+            "mal": "52991",
+            "bangumi": "400602"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "SPY×FAMILY 間諜家家酒 Season 2",
+        "title_ja": "SPY×FAMILY Season 2",
+        "aliases": [
+            "間諜家家酒 Season 2",
+            "間諜過家家 Season 2",
+            "間諜過家家 第2期",
+            "Spy x Family Season 2",
+            "SPY×FAMILY 间谍过家家 Season 2",
+            "间谍过家家 Season 2",
+            "间谍过家家 第2期"
+        ],
+        "summary": "約兒接下東國（Ostania）祕密組織「花園」的任務，將登上豪華郵輪，護衛黑手黨要人！然而洛伊德和安妮亞也將搭乘同一艘船去旅遊，這讓約兒對自己的祕密工作萌生迷惘？",
+        "cover_image": "https://static.acgsecrets.hk/img/b3/b3fe644768e82adadb8ab24d4692e0bc/f5d8790c209d479b98bfda50d3800507d13ecb364e331d79120876b7c26ce8b1.jpg",
+        "air_date_text": "2023年10月7日起／每週六／23時0分",
+        "air_date": "2023-10-07",
+        "tags": [
+            "漫畫改編",
+            "續作",
+            "高期待",
+            "高評價",
+            "動作",
+            "喜劇"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "Netflix",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "viu.com",
+                "url": "https://www.viu.com/ott/hk/zh/vod/2251140/"
+            },
+            {
+                "region": "香港",
+                "platform": "myTV SUPER",
+                "url": "https://www.mytvsuper.com/tc/programme/spyxfamilyseason2_139633/"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "Netflix",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "愛奇藝",
+                "url": "https://www.iq.com/album/1xqlt0fhwdd"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35469"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfpHv876tjiGO8h39nifN4zf"
+            },
+            {
+                "region": "中國大陸",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md21086686"
+            }
+        ],
+        "external_ids": {
+            "mal": "53887",
+            "bangumi": "411427"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "我想成為影之強者！2nd season",
+        "title_ja": "陰の実力者になりたくて！ 2nd season",
+        "aliases": [
+            "想要成為影之實力者 2nd season",
+            "想要成為影之強者 第2期",
+            "Kage no Jitsuryokusha ni Naritakute! 2nd Season",
+            "The Eminence in Shadow 2nd Season",
+            "我想成为影之强者！ 2nd season",
+            "想要成为影之实力者 2nd season",
+            "想要成为影之强者 第2期"
+        ],
+        "summary": "在克萊兒提議之下，席德來到「無法治都市」。在那裡，他參加了討伐沉眠的吸血鬼始祖「噬血女王」的任務。而後，出現在他眼前的，是自稱「最資深的吸血鬼獵人」的神祕美少女瑪莉。除了「無法治都市」的三大勢力「暴君」加格諾、「妖狐」雪女、「吸血鬼」克里姆森以外，「闇影庭園」也為了尋求「始祖血脈」和「惡魔附體者」的關連而參戰，讓戰場變得一片混亂。同時，「傳說的始祖」覺醒的時刻也跟著逼近……！",
+        "cover_image": "https://static.acgsecrets.hk/img/b9/b997f026f8629aa1108462c3e62881eb/b427eb59cf777f51698463ec8c52a20919ba94e1e64f3af386d63eb8aff15766.jpg",
+        "air_date_text": "2023年10月4日起／每週三／22時30分",
+        "air_date": "2023-10-04",
+        "tags": [
+            "小說改編",
+            "續作",
+            "12集",
+            "高期待",
+            "高評價",
+            "動作",
+            "喜劇",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Bilibili",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md21093797"
+            },
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtQGlyMs9SVOYp2lP-myamDL"
+            },
+            {
+                "region": "台灣",
+                "platform": "Bilibili",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md21093797"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35405"
+            },
+            {
+                "region": "台灣",
+                "platform": "Animax",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtQGlyMs9SVOYp2lP-myamDL"
+            }
+        ],
+        "external_ids": {
+            "mal": "54595",
+            "bangumi": "419846"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "香格里拉·開拓異境",
+        "title_ja": "シャングリラ・フロンティア",
+        "aliases": [
+            "香格里拉邊境",
+            "Shangri-La Frontier",
+            "Shangri-La Frontier: Kusoge Hunter",
+            "Kamige ni Idoman to su",
+            "香格里拉·开拓异境",
+            "香格里拉边境",
+            "香格里拉·弗陇提亚"
+        ],
+        "summary": "你是為了什麼而玩遊戲的？如果世上有100部神作，那麼也存在著1000部糞作。這是喜愛糞作，同時也被糞作所愛的男人“陽務樂郞”，向糞作的反面——神作「香格里拉·開拓異境」發起挑戰的故事。陽務樂郎是一個超愛玩“糞作”的糞作玩家，玩家名稱名為桑樂，擁有超一流的電玩技術！某天一個小小的契機讓他開始挑戰大眾公認的神作電玩。沒但想到電玩世界和現實生活卻都因此開始以他為中心產生變化…",
+        "cover_image": "https://static.acgsecrets.hk/img/ae/ae9ce186746722ac0b415b010711f731/b4c0d02ef9cb4fa4b45a2ec9e800df9fde93940b3010a03543dba166a9d22b1e.jpg",
+        "air_date_text": "2023年10月1日起／每週日／17時0分",
+        "air_date": "2023-10-01",
+        "tags": [
+            "小說改編",
+            "新作",
+            "2季度",
+            "高期待",
+            "高人氣",
+            "動作",
+            "冒險",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "viu.com",
+                "url": "https://www.viu.com/ott/hk/zh/vod/2247876/"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35247"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfpv_EIuCk3K-WwFSDdYvJiE"
+            },
+            {
+                "region": "台灣",
+                "platform": "愛奇藝",
+                "url": "https://www.iq.com/album/1ktvmii4zt0"
+            },
+            {
+                "region": "中國大陸",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md21086747"
+            },
+            {
+                "region": "中國大陸",
+                "platform": "愛奇藝",
+                "url": null
+            }
+        ],
+        "external_ids": {
+            "mal": "52347",
+            "bangumi": "390980"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "16bit 的感動 ANOTHER LAYER",
+        "title_ja": "16bitセンセーション ANOTHER LAYER",
+        "aliases": [
+            "16bit Sensation ANOTHER LAYER",
+            "16bit 的感动 ANOTHER LAYER",
+            "16bit的感动 Another Layer"
+        ],
+        "summary": "秋里樂葉是一名熱愛美少女和美少女遊戲的插畫師。儘管她夢想成為一名超級受歡迎的繪師，在她所工作的美少女遊戲製作公司裡也努力奮鬥，但現實並不總是那麼美好。在當今手機遊戲極為流行的時代，公司走下坡路，樂葉只能作為次要插畫師，不斷地描繪配角們的背影。某一天，她偶然從遊戲店的老板那裡得到了一款過去的經典美少女遊戲。當她一邊回憶著美少女遊戲的黃金時代，一邊打開『同級生』的遊戲盒時，突然被一道炫目的光包圍，接著發現自己已經回到了過去！時間已回到1992年，正是美少女遊戲剛開始興起的年代。樂葉在一家名為「Alcohol Soft」的公司找到了工作，她能否成功地構思、繪製，並創造出美少女角色呢？",
+        "cover_image": "https://static.acgsecrets.hk/img/7e/7e9a8aa57fd805580fa31a86d5d9ddd4/cfde0fbcc86b62781d41a7baefca6ecfd53dcbbde41be1582ac76d9f03866de5.jpg",
+        "air_date_text": "2023年10月4日起／每週三深夜／24時30分",
+        "air_date": "2023-10-04",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "高人氣",
+            "喜劇"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "Crunchyroll",
+                "url": "https://www.crunchyroll.com/16bit-sensation-another-layer"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35414"
+            },
+            {
+                "region": "台灣",
+                "platform": "Crunchyroll",
+                "url": "https://www.crunchyroll.com/16bit-sensation-another-layer"
+            }
+        ],
+        "external_ids": {
+            "mal": "54041",
+            "bangumi": "413741"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "賽馬娘 Pretty Derby Season 3",
+        "title_ja": "ウマ娘 プリティーダービー Season 3",
+        "aliases": [
+            "閃耀！優俊少女 Season 3",
+            "Umamusume: Pretty Derby Season 3",
+            "赛马娘 Pretty Derby Season 3",
+            "闪耀！优俊少女 Season 3馬娘第三季。這次的馬娘原型是北部玄駒。",
+            "闪耀！优俊少女 Season 3"
+        ],
+        "summary": "「直到手所能及之前，絕不放棄——」",
+        "cover_image": "https://static.acgsecrets.hk/img/91/913feb8dfa72859f328a32c6d44a8979/994f695ea8d6a8bca1d9ccd7ef8779eebd72a40ce4c9ef71d0ce0f2318851d71.jpg",
+        "air_date_text": "2023年10月4日起／每週三深夜／24時0分",
+        "air_date": "2023-10-04",
+        "tags": [
+            "遊戲改編",
+            "續作",
+            "高期待",
+            "運動"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtQQP6q5h7iVtIKKlk4CWwLk"
+            },
+            {
+                "region": "台灣",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtQQP6q5h7iVtIKKlk4CWwLk"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35408"
+            },
+            {
+                "region": "中國大陸",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md21086401"
+            }
+        ],
+        "external_ids": {
+            "mal": "53526",
+            "bangumi": "407332"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "家裡蹲吸血姬的鬱悶",
+        "title_ja": "ひきこまり吸血姫の悶々",
+        "aliases": [
+            "家裡蹲吸血姬的苦悶",
+            "Hikikomari Kyuuketsuki no Monmon",
+            "The Vexations of a Shut-In Vampire Princess",
+            "家里蹲吸血姬的郁闷",
+            "家里蹲吸血姬的苦闷"
+        ],
+        "summary": "一天到晚窩在家的少女黛拉可瑪莉，通稱「可瑪莉」一覺醒來，居然被大力提拔成為帝國的將軍！而且可瑪莉率領的，還是一支以下犯上風氣盛行、嗜血又暴力的部隊。可瑪莉出生在吸血鬼名門世家，卻因討厭血而背負「三不」——「運動神經不行」、「身高不夠高」、「不能用魔法」。正當她走投無路時，她（應該要成為）心腹的女僕薇兒在這時建言：「請交給我吧。我一定會讓那些部下會錯意的！」靠著虛張聲勢和好運氣屢戰屢勝的可瑪莉，一部歡樂的幻想故事誕生！雖然一天到晚宅在家裡，但可瑪莉是「肯努力就能做得到的孩子」！？",
+        "cover_image": "https://static.acgsecrets.hk/img/80/80d6d1720bddfe21732ffd906f918bec/587351b6bb81e33e036d6a5ed40a8b085c0fc346bf11b9ed134c8a493dc23695.jpg",
+        "air_date_text": "2023年10月7日起／每週六／22時30分",
+        "air_date": "2023-10-07",
+        "tags": [
+            "小說改編",
+            "新作",
+            "高期待",
+            "高人氣",
+            "喜劇",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "REMOW",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "愛奇藝",
+                "url": "https://www.iq.com/album/15ywxnj6jp5"
+            },
+            {
+                "region": "香港",
+                "platform": "It's Anime YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLhGamQZtJ7K8O7i0ypG3qsLtqViTmmjot"
+            },
+            {
+                "region": "台灣",
+                "platform": "REMOW",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "愛奇藝",
+                "url": "https://www.iq.com/album/15ywxnj6jp5"
+            },
+            {
+                "region": "台灣",
+                "platform": "It's Anime YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLhGamQZtJ7K8O7i0ypG3qsLtqViTmmjot"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35490"
+            }
+        ],
+        "external_ids": {
+            "mal": "54103",
+            "bangumi": "414214"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "藥師少女的獨語",
+        "title_ja": "薬屋のひとりごと",
+        "aliases": [
+            "藥屋少女的呢喃",
+            "Kusuriya no Hitorigoto",
+            "The Apothecary Diaries",
+            "药屋少女的呢喃",
+            "药师少女的独语"
+        ],
+        "summary": "「可否為我配製一帖春藥？」 貓貓的眼眸瞬間浮現出驚訝與好奇的色彩－－位處大陸中央的某個大國，有位姑娘置身於皇帝宮闕之中。 姑娘名喚貓貓，原在煙花巷擔任藥師，眼下則在後宮做下女。 這個絕對稱不上美女的姑娘很懂分寸，只是靜待期滿離宮。 她有自信，皇帝絕對不會「寵幸」她。 其間，貓貓得知皇子皆年幼早夭的事， 並聽聞連尚在人世的皇子皇女也身染重病，她開始調查他們的病因－－",
+        "cover_image": "https://static.acgsecrets.hk/img/03/037960abf466f5e4a03d1a535c057cb9/d745f5645a10957b58ae3d25d91119f195851e4a4533b54f4f67021b4e845767.jpg",
+        "air_date_text": "2023年10月21日／週六深夜／25時5分(首周播3話)",
+        "air_date": "2023-10-21",
+        "tags": [
+            "小說改編",
+            "新作",
+            "2季度",
+            "高期待",
+            "高評價",
+            "戲劇",
+            "神秘"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Netflix",
+                "url": "https://www.netflix.com/title/81712068"
+            },
+            {
+                "region": "台灣",
+                "platform": "Netflix",
+                "url": "https://www.netflix.com/title/81712068"
+            }
+        ],
+        "external_ids": {
+            "mal": "54492",
+            "bangumi": "420628"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "盾之勇者成名錄 Season3",
+        "title_ja": "盾の勇者の成り上がり Season 3",
+        "aliases": [
+            "盾之勇者成名錄 第三季",
+            "The Rising of the Shield Hero Season 3",
+            "Tate no Yusha no Nariagari Season 3",
+            "盾之勇者成名录 Season3",
+            "盾之勇者成名录 第三季"
+        ],
+        "summary": "「我有義務替拉芙塔莉雅打造一個棲身之處。」與仇敵‧京徹底做下了斷後，尚文一行人平安回到原屬的世界。雖然成功擊敗靈龜，但距離下一波浪潮來襲前的緩衝時間只有三個半月!!在這段期間，尚文向梅洛馬格女王提出要求，希望能夠擁有自己的專屬領地。表面上，尚文解釋目的是為了防備浪潮，用以培訓私人部隊。但他真正的用意，是為了重建過去遭到浪潮毀滅的拉芙塔莉雅故鄉……!!",
+        "cover_image": "https://static.acgsecrets.hk/img/70/70eb5b7bdfbb38e7c9f93378393e1c86/b1b86c500076f13583979b6775bd2226328d08826a1dd4e7c84c2290241ae65e.jpg",
+        "air_date_text": "2023年10月6日起／每週五／21時0分",
+        "air_date": "2023-10-06",
+        "tags": [
+            "小說改編",
+            "續作",
+            "高期待",
+            "高人氣",
+            "動作",
+            "冒險",
+            "戲劇",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Bilibili",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md21095909"
+            },
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtSoMtcbwQJQijWBKQTKhuaB"
+            },
+            {
+                "region": "台灣",
+                "platform": "Bilibili",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md21095909"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtSoMtcbwQJQijWBKQTKhuaB"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35516"
+            },
+            {
+                "region": "中國大陸",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md21086581"
+            }
+        ],
+        "external_ids": {
+            "mal": "40357",
+            "bangumi": "289907"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "SHY 靦腆英雄",
+        "title_ja": "SHY",
+        "aliases": [
+            "SHY",
+            "SHY 腼腆英雄"
+        ],
+        "summary": "21世紀已過半，世界各國都有英雄，各具特色且擁有超人般的力量！然而日本的英雄「SHY」卻是個極度靦腆怕羞的人，雖然不善於面對眾人、社會的眼光，但還是在苦惱之中努力解救需要幫助的人！",
+        "cover_image": "https://static.acgsecrets.hk/img/b9/b940d1669658b8277e4eeb444e5596e6/ade7cbc51c75b5e916b5acfdf2ee9c30b89d04f2d822ba7bb29c2dd8c0248b69.jpg",
+        "air_date_text": "2023年10月2日起／每週一深夜／24時0分",
+        "air_date": "2023-10-02",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "動作",
+            "戲劇"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "viu.com",
+                "url": "https://www.viu.com/ott/hk/zh/vod/2248626/SHY-%E9%9D%A6%E8%85%86%E8%8B%B1%E9%9B%84"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35362"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfq2P1Zmx6JAgjp201RLMTIf"
+            }
+        ],
+        "external_ids": {
+            "mal": "53237",
+            "bangumi": "403722"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "星靈感應",
+        "title_ja": "星屑テレパス",
+        "aliases": [
+            "Hoshikuzu Telepath",
+            "Stardust Telepath",
+            "星灵感应"
+        ],
+        "summary": "不擅長與人溝通的女高中生小之星海果邂逅了自稱是外星人的明內幽，並約定要一同追求夢想前往太空。接著在與副班長寶木遙乃、不常出席的雷門瞬等人的相遇之中決定要一起造出火箭……女高中生們製作火箭、以太空為目標的「青春火箭」故事！",
+        "cover_image": "https://static.acgsecrets.hk/img/82/825c6329aa8ab783669fff7f4c7cff5c/e0911e9ea54f077679151454f9e3b7267bd462103dcbeea24e5f5814b34c593c.jpg",
+        "air_date_text": "2023年10月9日起／每週一／21時0分",
+        "air_date": "2023-10-09",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "喜劇",
+            "超自然"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLuxqoToY7UcjSfniXCFlWGUVtvdv5O2gu"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35372"
+            }
+        ],
+        "external_ids": {
+            "mal": "53262",
+            "bangumi": "404115"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "東京復仇者 天竺編",
+        "title_ja": "東京リベンジャーズ 天竺編",
+        "aliases": [
+            "重生之道 天竺編",
+            "Tokyo Revengers: Tenjiku-hen",
+            "Tokyo Revengers: Tenjiku Arc",
+            "东京复仇者 天竺编",
+            "重生之道 天竺编",
+            "东京复仇者 第3期 天竺篇"
+        ],
+        "summary": "再次回到過去的武道，決心成為東卍的老大，並且改變未來！另一方面，前所未有的龐大組織，橫濱「天竺」襲擊了東卍！東卍史上最大也是「最後」的火拼，「關東事變」即將展開！",
+        "cover_image": "https://static.acgsecrets.hk/img/4d/4d24db749275483500a7c5659b218019/965eb14f7433d39d35cdbfed592a8142bbb3a553236fa1424bffdaeabe8bc2b6.jpg",
+        "air_date_text": "2023年10月3日起／每週二深夜／24時0分",
+        "air_date": "2023-10-03",
+        "tags": [
+            "漫畫改編",
+            "續作",
+            "動作",
+            "戲劇",
+            "超自然"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Disney＋",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "Disney＋",
+                "url": null
+            }
+        ],
+        "external_ids": {
+            "mal": "54918",
+            "bangumi": "427329"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "Dr.STONE 新石紀 NEW WORLD 第二季度",
+        "title_ja": "Dr.STONE NEW WORLD 第2クール",
+        "aliases": [
+            "Dr.STONE NEW WORLD 第2季度",
+            "石紀元 第3期 Part.2",
+            "Dr. STONE NEW WORLD Part 2",
+            "Dr.STONE 新石纪 NEW WORLD 第二季度",
+            "石纪元 第3期 Part.2Dr.STONE第三季動畫「NEW WORLD」分割播放的第二季度。",
+            "石纪元 第3期 Part.2"
+        ],
+        "summary": "其他名稱：Dr.STONE NEW WORLD 第2季度、石紀元 第3期 Part.2、Dr. STONE NEW WORLD Part 2、Dr.STONE 新石纪 NEW WORLD 第二季度、石纪元 第3期 Part.2Dr.STONE第三季動畫「NEW WORLD」分割播放的第二季度。",
+        "cover_image": "https://static.acgsecrets.hk/img/a0/a075ebe97ab16d5eff9c9d76d9cbb535/4812d0b362c1bc987a89a91cd7f65c5e27ada21651cd246d2e75dc735a0543ab.jpg",
+        "air_date_text": "2023年10月12日起／每週四／22時30分",
+        "air_date": "2023-10-12",
+        "tags": [
+            "漫畫改編",
+            "續作",
+            "高期待",
+            "高評價",
+            "冒險",
+            "喜劇"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtQkrUFepeQOELa13PBFFOPE"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtQkrUFepeQOELa13PBFFOPE"
+            },
+            {
+                "region": "中國大陸",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md20140807"
+            },
+            {
+                "region": "中國大陸",
+                "platform": "愛奇藝",
+                "url": null
+            },
+            {
+                "region": "中國大陸",
+                "platform": "優酷",
+                "url": null
+            }
+        ],
+        "external_ids": {
+            "mal": "55644",
+            "bangumi": "424372"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "不死不運",
+        "title_ja": "アンデッドアンラック",
+        "aliases": [
+            "不死不幸",
+            "UNDEAD UNLUCK",
+            "不死不运"
+        ],
+        "summary": "某天，出雲風子（不運）再也受不了自己總是給身旁的人帶來不幸，決定一死了之；此時卻突然出現一名全身赤裸的神秘男子（不死），也打算靠她的不幸能力自我了斷。然而這個舉動卻讓雙方都無法順利死去，於是決定換地方再死一次，不過這次卻出現某個組織（UNION）派來的追兵，試圖將他們帶回組織。不死為了完成心願，帶著不運展開逃亡，他們的命運將會如何？那個組織又是什麼來頭？",
+        "cover_image": "https://static.acgsecrets.hk/img/ea/eae9b570a3ba090bfbe22dd4fb95d937/f414b0d38ea0d51aaf36e5ef29ba9575baa337f679e133496b24f14fa82cc892.jpg",
+        "air_date_text": "2023年10月6日起／每週五深夜／25時23分",
+        "air_date": "2023-10-06",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "2季度",
+            "高評價",
+            "動作",
+            "喜劇",
+            "超自然"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "viu.com",
+                "url": "https://www.viu.com/ott/hk/zh/vod/2251142/"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35451"
+            }
+        ],
+        "external_ids": {
+            "mal": "52741",
+            "bangumi": "397808"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "鴨乃橋論的禁忌推理",
+        "title_ja": "鴨乃橋ロンの禁断推理",
+        "aliases": [
+            "Kamonohashi Ron no Kindan Suiri",
+            "鸭乃桥论的禁忌推理"
+        ],
+        "summary": "「終生將這份稀有天賦奉獻給偵探業，是我的責任。」過去，偵探培訓學校BULE曾有一位號稱無論什麼謎題都解得開的天才，本人也宣告希望終生將稀有的天賦奉獻給偵探業的男人．鴨乃橋論…但是他作為偵探卻有個致命的缺陷!!破案率100％！犯人逮捕率卻是0％!?有苦難言的偵探鴨乃橋論將與單純呆傻的搜查一課刑警一色都都丸聯手，華麗地解開所有的謎題！",
+        "cover_image": "https://static.acgsecrets.hk/img/9e/9e21af23db0e5d0d1ab04ef001e7d683/0c05bceda932322eadd8b4714e0d640ed0cfcff1f8018fabb1acca91b2b676c2.png",
+        "air_date_text": "2023年10月2日起／每週一／22時30分",
+        "air_date": "2023-10-02",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "高期待",
+            "喜劇",
+            "神秘"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Netflix",
+                "url": "https://www.netflix.com/title/81726765"
+            },
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtSx9wT7Sx3JEBRmiFE3mn5P"
+            },
+            {
+                "region": "台灣",
+                "platform": "Netflix",
+                "url": "https://www.netflix.com/title/81726765"
+            },
+            {
+                "region": "台灣",
+                "platform": "愛奇藝",
+                "url": "https://www.iq.com/album/1q5sugk8qwp"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtSx9wT7Sx3JEBRmiFE3mn5P"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35360"
+            },
+            {
+                "region": "中國大陸",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md21094180"
+            }
+        ],
+        "external_ids": {
+            "mal": "53879",
+            "bangumi": "411426"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "豬肝記得煮熟再吃",
+        "title_ja": "豚のレバーは加熱しろ",
+        "aliases": [
+            "豬肝倒是熱熱再吃啊",
+            "Buta no Liver wa Kanetsu Shiro",
+            "Heat the Pig Liver",
+            "猪肝记得煮熟再吃",
+            "猪肝倒是热热再吃啊"
+        ],
+        "summary": "我是個生吃豬肝後昏迷過去的不起眼阿宅。才以為自己轉生到了異世界，卻只是變成一隻豬！我躺在豬圈，拯救了我的是據說能看透人心的少女潔絲。嚄嚄！好可愛！從豬的角度來看，就能從裙襬窺見純白的……「那個，我能聽見你內心的聲音……」糟了！慾望暴露無遺啊！「如果你這麼希望，只看一下下——」咦，慢著……！對於我彷彿禽獸般的慾望（雖然有一點退避三舍）也願意接納，被這樣的純真少女照顧的生活。嗯～當一隻豬也不壞嘛？本故事描寫這樣的我們嚄嚄嚄的大冒險……照理說是這樣。不過潔絲啊，為什麼一直有人要妳的命？",
+        "cover_image": "https://static.acgsecrets.hk/img/9f/9f22973db432b671e6f4329424443251/fd9ba468eb4c4282e7dcc0cde2266618d04c4e36128e2fb78c8638baf1091ed8.jpg",
+        "air_date_text": "2023年10月7日起／每週六深夜／24時30分",
+        "air_date": "2023-10-07",
+        "tags": [
+            "小說改編",
+            "新作",
+            "高期待",
+            "高人氣",
+            "喜劇",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35484"
+            }
+        ],
+        "external_ids": {
+            "mal": "50583",
+            "bangumi": "362005"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "我的推是壞人大小姐。",
+        "title_ja": "私の推しは悪役令嬢。",
+        "aliases": [
+            "わたおし",
+            "我推是反派大小姐",
+            "我推惡役",
+            "Watashi no Oshi wa Akuyaku Reijou",
+            "I'm in Love with the Villainess",
+            "我的推是坏人大小姐。",
+            "我推恶役"
+        ],
+        "summary": "「雖然我是女性向遊戲的女主角，但我不能喜歡壞人大小姐嗎？」 在黑心企業工作的社畜ＯＬ大橋零轉生成了女性向遊戲「Revolution」世界中的零•緹拉。轉生之後的她想做的事－－居然不是和攻略對象的王子們談戀愛，而是一心溺愛身為壞人大小姐的克蕾雅•弗朗索瓦。",
+        "cover_image": "https://static.acgsecrets.hk/img/57/5783b657f8d6e1d3d70632bd776ea888/781503d7f724971d04fe10a02fb92c80f742a09720d234807dcc8a4c561bc7ba.jpg",
+        "air_date_text": "2023年10月2日起／每週一深夜／24時30分",
+        "air_date": "2023-10-02",
+        "tags": [
+            "小說改編",
+            "新作",
+            "高期待",
+            "喜劇",
+            "奇幻",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Aniplus",
+                "url": "https://nowplayer.now.com/ondemand/detail?id=S202309220170024&type=series"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35361"
+            }
+        ],
+        "external_ids": {
+            "mal": "53833",
+            "bangumi": "410928"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "超超超超超喜歡你的100個女朋友",
+        "title_ja": "君のことが大大大大大好きな100人の彼女",
+        "aliases": [
+            "超超超超超喜歡你的100個女友",
+            "超超超超喜歡你的100個女孩子",
+            "Kimi no Koto ga Daidaidaidaidaisuki na 100-nin no Kanojo",
+            "The 100 Girlfriends Who Really",
+            "Really",
+            "Really Love You",
+            "hyakkano",
+            "超超超超超喜欢你的100个女友",
+            "超超超超喜欢你的100个女孩子"
+        ],
+        "summary": "愛城戀太郎在國中畢業當天累積了人生第100次告白失敗。為此前去神社祈願的他竟遇到戀愛之神親口保證，他在高中將遇到100位「真命天女」！然而入學當天，戀太郎才因遇見2位「真命天女」而高興，又被告知驚人的事實：如果選擇其中一人，沒跟他交往的一方就會死！面對這終極的抉擇，戀太郎的決定是……讓所有人都幸福！",
+        "cover_image": "https://static.acgsecrets.hk/img/23/233f19e21d460462e3069a24a8da8eea/acf6da07ad45d6a354fce17094ccb3f38caa04e989a2b05efd12988b17064ce0.jpg",
+        "air_date_text": "2023年10月8日起／每週日／22時30分",
+        "air_date": "2023-10-08",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "高人氣",
+            "喜劇",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "viu.com",
+                "url": "https://www.viu.com/ott/hk/zh/vod/2251377/"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35508"
+            }
+        ],
+        "external_ids": {
+            "mal": "54714",
+            "bangumi": "424379"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "堤亞穆帝國物語",
+        "title_ja": "ティアムーン帝国物語～断頭台から始まる、姫の転生逆転ストーリー～",
+        "aliases": [
+            "堤亞穆帝國物語～從斷頭台開始",
+            "公主重生後的逆轉人生～",
+            "Tearmoon Teikoku Monogatari: Dantoudai kara Hajimaru",
+            "Hime no Tensei Gyakuten Story",
+            "Tearmoon Empire Story",
+            "堤亚穆帝国物语",
+            "堤亚穆帝国物语～从断头台开始",
+            "公主重生后的逆转人生～"
+        ],
+        "summary": "在分崩離析的堤亞穆帝國，被貶低為任性公主的皇女米雅遭到處刑。──本來該是如此，醒來的她卻變回12歲？？為了在第二次的人生躲過斷頭台，她手持前世的日記決心重新整頓帝國的施政。首先拉攏忠心耿耿的底層女僕，和遭到左遷實際卻很優秀的文官，扭轉失敗過去的日子就此展開。但是，米雅的真心話為「自身安全為第一優先」。遠離仇敵，努力經營人脈的過程中，不知為何在周圍的揣摩上意之下接連實現奇蹟！結果，本來是自私的行動竟然大幅地改變了大陸全土的未來……「這、這點小事交給我來根本輕而易舉！」明哲保身！自我中心最強！膽小鬼的前（？）廢柴公主以前世的記憶為武器抵抗命運，一生中最精彩的改變歷史奇幻故事！",
+        "cover_image": "https://static.acgsecrets.hk/img/a3/a3ec5ff59008f99866532d247c637c5c/a15135bde586341efc5026023df8155d1bea95a33a1bffb6e3aeafde3582ab2c.jpg",
+        "air_date_text": "2023年10月7日起／每週六深夜／25時0分",
+        "air_date": "2023-10-07",
+        "tags": [
+            "小說改編",
+            "新作",
+            "高期待",
+            "高人氣",
+            "喜劇",
+            "奇幻",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLuxqoToY7UcjCDnDaImo5rbltEfJtkG9i"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfrBTYxrhXL6TVvROBkpfQ7K"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35475"
+            }
+        ],
+        "external_ids": {
+            "mal": "52962"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "哥布林殺手 第二季",
+        "title_ja": "ゴブリンスレイヤーⅡ",
+        "aliases": [
+            "ゴブリンスレイヤーII",
+            "Goblin Slayer 2",
+            "GOBLIN SLAYER Season 2",
+            "哥布林杀手 第二季"
+        ],
+        "summary": "「話說回來，那個、呃，後天，不是要舉辦收穫祭嗎？──您有沒有安排什麼行程呢？」「……哥布林。」「啊，除了哥布林以外的。」時節入秋，邊境小鎮即將迎接收穫祭的到來。這當中，有忙於神殿工作的女神官、因某件事鬧彆扭的妖精弓手、參加祭典準備作業的礦人道士、蜥蜴僧侶，以及各自過著日常生活的冒險者們。哥布林殺手原先也重複著屬於他的「日常」……但隨剿滅哥布林的委託減少，三位訪客陡然現身，也令隱藏於祭典背後的計畫浮上檯面！？",
+        "cover_image": "https://static.acgsecrets.hk/img/1a/1a80ee6db7260fa0ed859705ecd426a5/e12b76276ec07c80cb47bf451fe7c90da7845fe94306c5a53e235567697e21eb.jpg",
+        "air_date_text": "2023年10月6日起／每週五／22時0分",
+        "air_date": "2023-10-06",
+        "tags": [
+            "小說改編",
+            "續作",
+            "高期待",
+            "高人氣",
+            "動作",
+            "冒險",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "viu.com",
+                "url": "https://www.viu.com/ott/hk/zh/vod/2251141/"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35439"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfrZDSMb_GQfYJHoHsb9GpTD"
+            },
+            {
+                "region": "台灣",
+                "platform": "愛奇藝",
+                "url": "https://www.iq.com/album/r1yqfi8fix"
+            }
+        ],
+        "external_ids": {
+            "mal": "47160",
+            "bangumi": "326867"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "BULLBUSTER",
+        "title_ja": "ブルバスター",
+        "aliases": [],
+        "summary": "年輕的工程師沖野鉄郎帶著他自己開發的新型機器人BULLBUSTER，來到了專門驅除害獸的公司波止工業。由社長田島帶領的該公司正在對抗名為「巨獣」的神秘生物！由於是一家常年資金短缺的小型企業，波止工業總是伴隨著經濟問題……無論是機器人的燃料開銷、駕駛員的薪資，甚至一發子彈的浪費都是不可承受的。在追求退治巨獣的「理想」和成本的「現實」夾縫中，波止的未來會迎來什麼？",
+        "cover_image": "https://static.acgsecrets.hk/img/a0/a0b046df92b84d246ee702e2c3b2a75e/42a30a95509c4d2978bc7cb84290e7eb3f9553f53f7e39c6af05d0e9427b5bc3.jpg",
+        "air_date_text": "2023年10月4日起／每週三／21時0分",
+        "air_date": "2023-10-04",
+        "tags": [
+            "小說改編",
+            "新作",
+            "動作",
+            "科幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtQ8g02xGvOvjiZVQbq6ib8J"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtQ8g02xGvOvjiZVQbq6ib8J"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35399"
+            }
+        ],
+        "external_ids": {
+            "mal": "53633",
+            "bangumi": "408361"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "我們的雨色協議",
+        "title_ja": "僕らの雨いろプロトコル",
+        "aliases": [
+            "Bokura no Ame-iro Protocol",
+            "Our Rainy Protocol",
+            "我们的雨色协议以電競為題材的原創動畫。",
+            "我们的雨色协议"
+        ],
+        "summary": "與母親及妹妹一起生活的高二生──時野谷瞬。因為一場意外事故導致父親離世、妹妹受傷以後，他放棄了原本沉迷的遊戲，進入電競咖啡廳「FOX ONE」工作。與從小一起長大的遊戲夥伴往來的同時，忙於打工及課業的瞬，突然發現「FOX ONE」背負了巨額債務。為了還債，瞬與夥伴立志要在「XAXXERION錦標賽」贏得冠軍，獲得獎金。瞬懷抱著內疚的心情，再次投身於線上遊戲世界，在他面前，出現了曾經與他一同進行遊戲的「爆裂君」。未曾體驗的邂逅與經歷，以及激戰……瞬即使不時感到苦惱，仍然與夥伴們一起攜手向前進。他們的世界透過遊戲開始動了起來。這是少年與家人，以及夥伴們的故事……。",
+        "cover_image": "https://static.acgsecrets.hk/img/33/33832e4962847d589a98b59232e7847a/fee5673c7f01b4617f22d55345a26c796f011322a2c1322fcca51960b814e818.jpg",
+        "air_date_text": "2023年10月7日起／每週六深夜／25時30分",
+        "air_date": "2023-10-07",
+        "tags": [
+            "原創作品",
+            "新作",
+            "高人氣",
+            "動作"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLuxqoToY7Ucgbx4DJKMfrJmC2h0gU76Hy"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfqWuCLEndYghppSJMWmZ5s9"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35487"
+            }
+        ],
+        "external_ids": {
+            "mal": "55894",
+            "bangumi": "444634"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "撿走被人悔婚的千金，教會她壞壞的幸福生活",
+        "title_ja": "婚約破棄された令嬢を拾った俺が、イケナイことを教え込む",
+        "aliases": [
+            "婚約破棄された令嬢を拾った俺が",
+            "イケナイことを教え込む",
+            "撿到被退婚大小姐的我教她做壞壞的事",
+            "撿到退婚大小姐的我",
+            "教她幸福的事",
+            "Konyaku Haki sareta Reijou wo Hirotta Ore ga",
+            "Ikenai Koto wo Oshiekomu",
+            "I'm Giving the Disgraced Noble Lady I Rescued a Crash Course in Naughtiness",
+            "捡走被人悔婚的千金",
+            "教会她坏坏的幸福生活",
+            "捡到被退婚大小姐的我教会她做坏坏的事",
+            "捡到退婚大小姐的我"
+        ],
+        "summary": "住在森林深處，討厭與人往來的魔法師──亞倫，不但被稱作「魔王」，周遭的人也都對他感到多有畏懼。過著隱士生活的他，某天撿到了倒在路邊的千金──夏綠蒂。她被安上莫須有的罪名，更遭到悔婚，從祖國逃到這裡來。聽聞這些原委的亞倫，回想起自己曾被深信是夥伴的成員背叛的苦澀經驗。聽到她年僅十七歲，一直過著被人壓榨的生活，亞倫下定決心——要讓她住在自己家裡……灌輸她各種壞壞卻幸福的事情。",
+        "cover_image": "https://static.acgsecrets.hk/img/4d/4d00cd2cc3b80f8785ba635ab4da8ca0/c37ed0f7c48513d9411f27825b31c76f3e945030971481ccd65281b194b05862.jpg",
+        "air_date_text": "2023年10月4日起／每週三／22時0分",
+        "air_date": "2023-10-04",
+        "tags": [
+            "小說改編",
+            "新作",
+            "高期待",
+            "喜劇",
+            "奇幻",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md21093519"
+            },
+            {
+                "region": "香港",
+                "platform": "愛奇藝",
+                "url": "https://www.iq.com/album/1j0m72u52qx"
+            },
+            {
+                "region": "香港",
+                "platform": "It's Anime YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLhGamQZtJ7K_JCncI-OMo2W6pL1CuU_Zy"
+            },
+            {
+                "region": "台灣",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md21093519"
+            },
+            {
+                "region": "台灣",
+                "platform": "愛奇藝",
+                "url": "https://www.iq.com/album/1j0m72u52qx"
+            },
+            {
+                "region": "台灣",
+                "platform": "It's Anime YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLhGamQZtJ7K_JCncI-OMo2W6pL1CuU_Zy"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35402"
+            },
+            {
+                "region": "中國大陸",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md21086113"
+            }
+        ],
+        "external_ids": {
+            "mal": "52934",
+            "bangumi": "398922"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "位於戀愛光譜極端的我們",
+        "title_ja": "経験済みなキミと、経験ゼロなオレが、お付き合いする話。",
+        "aliases": [
+            "經驗豐富的你與經驗為零的我交往的故事。",
+            "經驗豐富的你和經驗為零的我交往的故事",
+            "Keikenzumi na Kimi to",
+            "Keiken Zero na Ore ga",
+            "Otsukiai suru Hanashi.",
+            "You Were Experienced",
+            "I Was Not: Our Dating Story",
+            "KimiZero",
+            "位于恋爱光谱极端的我们",
+            "经验丰富的你与经验为零的我交往的故事。",
+            "经验丰富的你和经验为零的我交往的故事"
+        ],
+        "summary": "充滿邊緣人氣質的高中生，加島龍斗因為玩懲罰遊戲而向位於校園階級金字塔最上層，也是他所愛慕的白河月愛告白。卻得到「嗯，反正人家現在也是單身」的意外回答而與她開始交往。龍斗又是尾隨月愛偷聽型男足球社員對她告白，又是被剛開始交往的月愛帶到她的房間……無論是身邊朋友或興趣嗜好都大相逕庭的兩人，每天過著對彼此間的差異感到驚訝，且接納對方的日子，接著……兩人獲得成長，逐漸心意相通。",
+        "cover_image": "https://static.acgsecrets.hk/img/57/57eab09519de9758e3cefe2b303e3fdc/b49aa66bc3f36c8d2cc66ea17b93853a12356a9e4e940dd7b4fcf51c76df5b98.jpg",
+        "air_date_text": "2023年10月6日起／每週五／22時30分",
+        "air_date": "2023-10-06",
+        "tags": [
+            "小說改編",
+            "新作",
+            "高期待",
+            "高人氣",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLuxqoToY7UchsVLgWHvTqik35BahH-8KD"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfrRB-M8hiQEARFZIkcnAGz-"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35442"
+            }
+        ],
+        "external_ids": {
+            "mal": "52990",
+            "bangumi": "400595"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "狩龍人拉格納",
+        "title_ja": "ラグナクリムゾン",
+        "aliases": [
+            "Ragna Crimson",
+            "狩龙人拉格纳"
+        ],
+        "summary": "「獵龍人」──揮舞銀劍、狩獵龍族以換取報酬的職業。 技術拙劣的獵龍人少年・拉格納與龍族討伐數無人能及的天才少女・蕾歐妮卡搭檔，每天致力於狩獵龍族。 拉格納只有一個心願──「就算無法變強也無所謂，希望能永遠待在蕾歐身邊。」 然而他的想法，卻因為擁有前所未見之強大力量的「上位龍」的襲擊而化為泡影。 在大敵當前之際，拉格納的腦海中浮現起這幾天一直令他苦惱不已的惡夢──那是雖然獲得了最強大的力量，卻早已沒有任何必須守護的事物，活在充滿絕望與孤獨的未來中的自己的身影。 未來的自己交給他的東西是什麼……？現在的自己又該選擇什麼樣的道路……？ 然後，拉格納將與充滿謎團的新搭檔・緋紅一起為迴避絕望的未來踏出第一步。 他將挑戰的是，絕對性的強者。他將對抗的，是被強制的命運。朝向極限的彼方前進──。",
+        "cover_image": "https://static.acgsecrets.hk/img/9a/9aa1c89a31f19029caf2940e3a1fd642/f95d5ecb2a5c9f7161e06ce3495c1bdb0e6ad8a295753bcf76c21ea6cc6b6d73.jpg",
+        "air_date_text": "2023年9月30日／週六深夜／25時0分(首週一小時，提前半小時播放)",
+        "air_date": "2023-09-30",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "2季度",
+            "高人氣",
+            "動作",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLuxqoToY7UchB7DtUZ4MPpaTmr_ZkgpV1"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfp_uOtg2M8yHR8P6sTzN0ot"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35246"
+            },
+            {
+                "region": "中國大陸",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md21087176"
+            },
+            {
+                "region": "中國大陸",
+                "platform": "愛奇藝",
+                "url": "http://www.iqiyi.com/v_1e2btmu0obw.html"
+            }
+        ],
+        "external_ids": {
+            "mal": "51297"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "凹凸魔女的親子日常",
+        "title_ja": "でこぼこ魔女の親子事情",
+        "aliases": [
+            "凹凸魔女的母女故事",
+            "Dekoboko Majo no Oyako Jijou",
+            "he Family Circumstances of the Unreliable Witch",
+            "凹凸魔女的亲子日常"
+        ],
+        "summary": "某天，獨居在森林裡的魔女艾麗莎撿到了人類嬰兒。雖然艾麗莎不知該如何是好，仍替嬰兒取名為「薇奧拉」，並決定扶養她。十六年後，薇奧拉不只變成超級戀母的女孩，連成長幅度都超乎預料……",
+        "cover_image": "https://static.acgsecrets.hk/img/2a/2a66f77645aa228cbbf8dbe353992558/5762cf13b61f87417d2f3caff162eb05ff6b24de54895c95700deda3e4392262.png",
+        "air_date_text": "2023年10月1日起／每週日／22時0分",
+        "air_date": "2023-10-01",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "喜劇",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtTkKqR1CFRSDm0yCsMDt9wo"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtTkKqR1CFRSDm0yCsMDt9wo"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35345"
+            }
+        ],
+        "external_ids": {
+            "mal": "52985",
+            "bangumi": "400551"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "聖劍學院的魔劍使",
+        "title_ja": "聖剣学院の魔剣使い",
+        "aliases": [
+            "Seiken Gakuin no Makentsukai",
+            "Magic Sword Master of Holy Sword School",
+            "The Demon Sword Master of Excalibur Academy",
+            "圣剑学院的魔剑使"
+        ],
+        "summary": "最強的魔王雷歐尼斯為了迎接註定到來的決戰，封印了自身的存在。然而跨越千年時光甦醒的他，竟然變回了十歲少年的模樣！「為什麼！？」「你怎麼被關在這裡？放心吧，姊姊會保護你的。」雷歐尼斯受到隸屬於＜聖劍學院＞的美少女黎榭莉亞保護，並對劇變的世界感到驚愕。未知的敵人＜虛獸＞、＜第零七戰術都市＞、以武器作為外形的異能之力──＜聖劍＞，儘管這些陌生的詞語讓他相當困惑，他依然進入了＜聖劍學院＞就讀。在魔術消失的未來世界中，由最強魔王與美少女們交織而成、聖劍與魔劍的校園刀劍奇幻故事揭開序幕！",
+        "cover_image": "https://static.acgsecrets.hk/img/b6/b6bdf80faea933c285efbab2b27a7c2f/888f7d2e686cf14c6e35e190e4308d22d0f8c2064f83e5d22d596af4366d17de.jpg",
+        "air_date_text": "2023年10月2日起／每週一深夜／25時30分",
+        "air_date": "2023-10-02",
+        "tags": [
+            "小說改編",
+            "新作",
+            "高期待",
+            "高人氣",
+            "動作",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "愛奇藝",
+                "url": "https://www.iq.com/album/pd4uzu66zp"
+            },
+            {
+                "region": "香港",
+                "platform": "It's Anime YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLhGamQZtJ7K8jHPJVNU4NTqD-kbkmoZ5r"
+            },
+            {
+                "region": "台灣",
+                "platform": "愛奇藝",
+                "url": "https://www.iq.com/album/pd4uzu66zp"
+            },
+            {
+                "region": "台灣",
+                "platform": "It's Anime YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLhGamQZtJ7K8jHPJVNU4NTqD-kbkmoZ5r"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35370"
+            }
+        ],
+        "external_ids": {
+            "mal": "50184",
+            "bangumi": "353819"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "偶像大師 百萬人演唱會！",
+        "title_ja": "アイドルマスター ミリオンライブ！",
+        "aliases": [
+            "偶像大師 百萬Live！",
+            "偶像大師 百萬現場！",
+            "The iDOLM@STER MILLION LIVE!",
+            "偶像大师 百万人演唱会！",
+            "偶像大师 百万Live！",
+            "偶像大师 百万现场！"
+        ],
+        "summary": "其他名稱：偶像大師 百萬Live！、偶像大師 百萬現場！、The iDOLM@STER MILLION LIVE!、偶像大师 百万人演唱会！、偶像大师 百万Live！、偶像大师 百万现场！",
+        "cover_image": "https://static.acgsecrets.hk/img/40/4002ece017a5d8fa9c10f9c06b5bd7b1/ca1da1ff24a4beabef350eb4895915ef42a384a9c03ab8b3588bd33055418838.jpg",
+        "air_date_text": "2023年10月8日起／每週日／10時0分",
+        "air_date": "2023-10-08",
+        "tags": [
+            "遊戲改編",
+            "新作",
+            "音樂"
+        ],
+        "streams": [],
+        "external_ids": {
+            "mal": "42385",
+            "bangumi": "309807"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "GOD.app",
+        "title_ja": "カミエラビ",
+        "aliases": [
+            "KamiErabi",
+            "KamiErabi GOD.app",
+            "GOD.app 神明选拔《尼爾》橫尾太郎原案",
+            "《陽炎》作者Jin編劇",
+            "《炎炎消防隊》大久保篤人設的原創動畫作品。",
+            "GOD.app 神明选拔"
+        ],
+        "summary": "其他名稱：KamiErabi、KamiErabi GOD.app、GOD.app 神明选拔《尼爾》橫尾太郎原案、《陽炎》作者Jin編劇，《炎炎消防隊》大久保篤人設的原創動畫作品。",
+        "cover_image": "https://static.acgsecrets.hk/img/bd/bd8d5e58cfe5c7d4ff79625b76750e2d/c4bb51007ddf009fa065eae8bf4df15d729b14a9f5aa085c7136b3e2a47e5292.jpg",
+        "air_date_text": "2023年10月4日起／每週三深夜／24時55分",
+        "air_date": "2023-10-04",
+        "tags": [
+            "原創作品",
+            "新作",
+            "動作"
+        ],
+        "streams": [],
+        "external_ids": {
+            "mal": "54798",
+            "bangumi": "425601"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "暴食狂戰士",
+        "title_ja": "暴食のベルセルク",
+        "aliases": [
+            "暴食狂戰士 唯有我突破了所謂「等級」的概念",
+            "狂怒的暴食",
+            "Boushoku no Berserk",
+            "Berserk of Gluttony",
+            "暴食狂战士",
+            "暴食狂战士 唯有我突破了所谓「等级」的概念"
+        ],
+        "summary": "擔任城門守衛的斐特因為自己持有的技能《暴食》是個只會讓肚子變餓的沒用能力，被迫過著最低階的生活。不過在他偶然解決掉侵入城內的盜賊後，世界徹底改變。沒錯，斐特持有的技能《暴食》，其實隱藏著能奪取殺害對象的技能和能力值的驚人力量。就這樣，原本只能像隻螻蟻苟活下去的斐特，命運悄悄地，也迅速地開始轉動——",
+        "cover_image": "https://static.acgsecrets.hk/img/75/75790aab581d24e7dfd247efed27ceeb/5754a0e3fb01c39ac2b02f178469ba39335bee96b26b99bae98a48071ff6c85d.jpg",
+        "air_date_text": "2023年10月4日起／每週三深夜／25時30分",
+        "air_date": "2023-10-04",
+        "tags": [
+            "小說改編",
+            "新作",
+            "高人氣",
+            "動作",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "viu.com",
+                "url": "https://www.viu.com/ott/hk/zh/vod/2248138/"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfoLF2J08Cpz5Ag2S4mK1J9A"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35249"
+            }
+        ],
+        "external_ids": {
+            "mal": "53439",
+            "bangumi": "406180"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "世界盡頭的聖騎士 鐵鏽之山的君王",
+        "title_ja": "最果てのパラディン 鉄錆の山の王",
+        "aliases": [
+            "Saihate no Paladin: Tetsusabi no Yama no Ou",
+            "The Faraway Paladin: The Lord of the Rust Mountains",
+            "世界尽头的圣骑士 铁锈之山的君王"
+        ],
+        "summary": "威爾成為聖騎士後過了一段時日。惡魔們與奇美拉都被討伐，讓無法可管又窮困的《獸之森林》居民們恢復了經濟活動與笑容。然而，邪惡的影子又再度漸漸籠罩這塊世界盡頭之地。從不合時節的花大量綻放開始，森林中陸續發生異常現象。為了解決問題，威爾與夥伴出發前往《獸之森林》的深處。不過等待著他們的，卻是森林之王的一段不祥的預言。「在鐵鏽的山脈，將會燃起災厄的黑火。烈焰擴散，恐會燒盡這塊土地的一切。」毀滅的矮人族之都──《鐵鏽山脈》中沉睡的災厄究竟是──？隨著與新夥伴的邂逅，威爾一行人的冒險再次開始了！",
+        "cover_image": "https://static.acgsecrets.hk/img/ff/ffbdcfb8eb4bd523ec382b5a563fb6fb/3da2b9612fde898e04facd2a1e028dde37eba9d6bb054b01a7ddb89a5e6002df.jpg",
+        "air_date_text": "2023年10月7日起／每週六／22時0分",
+        "air_date": "2023-10-07",
+        "tags": [
+            "小說改編",
+            "續作",
+            "高期待",
+            "動作",
+            "冒險",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md21093607"
+            },
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtT8MiM0FpwyVmE6i5gdD2Bj"
+            },
+            {
+                "region": "台灣",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md21093607"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35466"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtT8MiM0FpwyVmE6i5gdD2Bj"
+            }
+        ],
+        "external_ids": {
+            "mal": "50664",
+            "bangumi": "363569"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "重生者的魔法一定要特別",
+        "title_ja": "帰還者の魔法は特別です",
+        "aliases": [
+            "歸還者的魔法要特別",
+            "Kikansha no Mahou wa Tokubetsu desu",
+            "A Returner's Magic Should Be Special",
+            "归还者的魔法要特别",
+            "重生者的魔法一定要特别"
+        ],
+        "summary": "異次元空間『影之世界』持續侵蝕世界。人類不得不面對影世界帶來的最可怕的災難『影子迷宮』。『戴基爾．阿曼德』與同伴一同對抗最後一個『影子迷宮』的最終頭目破滅龍（波羅米歐．納波利坦），卻仍迎來世界的滅亡結局。就在戴基爾萬念俱灰的瞬間眼前出現了熟悉的光景……竟是13年前的世界。戴基爾竟回到了他的母校，全帝國第一的魔法學園「赫布里溫學院」的開學典禮上。於是他為了拯救世界，再次集結伙伴們，起身反抗終將到來的滅亡命運！",
+        "cover_image": "https://static.acgsecrets.hk/img/3d/3ddf9f6bb29d218e75fcfd0f371c49b8/f6d7f469299f3348c6fad1b01e578c00be8ed4fe81ee650eb48b4eb7a544918c.jpg",
+        "air_date_text": "2023年10月7日起／每週六深夜／24時0分",
+        "air_date": "2023-10-07",
+        "tags": [
+            "小說改編",
+            "新作",
+            "動作",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35481"
+            }
+        ],
+        "external_ids": {
+            "mal": "54852",
+            "bangumi": "425990"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "柚木家的四兄弟",
+        "title_ja": "柚木さんちの四兄弟。",
+        "aliases": [
+            "Yuzuki-san Chi no Yon Kyoudai.",
+            "The four brothers of Yuzuki"
+        ],
+        "summary": "熱鬧無比，有時還會吵架，四個性格各異的兄弟，每天的生活豐富多彩。無論是在家中、學校或是鄰里，都會上演各種有趣的事件。",
+        "cover_image": "https://static.acgsecrets.hk/img/9b/9bd1f39c0d8d01c130794368b20d1838/cd27fc2250600c1640bffceab45bdb236d554146aaa5ecdf3ae508b34c382db9.jpg",
+        "air_date_text": "2023年10月5日起／每週四／23時30分",
+        "air_date": "2023-10-05",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "日常"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtT-lLfBkMTj8sAdhKrTT14s"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtT-lLfBkMTj8sAdhKrTT14s"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35429"
+            }
+        ],
+        "external_ids": {
+            "mal": "55153",
+            "bangumi": "432651"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "大小姐和看門犬",
+        "title_ja": "お嬢と番犬くん",
+        "aliases": [
+            "大小姐與看門狗",
+            "Ojou to Banken-kun",
+            "A Girl & Her Guard Dog",
+            "大小姐与看门狗",
+            "大小姐与看门犬"
+        ],
+        "summary": "15歲的瀨名垣一咲是第三代瀨名垣組組長的孫女。她想正常地在高中交朋友和談戀愛，於是離開了原本住的地方到遠處就學。但過度保護她的26歲少主宇藤啓彌竟然謊報年齡，走後門和一咲入讀同一所高中。「談戀愛對妳來說還太早了」，啓彌對一咲這麼說，並不准任何男人接近她。然而，其實一咲早從很久以前就一直單戀著啓彌…？！",
+        "cover_image": "https://static.acgsecrets.hk/img/e4/e44c9be95590a265331cb40ee4e4bb22/af208d04e0ddba260e532c0847eef1639fd7ee542c51ef96a820fcefd8415868.png",
+        "air_date_text": "2023年9月28日起／每週四深夜／24時30分",
+        "air_date": "2023-09-28",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtRjmdLcoU4r0lFnidd0pN_H"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtRjmdLcoU4r0lFnidd0pN_H"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35240"
+            }
+        ],
+        "external_ids": {
+            "mal": "53300"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "魔法使的新娘 第2季 Part2",
+        "title_ja": "魔法使いの嫁 SEASON2 第2クール",
+        "aliases": [
+            "Mahou Tsukai no Yome Season 2 Cour 2",
+            "The Ancient Magus' Bride Season 2 Part 2"
+        ],
+        "summary": "其他名稱：Mahou Tsukai no Yome Season 2 Cour 2、The Ancient Magus' Bride Season 2 Part 2",
+        "cover_image": "https://static.acgsecrets.hk/img/d2/d218e7fd280bb290644ac930a46375c3/fd3452fdd3a217d585b1ca1a430ac1b59b3984afa16d6286b69ac98c579ce287.jpg",
+        "air_date_text": "2023年10月5日起／每週四／22時0分",
+        "air_date": "2023-10-05",
+        "tags": [
+            "漫畫改編",
+            "續作",
+            "高評價",
+            "戲劇",
+            "奇幻",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "viu.com",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md20197734"
+            },
+            {
+                "region": "台灣",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md20197734"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": null
+            }
+        ],
+        "external_ids": {
+            "mal": "55742",
+            "bangumi": "442523"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "MF GHOST 燃油車鬥魂",
+        "title_ja": "MFゴースト",
+        "aliases": [
+            "極速車魂",
+            "MF GHOST",
+            "极速车魂",
+            "MF GHOST 燃油车斗魂",
+            "MF Ghost 极速车魂《頭文字D》世界觀續作漫畫的改編動畫。",
+            "MF Ghost 极速车魂"
+        ],
+        "summary": "到了202X年，已經是電動車當道的世界，停止生產原本使用汽油為燃料的汽車。在這樣的環境下，在日本舉辦的公路賽事「MFG」透過網路的傳播而大受歡迎，來自英國知名賽車學校畢業的19歲主角‧夏向，為了個人某個目的也來到日本參加了該場賽事。他將會帶給這場賽事什麼樣的亮點，至於他與女主角‧戀之間的感情，又將會擦出什麼樣的火花呢？",
+        "cover_image": "https://static.acgsecrets.hk/img/ba/baf686ed7f6980574733c69dacac1346/6e242a15c286b473b0f3965f47f9f90f190835a3b4a811a461fc4e53d455d1e4.jpg",
+        "air_date_text": "2023年9月30日／週六／22時30分",
+        "air_date": "2023-09-30",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "運動"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtQFJtzY7g5s5M1AZMF5qE9o"
+            },
+            {
+                "region": "香港",
+                "platform": "viu.com",
+                "url": "https://www.viu.com/ott/hk/zh/vod/2247897/"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtQFJtzY7g5s5M1AZMF5qE9o"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35250"
+            }
+        ],
+        "external_ids": {
+            "mal": "50695"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "OVERTAKE！",
+        "title_ja": "オーバーテイク！",
+        "aliases": [],
+        "summary": "「F4」是進入頂點賽車「F1」的門票，為了培養優秀的年輕車手，它擔任著「賽車甲子園」的角色。有一名叫真賀孝哉的攝影師，在場上看到了高中生賽車手淺雛悠努力不懈的模樣後，想起了自己遺忘許久的心中熱忱。以此為契機，孝哉與車隊「小牧Motors」決定支持悠實現他的夢想。個性與年齡完全不同的孝哉和悠，兩人的人生開始有所交集——。",
+        "cover_image": "https://static.acgsecrets.hk/img/3c/3c40e0df59b1d233f39a5d06aa6d74da/2d096ba038cfcdd03fc0ae3fa69e9a03a73884f1a1e092e3928b4ac81dc962d5.jpg",
+        "air_date_text": "2023年10月1日起／每週日／22時0分",
+        "air_date": "2023-10-01",
+        "tags": [
+            "原創作品",
+            "新作",
+            "運動"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtRE0CgQa2cdQyTPw9Xpdc6y"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtRE0CgQa2cdQyTPw9Xpdc6y"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35346"
+            }
+        ],
+        "external_ids": {
+            "mal": "54301",
+            "bangumi": "416534"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "聖女魔力無所不能 第二季",
+        "title_ja": "聖女の魔力は万能です Season2",
+        "aliases": [
+            "聖女的魔力是萬能的 第二季",
+            "Seijo no Maryoku wa Bannou desu Season2",
+            "The Saint's Magic Power Is Omnipotent Season2",
+            "The Power of the Saint is All Around Season2",
+            "圣女魔力无所不能 第二季",
+            "圣女的魔力是万能的 第二季"
+        ],
+        "summary": "聖是二十幾歲的上班族，某天她突然被召喚到異世界當「聖女」。她活用原本就喜歡植物的嗜好，開始在藥用植物研究所工作。她是個生性認真的工作狂，再加上「聖女能量」的加持，接二連三做出效果增加五成的藥水。後來她在魔物討伐中，施展威力強大的淨化魔法，評價因此水漲船高！她的「聖女」身分受到斯蘭塔尼亞王國正式承認，身為王國的救世主，眾人都非常尊敬她。在一旁守護並扶持她的人，是研究所的約翰與裘德、宮廷魔導師團的尤利，還有彼此情投意合，卻尚未開始交往的「冰霜騎士」艾爾柏特。即使成了王國最重要的人物，聖依舊埋頭研究。她和艾爾柏特的感情將會慢慢升溫，戀愛也會有新的發展——!?",
+        "cover_image": "https://static.acgsecrets.hk/img/d4/d48e28c1bc1c2888b73581ddbf270b9c/851acf28b17fa67b6cdafc9801cf160c11e9be944c27afa8d712d1478f95415b.png",
+        "air_date_text": "2023年10月3日起／每週二／23時0分",
+        "air_date": "2023-10-03",
+        "tags": [
+            "小說改編",
+            "續作",
+            "高期待",
+            "奇幻",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLuxqoToY7Ucj8bl8GQM2zRPQxNurHkrmj"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfpD93YoQGg_T14SW-J7Wft9"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35392"
+            },
+            {
+                "region": "台灣",
+                "platform": "愛奇藝",
+                "url": "https://www.iq.com/album/1xd9oaolll5"
+            },
+            {
+                "region": "中國大陸",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md21086848"
+            }
+        ],
+        "external_ids": {
+            "mal": "51215",
+            "bangumi": "373787"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "希望的力量～大人光之美少女‘23～",
+        "title_ja": "キボウノチカラ～オトナプリキュア’２３～",
+        "aliases": [
+            "希望的力量 成年光之美少女'23",
+            "Kibo no Chikara ~Otona Precure 23~"
+        ],
+        "summary": "其他名稱：希望的力量 成年光之美少女'23、Kibo no Chikara ~Otona Precure 23~",
+        "cover_image": "https://static.acgsecrets.hk/img/a0/a07999af8ac317992e99d80af91729e8/33437cb4ec27991bac8dbb7c2a5295384667bfc13403d6aa5f9e48e6ac26e6a9.jpg",
+        "air_date_text": "2023年10月7日起／每週六／18時25分",
+        "air_date": "2023-10-07",
+        "tags": [
+            "原創作品",
+            "新作",
+            "動作",
+            "奇幻"
+        ],
+        "streams": [],
+        "external_ids": {
+            "mal": "54716",
+            "bangumi": "424453"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "想當冒險者前往都市的女兒成為S級",
+        "title_ja": "冒険者になりたいと都に出て行った娘がＳランクになってた",
+        "aliases": [
+            "因想當冒險者而前往大都市的女兒已經升到了S級",
+            "想當冒險者的女兒到首都當了等級S的冒險者",
+            "想當冒險者前往大都市的女兒升到了S級",
+            "冒險者女兒到大都市當了S級冒險者",
+            "Boukensha ni Naritai to Miyako ni Deteitta Musume ga S-Rank ni Natteta",
+            "My Daughter Left the Nest and Returned an S-Rank Adventurer",
+            "想当冒险者前往都市的女儿成为S级",
+            "因想当冒险者而前往大都市的女儿已经升到了S级",
+            "想当冒险者的女儿到首都当了等级S的冒险者",
+            "想当冒险者前往大都市的女儿升到了S级",
+            "冒险者女儿到大都市当了S级冒险者"
+        ],
+        "summary": "在故鄉村子過著和平生活的退休冒險者貝爾格里夫，某天在附近的森林撿到一名被遺棄的女嬰，就將她當成自己的女兒取名「安潔琳」獨自撫養長大。光陰似箭——憧憬著父親的背影出發前往都市的女兒已經成為最上級的「Ｓ級」冒險者…！？",
+        "cover_image": "https://static.acgsecrets.hk/img/1e/1e4e7a580b9b0b76e9dcce9824129727/b24c1eaaa1835ee4f5d21f268283ee2e259b213280804e90f7ddd2128d5a2457.jpg",
+        "air_date_text": "2023年9月28日起／每週四／23時0分",
+        "air_date": "2023-09-28",
+        "tags": [
+            "小說改編",
+            "新作",
+            "動作",
+            "冒險",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md21093439"
+            },
+            {
+                "region": "香港",
+                "platform": "愛奇藝",
+                "url": "https://www.iq.com/album/2b0vwch29gp"
+            },
+            {
+                "region": "香港",
+                "platform": "It's Anime YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLhGamQZtJ7K-J2WeHc-MYqxf77vx8yVnR"
+            },
+            {
+                "region": "台灣",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md21093439"
+            },
+            {
+                "region": "台灣",
+                "platform": "愛奇藝",
+                "url": "https://www.iq.com/album/2b0vwch29gp"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35239"
+            },
+            {
+                "region": "台灣",
+                "platform": "It's Anime YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLhGamQZtJ7K-J2WeHc-MYqxf77vx8yVnR"
+            },
+            {
+                "region": "中國大陸",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md21086382"
+            }
+        ],
+        "external_ids": {
+            "mal": "53494"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "我的新上司是天然呆",
+        "title_ja": "新しい上司はど天然",
+        "aliases": [
+            "新上司是天然呆",
+            "Atarashii Joushi wa Do Tennen",
+            "My New Boss Is Goofy"
+        ],
+        "summary": "上班族桃瀨因受不了上司的職場霸凌於是轉職了，但被霸凌的心理陰影卻讓他在上班第一天就在新上司面前胃痛得蹲在地上走不動，正當他以為自己會被新上司討厭的時候，出現在他面前的竟是新上司急忙去買來的…生理痛的藥？",
+        "cover_image": "https://static.acgsecrets.hk/img/06/06cba21f29a8993a58645d25b66399a5/bcd69877db9eb8fbc3c72e326c56f94e0e7c8596ba458fad00b168fe7a7197b6.jpg",
+        "air_date_text": "2023年10月7日起／每週六／23時30分",
+        "air_date": "2023-10-07",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "高評價",
+            "喜劇"
+        ],
+        "streams": [
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35472"
+            }
+        ],
+        "external_ids": {
+            "mal": "53310",
+            "bangumi": "435926"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "川越男子歌唱團",
+        "title_ja": "川越ボーイズ・シング",
+        "aliases": [
+            "川越男子合唱團",
+            "Kawagoe Boys Sing",
+            "川越男子歌唱团",
+            "川越男子合唱团"
+        ],
+        "summary": "「對我來說，在人群前演唱…」想唱但唱不出來。前聖歌隊成員出井天使，他選擇躲在自己家的「だんぼっち」內，繼續唱著他的歌。他本來過著安穩的學校生活，直到前指揮家響春男突然來到他的生活中。有才華但因為性格問題而被樂隊開除的春男，為了回歸，必須完成一項任務：他得在川越學園創建一支只有男生的「男生合唱部」，並在「全國男生合唱大賽」中奪得冠軍。天使和夥伴們被自我中心、不知變通、常說惡言的春男被迫加入了「男孩合唱部」。起初，新部員們對春男的倔強和難搞感到煩惱，但在春男的特殊指導下，他們漸漸愛上了合唱。川越學園的男孩合唱部能在眾多頂級對手中勝出，贏得比賽冠軍嗎？",
+        "cover_image": "https://static.acgsecrets.hk/img/27/27a4764f2ac0001bb4cd476a4ba87b52/bccefbf0876e9da5806406cbfae0e0e495295f6518dd1ff74b313170afd4a193.png",
+        "air_date_text": "2023年10月9日起／每週一／23時0分",
+        "air_date": "2023-10-09",
+        "tags": [
+            "原創作品",
+            "新作",
+            "喜劇",
+            "音樂",
+            "校園"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "It's Anime YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLhGamQZtJ7K8wkhGjTfXaLXy4zlqULRea"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35386"
+            },
+            {
+                "region": "台灣",
+                "platform": "It's Anime YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLhGamQZtJ7K8wkhGjTfXaLXy4zlqULRea"
+            }
+        ],
+        "external_ids": {
+            "mal": "54638",
+            "bangumi": "422425"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "米奇與達利 惡童物語",
+        "title_ja": "ミギとダリ",
+        "aliases": [
+            "米奇與達利",
+            "Migi to Dali",
+            "Migi & Dali",
+            "米奇与达利 恶童物语",
+            "米奇与达利"
+        ],
+        "summary": "1990年神戶市北區。有個以美國郊區為原型打造出來的新城──奧里岡村，在這座富裕居民們生活的鎮上出現了「一個人」，他是名少年。那個少年是沒有子嗣的園山家收養的孩子，名為秘鳥。園山夫妻很快就受到俊美聰穎的少年秘鳥所吸引，但是秘鳥卻有一個天大的祕密與驚人的目的──",
+        "cover_image": "https://static.acgsecrets.hk/img/55/55eecb961b7a5c27ecb5765fcb313fd1/f83c0e9348ac747e92e1531663fb48009b73a8889ee774ca9a4a9a908201d3e7.jpg",
+        "air_date_text": "2023年10月2日起／每週一／22時0分",
+        "air_date": "2023-10-02",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "高評價",
+            "喜劇"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Aniplus",
+                "url": "https://nowplayer.now.com/ondemand/detail?id=S202309220170004&type=series"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35359"
+            },
+            {
+                "region": "中國大陸",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md21089341"
+            }
+        ],
+        "external_ids": {
+            "mal": "50586",
+            "bangumi": "362255"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "地下忍者",
+        "title_ja": "アンダーニンジャ",
+        "aliases": [
+            "Under Ninja"
+        ],
+        "summary": "在日本，存在著世界上最龐大的暗殺組織──。曾經盛極一時的日本忍者，因為戰後ＧＨＱ強迫解散組織後消失無蹤。然而，事實上，忍者至今依舊暗中存在，人數據說多達20萬人。而且，部分「精銳」忍者，在國家級的對抗中負責執行秘密任務，相當活躍。不過，另一方面，下級忍者卻是經常拿不到工作，其中之一的雲隱九郎也一樣，過著宛如尼特族般的生活……",
+        "cover_image": "https://static.acgsecrets.hk/img/62/62814aa9fced053e0ff17b72cf50d9c7/cdebdb13f7c7f3fe85413466ebd18a889389908f1127f302cfb0dd5cca82e8da.png",
+        "air_date_text": "2023年10月5日起／每週四深夜／25時28分",
+        "air_date": "2023-10-05",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "動作"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "愛奇藝",
+                "url": "https://www.iq.com/album/13zaq099nk9"
+            },
+            {
+                "region": "香港",
+                "platform": "It's Anime YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLhGamQZtJ7K_QY2U_uqOLv11WUNWbKlbK"
+            },
+            {
+                "region": "台灣",
+                "platform": "愛奇藝",
+                "url": "https://www.iq.com/album/13zaq099nk9"
+            },
+            {
+                "region": "台灣",
+                "platform": "It's Anime YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLhGamQZtJ7K_QY2U_uqOLv11WUNWbKlbK"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35436"
+            }
+        ],
+        "external_ids": {
+            "mal": "49766",
+            "bangumi": "348220"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "女朋友 and 女朋友 第2季",
+        "title_ja": "カノジョも彼女 第2期",
+        "aliases": [
+            "她也是女友 第2季",
+            "女友成雙 第2季",
+            "女朋友 vs. 女朋友 第2季",
+            "女朋友and女朋友 Season 2",
+            "女友成堆 第2期",
+            "Kanojo mo Kanojo 2nd Season",
+            "Girlfriend",
+            "Girlfriend Season 2",
+            "女友成双 第2季",
+            "女朋友 vs. 女朋友第2季"
+        ],
+        "summary": "經過了溫泉旅行，咲和渚兩人以對等的關係繼續和直也過著腳踏兩條船的生活。加上奪走直也初吻的蜜莉卡，暗戀著直也的紫乃，迎來暑假的五人，戀情的舞台將轉往煙火大會、露營，以及沖繩——",
+        "cover_image": "https://static.acgsecrets.hk/img/fa/fa2224a1260eeb9e4f2f2f38463ccc34/b72583e05436965210baacec3861903038b27aa1437a5df388dea06a8f03aa94.jpg",
+        "air_date_text": "2023年10月6日起／每週五深夜／26時23分",
+        "air_date": "2023-10-06",
+        "tags": [
+            "漫畫改編",
+            "續作",
+            "喜劇",
+            "浪漫",
+            "校園",
+            "日常"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLuxqoToY7Ucgc0-9Xq-GJxJP5drIaGdrf"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfqkhJ5dHKSQUB-RYDgaIMtt"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35457"
+            }
+        ],
+        "external_ids": {
+            "mal": "53040",
+            "bangumi": "398949"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "明日方舟：冬隱歸路",
+        "title_ja": "アークナイツ【冬隠帰路/PERISH IN FROST】",
+        "aliases": [
+            "Arknights: Fuyukomori Kaerimichi",
+            "Arknights: Perish in Frost",
+            "明日方舟：冬隐归路",
+            "明日方舟 冬隐归路"
+        ],
+        "summary": "礦石病－那是會讓人體逐漸結晶化至死亡的不治之症。 羅德島製藥公司為研發出治療礦石病的特效藥物，並為解決天災與礦石病帶來的各種問題與爭端、改善感染者的處境而不斷採取行動。 為阻止感染者組織整合運動的暴行，羅德島與炎國城市龍門簽訂協議，為實現各自的目標而共同行動。 在經歷了與米莎和碎骨的戰鬥之後，阿米婭無法接受現實，獨自消沉著。 而在另一邊，羅德島派遣到分城廢墟的偵察小隊，注意到了在廢城中出現的特異現象…",
+        "cover_image": "https://static.acgsecrets.hk/img/f6/f645c5e81cad182a3053839e57dbe22c/9134743ee2b4db1c94abad8aa7c67ff9342fbe595727f68d5329d5d513d0491a.jpg",
+        "air_date_text": "2023年10月6日起／每週五深夜／25時23分",
+        "air_date": "2023-10-06",
+        "tags": [
+            "遊戲改編",
+            "續作",
+            "動作",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md21085589"
+            },
+            {
+                "region": "台灣",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md21085589"
+            },
+            {
+                "region": "中國大陸",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md21085589"
+            }
+        ],
+        "external_ids": {
+            "mal": "53881",
+            "bangumi": "411268"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "破滅的王國",
+        "title_ja": "はめつのおうこく",
+        "aliases": [
+            "破滅之國",
+            "破滅王國",
+            "Hametsu no Oukoku",
+            "The Kingdoms of Ruin",
+            "破灭的王国",
+            "破灭之国",
+            "破灭王国"
+        ],
+        "summary": "原本仰賴魔女力量而發展文明的人類，在超產業革命期間，開始否定魔女的存在，大國利迪亞更是開始獵殺魔女。少年阿德尼斯的養育之親兼最愛的魔女‧克蘿耶被皇帝殺死，自己也被囚禁，於是發誓要報復人類…在一次魔女大鬧監獄時，阿德尼斯被放出來了…",
+        "cover_image": "https://static.acgsecrets.hk/img/87/8761020a0f2710eb3edacd24ff454ba8/653169c001cb99b069ca4f782345e1e0005855ef3bfd487625557718495b7c87.jpg",
+        "air_date_text": "2023年10月6日起／每週五深夜／25時53分",
+        "air_date": "2023-10-06",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "動作",
+            "戲劇",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtSoOqDJHzgkYqIc9aJ0Jd7F"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtSoOqDJHzgkYqIc9aJ0Jd7F"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35454"
+            }
+        ],
+        "external_ids": {
+            "mal": "54362",
+            "bangumi": "418512"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "絆之Allele 2nd Season",
+        "title_ja": "絆のアリル セカンドシーズン",
+        "aliases": [
+            "絆的Allele 2nd Season",
+            "Kizuna no Allele 2nd Season",
+            "Kizuna no Allele Season 2",
+            "绊之Allele 2nd Season",
+            "绊的Allele 2nd Season"
+        ],
+        "summary": "PathTLive的所有成員，包括Miracle都成功進入了Virtual Grid Award ADEN種子的本選賽。但他們的高興來得快去得也快，下一個試煉很快就降臨到了他們頭上。學院提出的下一個挑戰是組合戰！PathTLive之間的友誼也出現裂縫？！新的強敵的出現、與同伴的分離，使得Miracle和她的夥伴們的友情變得動盪不安。這個試煉會給Miracle他們帶來什麼呢？PathTLive的命運又將何去何從！？",
+        "cover_image": "https://static.acgsecrets.hk/img/02/029bd4b36aec0cca551d0a252a05729b/49e55a9bc6dd63f3cd1e2689c387602a2aba5d2993bb8c171b0467ac2dfc6055.jpg",
+        "air_date_text": "2023年10月4日起／每週三深夜／24時0分",
+        "air_date": "2023-10-04",
+        "tags": [
+            "原創作品",
+            "續作",
+            "音樂"
+        ],
+        "streams": [
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35411"
+            }
+        ],
+        "external_ids": {
+            "mal": "55775",
+            "bangumi": "443147"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "某大叔的VRMMO活動記",
+        "title_ja": "とあるおっさんのVRMMO活動記",
+        "aliases": [
+            "A Certain Middle-Aged Man's VRMMO Activity Log",
+            "To Aru Ossan no VRMMO Katsudouki",
+            "某大叔的VRMMO活动记"
+        ],
+        "summary": "喜歡玩遊戲的普通小職員田中大地，以大地之名登入官方自豪自由度超級破表的新型VRMMO「重啟自由之地Online」的世界。在可以全力打怪，也可以隨心所欲探險的世界裡，大地選擇鑽研公認最不好用的技能，將其發揮到淋漓盡致的低調玩法！例如專門製作耗時費工的藥水、研發無用但美味至極的料理、有時親手打造不得了的武器享受狩獵的樂趣等等――平凡無奇的中年大叔，在VRMMO的奇幻世界裡，今天依舊只走自己的路！",
+        "cover_image": "https://static.acgsecrets.hk/img/b2/b2a4a596b65a36100d98b8d8124a189c/e821dcdc767d95335a33ce4af28e3ee74bf0c2beeb9d8481425bc25521e2f16b.jpg",
+        "air_date_text": "2023年10月2日起／每週一深夜／25時0分",
+        "air_date": "2023-10-02",
+        "tags": [
+            "小說改編",
+            "新作",
+            "動作",
+            "冒險",
+            "喜劇",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLuxqoToY7UcjJEGfros6Std4gP3WW0Aiq"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfqaNNTfkEsrOmfkYtHVZzYl"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35363"
+            }
+        ],
+        "external_ids": {
+            "mal": "54431",
+            "bangumi": "419728"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "靠著魔法藥水在異世界活下去！",
+        "title_ja": "ポーション頼みで生き延びます!",
+        "aliases": [
+            "Potion-danomi de Ikinobimasu!",
+            "I Shall Survive Using Potions!",
+            "靠着魔法药水在异世界活下去！"
+        ],
+        "summary": "由於管理者調整世界扭曲的行動失敗，長瀨香失去了肉體，而且無法再回到原本的世界，只能轉生至文明更為落後的世界。無法忍受自己被扔到那種地方的香提出要求，想要一種『可以自由做出任何效果藥品』的能力，並更進一步取得道具箱、語言理解能力及稍微返老還童的身體。就這樣，15歲的少女‧香使用自己創造的藥品──魔法藥水，以穩定的生活為目標展開冒險！",
+        "cover_image": "https://static.acgsecrets.hk/img/5b/5b1ec3dc52e5ebc23dfa9984c951c511/91e69a70949e1b063723d314182008a358baad701a5ca08e28ee268e85906f14.png",
+        "air_date_text": "2023年10月7日起／每週六深夜／26時0分",
+        "air_date": "2023-10-07",
+        "tags": [
+            "小說改編",
+            "新作",
+            "奇幻"
+        ],
+        "streams": [],
+        "external_ids": {
+            "mal": "54616",
+            "bangumi": "421643"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "屍體如山的死亡遊戲 第2季",
+        "title_ja": "デッドマウント・デスプレイ 第2クール",
+        "aliases": [
+            "亡骸遊戲 第2季",
+            "Dead Mount Death Play 2nd Cour",
+            "Dead Mount Death Play Part 2",
+            "尸体如山的死亡游戏 第2季",
+            "亡骸游戏 第2季",
+            "亡骸游戏 Part.2"
+        ],
+        "summary": "其他名稱：亡骸遊戲 第2季、Dead Mount Death Play 2nd Cour、Dead Mount Death Play Part 2、尸体如山的死亡游戏 第2季、亡骸游戏 第2季、亡骸游戏 Part.2",
+        "cover_image": "https://static.acgsecrets.hk/img/8f/8f5f2b8104d0cdaf497074b2ea94a2f0/1da1268d323b2032f1139e35d9907471e61f10fcc993c6deec42893997c6c8c2.jpg",
+        "air_date_text": "2023年10月9日起／每週一深夜／24時0分",
+        "air_date": "2023-10-09",
+        "tags": [
+            "漫畫改編",
+            "續作",
+            "高期待",
+            "動作",
+            "奇幻",
+            "超自然"
+        ],
+        "streams": [
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": null
+            }
+        ],
+        "external_ids": {
+            "mal": "54743",
+            "bangumi": "424892"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "七大罪 默示錄的四騎士",
+        "title_ja": "七つの大罪 黙示録の四騎士",
+        "aliases": [
+            "七大罪 默示錄四騎士",
+            "Mokushiroku no Yonkishi",
+            "The Seven Deadly Sins: Four Knights of the Apocalypse",
+            "Nanatsu no Taizai: Mokushiroku no Yonkishi",
+            "七大罪 默示录的四骑士",
+            "七大罪 默示录四骑士少年megazine漫畫《七大罪》續作「默示錄的四騎士」的改編動畫",
+            "動畫版相比漫畫原作冠上了前作七大罪的名字。",
+            "七大罪 默示录四骑士"
+        ],
+        "summary": "其他名稱：七大罪 默示錄四騎士、Mokushiroku no Yonkishi、The Seven Deadly Sins: Four Knights of the Apocalypse、Nanatsu no Taizai: Mokushiroku no Yonkishi、七大罪 默示录的四骑士、七大罪 默示录四骑士少年megazine漫畫《七大罪》續作「默示錄的四騎士」的改編動畫，動畫版相比漫畫原作冠上了前作七大罪的名字。",
+        "cover_image": "https://static.acgsecrets.hk/img/5a/5a25de0138db88aafd84c777c146778d/a8377ff172f214c1e141fa8dc6ae046c2e0dcd9016431ae57a0d4298d15cd376.jpg",
+        "air_date_text": "2023年10月8日起／每週日／16時30分",
+        "air_date": "2023-10-08",
+        "tags": [
+            "漫畫改編",
+            "續作",
+            "動作",
+            "冒險",
+            "奇幻"
+        ],
+        "streams": [],
+        "external_ids": {
+            "mal": "51794",
+            "bangumi": "380792"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "烈焰先鋒 救國的橘衣消防員",
+        "title_ja": "め組の大吾 救国のオレンジ",
+        "aliases": [
+            "特搜組大吾 救國的橘色部隊",
+            "Megumi no Daigo: Kyuukoku no Orange",
+            "Firefighter Daigo: Rescuer in Orange",
+            "特搜组大吾 救国的橘色部队",
+            "烈焰先锋 救国的橘衣消防员90年代漫畫《め組の大吾(消防員的故事/火線先鋒大吾)》續篇的動畫化作品。",
+            "烈焰先锋 救国的橘衣消防员"
+        ],
+        "summary": "十朱大吾與斧田駿、中村雪以及其他伙伴通過了「特別技術研修」，正式成為救助隊成員，將前往火災現場拯救傷患與受困的民眾！前作的配角「甘粕士郎」也在本書中登場！暌違二十五年的系列新作，再次見到熟悉的角色，踏上「救助」的戰場———！",
+        "cover_image": "https://static.acgsecrets.hk/img/d2/d2402b66154dbe6c7f2894df8cdb772e/8d0797f74b3f5ec5c9d947ffaa74bcef31ed1fc9927b5516025b4b02e7b6edb5.jpg",
+        "air_date_text": "2023年9月30日起／每週六／17時30分",
+        "air_date": "2023-09-30",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "2季度",
+            "動作",
+            "戲劇"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtTjVYhqX-2qoDgcc2Lrpruv"
+            },
+            {
+                "region": "台灣",
+                "platform": "羚邦",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtTjVYhqX-2qoDgcc2Lrpruv"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35245"
+            }
+        ],
+        "external_ids": {
+            "mal": "53848"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "Paradox Live THE ANIMATION",
+        "title_ja": "Paradox Live THE ANIMATION",
+        "aliases": [],
+        "summary": "近未來，在飽和的HIPHOP文化中誕生了新的潮流：「幻影Live」。Hip hop歌手通過與被稱為「幻金屬」的金屬飾品和自己的DNA化學反應，創造出與其情感相連的幻影，在華麗的舞台上激起年輕一代的狂熱。在這期間，分別在各自的音樂風格中獨占鳴名的「BAE」「The Cat’s Whiskers」「cozmez」和「悪漢奴等」，都收到了在傳奇的“CLUB paradox”舉行的神秘大賽「Paradox Live」的邀請。這四隊各自懷著不同的理由決定加入這場戰鬥，但「Paradox Live」的背後，卻隱藏著超乎想像的巨大秘密……",
+        "cover_image": "https://static.acgsecrets.hk/img/29/29b422fa1e827a4d5e78de85a7e30e33/28e224b123293e31b3943fc17318d27e55163131ebd81c216493956d39f03c4d.jpg",
+        "air_date_text": "2023年10月3日起／每週二／23時0分",
+        "air_date": "2023-10-03",
+        "tags": [
+            "原創作品",
+            "新作",
+            "科幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtTbYVjA-1lxigKz2_GY70xO"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtTbYVjA-1lxigKz2_GY70xO"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35395"
+            }
+        ],
+        "external_ids": {
+            "mal": "51956",
+            "bangumi": "385210"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "催眠麥克風 -Division Rap Battle- Rhyme Anima +",
+        "title_ja": "ヒプノシスマイク-Division Rap Battle- Rhyme Anima +",
+        "aliases": [
+            "HYPNOSISMIC -Division Rap Battle- Rhyme Anima +\"",
+            "催眠麦克风 -Division Rap Battle- Rhyme Anima +"
+        ],
+        "summary": "H歷，使用武力的戰爭已經根絕，鬥爭不靠武力，而是以能夠干擾人類精神的特殊麥克風取代，其名為「催眠麥克風」。藉由這個麥克風唱出的歌詞可以影響人類的交感神經和副交感神經，使人變成各種狀態。H歷3年，各DIVISION的MC代表團互相戰鬥，開始了DIVISION RAP BATTLE，獲勝的地區可以得到領地以外的領土。第二回DIVISION RAP BATTLE由第一回勝出的「Buster Bros!!!」、「MAD TRIGGER CREW」、「Fling Posse」、「麻天狼」，以及「通通打趴啦本舖」和「Bad Ass Temple」晉級決賽，角逐勝利。時間是第二回DIVISION RAP BATTLE結束後不久…。背負著DIVISION的男人們開始了新的戰鬥！",
+        "cover_image": "https://static.acgsecrets.hk/img/f9/f92dd77f972a835f11ad436e5ab97848/44197c53b3635c2d3b62531efc2ca55e281c795bb5fefecba2568187792e320f.jpg",
+        "air_date_text": "2023年10月6日起／每週五深夜／24時0分",
+        "air_date": "2023-10-06",
+        "tags": [
+            "原創作品",
+            "續作",
+            "動作",
+            "科幻"
+        ],
+        "streams": [
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35448"
+            }
+        ],
+        "external_ids": {
+            "mal": "54858",
+            "bangumi": "426049"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "B-PROJECT～熱烈＊Love Call～",
+        "title_ja": "B-PROJECT～熱烈＊ラブコール～",
+        "aliases": [
+            "B-PROJECT Netsuretsu＊Love Call",
+            "B-PROJECT～热烈＊Love Call～虛擬偶像計劃第三季",
+            "上一季在2019年1月播放。",
+            "B-PROJECT～热烈＊Love Call～"
+        ],
+        "summary": "其他名稱：B-PROJECT Netsuretsu＊Love Call、B-PROJECT～热烈＊Love Call～虛擬偶像計劃第三季，上一季在2019年1月播放。",
+        "cover_image": "https://static.acgsecrets.hk/img/2b/2b793116c4f654a16bc019b83072f15a/14212cf6a2c45939de9e06b84328716d4d347faccffb7296b588d476bc708b60.jpg",
+        "air_date_text": "2023年10月2日起／每週一／21時30分",
+        "air_date": "2023-10-02",
+        "tags": [
+            "原創作品",
+            "續作",
+            "音樂"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "It's Anime YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLhGamQZtJ7K9MpAsjiyfyO0lB0-zVofm5"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35371"
+            },
+            {
+                "region": "台灣",
+                "platform": "It's Anime YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLhGamQZtJ7K9MpAsjiyfyO0lB0-zVofm5"
+            }
+        ],
+        "external_ids": {
+            "mal": "44081",
+            "bangumi": "320456"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "放學後少年花子君",
+        "title_ja": "放課後少年花子くん",
+        "aliases": [
+            "Houkago Shounen Hanako-kun",
+            "After-school Hanako-kun",
+            "放学后少年花子君2020年冬季動畫《地縛少年花子君》原作番外篇的動畫化。短篇動畫",
+            "共4集。",
+            "放学后少年花子君"
+        ],
+        "summary": "其他名稱：Houkago Shounen Hanako-kun、After-school Hanako-kun、放学后少年花子君2020年冬季動畫《地縛少年花子君》原作番外篇的動畫化。短篇動畫，共4集。",
+        "cover_image": "https://static.acgsecrets.hk/img/36/36ffc19e9fd183a7c82410e8d46cb6e4/94d6e3ef9e6bcff2625ada64bcda1846c7bfc1c115c1e27ffec8453ae13d5295.jpg",
+        "air_date_text": "2023年10月12日起／每週四深夜／25時58分",
+        "air_date": "2023-10-12",
+        "tags": [
+            "漫畫改編",
+            "續作",
+            "喜劇",
+            "超自然"
+        ],
+        "streams": [],
+        "external_ids": {
+            "mal": "56425",
+            "bangumi": "412164"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "鐵路浪漫譚 2",
+        "title_ja": "レヱル・ロマネスク2",
+        "aliases": [
+            "愛上火車 2",
+            "Rail Romanesque 2",
+            "铁路浪漫谭 2",
+            "爱上火车 2"
+        ],
+        "summary": "其他名稱：愛上火車 2、Rail Romanesque 2、铁路浪漫谭 2、爱上火车 2",
+        "cover_image": "https://static.acgsecrets.hk/img/3e/3ee43bbfa0d029e716807642c69ec6b2/b7a1f1c18378be7f594f73c0c2ebf7ad3e9cb38f16d3bac985b42fce2e4bc2da.jpg",
+        "air_date_text": "2023年10月5日起／每週四深夜／25時0分",
+        "air_date": "2023-10-05",
+        "tags": [
+            "遊戲改編",
+            "續作",
+            "日常"
+        ],
+        "streams": [],
+        "external_ids": {
+            "mal": "44583",
+            "bangumi": "404284"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "足球小將 第2季 世少篇",
+        "title_ja": "キャプテン翼シーズン2 ジュニアユース編",
+        "aliases": [
+            "足球小將翼 第2季 世少篇",
+            "隊長小翼 第2季 世少篇",
+            "新足球小將 第2期 世少篇",
+            "Captain Tsubasa Season 2: Junior Youth-hen",
+            "Captain Tsubasa Jr. Youth Arc",
+            "队长小翼 第2季 世少篇",
+            "足球小将翼 第2季 世少篇",
+            "足球小将 第2季 世少篇",
+            "新足球小将 第2期 世少篇"
+        ],
+        "summary": "其他名稱：隊長小翼 第2季 世少篇、新足球小將 第2期 世少篇、Captain Tsubasa Season 2: Junior Youth-hen、Captain Tsubasa Jr. Youth Arc、队长小翼 第2季 世少篇、足球小将翼 第2季 世少篇、足球小将 第2季 世少篇、新足球小将 第2期 世少篇",
+        "cover_image": "https://static.acgsecrets.hk/img/f7/f7a5f4a4b073bf463781f6184d3599e8/02087392b44d4e436116425f5ea100ecfd7902ee3ee9c871c6167d03eb9211b4.png",
+        "air_date_text": "2023年10月1日起／每週日／17時30分",
+        "air_date": "2023-10-01",
+        "tags": [
+            "漫畫改編",
+            "續作",
+            "2季度",
+            "運動"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "香港",
+                "platform": "viu.com",
+                "url": "https://www.viu.com/ott/hk/zh/vod/2247795/"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfrAfnXImGF4TCiF5s0p_FRq"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35248"
+            }
+        ],
+        "external_ids": {
+            "mal": "54803",
+            "bangumi": "425638"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "松犬",
+        "title_ja": "まついぬ",
+        "aliases": [
+            "Matsuinu赤塚不二夫《阿松 (おそ松くん)》衍生作品。",
+            "Matsuinu"
+        ],
+        "summary": "其他名稱：Matsuinu赤塚不二夫《阿松 (おそ松くん)》衍生作品。",
+        "cover_image": "https://static.acgsecrets.hk/img/be/be81dafc0e554f9576f7db7fd316879b/c2732184c261e5ccb798b86b00710ae8ebd3cffd02a12f53dd54acb012de8a73.png",
+        "air_date_text": "2023年10月7日起／每週六／7時0分",
+        "air_date": "2023-10-07",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "戲仿"
+        ],
+        "streams": [],
+        "external_ids": {
+            "bangumi": "452511"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "爆旋陀螺 X",
+        "title_ja": "ベイブレードエックス",
+        "aliases": [
+            "戰鬥陀螺 X",
+            "陀螺戰士 X",
+            "霸旋陀螺 X",
+            "BEYBLADE X",
+            "陀螺战士X",
+            "战斗陀螺X",
+            "爆旋陀螺X",
+            "霸旋陀螺X"
+        ],
+        "summary": "其他名稱：陀螺戰士 X、霸旋陀螺 X、BEYBLADE X、陀螺战士X、战斗陀螺X、爆旋陀螺X、霸旋陀螺X",
+        "cover_image": "https://static.acgsecrets.hk/img/03/0342b1436438b9dbaa852d3bc2819721/9a4a55d60446cf2b61f780b02c35a07e392711c94f16eae542301287ff9382e2.jpg",
+        "air_date_text": "2023年10月6日起／每週五／18時25分",
+        "air_date": "2023-10-06",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "動作",
+            "冒險",
+            "運動"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "TVB",
+                "url": null
+            }
+        ],
+        "external_ids": {
+            "bangumi": "418599"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "仙魔大戰",
+        "title_ja": "ビックリメン",
+        "aliases": [
+            "聖魔大戰",
+            "BIKKURI-MEN",
+            "圣魔大战",
+            "仙魔大战食玩「仙(聖)魔大戰」的新動畫版。",
+            "仙魔大战"
+        ],
+        "summary": "其他名稱：BIKKURI-MEN、圣魔大战、仙魔大战食玩「仙(聖)魔大戰」的新動畫版。",
+        "cover_image": "https://static.acgsecrets.hk/img/23/23be131c7fc2fd0e31e1776d425f0b75/eba47ffae5fd8856dd4a8ef2f66630e7e22dcefaa2e4f89555863e101faaf2bc.jpg",
+        "air_date_text": "2023年10月5日起／每週四／23時30分",
+        "air_date": "2023-10-05",
+        "tags": [
+            "遊戲改編",
+            "新作",
+            "喜劇",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtRhFhprT0thU4VIhUPkvlSa"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtRhFhprT0thU4VIhUPkvlSa"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35425"
+            }
+        ],
+        "external_ids": {
+            "mal": "54914",
+            "bangumi": "427568"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "小不點",
+        "title_ja": "オチビサン",
+        "aliases": [
+            "Ochibi-san",
+            "小不点"
+        ],
+        "summary": "其他名稱：Ochibi-san、小不点",
+        "cover_image": "https://static.acgsecrets.hk/img/1e/1e91181b2e32b99a65ad30dce3a49be5/7ec39acccb07de3920bc3f569329d8d9c7cb74d6d20cef49d5eba436a21753b1.jpg",
+        "air_date_text": "2023年10月7日起／每週六深夜／24時0分",
+        "air_date": "2023-10-07",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "日常"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtRHYCBrRAOVF2J9Yd3KswiA"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtRHYCBrRAOVF2J9Yd3KswiA"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35493"
+            }
+        ],
+        "external_ids": {
+            "mal": "56588",
+            "bangumi": "453630"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "DOG SIGNAL",
+        "title_ja": "ドッグシグナル",
+        "aliases": [
+            "Dog Signal 狗狗訊號",
+            "愛犬訊號",
+            "Dog Signal 狗狗信号",
+            "爱犬信号"
+        ],
+        "summary": "其他名稱：Dog Signal 狗狗訊號、愛犬訊號、Dog Signal 狗狗信号、爱犬信号",
+        "cover_image": "https://static.acgsecrets.hk/img/25/25d73d636c7adbf51bbae3882750bc44/b37f5507964de13c0f5374bd5894b9bc7e7723335f42497669980750adff96eb.jpg",
+        "air_date_text": "2023年10月22日起／每週日／17時0分",
+        "air_date": "2023-10-22",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "日常"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtS84wxYPqYeNLQGvgrMUxhG"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=35788"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtS84wxYPqYeNLQGvgrMUxhG"
+            }
+        ],
+        "external_ids": {
+            "mal": "54294",
+            "bangumi": "418494"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "全力兔",
+        "title_ja": "全力ウサギ",
+        "aliases": [
+            "全力兔子",
+            "Zenryoku Usagi"
+        ],
+        "summary": "其他名稱：全力兔子、Zenryoku Usagi",
+        "cover_image": "https://static.acgsecrets.hk/img/a9/a969d3e178960ad50814b00a66b3554e/be121887f382f05322468f0c3e71fb989b036dcdfa948f648d3f9309a33f75b1.jpg",
+        "air_date_text": "2023年10月7日起／每週六／17時55分",
+        "air_date": "2023-10-07",
+        "tags": [
+            "漫畫改編",
+            "續作",
+            "高評價",
+            "喜劇"
+        ],
+        "streams": [],
+        "external_ids": {
+            "mal": "50995",
+            "bangumi": "368833"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "跳跳小雞 第3季",
+        "title_ja": "チキップダンサーズ 第3期",
+        "aliases": [
+            "Chickip Dancers 第3季",
+            "小雞舞者 第3期",
+            "Chickip Dancers 3rd Season",
+            "跳跳小鸡 第3季",
+            "小鸡舞者 第3期"
+        ],
+        "summary": "其他名稱：Chickip Dancers 第3季、小雞舞者 第3期、Chickip Dancers 3rd Season、跳跳小鸡 第3季、小鸡舞者 第3期",
+        "cover_image": "https://static.acgsecrets.hk/img/e5/e559c0a2fab23c442eb5cea72005d987/0b3ce9ffb59f952578b9b2e6ae45d070fc39a4fd6ffb3eed313fe888fe12ae16.jpg",
+        "air_date_text": "2023年9月25日起／每週一／8時45分",
+        "air_date": "2023-09-25",
+        "tags": [
+            "遊戲改編",
+            "續作",
+            "日常"
+        ],
+        "streams": [],
+        "external_ids": {
+            "mal": "56504"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "加密忍者咲耶",
+        "title_ja": "忍ばない！クリプトニンジャ咲耶",
+        "aliases": [
+            "Shinobanai! Crypto Ninja Sakuya",
+            "CryptoNinja SAKUYA"
+        ],
+        "summary": "其他名稱：Shinobanai! Crypto Ninja Sakuya、CryptoNinja SAKUYA",
+        "cover_image": "https://static.acgsecrets.hk/img/10/10548c14c86e0942139d02a6b3a65e84/30c992a55ddcf45465cbc0216fdb2f362fcd99d1e548931b001db33a3c4e8055.jpg",
+        "air_date_text": "2023年10月3日起／每週二深夜／25時0分",
+        "air_date": "2023-10-03",
+        "tags": [
+            "改編作品",
+            "新作",
+            "2季度",
+            "動作"
+        ],
+        "streams": [],
+        "external_ids": {
+            "mal": "56505",
+            "bangumi": "451559"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "秘密任務～潛入搜查官絕對不會輸！",
+        "title_ja": "しーくれっとみっしょん～潜入捜査官は絶対に負けない！～",
+        "aliases": [
+            "Secret Mission～潛入搜查官絕不屈服！～",
+            "Secret Mission",
+            "秘密任务～潜入搜查官绝对不会输！",
+            "Secret Mission～潜入搜查官绝不屈服！ ～本季僧侶檔。",
+            "Secret Mission～潜入搜查官绝不屈服！ ～"
+        ],
+        "summary": "其他名稱：Secret Mission～潛入搜查官絕不屈服！～、Secret Mission、秘密任务～潜入搜查官绝对不会输！、Secret Mission～潜入搜查官绝不屈服！ ～本季僧侶檔。",
+        "cover_image": "https://static.acgsecrets.hk/img/df/df97f581f87c39b10c34996e58336f0d/bb33ad1e5b0f33ee600713d632255d2073d5b6d299286f870a9bc1c86ed08f91.jpg",
+        "air_date_text": "2023年10月1日起／每週日深夜／25時0分",
+        "air_date": "2023-10-01",
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "高人氣",
+            "家長指引"
+        ],
+        "streams": [
+            {
+                "region": "台灣",
+                "platform": "KKTV",
+                "url": "https://www.kktv.me/titles/06001682"
+            }
+        ],
+        "external_ids": {
+            "bangumi": "451556"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "咒術廻戰 第2期",
+        "title_ja": "呪術廻戦 第2期",
+        "aliases": [
+            "咒術回戰 第2期",
+            "咒術迴戰 第2期",
+            "JUJUTSU KAISEN Season 2",
+            "Sorcery Fight Season 2",
+            "咒术回战 第2期"
+        ],
+        "summary": "虎杖他們擊敗道成肉身的「咒胎九相圖」次男和三男，回收了宿儺的手指。這個成果令他們獲薦成為１級術師。而在背後暗中安排的五條，究竟有何用心…!?──故事將追溯到五條和夏油高專２年級時的事件!!",
+        "cover_image": "https://static.acgsecrets.hk/img/ef/ef8afc5fd00d9e1adb537a53e796dea6/d2a0622857bd100a6a043e009f50f7449a576b3b2f59012c797940968577a047.jpg",
+        "air_date_text": "每週四／23時56分",
+        "air_date": null,
+        "tags": [
+            "漫畫改編",
+            "續作",
+            "2季度",
+            "動作",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtTNzLA36L1lhjkYs9OHMW18"
+            },
+            {
+                "region": "香港",
+                "platform": "Netflix",
+                "url": "https://www.netflix.com/title/81278456"
+            },
+            {
+                "region": "香港",
+                "platform": "myTV SUPER",
+                "url": "https://www.mytvsuper.com/tc/programme/jujutsukaisenseason2_138919/"
+            },
+            {
+                "region": "香港",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md20310415"
+            },
+            {
+                "region": "香港",
+                "platform": "viu.com",
+                "url": "https://www.viu.com/ott/hk/zh/vod/2204613/"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtTNzLA36L1lhjkYs9OHMW18"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=34074"
+            },
+            {
+                "region": "台灣",
+                "platform": "愛奇藝",
+                "url": "https://www.iq.com/album/1y1401doo65"
+            },
+            {
+                "region": "台灣",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md20310415"
+            },
+            {
+                "region": "中國大陸",
+                "platform": "愛奇藝",
+                "url": null
+            },
+            {
+                "region": "中國大陸",
+                "platform": "愛奇藝",
+                "url": "https://www.iqiyi.com/v_1c2fkrgubtk.html"
+            }
+        ],
+        "external_ids": {
+            "mal": "51009",
+            "bangumi": "369304"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "勇者赫魯庫",
+        "title_ja": "ヘルク",
+        "aliases": [
+            "Helck",
+            "Helck the Hero",
+            "勇者赫鲁库"
+        ],
+        "summary": "「我要消滅人類。」勇者如此說道。在一位勇者親手打倒魔王的３個月後，魔界這裡即將舉行一場又一場賭上新任魔王寶座的熱血戰鬥!!!而在那現身的人類勇者．赫魯庫－－－「人類太可惡！」如此說道的他的真實意圖會是…!?",
+        "cover_image": "https://static.acgsecrets.hk/img/4c/4c1cd908d85b21be361371334c5343f6/a1020d9c003e748adc336fa959f78298b814f6527a121c84be0070f4b925b363.jpg",
+        "air_date_text": "每週二深夜／25時29分",
+        "air_date": null,
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "2季度",
+            "動作",
+            "奇幻"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md20290147"
+            },
+            {
+                "region": "香港",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtSow1ByrUAkL12nhNTDDmvx"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=34245"
+            },
+            {
+                "region": "台灣",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md20290147"
+            },
+            {
+                "region": "台灣",
+                "platform": "Ani-One YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLC18xlbCdwtSow1ByrUAkL12nhNTDDmvx"
+            },
+            {
+                "region": "中國大陸",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md20289050"
+            }
+        ],
+        "external_ids": {
+            "mal": "51020",
+            "bangumi": "369784"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "黑暗集會",
+        "title_ja": "ダークギャザリング",
+        "aliases": [
+            "Dark Gathering",
+            "黑暗集会"
+        ],
+        "summary": "因為自己的靈異體質，過去曾害朋友捲入中邪事件的大學生‧螢多朗。隨著上了大學，螢多朗決定當家庭教師來打工，沒想到竟然被他的第一個學生，天才少女‧夜宵看穿自己擁有靈異體質，甚至還邀請螢多朗一起前往靈異景點…！？",
+        "cover_image": "https://static.acgsecrets.hk/img/82/829ef219632828dc84369fbc46f94f64/1d5e6372bea5dbc3659122930c8b28d60f25ca73c1d74a2c09ce3f7ca39ab609.jpg",
+        "air_date_text": "每週日深夜／25時5分",
+        "air_date": null,
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "2季度",
+            "恐怖",
+            "超自然"
+        ],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PLuxqoToY7UcjqjWFQceaNiUmOXKK2a19f"
+            },
+            {
+                "region": "香港",
+                "platform": "愛奇藝",
+                "url": "https://www.iq.com/album/nd4lyz6mpt"
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花YouTube",
+                "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfqAzIsqdo0wQ8FGXiLMfTLe"
+            },
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=34115"
+            },
+            {
+                "region": "台灣",
+                "platform": "愛奇藝",
+                "url": "https://www.iq.com/album/nd4lyz6mpt"
+            }
+        ],
+        "external_ids": {
+            "mal": "52505",
+            "bangumi": "390794"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "浪客劍心",
+        "title_ja": "るろうに剣心 -明治剣客浪漫譚-",
+        "aliases": [
+            "神劍闖江湖 新系列",
+            "Rurouni Kenshin -Meiji Kenkaku Romantan-",
+            "Rurouni Kenshin",
+            "Samurai X 2023",
+            "浪客剑心",
+            "神剑闯江湖 新系列90年代漫畫改編動畫作品《浪客劍心(台：神劍闖江湖)》的2023年重製版",
+            "製作組",
+            "配音員大翻新。原作者和月伸宏監修劇本和人設。",
+            "神剑闯江湖 新系列"
+        ],
+        "summary": "其他名稱：Rurouni Kenshin -Meiji Kenkaku Romantan-、Rurouni Kenshin、Samurai X 2023、浪客剑心、神剑闯江湖 新系列90年代漫畫改編動畫作品《浪客劍心(台：神劍闖江湖)》的2023年重製版，製作組、配音員大翻新。原作者和月伸宏監修劇本和人設。",
+        "cover_image": "https://static.acgsecrets.hk/img/c5/c54e65a119d9bf2fff1f22c586dc39a1/7d1468d2fcf6a1c93fd8459979849109691f1b9438062bc042fab11cecea63ab.jpg",
+        "air_date_text": "每週四深夜／24時55分",
+        "air_date": null,
+        "tags": [
+            "漫畫改編",
+            "新作",
+            "2季度",
+            "動作",
+            "浪漫"
+        ],
+        "streams": [
+            {
+                "region": "台灣",
+                "platform": "巴哈姆特動畫瘋",
+                "url": "https://ani.gamer.com.tw/animeVideo.php?sn=34075"
+            },
+            {
+                "region": "中國大陸",
+                "platform": "Bilibili",
+                "url": "https://www.bilibili.com/bangumi/media/md20290697"
+            }
+        ],
+        "external_ids": {
+            "mal": "50613",
+            "bangumi": "363102"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "闇影詩章F 七影篇",
+        "title_ja": "シャドウバースＦ セブンシャドウズ編",
+        "aliases": [
+            "Shadowverse Flame: Seven Shadows-hen",
+            "暗影诗章F 七影篇"
+        ],
+        "summary": "其他名稱：Shadowverse Flame: Seven Shadows-hen、暗影诗章F 七影篇",
+        "cover_image": "https://static.acgsecrets.hk/img/b8/b88ca35d9fe878576d2945489b8f7a60/96510d97bcd6462092958c3a8f6ad1d196b64b0660dd3e7457de04369c94f1d7.jpg",
+        "air_date_text": "每週六／9時30分",
+        "air_date": null,
+        "tags": [
+            "遊戲改編",
+            "續作",
+            "2季度",
+            "奇幻"
+        ],
+        "streams": [],
+        "external_ids": {
+            "mal": "54854",
+            "bangumi": "425969"
+        }
+    },
+    {
+        "season": "202310",
+        "season_year": 2023,
+        "season_code": "fall",
+        "title_zh": "全員逃走中 -終極任務-",
+        "title_ja": "逃走中 グレートミッション",
+        "aliases": [
+            "Tousouchuu: Great Mission",
+            "Run For Money: The Great Mission",
+            "全员逃走中 -终极任务-富士電視台綜藝遊戲「全員逃走中」的改編動畫。",
+            "全员逃走中 -终极任务-"
+        ],
+        "summary": "其他名稱：Tousouchuu: Great Mission、Run For Money: The Great Mission、全员逃走中 -终极任务-富士電視台綜藝遊戲「全員逃走中」的改編動畫。",
+        "cover_image": "https://static.acgsecrets.hk/img/05/05c494ee874f0fac10371d9ff93f2329/fad8e2c57a38ccdcc9f9d27f35786a88bd0a93f720b382627ae2b93f6c15f955.jpg",
+        "air_date_text": "每週日／9時0分",
+        "air_date": null,
+        "tags": [
+            "遊戲改編",
+            "新作",
+            "8季度",
+            "科幻"
+        ],
+        "streams": [],
+        "external_ids": {
+            "mal": "54040",
+            "bangumi": "413786"
+        }
+    }
+]
