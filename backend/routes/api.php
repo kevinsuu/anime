@@ -9,7 +9,6 @@ Route::post('/auth/google', [AuthController::class, 'google']);
 
 Route::get('/anime', [AnimeController::class, 'index']);
 Route::post('/anime', [AnimeController::class, 'store'])->middleware('jwt');
-Route::post('/anime/sync-seasonal', [AnimeController::class, 'syncSeasonal'])->middleware('jwt');
 
 Route::middleware('jwt')->group(function (): void {
     Route::get('/me', [AnimeListController::class, 'me']);
