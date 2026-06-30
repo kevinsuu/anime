@@ -4,7 +4,6 @@ namespace App\Services\AnimeCatalog;
 
 use DOMDocument;
 use DOMElement;
-use DOMNode;
 use DOMXPath;
 
 /**
