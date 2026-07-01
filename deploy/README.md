@@ -10,26 +10,26 @@ Images: `ghcr.io/kevinsuu/anime-{backend,scheduler,frontend}:vX.Y.Z` (and `:late
 
 ## One-time host setup
 
-1. Pick the target VM and confirm what's already listening on 80/443 (`docker ps`, `docker inspect
-   nginx-proxy` if one exists). This repo's `deploy/nginx.conf` assumes it owns port 80/443 directly
-   with its own certbot-managed certs — if the host already runs a shared `nginx-proxy` +
-   `acme-companion` setup instead, skip `deploy/nginx.conf` and the `proxy`/certbot volumes in
-   `docker-compose.yml`, and instead just add `VIRTUAL_HOST` / `LETSENCRYPT_HOST` env vars to the
-   `frontend` and `backend` services and join the shared proxy network.
+This repo's `deploy/docker-compose.yml` does **not** run its own nginx/certbot — the host's native
+nginx (systemd service) is the single reverse proxy for every project on that machine (anime,
+DiscordAIBot, RecordSystem, ...). Each project's containers only bind to `127.0.0.1:<port>`; nginx
+on the host terminates TLS and proxies to those loopback ports. See
+[`../docs/shared-nginx-deployment.md`](../docs/shared-nginx-deployment.md) for the full rationale
+and the shared nginx server-block template — that doc is the single source of truth shared across
+all three projects deployed on this host; keep this section in sync with it.
 
-2. Create the deploy directory on the host and copy `deploy/docker-compose.yml` and
-   `deploy/nginx.conf` (if using the standalone proxy path) there:
+1. Create the deploy directory on the host and copy `deploy/docker-compose.yml` there:
 
    ```
    ssh <user>@<host> mkdir -p ~/anime-deploy
-   scp deploy/docker-compose.yml deploy/nginx.conf <user>@<host>:~/anime-deploy/
+   scp deploy/docker-compose.yml <user>@<host>:~/anime-deploy/
    ```
 
-3. Copy `deploy/.env.production.example` to `~/anime-deploy/.env` on the host and fill in real
+2. Copy `deploy/.env.production.example` to `~/anime-deploy/.env` on the host and fill in real
    values (DB password, JWT_SECRET via `openssl rand -base64 48`, Google OAuth credentials, APP_KEY
    via `php artisan key:generate --show` run locally).
 
-4. GHCR images are private by default. Log in on the host once so `docker compose pull` works:
+3. GHCR images are private by default. Log in on the host once so `docker compose pull` works:
 
    ```
    docker login ghcr.io -u <github-username>
@@ -37,20 +37,19 @@ Images: `ghcr.io/kevinsuu/anime-{backend,scheduler,frontend}:vX.Y.Z` (and `:late
 
    (use a GitHub PAT with `read:packages` scope as the password)
 
-5. First-run TLS cert (standalone proxy path only — skip if using a shared nginx-proxy):
+4. `docker compose up -d` — `backend` binds `127.0.0.1:8080`, `frontend` binds `127.0.0.1:3000`.
+
+5. Add (or update) the `anime.kaistarstudio.me` server block in the host's shared nginx config per
+   [`../docs/shared-nginx-deployment.md`](../docs/shared-nginx-deployment.md), then issue the cert:
 
    ```
-   docker compose up -d proxy
-   docker run --rm -v anime-deploy_certbot-etc:/etc/letsencrypt \
-     -v anime-deploy_certbot-www:/var/www/certbot \
-     certbot/certbot certonly --webroot -w /var/www/certbot \
-     -d anime.kaistarstudio.me --email you@example.com --agree-tos --no-eff-email
-   docker compose restart proxy
+   sudo certbot certonly --nginx -d anime.kaistarstudio.me
+   sudo nginx -t && sudo systemctl reload nginx
    ```
 
-   Set up renewal via cron/systemd timer running `certbot renew` against the same volumes, or add a
-   long-running `certbot/certbot` sidecar (see the existing `certbot` container pattern already used
-   on the other host).
+   Renewal is automatic — certbot installs a systemd timer/cron job on first install
+   (`systemctl list-timers | grep certbot` to confirm) and `certbot renew` re-runs the same
+   `--nginx` plugin, so no manual steps are needed afterward.
 
 6. DNS: point `anime.kaistarstudio.me` A record at the host's public IP.
 
@@ -79,7 +78,9 @@ git push --tags
 ```
 
 Watch the Actions run. On success, `docker compose ps` on the host should show `backend`,
-`scheduler`, `frontend`, `mysql`, and `proxy` (if standalone) all healthy.
+`scheduler`, `frontend`, and `mysql` all healthy. The deploy workflow also runs
+`docker compose exec backend php artisan migrate --force` automatically — no manual DB setup step
+needed after the first deploy.
 
 ## Rollback
 
