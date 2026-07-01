@@ -63,7 +63,156 @@
         ],
         "external_ids": {
             "mal": "48583"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=jRVKBrJ7X-o",
+                "thumbnail": "https://img.youtube.com/vi/jRVKBrJ7X-o/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "エレン・イェーガー",
+                "actor": "梶 裕貴"
+            },
+            {
+                "character": "ミカサ・アッカーマン",
+                "actor": "石川由依"
+            },
+            {
+                "character": "アルミン・アルレルト",
+                "actor": "井上麻里奈"
+            },
+            {
+                "character": "コニー・スプリンガー",
+                "actor": "下野 紘"
+            },
+            {
+                "character": "ヒストリア・レイス",
+                "actor": "三上枝織"
+            },
+            {
+                "character": "ジャン・キルシュタイン",
+                "actor": "谷山紀章"
+            },
+            {
+                "character": "ライナー・ブラウン",
+                "actor": "細谷佳正"
+            },
+            {
+                "character": "ハンジ・ゾエ",
+                "actor": "朴 璐美"
+            },
+            {
+                "character": "リヴァイ・アッカーマン",
+                "actor": "神谷浩史"
+            },
+            {
+                "character": "ジーク・イェーガー",
+                "actor": "子安武人"
+            },
+            {
+                "character": "ファルコ・グライス",
+                "actor": "花江夏樹"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "諫山 創"
+            },
+            {
+                "role": "導演",
+                "name": "林祐一郎"
+            },
+            {
+                "role": "チーフ演出",
+                "name": "宍戸淳"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "瀬古浩司"
+            },
+            {
+                "role": "角色設計",
+                "name": "岸 友洋"
+            },
+            {
+                "role": "色彩設計",
+                "name": "大西慈"
+            },
+            {
+                "role": "美術監督",
+                "name": "小倉一男"
+            },
+            {
+                "role": "画面設計",
+                "name": "淡輪雄介"
+            },
+            {
+                "role": "總作畫監督",
+                "name": "新沼大祐、秋田学"
+            },
+            {
+                "role": "特效作畫監督",
+                "name": "酒井智史、古俣太一"
+            },
+            {
+                "role": "3DCG導演",
+                "name": "奥納基、池田昴"
+            },
+            {
+                "role": "攝影監督",
+                "name": "浅川茂輝"
+            },
+            {
+                "role": "剪接",
+                "name": "吉武将人"
+            },
+            {
+                "role": "音效指導",
+                "name": "三間雅文"
+            },
+            {
+                "role": "音樂",
+                "name": "KOHTA YAMAMOTO、澤野弘之"
+            },
+            {
+                "role": "音響効果",
+                "name": "山谷尚人"
+            },
+            {
+                "role": "音響制作",
+                "name": "テクノサウンド"
+            },
+            {
+                "role": "動畫製作",
+                "name": "MAPPA"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://shingeki.tv/final/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/%E9%80%B2%E6%93%8A%E7%9A%84%E5%B7%A8%E4%BA%BA"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/anime_shingeki"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/48583/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -141,7 +290,112 @@
         ],
         "external_ids": {
             "mal": "42072"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=ZO5tYbvqGrc",
+                "thumbnail": "https://img.youtube.com/vi/ZO5tYbvqGrc/mqdefault.jpg"
+            },
+            {
+                "url": "https://www.youtube.com/watch?v=k5nkrxm-1gY",
+                "thumbnail": "https://img.youtube.com/vi/k5nkrxm-1gY/mqdefault.jpg"
+            },
+            {
+                "url": "https://www.youtube.com/watch?v=TCr0zqNIt7c",
+                "thumbnail": "https://img.youtube.com/vi/TCr0zqNIt7c/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "ミラ",
+                "actor": "大森日雅"
+            },
+            {
+                "character": "ソロモン",
+                "actor": "村瀬 歩"
+            },
+            {
+                "character": "ルミナリア",
+                "actor": "日向未南"
+            },
+            {
+                "character": "ゼフ",
+                "actor": "斉藤隼一"
+            },
+            {
+                "character": "アスバル",
+                "actor": "安元 洋貴"
+            },
+            {
+                "character": "フリッカ",
+                "actor": "櫻 弥恵"
+            },
+            {
+                "character": "エメラ",
+                "actor": "夏吉ゆうこ"
+            },
+            {
+                "character": "タクト",
+                "actor": "井澤 佳の実"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "りゅうせんひろつぐ"
+            },
+            {
+                "role": "角色原案",
+                "name": "藤ちょこ"
+            },
+            {
+                "role": "導演",
+                "name": "元永慶太郎"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "鴻野貴光"
+            },
+            {
+                "role": "角色設計",
+                "name": "堀井久美"
+            },
+            {
+                "role": "音樂",
+                "name": "坂部 剛"
+            },
+            {
+                "role": "音效指導",
+                "name": "えびなやすのり"
+            },
+            {
+                "role": "動畫製作",
+                "name": "studio A-CAT"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://kendeshi-anime.com/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/%E8%87%AA%E7%A8%B1%E8%B3%A2%E8%80%85%E5%BC%9F%E5%AD%90%E7%9A%84%E8%B3%A2%E8%80%85"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/kendeshi_anime"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/42072/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -190,7 +444,104 @@
         ],
         "external_ids": {
             "mal": "48736"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=tFKDKd8z-NU",
+                "thumbnail": "https://img.youtube.com/vi/tFKDKd8z-NU/mqdefault.jpg"
+            },
+            {
+                "url": "https://www.youtube.com/watch?v=qJ8GyiSJ1KU",
+                "thumbnail": "https://img.youtube.com/vi/qJ8GyiSJ1KU/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "喜多川海夢",
+                "actor": "直田姫奈"
+            },
+            {
+                "character": "五条新菜",
+                "actor": "石毛翔弥"
+            },
+            {
+                "character": "乾紗寿叶",
+                "actor": "種﨑敦美"
+            },
+            {
+                "character": "乾心寿",
+                "actor": "羊宮妃那"
+            },
+            {
+                "character": "五条薫",
+                "actor": "斧アツシ"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "福田晋一"
+            },
+            {
+                "role": "導演",
+                "name": "篠原啓輔"
+            },
+            {
+                "role": "副導演",
+                "name": "平峯義大"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "冨田頼子"
+            },
+            {
+                "role": "編劇",
+                "name": "冨田頼子"
+            },
+            {
+                "role": "角色設計",
+                "name": "石田一将"
+            },
+            {
+                "role": "總作畫監督",
+                "name": "石田一将"
+            },
+            {
+                "role": "音樂",
+                "name": "中塚武"
+            },
+            {
+                "role": "音效指導",
+                "name": "藤田亜紀子"
+            },
+            {
+                "role": "動畫製作",
+                "name": "CloverWorks"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://bisquedoll-anime.com/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/%E6%88%80%E4%B8%8A%E6%8F%9B%E8%A3%9D%E5%A8%83%E5%A8%83"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/kisekoi_anime"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/48736/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -260,7 +611,120 @@
         ],
         "external_ids": {
             "mal": "40507"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=a4VkLBHiPjo",
+                "thumbnail": "https://img.youtube.com/vi/a4VkLBHiPjo/mqdefault.jpg"
+            },
+            {
+                "url": "https://www.youtube.com/watch?v=T3ExQQ7s5QI",
+                "thumbnail": "https://img.youtube.com/vi/T3ExQQ7s5QI/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "南雲ハジメ",
+                "actor": "深町寿成"
+            },
+            {
+                "character": "ユエ",
+                "actor": "桑原由気"
+            },
+            {
+                "character": "シア・ハウリア",
+                "actor": "高橋ミナミ"
+            },
+            {
+                "character": "ティオ・クラルス",
+                "actor": "日笠陽子"
+            },
+            {
+                "character": "白崎香織",
+                "actor": "大西沙織"
+            },
+            {
+                "character": "八重樫雫",
+                "actor": "花守ゆみり"
+            },
+            {
+                "character": "畑山愛子",
+                "actor": "加隈亜衣"
+            },
+            {
+                "character": "ミュウ",
+                "actor": "小倉唯"
+            },
+            {
+                "character": "リリアーナ・S・B・ハイリヒ",
+                "actor": "芝崎典子"
+            },
+            {
+                "character": "ノイント",
+                "actor": "佐藤利奈"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "白米良"
+            },
+            {
+                "role": "插畫",
+                "name": "たかやKi"
+            },
+            {
+                "role": "導演",
+                "name": "岩永彰"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "佐藤勝一"
+            },
+            {
+                "role": "編劇",
+                "name": "佐藤勝一"
+            },
+            {
+                "role": "角色設計",
+                "name": "小島智加"
+            },
+            {
+                "role": "總作畫監督",
+                "name": "小島智加"
+            },
+            {
+                "role": "音樂",
+                "name": "高橋諒"
+            },
+            {
+                "role": "動畫製作",
+                "name": "asread.、studio MOTHER"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://arifureta.com/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/%E5%B9%B3%E5%87%A1%E8%81%B7%E6%A5%AD%E9%80%A0%E5%B0%B1%E4%B8%96%E7%95%8C%E6%9C%80%E5%BC%B7"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/ARIFURETA_info"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/40507/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -335,7 +799,152 @@
         ],
         "external_ids": {
             "mal": "47159"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=unmviapbywM",
+                "thumbnail": "https://img.youtube.com/vi/unmviapbywM/mqdefault.jpg"
+            },
+            {
+                "url": "https://www.youtube.com/watch?v=TxWHJz8Gg_E",
+                "thumbnail": "https://img.youtube.com/vi/TxWHJz8Gg_E/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "ウェイン・サレマ・アルバレスト",
+                "actor": "斉藤壮馬"
+            },
+            {
+                "character": "ニニム・ラーレイ",
+                "actor": "高橋李依"
+            },
+            {
+                "character": "フラーニャ・エルク・アルバレスト",
+                "actor": "千本木彩花"
+            },
+            {
+                "character": "ロウェルミナ",
+                "actor": "東山奈央"
+            },
+            {
+                "character": "フィシュ",
+                "actor": "日笠陽子"
+            },
+            {
+                "character": "ナナキ",
+                "actor": "榊原優希"
+            },
+            {
+                "character": "ゼノ",
+                "actor": "中島由貴"
+            },
+            {
+                "character": "ハガル",
+                "actor": "菅生隆之"
+            },
+            {
+                "character": "ラークルム",
+                "actor": "濱野大輝"
+            },
+            {
+                "character": "グリュエール",
+                "actor": "大塚明夫"
+            },
+            {
+                "character": "トルチェイラ",
+                "actor": "釘宮理恵"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "鳥羽徹"
+            },
+            {
+                "role": "角色原案",
+                "name": "ファルまろ"
+            },
+            {
+                "role": "導演",
+                "name": "玉川真人"
+            },
+            {
+                "role": "副導演",
+                "name": "蔡欣亞"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "赤尾でこ"
+            },
+            {
+                "role": "角色設計",
+                "name": "應地隆之介"
+            },
+            {
+                "role": "美術監督",
+                "name": "栫ヒロツグ"
+            },
+            {
+                "role": "色彩設計",
+                "name": "中尾総子"
+            },
+            {
+                "role": "3D導演",
+                "name": "墳下芳弘"
+            },
+            {
+                "role": "剪接",
+                "name": "長谷川舞"
+            },
+            {
+                "role": "攝影監督",
+                "name": "内田奈津美"
+            },
+            {
+                "role": "音效指導",
+                "name": "納谷僚介"
+            },
+            {
+                "role": "音樂",
+                "name": "佐橋俊彦"
+            },
+            {
+                "role": "音響制作",
+                "name": "スタジオマウス"
+            },
+            {
+                "role": "動畫製作人",
+                "name": "大上裕真"
+            },
+            {
+                "role": "動畫製作",
+                "name": "橫濱 Animation LABO"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://tensaiouji-anime.com/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/%E5%A4%A9%E6%89%8D%E7%8E%8B%E5%AD%90%E7%9A%84%E8%B5%A4%E5%AD%97%E5%9C%8B%E5%AE%B6%E9%87%8D%E7%94%9F%E8%A1%93"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/tensaiouji_PR"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/47159/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -397,7 +1006,156 @@
         ],
         "external_ids": {
             "mal": "48414"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=0DcDNIZn9RY",
+                "thumbnail": "https://img.youtube.com/vi/0DcDNIZn9RY/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "赤星ビスコ",
+                "actor": "鈴木崚汰"
+            },
+            {
+                "character": "猫柳ミロ",
+                "actor": "花江夏樹"
+            },
+            {
+                "character": "猫柳パウー",
+                "actor": "近藤玲奈"
+            },
+            {
+                "character": "ジャビ",
+                "actor": "斎藤志郎"
+            },
+            {
+                "character": "黒革",
+                "actor": "津田健次郎"
+            },
+            {
+                "character": "大茶釜チロル",
+                "actor": "富田美憂"
+            },
+            {
+                "character": "ジャビ",
+                "actor": "斎藤志郎"
+            },
+            {
+                "character": "黒革",
+                "actor": "津田健次郎"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "瘤久保慎司"
+            },
+            {
+                "role": "原作插畫",
+                "name": "赤岸K"
+            },
+            {
+                "role": "原作世界観イラスト",
+                "name": "mocha"
+            },
+            {
+                "role": "導演",
+                "name": "碇谷敦"
+            },
+            {
+                "role": "副導演",
+                "name": "又賀大介"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "村井さだゆき"
+            },
+            {
+                "role": "編劇",
+                "name": "村井さだゆき"
+            },
+            {
+                "role": "角色設計",
+                "name": "浅利歩惟、碇谷敦"
+            },
+            {
+                "role": "美術監督",
+                "name": "三宅昌和"
+            },
+            {
+                "role": "色彩設計",
+                "name": "千葉絵美"
+            },
+            {
+                "role": "美術設定",
+                "name": "曽野由大"
+            },
+            {
+                "role": "クリーチャー設定",
+                "name": "曽野由大"
+            },
+            {
+                "role": "總作畫監督",
+                "name": "浅利歩惟、井川典恵"
+            },
+            {
+                "role": "主動畫師",
+                "name": "松原豊、河合桃子"
+            },
+            {
+                "role": "補間動畫監督",
+                "name": "張逸暉"
+            },
+            {
+                "role": "攝影監督",
+                "name": "高木翼"
+            },
+            {
+                "role": "剪接",
+                "name": "木村祥明"
+            },
+            {
+                "role": "音樂",
+                "name": "上田剛士、椿山日南子"
+            },
+            {
+                "role": "音效指導",
+                "name": "小泉紀介"
+            },
+            {
+                "role": "音楽制作",
+                "name": "FlyingDog"
+            },
+            {
+                "role": "動畫製作",
+                "name": "OZ"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://sabikuibisco.jp/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/%E9%A3%9F%E9%8F%BD%E6%9C%AB%E4%B8%96%E9%8C%84"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/SABIKUI_BISCO"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/48414/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -458,7 +1216,112 @@
         ],
         "external_ids": {
             "mal": "49721"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=VrLbU-vYUDQ",
+                "thumbnail": "https://img.youtube.com/vi/VrLbU-vYUDQ/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "高木さん",
+                "actor": "高橋李依"
+            },
+            {
+                "character": "西片",
+                "actor": "梶 裕貴"
+            },
+            {
+                "character": "ミナ",
+                "actor": "小原好美"
+            },
+            {
+                "character": "ユカリ",
+                "actor": "M・A・O"
+            },
+            {
+                "character": "サナエ",
+                "actor": "小倉 唯"
+            },
+            {
+                "character": "中井",
+                "actor": "内田雄馬"
+            },
+            {
+                "character": "真野",
+                "actor": "小岩井ことり"
+            },
+            {
+                "character": "高尾",
+                "actor": "岡本信彦"
+            },
+            {
+                "character": "木村",
+                "actor": "落合福嗣"
+            },
+            {
+                "character": "浜口",
+                "actor": "内山昂輝"
+            },
+            {
+                "character": "北条",
+                "actor": "悠木 碧"
+            },
+            {
+                "character": "田辺先生",
+                "actor": "田所陽向"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "山本崇一朗"
+            },
+            {
+                "role": "導演",
+                "name": "赤城博昭"
+            },
+            {
+                "role": "編劇",
+                "name": "福田裕子、伊丹あき、加藤還一"
+            },
+            {
+                "role": "角色設計",
+                "name": "髙野 綾"
+            },
+            {
+                "role": "音樂",
+                "name": "堤 博明"
+            },
+            {
+                "role": "動畫製作",
+                "name": "新銳動畫"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://takagi3.me/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/%E6%93%85%E9%95%B7%E6%8D%89%E5%BC%84%E4%BA%BA%E7%9A%84%E9%AB%98%E6%9C%A8%E5%90%8C%E5%AD%B8"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/takagi3_anime"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/49721/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -526,7 +1389,128 @@
         ],
         "external_ids": {
             "mal": "48997"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=C1J0NsSBhOU",
+                "thumbnail": "https://img.youtube.com/vi/C1J0NsSBhOU/mqdefault.jpg"
+            },
+            {
+                "url": "https://www.youtube.com/watch?v=Awp_B8E2Ktg",
+                "thumbnail": "https://img.youtube.com/vi/Awp_B8E2Ktg/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "橘日向（女）",
+                "actor": "M・A・O"
+            },
+            {
+                "character": "神宮寺司",
+                "actor": "日野聡"
+            },
+            {
+                "character": "橘日向（男）",
+                "actor": "伊東健人"
+            },
+            {
+                "character": "愛と美の女神",
+                "actor": "釘宮理恵"
+            },
+            {
+                "character": "ティロリロ・リリリ・ルー",
+                "actor": "藤井ゆきよ"
+            },
+            {
+                "character": "サテイナ",
+                "actor": "遠野ひかる"
+            },
+            {
+                "character": "ウルティナ",
+                "actor": "進藤あまね"
+            },
+            {
+                "character": "シュバルツ",
+                "actor": "石川界人"
+            },
+            {
+                "character": "ルシウス",
+                "actor": "喜多村英梨"
+            },
+            {
+                "character": "シェン",
+                "actor": "諏訪部順一"
+            },
+            {
+                "character": "ムリア",
+                "actor": "芹澤優"
+            },
+            {
+                "character": "ユグレイン",
+                "actor": "牧野由依"
+            },
+            {
+                "character": "ナレーション",
+                "actor": "江原正士"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "池澤真・津留崎優、Cygames"
+            },
+            {
+                "role": "導演",
+                "name": "山井紗也香"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "竹内利光"
+            },
+            {
+                "role": "角色設計",
+                "name": "大和葵"
+            },
+            {
+                "role": "音效指導",
+                "name": "亀山俊樹"
+            },
+            {
+                "role": "音樂",
+                "name": "渡辺剛"
+            },
+            {
+                "role": "音響制作",
+                "name": "ビットグルーヴプロモーション"
+            },
+            {
+                "role": "動畫製作",
+                "name": "OLM Team Yoshioka"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://fabiniku.com/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/%E8%88%87%E6%88%90%E7%82%BA%E7%95%B0%E4%B8%96%E7%95%8C%E7%BE%8E%E5%B0%91%E5%A5%B3%E7%9A%84%E5%A4%A7%E5%8F%94%E4%B8%80%E8%B5%B7"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/fabiniku"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/48997/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -610,7 +1594,80 @@
         ],
         "external_ids": {
             "mal": "47161"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=o34GOPt0-78",
+                "thumbnail": "https://img.youtube.com/vi/o34GOPt0-78/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "マティアス＝ヒルデスハイマー",
+                "actor": "玉城仁菜"
+            },
+            {
+                "character": "ルリイ＝アーベントロート",
+                "actor": "鈴代紗弓"
+            },
+            {
+                "character": "アルマ＝レプシウス",
+                "actor": "白石晴香"
+            },
+            {
+                "character": "イリス",
+                "actor": "井澤詩織"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "進行諸島"
+            },
+            {
+                "role": "角色原案",
+                "name": "風花風花"
+            },
+            {
+                "role": "導演",
+                "name": "秋田谷典昭"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "内田裕基"
+            },
+            {
+                "role": "角色設計",
+                "name": "大沢美奈"
+            },
+            {
+                "role": "動畫製作",
+                "name": "J.C.STAFF"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://shikkakumon.com/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/%E5%A4%B1%E6%A0%BC%E7%B4%8B%E7%9A%84%E6%9C%80%E5%BC%B7%E8%B3%A2%E8%80%85"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/shikkakumon_pr"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/47161/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -666,7 +1723,136 @@
         ],
         "external_ids": {
             "mal": "49930"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=onTxCpESx0Y",
+                "thumbnail": "https://img.youtube.com/vi/onTxCpESx0Y/mqdefault.jpg"
+            },
+            {
+                "url": "https://www.youtube.com/watch?v=cAepP-zxzBM",
+                "thumbnail": "https://img.youtube.com/vi/cAepP-zxzBM/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "ソーマ・カズヤ",
+                "actor": "小林裕介"
+            },
+            {
+                "character": "リーシア・エルフリーデン",
+                "actor": "水瀬いのり"
+            },
+            {
+                "character": "アイーシャ・ウドガルド",
+                "actor": "長谷川育美"
+            },
+            {
+                "character": "ジュナ・ドーマ",
+                "actor": "上田麗奈"
+            },
+            {
+                "character": "ハクヤ・クオンミン",
+                "actor": "興津和幸"
+            },
+            {
+                "character": "トモエ・イヌイ",
+                "actor": "佳原萌枝"
+            },
+            {
+                "character": "ポンチョ・パナコッタ",
+                "actor": "水中雅章"
+            },
+            {
+                "character": "カルラ・バルガス",
+                "actor": "愛美"
+            },
+            {
+                "character": "ロロア・アミドニア",
+                "actor": "M・A・O"
+            },
+            {
+                "character": "マリア・ユーフォリア",
+                "actor": "金元寿子"
+            },
+            {
+                "character": "ジャンヌ・ユーフォリア",
+                "actor": "石川由依"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "どぜう丸"
+            },
+            {
+                "role": "角色原案",
+                "name": "冬ゆき"
+            },
+            {
+                "role": "導演",
+                "name": "渡部高志"
+            },
+            {
+                "role": "編劇",
+                "name": "雑破業、大野木寛"
+            },
+            {
+                "role": "角色設計",
+                "name": "大塚舞"
+            },
+            {
+                "role": "音樂",
+                "name": "立山秋航"
+            },
+            {
+                "role": "音效指導",
+                "name": "明田川仁"
+            },
+            {
+                "role": "音楽制作",
+                "name": "KING RECORDS"
+            },
+            {
+                "role": "音響効果",
+                "name": "小山恭正"
+            },
+            {
+                "role": "音響制作",
+                "name": "マジックカプセル"
+            },
+            {
+                "role": "出品",
+                "name": "WOWMAX"
+            },
+            {
+                "role": "動畫製作",
+                "name": "J.C.STAFF"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://genkoku-anime.com/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/%E7%8F%BE%E5%AF%A6%E4%B8%BB%E7%BE%A9%E5%8B%87%E8%80%85%E7%9A%84%E7%8E%8B%E5%9C%8B%E9%87%8D%E5%BB%BA%E8%A8%98"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/genkoku_info"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/49930/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -710,7 +1896,96 @@
         ],
         "external_ids": {
             "mal": "48239"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=CZRyRQZO90w",
+                "thumbnail": "https://img.youtube.com/vi/CZRyRQZO90w/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "ケーナ",
+                "actor": "幸村恵理"
+            },
+            {
+                "character": "スカルゴ",
+                "actor": "小野大輔"
+            },
+            {
+                "character": "マイマイ",
+                "actor": "名塚佳織"
+            },
+            {
+                "character": "カータツ",
+                "actor": "杉田智和"
+            },
+            {
+                "character": "キー",
+                "actor": "小田切優衣"
+            },
+            {
+                "character": "リット",
+                "actor": "柳原かなこ"
+            },
+            {
+                "character": "マレール",
+                "actor": "中村 桜"
+            },
+            {
+                "character": "ルイネ",
+                "actor": "広瀬ゆうき"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "Ceez"
+            },
+            {
+                "role": "原作插畫",
+                "name": "てんまそ"
+            },
+            {
+                "role": "導演",
+                "name": "柳瀬雄之"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "筆安一幸"
+            },
+            {
+                "role": "角色設計",
+                "name": "舛舘俊秀、小島えり、出口花穂"
+            },
+            {
+                "role": "動畫製作",
+                "name": "Maho Film"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://leadale.net/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/%E9%87%8C%E4%BA%9E%E5%BE%B7%E9%8C%84%E5%A4%A7%E5%9C%B0"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/leadale_anime"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/48239/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -744,7 +2019,103 @@
                 "url": "https://ani.gamer.com.tw/animeVideo.php?sn=27364"
             }
         ],
-        "external_ids": []
+        "external_ids": [],
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=Nx7EizT4GQY",
+                "thumbnail": "https://img.youtube.com/vi/Nx7EizT4GQY/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "水原怜人",
+                "actor": "市川太一"
+            },
+            {
+                "character": "周防美来",
+                "actor": "白石晴香"
+            },
+            {
+                "character": "龍造寺朱音",
+                "actor": "大地葉"
+            },
+            {
+                "character": "山田翠",
+                "actor": "山根綺"
+            },
+            {
+                "character": "片桐麗亜",
+                "actor": "渡部恵子"
+            },
+            {
+                "character": "黒田マリア",
+                "actor": "小坂井祐莉絵"
+            },
+            {
+                "character": "水原まひる",
+                "actor": "首藤志奈"
+            },
+            {
+                "character": "火野恭司",
+                "actor": "江口拓也"
+            },
+            {
+                "character": "石動寧々子",
+                "actor": "石上静香"
+            },
+            {
+                "character": "北山玲奈",
+                "actor": "天野聡美"
+            },
+            {
+                "character": "土井翔太",
+                "actor": "浦和希"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "LINK、宵野コタロー"
+            },
+            {
+                "role": "導演",
+                "name": "信田ユウ"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "高橋龍也"
+            },
+            {
+                "role": "角色設計",
+                "name": "小関雅"
+            },
+            {
+                "role": "音樂",
+                "name": "大川茂伸"
+            },
+            {
+                "role": "動畫製作",
+                "name": "Studio五組、AXsiZ"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://end-harem-anime.com/"
+            },
+            {
+                "category": "一般",
+                "label": "wiki",
+                "url": "©LINK・宵野コタロー／集英社・終末のハーレム製作委員会"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/harem_official_"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -786,7 +2157,152 @@
         ],
         "external_ids": {
             "mal": "44516"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=QlMuqsQacD8",
+                "thumbnail": "https://img.youtube.com/vi/QlMuqsQacD8/mqdefault.jpg"
+            },
+            {
+                "url": "https://www.youtube.com/watch?v=vJNPR1UhMdQ",
+                "thumbnail": "https://img.youtube.com/vi/vJNPR1UhMdQ/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "シャトー・ダンクワース",
+                "actor": "大西沙織"
+            },
+            {
+                "character": "ソン・リャンハ",
+                "actor": "下野紘"
+            },
+            {
+                "character": "エウリペデス・リッツラン",
+                "actor": "堀内賢雄"
+            },
+            {
+                "character": "ジム",
+                "actor": "天﨑滉平"
+            },
+            {
+                "character": "ホー",
+                "actor": "前野智昭"
+            },
+            {
+                "character": "ドニー",
+                "actor": "大塚芳忠"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "Fe"
+            },
+            {
+                "role": "導演",
+                "name": "大庭秀昭"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "久尾 歩"
+            },
+            {
+                "role": "編劇",
+                "name": "久尾 歩"
+            },
+            {
+                "role": "角色設計",
+                "name": "佐藤陽子"
+            },
+            {
+                "role": "配角角色設計",
+                "name": "小林利充"
+            },
+            {
+                "role": "美術監督",
+                "name": "黛 昌樹"
+            },
+            {
+                "role": "色彩設計",
+                "name": "山上愛子"
+            },
+            {
+                "role": "3Dデザイン",
+                "name": "杉村友和"
+            },
+            {
+                "role": "道具設計",
+                "name": "杉村友和"
+            },
+            {
+                "role": "總作畫監督",
+                "name": "佐藤陽子、小林利充"
+            },
+            {
+                "role": "動作作畫監督",
+                "name": "才木康寛"
+            },
+            {
+                "role": "攝影監督",
+                "name": "伏原あかね"
+            },
+            {
+                "role": "剪接",
+                "name": "木村佳史子"
+            },
+            {
+                "role": "音效指導",
+                "name": "髙桑 一"
+            },
+            {
+                "role": "音樂",
+                "name": "吉川 慶"
+            },
+            {
+                "role": "音楽制作",
+                "name": "TOY'S FACTORY"
+            },
+            {
+                "role": "音響効果",
+                "name": "和田俊也"
+            },
+            {
+                "role": "音響制作",
+                "name": "ビットグルーヴプロモーション"
+            },
+            {
+                "role": "音楽制作協力",
+                "name": "ミラクル・バス"
+            },
+            {
+                "role": "動畫製作",
+                "name": "Platinum Vision"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://love-of-kill.com/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/%E7%9B%B8%E6%84%9B%E7%9B%B8%E6%AE%BA"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/LoveofKill_info"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/44516/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -827,7 +2343,136 @@
         ],
         "external_ids": {
             "mal": "45425"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=Q0sf5-94Luc",
+                "thumbnail": "https://img.youtube.com/vi/Q0sf5-94Luc/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "海凪ひより",
+                "actor": "久住琳"
+            },
+            {
+                "character": "海凪小春",
+                "actor": "日岡なつみ"
+            },
+            {
+                "character": "吉永恋",
+                "actor": "嶺内ともみ"
+            },
+            {
+                "character": "福元一花",
+                "actor": "名塚佳織"
+            },
+            {
+                "character": "福元二葉",
+                "actor": "村上奈津実"
+            },
+            {
+                "character": "二宮藍子",
+                "actor": "井上ほの花"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "うちのまいこ"
+            },
+            {
+                "role": "導演",
+                "name": "秋田谷典昭"
+            },
+            {
+                "role": "副導演",
+                "name": "守田芸成"
+            },
+            {
+                "role": "釣りシーン演出",
+                "name": "柴田 匠"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "山田由香"
+            },
+            {
+                "role": "角色設計",
+                "name": "滝本祥子"
+            },
+            {
+                "role": "美術監督",
+                "name": "諸熊倫子"
+            },
+            {
+                "role": "色彩設計",
+                "name": "月野えりか"
+            },
+            {
+                "role": "總作畫監督",
+                "name": "滝本祥子"
+            },
+            {
+                "role": "攝影監督",
+                "name": "佐藤 敦"
+            },
+            {
+                "role": "3D導演",
+                "name": "濱村敏郎"
+            },
+            {
+                "role": "剪接",
+                "name": "仙土真希"
+            },
+            {
+                "role": "料理作監",
+                "name": "鷲北恭太"
+            },
+            {
+                "role": "エフェクト作監",
+                "name": "鷲北恭太"
+            },
+            {
+                "role": "音效指導",
+                "name": "土屋雅紀"
+            },
+            {
+                "role": "音樂",
+                "name": "伊賀拓郎"
+            },
+            {
+                "role": "音楽制作",
+                "name": "FlyingDog"
+            },
+            {
+                "role": "動畫製作",
+                "name": "CONNECT"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://slowlooptv.com/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/SLOW_LOOP-%E5%A5%B3%E5%AD%A9%E7%9A%84%E9%87%A3%E9%AD%9A%E6%85%A2%E6%B4%BB-"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/slowloop_tv"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/45425/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -872,7 +2517,84 @@
         ],
         "external_ids": {
             "mal": "24670"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=-vwDK6XQ4sY",
+                "thumbnail": "https://img.youtube.com/vi/-vwDK6XQ4sY/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "ペコリーヌ",
+                "actor": "M・A・O"
+            },
+            {
+                "character": "コッコロ",
+                "actor": "伊藤 美来"
+            },
+            {
+                "character": "キャル",
+                "actor": "立花 理香"
+            },
+            {
+                "character": "ユウキ",
+                "actor": "阿部 敦"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "Cygames"
+            },
+            {
+                "role": "總導演",
+                "name": "金崎貴臣"
+            },
+            {
+                "role": "導演",
+                "name": "いわもとやすお"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "金崎貴臣"
+            },
+            {
+                "role": "角色設計",
+                "name": "渡辺 舞、野田康行、栗田聡美、楊 烈駿"
+            },
+            {
+                "role": "音樂",
+                "name": "イマジン"
+            },
+            {
+                "role": "動畫製作",
+                "name": "Cypic (CygamesPictures)"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://anime.priconne-redive.jp/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/%E8%B6%85%E7%95%B0%E5%9F%9F%E5%85%AC%E4%B8%BB%E9%80%A3%E7%B5%90%E2%98%86Re:Dive"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/priconne_anime"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/24670/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -922,7 +2644,122 @@
         ],
         "external_ids": {
             "mal": "50185"
-        }
+        },
+        "themes": [],
+        "trailers": [],
+        "cast": [
+            {
+                "character": "白鳥 尊",
+                "actor": "榎木淳弥"
+            },
+            {
+                "character": "宮澄 建",
+                "actor": "三木眞一郎"
+            },
+            {
+                "character": "佐伯蒼汰",
+                "actor": "石川界人"
+            },
+            {
+                "character": "佐伯橙也",
+                "actor": "逢坂良太"
+            },
+            {
+                "character": "竹田浩輝",
+                "actor": "柿原徹也"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "Team RMC"
+            },
+            {
+                "role": "角色原案",
+                "name": "ヤスダスズヒト"
+            },
+            {
+                "role": "導演",
+                "name": "山内愛弥"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "内海照子、山内愛弥"
+            },
+            {
+                "role": "角色設計",
+                "name": "まじろ"
+            },
+            {
+                "role": "美術監督",
+                "name": "甲斐政俊"
+            },
+            {
+                "role": "色彩設計",
+                "name": "小野寺笑子"
+            },
+            {
+                "role": "美術設定",
+                "name": "佐藤正浩"
+            },
+            {
+                "role": "2Dワークス",
+                "name": "渡部岳、中島俊、旭プロダクション デザイン部"
+            },
+            {
+                "role": "攝影監督",
+                "name": "長谷川奈穂"
+            },
+            {
+                "role": "剪接",
+                "name": "長谷川舞"
+            },
+            {
+                "role": "美術背景",
+                "name": "スタジオKAIMU"
+            },
+            {
+                "role": "3Dワークス",
+                "name": "FelixFilm"
+            },
+            {
+                "role": "撮影",
+                "name": "旭Production"
+            },
+            {
+                "role": "音樂",
+                "name": "fox capture plan"
+            },
+            {
+                "role": "音效指導",
+                "name": "本山 哲"
+            },
+            {
+                "role": "音響制作",
+                "name": "グロービジョン"
+            },
+            {
+                "role": "動畫製作",
+                "name": "LIDENFILMS"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://rymansclub.com/"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/rymansclub_PR"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/50185/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -968,7 +2805,112 @@
         ],
         "external_ids": {
             "mal": "50204"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=lUfoZt0FHMc",
+                "thumbnail": "https://img.youtube.com/vi/lUfoZt0FHMc/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "蒼生シュウタ",
+                "actor": "榎木淳弥"
+            },
+            {
+                "character": "朱城ラン",
+                "actor": "内田雄馬"
+            },
+            {
+                "character": "翠堂コウキ",
+                "actor": "石川界人"
+            },
+            {
+                "character": "翠堂アスミ",
+                "actor": "石見舞菜香"
+            },
+            {
+                "character": "櫻木まり",
+                "actor": "牧野由依"
+            },
+            {
+                "character": "きなこ",
+                "actor": "兎丸七海"
+            },
+            {
+                "character": "黒葛川早紀子",
+                "actor": "生天目仁美"
+            },
+            {
+                "character": "翠堂豪理",
+                "actor": "楠 大典"
+            },
+            {
+                "character": "翠堂香苗",
+                "actor": "大原さやか"
+            },
+            {
+                "character": "クナイ",
+                "actor": "斉藤壮馬"
+            },
+            {
+                "character": "ヤマモリ",
+                "actor": "伊丸岡 篤"
+            }
+        ],
+        "staff": [
+            {
+                "role": "角色原案",
+                "name": "曽我部修司、ののかなこ"
+            },
+            {
+                "role": "導演",
+                "name": "津田尚克"
+            },
+            {
+                "role": "故事統籌",
+                "name": "下倉バイオ"
+            },
+            {
+                "role": "編劇",
+                "name": "下倉バイオ"
+            },
+            {
+                "role": "角色設計",
+                "name": "岸田隆宏"
+            },
+            {
+                "role": "音樂",
+                "name": "深澤秀行"
+            },
+            {
+                "role": "動畫製作",
+                "name": "CloverWorks"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://tokyo24project.com/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/%E6%9D%B1%E4%BA%AC24%E5%8D%80"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/tokyo24_project"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/50204/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -1012,7 +2954,156 @@
         ],
         "external_ids": {
             "mal": "48553"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=WrS9rUKxzSo",
+                "thumbnail": "https://img.youtube.com/vi/WrS9rUKxzSo/mqdefault.jpg"
+            },
+            {
+                "url": "https://www.youtube.com/watch?v=q2kTPtVWORs",
+                "thumbnail": "https://img.youtube.com/vi/q2kTPtVWORs/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "明日小路",
+                "actor": "村上まなつ"
+            },
+            {
+                "character": "木崎江利花",
+                "actor": "雨宮 天"
+            },
+            {
+                "character": "兎原透子",
+                "actor": "鬼頭明里"
+            },
+            {
+                "character": "古城智乃",
+                "actor": "若山詩音"
+            },
+            {
+                "character": "谷川 景",
+                "actor": "関根明良"
+            },
+            {
+                "character": "鷲尾 瞳",
+                "actor": "石上静香"
+            },
+            {
+                "character": "水上りり",
+                "actor": "石川由依"
+            },
+            {
+                "character": "平岩 蛍",
+                "actor": "麻倉もも"
+            },
+            {
+                "character": "四条璃生奈",
+                "actor": "田所あずさ"
+            },
+            {
+                "character": "神黙根子",
+                "actor": "伊藤美来"
+            },
+            {
+                "character": "龍守 逢",
+                "actor": "伊瀬茉莉也"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "博"
+            },
+            {
+                "role": "導演",
+                "name": "黒木美幸"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "山崎莉乃"
+            },
+            {
+                "role": "編劇",
+                "name": "山崎莉乃"
+            },
+            {
+                "role": "角色設計",
+                "name": "河野恵美"
+            },
+            {
+                "role": "配角角色設計",
+                "name": "川上大志、安野将人"
+            },
+            {
+                "role": "美術監督",
+                "name": "薄井久代、守安靖尚"
+            },
+            {
+                "role": "色彩設計",
+                "name": "横田明日香"
+            },
+            {
+                "role": "美術設定",
+                "name": "塩澤良憲"
+            },
+            {
+                "role": "總作畫監督",
+                "name": "河野恵美、川上大志、安野将人"
+            },
+            {
+                "role": "攝影監督",
+                "name": "川下裕樹"
+            },
+            {
+                "role": "3D導演",
+                "name": "宮原洋平"
+            },
+            {
+                "role": "剪接",
+                "name": "齋藤朱里"
+            },
+            {
+                "role": "キャラクターレタッチ",
+                "name": "カプセル"
+            },
+            {
+                "role": "音樂",
+                "name": "うたたね歌菜"
+            },
+            {
+                "role": "音效指導",
+                "name": "濱野高年"
+            },
+            {
+                "role": "動畫製作",
+                "name": "CloverWorks"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://akebi-chan.jp/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/%E6%98%8E%E6%97%A5%E5%90%8C%E5%AD%B8%E7%9A%84%E6%B0%B4%E6%89%8B%E6%9C%8D"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/akebi_chan"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/48553/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -1074,7 +3165,136 @@
         ],
         "external_ids": {
             "mal": "46604"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=uTnmApB8h0Q",
+                "thumbnail": "https://img.youtube.com/vi/uTnmApB8h0Q/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "M4A1",
+                "actor": "戸松 遥"
+            },
+            {
+                "character": "M16A1",
+                "actor": "山根希美"
+            },
+            {
+                "character": "ST AR-15",
+                "actor": "加藤英美里"
+            },
+            {
+                "character": "M4 SOPMOD II",
+                "actor": "田村ゆかり"
+            },
+            {
+                "character": "ジャンシアーヌ",
+                "actor": "小松未可子"
+            },
+            {
+                "character": "カリーナ",
+                "actor": "東山奈央"
+            },
+            {
+                "character": "エージェント",
+                "actor": "生天目仁美"
+            },
+            {
+                "character": "スケアクロウ",
+                "actor": "奥野香耶"
+            },
+            {
+                "character": "エクスキューショナー",
+                "actor": "伊藤 静"
+            },
+            {
+                "character": "クルーガー",
+                "actor": "大塚明夫"
+            }
+        ],
+        "staff": [
+            {
+                "role": "導演",
+                "name": "上田 繁"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "倉田英之"
+            },
+            {
+                "role": "編劇",
+                "name": "倉田英之"
+            },
+            {
+                "role": "角色設計",
+                "name": "山田正樹"
+            },
+            {
+                "role": "美術監督",
+                "name": "権瓶岳斗"
+            },
+            {
+                "role": "色彩設計",
+                "name": "斎藤麻記"
+            },
+            {
+                "role": "道具設計",
+                "name": "神宮司訓之"
+            },
+            {
+                "role": "背景",
+                "name": "グーフィー"
+            },
+            {
+                "role": "攝影監督",
+                "name": "小寺翔太"
+            },
+            {
+                "role": "3DCG導演",
+                "name": "原一晃"
+            },
+            {
+                "role": "剪接",
+                "name": "本田優規"
+            },
+            {
+                "role": "音樂",
+                "name": "渡邊 崇"
+            },
+            {
+                "role": "音效指導",
+                "name": "田中 亮"
+            },
+            {
+                "role": "動畫製作",
+                "name": "旭Production"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://gf-anime.com/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/%E5%B0%91%E5%A5%B3%E5%89%8D%E7%B7%9A_(%E5%8B%95%E7%95%AB)"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/gf_animePR"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/46604/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -1134,7 +3354,132 @@
         ],
         "external_ids": {
             "mal": "42892"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=DFnwUGEN8hA",
+                "thumbnail": "https://img.youtube.com/vi/DFnwUGEN8hA/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "リチャード",
+                "actor": "斎賀みつき"
+            },
+            {
+                "character": "ヘンリー",
+                "actor": "緑川 光"
+            },
+            {
+                "character": "ヨーク公爵リチャード",
+                "actor": "速水 奨"
+            },
+            {
+                "character": "エドワード",
+                "actor": "鳥海浩輔"
+            },
+            {
+                "character": "ジョージ",
+                "actor": "内匠靖明"
+            },
+            {
+                "character": "ウォリック伯爵",
+                "actor": "三上 哲"
+            },
+            {
+                "character": "ケイツビー",
+                "actor": "日野 聡"
+            },
+            {
+                "character": "マーガレット王妃",
+                "actor": "大原さやか"
+            },
+            {
+                "character": "エドワード王太子",
+                "actor": "天﨑滉平"
+            },
+            {
+                "character": "アン",
+                "actor": "鈴代紗弓"
+            },
+            {
+                "character": "イザベル",
+                "actor": "真野あゆみ"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "菅野 文"
+            },
+            {
+                "role": "導演",
+                "name": "鈴木健太郎"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "内田裕基"
+            },
+            {
+                "role": "編劇",
+                "name": "内田裕基"
+            },
+            {
+                "role": "角色設計",
+                "name": "橋詰 力"
+            },
+            {
+                "role": "美術監督",
+                "name": "泉 健太郎"
+            },
+            {
+                "role": "色彩設計",
+                "name": "店橋真弓"
+            },
+            {
+                "role": "攝影監督",
+                "name": "高橋昭裕"
+            },
+            {
+                "role": "音效指導",
+                "name": "岩浪美和"
+            },
+            {
+                "role": "音樂",
+                "name": "大谷 幸"
+            },
+            {
+                "role": "音楽制作",
+                "name": "Lantis"
+            },
+            {
+                "role": "動畫製作",
+                "name": "J.C.STAFF"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://baraou-anime.com/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/%E8%96%94%E8%96%87%E7%8E%8B%E7%9A%84%E8%91%AC%E9%9A%8A"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/baraou_anime"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/42892/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -1171,7 +3516,120 @@
         ],
         "external_ids": {
             "mal": "43735"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=yi6zNeKaDbU",
+                "thumbnail": "https://img.youtube.com/vi/yi6zNeKaDbU/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "六石陽菜",
+                "actor": "内山悠里菜"
+            },
+            {
+                "character": "鷹取舞花",
+                "actor": "稗田寧々"
+            },
+            {
+                "character": "鹿野志穂",
+                "actor": "守屋亨香"
+            },
+            {
+                "character": "月居ほのか",
+                "actor": "緒方佑奈"
+            },
+            {
+                "character": "天童悠希",
+                "actor": "鷹村彩花"
+            },
+            {
+                "character": "赤川千紗",
+                "actor": "宮原颯希"
+            },
+            {
+                "character": "恵庭あいり",
+                "actor": "飯塚麻結"
+            },
+            {
+                "character": "九条柚葉",
+                "actor": "村上まなつ"
+            },
+            {
+                "character": "夜峰美晴",
+                "actor": "安齋由香里"
+            },
+            {
+                "character": "神室絢",
+                "actor": "松田彩希"
+            },
+            {
+                "character": "宮路まほろ",
+                "actor": "山口愛"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "リベル・エンタテインメント"
+            },
+            {
+                "role": "角色原案",
+                "name": "シソ"
+            },
+            {
+                "role": "導演",
+                "name": "片貝 慎"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "浦畑達彦"
+            },
+            {
+                "role": "角色設計",
+                "name": "谷口元浩"
+            },
+            {
+                "role": "配角角色設計",
+                "name": "西村理恵"
+            },
+            {
+                "role": "音樂",
+                "name": "中西亮輔"
+            },
+            {
+                "role": "音楽制作",
+                "name": "PONY CANYON、AP DREAM"
+            },
+            {
+                "role": "動畫製作",
+                "name": "夢太公司、Graphinica"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://cue-animation.jp/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/CUE!"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/cue_anime"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/43735/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -1247,7 +3705,92 @@
         ],
         "external_ids": {
             "mal": "45560"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=O4wTuxahqj0",
+                "thumbnail": "https://img.youtube.com/vi/O4wTuxahqj0/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "武蔵",
+                "actor": "内田雄馬"
+            },
+            {
+                "character": "鐘巻小次郎",
+                "actor": "斉藤壮馬"
+            },
+            {
+                "character": "服部つぐみ",
+                "actor": "高橋李依"
+            },
+            {
+                "character": "武田尚虎",
+                "actor": "日野聡"
+            },
+            {
+                "character": "犬飼四郎",
+                "actor": "下野紘"
+            },
+            {
+                "character": "犬坂七緒",
+                "actor": "和氣あず未"
+            },
+            {
+                "character": "小雨田英雄",
+                "actor": "羽多野渉"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "大高 忍"
+            },
+            {
+                "role": "導演",
+                "name": "柳沢テツヤ"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "國澤真理子"
+            },
+            {
+                "role": "角色設計",
+                "name": "岸田隆宏"
+            },
+            {
+                "role": "音樂",
+                "name": "深澤秀行"
+            },
+            {
+                "role": "動畫製作",
+                "name": "A.C.G.T"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://orient-anime.jp/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/ORIENT_%E6%9D%B1%E6%96%B9%E5%B0%91%E5%B9%B4"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/orient_PR"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/45560/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -1298,7 +3841,124 @@
         ],
         "external_ids": {
             "mal": "49385"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=rbZ2R8qYXbU",
+                "thumbnail": "https://img.youtube.com/vi/rbZ2R8qYXbU/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "黒井津燈香",
+                "actor": "前田佳織里"
+            },
+            {
+                "character": "ウルフ・ベート",
+                "actor": "天野聡美"
+            },
+            {
+                "character": "佐田巻博士",
+                "actor": "梅原裕一郎"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "水崎弘明"
+            },
+            {
+                "role": "導演",
+                "name": "斎藤久"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "高山カツヒコ"
+            },
+            {
+                "role": "角色設計",
+                "name": "森前和也"
+            },
+            {
+                "role": "配角角色設計",
+                "name": "新谷真昼"
+            },
+            {
+                "role": "美術監督",
+                "name": "甲斐政俊"
+            },
+            {
+                "role": "色彩設計",
+                "name": "ながさか暁"
+            },
+            {
+                "role": "衣装デザイン",
+                "name": "監物ケビン雄太"
+            },
+            {
+                "role": "美術設定",
+                "name": "赤樹壱磨"
+            },
+            {
+                "role": "攝影監督",
+                "name": "今泉秀樹"
+            },
+            {
+                "role": "3DCG",
+                "name": "渡辺哲也"
+            },
+            {
+                "role": "剪接",
+                "name": "木村祥明"
+            },
+            {
+                "role": "音效指導",
+                "name": "飯田里樹"
+            },
+            {
+                "role": "音樂",
+                "name": "manzo"
+            },
+            {
+                "role": "音楽制作",
+                "name": "CREST"
+            },
+            {
+                "role": "ヒーローデザイン",
+                "name": "まさひろ山根、ことぶきつかさ"
+            },
+            {
+                "role": "怪人デザイン",
+                "name": "森木靖奏"
+            },
+            {
+                "role": "動畫製作",
+                "name": "Quad"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://kuroitsusan-anime.com/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/%E6%80%AA%E4%BA%BA%E9%96%8B%E7%99%BC%E9%83%A8%E7%9A%84%E9%BB%91%E4%BA%95%E6%B4%A5"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/kuroitsusan"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/49385/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -1357,7 +4017,135 @@
         ],
         "external_ids": {
             "mal": "45783"
-        }
+        },
+        "themes": [],
+        "trailers": [],
+        "cast": [
+            {
+                "character": "玄奘三蔵",
+                "actor": "関 俊彦"
+            },
+            {
+                "character": "孫悟空",
+                "actor": "保志総一朗"
+            },
+            {
+                "character": "沙悟浄",
+                "actor": "平田広明"
+            },
+            {
+                "character": "猪八戒",
+                "actor": "石田 彰"
+            },
+            {
+                "character": "ヘイゼル＝グロース",
+                "actor": "遠近孝一"
+            },
+            {
+                "character": "ガティ＝ネネホーク",
+                "actor": "小山力也"
+            },
+            {
+                "character": "你健一",
+                "actor": "大塚芳忠"
+            },
+            {
+                "character": "烏哭三蔵",
+                "actor": "大塚芳忠"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "峰倉かずや"
+            },
+            {
+                "role": "導演",
+                "name": "髙田美里"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "横手美智子、松井亜弥"
+            },
+            {
+                "role": "角色設計",
+                "name": "小倉典子"
+            },
+            {
+                "role": "美術監督",
+                "name": "深井絵梨香"
+            },
+            {
+                "role": "色彩設計",
+                "name": "野地弘納"
+            },
+            {
+                "role": "道具設計",
+                "name": "小倉典子"
+            },
+            {
+                "role": "美術設定",
+                "name": "青木智由紀、イノセユキエ"
+            },
+            {
+                "role": "總作畫監督",
+                "name": "小倉典子"
+            },
+            {
+                "role": "CG導演",
+                "name": "山崎嘉雅"
+            },
+            {
+                "role": "攝影監督",
+                "name": "後藤晴香"
+            },
+            {
+                "role": "剪接",
+                "name": "梅津朋美"
+            },
+            {
+                "role": "音樂",
+                "name": "白戸佑輔"
+            },
+            {
+                "role": "音效指導",
+                "name": "髙桑 一"
+            },
+            {
+                "role": "音楽制作",
+                "name": "Lantis"
+            },
+            {
+                "role": "動畫製作人",
+                "name": "柴 宏和"
+            },
+            {
+                "role": "動畫製作",
+                "name": "LIDENFILMS"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://saiyuki-r-zeroin.jp/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/%E6%9C%80%E9%81%8A%E8%A8%98"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/saiyuki_re"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/45783/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -1413,7 +4201,155 @@
         ],
         "external_ids": {
             "mal": "49114"
-        }
+        },
+        "themes": [],
+        "trailers": [],
+        "cast": [
+            {
+                "character": "ヴァニタス",
+                "actor": "花江夏樹"
+            },
+            {
+                "character": "ノエ",
+                "actor": "石川界人"
+            },
+            {
+                "character": "ジャンヌ",
+                "actor": "水瀬いのり"
+            },
+            {
+                "character": "ローラン",
+                "actor": "河西健吾"
+            },
+            {
+                "character": "オリヴィエ",
+                "actor": "前野智昭"
+            },
+            {
+                "character": "アストルフォ",
+                "actor": "村瀬 歩"
+            },
+            {
+                "character": "クロエ",
+                "actor": "釘宮理恵"
+            },
+            {
+                "character": "ジャン＝ジャック",
+                "actor": "濱野大輝"
+            },
+            {
+                "character": "ルカ",
+                "actor": "下地紫野"
+            },
+            {
+                "character": "ドミニク",
+                "actor": "茅野愛衣"
+            },
+            {
+                "character": "ルスヴン",
+                "actor": "森川智之"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "望月 淳"
+            },
+            {
+                "role": "ビジュアルコンセプト",
+                "name": "滝沢いづみ"
+            },
+            {
+                "role": "導演",
+                "name": "板村智幸"
+            },
+            {
+                "role": "監督補佐",
+                "name": "三好なお"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "赤尾でこ"
+            },
+            {
+                "role": "角色設計",
+                "name": "伊藤嘉之"
+            },
+            {
+                "role": "配角角色設計",
+                "name": "中山知世"
+            },
+            {
+                "role": "色彩設計",
+                "name": "滝沢いづみ"
+            },
+            {
+                "role": "美術監督",
+                "name": "金井眞悟"
+            },
+            {
+                "role": "道具設計",
+                "name": "石橋慎平"
+            },
+            {
+                "role": "美術デザイン",
+                "name": "多田周平"
+            },
+            {
+                "role": "總作畫監督",
+                "name": "伊藤嘉之、中山知世"
+            },
+            {
+                "role": "攝影監督",
+                "name": "張盈穎"
+            },
+            {
+                "role": "3DCG導演",
+                "name": "三宅拓馬"
+            },
+            {
+                "role": "剪接",
+                "name": "松原理恵、白石あかね"
+            },
+            {
+                "role": "音樂",
+                "name": "梶浦由記"
+            },
+            {
+                "role": "音效指導",
+                "name": "若林和弘"
+            },
+            {
+                "role": "音響効果",
+                "name": "倉橋静男、西佐知子"
+            },
+            {
+                "role": "動畫製作",
+                "name": "bones"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://vanitas-anime.com/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/%E7%93%A6%E5%B0%BC%E5%A1%94%E6%96%AF%E7%9A%84%E6%89%8B%E6%9C%AD"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/vanitas_anime"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/49114/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -1467,7 +4403,116 @@
         ],
         "external_ids": {
             "mal": "49969"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=O6v0Y4_UNOs",
+                "thumbnail": "https://img.youtube.com/vi/O6v0Y4_UNOs/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "神谷 瞬",
+                "actor": "石田彰"
+            },
+            {
+                "character": "白金ハル",
+                "actor": "堀江 瞬"
+            },
+            {
+                "character": "タイガ",
+                "actor": "沢城千春"
+            },
+            {
+                "character": "有栖川さおり",
+                "actor": "渕上 舞"
+            },
+            {
+                "character": "三田三太郎",
+                "actor": "田村睦心"
+            },
+            {
+                "character": "大門愛海",
+                "actor": "落合福嗣"
+            },
+            {
+                "character": "青山カズキ",
+                "actor": "千葉翔也"
+            },
+            {
+                "character": "鳳天心",
+                "actor": "中 博史"
+            },
+            {
+                "character": "鳳王次郎",
+                "actor": "諏訪部順一"
+            },
+            {
+                "character": "神木結衣",
+                "actor": "小松未可子"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "アカツキ、トゥーキョーゲームス"
+            },
+            {
+                "role": "原案",
+                "name": "小高 和剛"
+            },
+            {
+                "role": "角色原案",
+                "name": "小松崎 類、しまどりる"
+            },
+            {
+                "role": "導演",
+                "name": "青木 悠"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "横手 美智子"
+            },
+            {
+                "role": "角色設計",
+                "name": "藪本 陽輔"
+            },
+            {
+                "role": "音樂",
+                "name": "高田 雅史"
+            },
+            {
+                "role": "音楽制作",
+                "name": "Lantis"
+            },
+            {
+                "role": "動畫製作",
+                "name": "LIDENFILMS"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://tribenine.tokyo/anime/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/TRIBE_NINE"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/tribenine_tokyo"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/49969/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -1517,7 +4562,132 @@
         ],
         "external_ids": {
             "mal": "49519"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=gbYFaLhM2FU",
+                "thumbnail": "https://img.youtube.com/vi/gbYFaLhM2FU/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "川合麻依",
+                "actor": "若山詩音"
+            },
+            {
+                "character": "藤 聖子",
+                "actor": "石川由依"
+            },
+            {
+                "character": "源 誠二",
+                "actor": "鈴木崚汰"
+            },
+            {
+                "character": "山田武志",
+                "actor": "土屋神葉"
+            },
+            {
+                "character": "牧高美和",
+                "actor": "花澤香菜"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "泰 三子"
+            },
+            {
+                "role": "導演",
+                "name": "佐藤雄三"
+            },
+            {
+                "role": "副導演",
+                "name": "石田 暢"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "金月龍之介"
+            },
+            {
+                "role": "角色設計",
+                "name": "土屋 圭"
+            },
+            {
+                "role": "色彩設計",
+                "name": "大野春恵"
+            },
+            {
+                "role": "美術ボード",
+                "name": "橋本和幸、横松紀彦"
+            },
+            {
+                "role": "美術設定",
+                "name": "杉山晋史"
+            },
+            {
+                "role": "攝影監督",
+                "name": "畑中宏伸"
+            },
+            {
+                "role": "剪接",
+                "name": "塚常真理子"
+            },
+            {
+                "role": "3D導演",
+                "name": "田中康隆"
+            },
+            {
+                "role": "音樂",
+                "name": "信澤宣朋"
+            },
+            {
+                "role": "音效指導",
+                "name": "小泉紀介"
+            },
+            {
+                "role": "音響効果",
+                "name": "山谷尚人"
+            },
+            {
+                "role": "録音スタジオ",
+                "name": "スタジオT&T"
+            },
+            {
+                "role": "音響制作",
+                "name": "マジックカプセル"
+            },
+            {
+                "role": "動畫製作人",
+                "name": "芦川真理子、豊田智紀"
+            },
+            {
+                "role": "動畫製作",
+                "name": "MADHOUSE"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://hakozume-anime.com/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/%E7%A7%98%E5%AF%86%E5%85%A7%E5%B9%95%EF%BD%9E%E5%A5%B3%E8%AD%A6%E7%9A%84%E5%8F%8D%E6%93%8A%EF%BD%9E"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/hakozume_anime"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/49519/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -1559,7 +4729,143 @@
                 "url": null
             }
         ],
-        "external_ids": []
+        "external_ids": [],
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=QUshV0Q2XQ0",
+                "thumbnail": "https://img.youtube.com/vi/QUshV0Q2XQ0/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "大和 晴",
+                "actor": "高良崚太"
+            },
+            {
+                "character": "榊 星一郎",
+                "actor": "石森周斗"
+            },
+            {
+                "character": "月丘柊依",
+                "actor": "吉原康平"
+            },
+            {
+                "character": "幸永椿貴",
+                "actor": "山口諒太郎"
+            },
+            {
+                "character": "南雲 竜",
+                "actor": "古田一紀"
+            },
+            {
+                "character": "天門泰雅",
+                "actor": "坂井易直"
+            },
+            {
+                "character": "宇佐美 智",
+                "actor": "山下誠一郎"
+            },
+            {
+                "character": "樫良木ルイ",
+                "actor": "峯田大夢"
+            },
+            {
+                "character": "結城 心",
+                "actor": "新井雄也"
+            },
+            {
+                "character": "久我巧生",
+                "actor": "村上 聡"
+            },
+            {
+                "character": "花山院快斗",
+                "actor": "馬場惇平"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "鞠田マオ"
+            },
+            {
+                "role": "人設原案",
+                "name": "河下水希、雪広うたこ、たなかマルメロ、潤宮るか、沙汰 シラノ、星野リリィ"
+            },
+            {
+                "role": "導演",
+                "name": "ひいろゆきな"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "米村正二"
+            },
+            {
+                "role": "潤色",
+                "name": "東 環妃"
+            },
+            {
+                "role": "角色設計",
+                "name": "石川智美"
+            },
+            {
+                "role": "配角角色設計",
+                "name": "鶴田 眸"
+            },
+            {
+                "role": "美術監督",
+                "name": "魏 斯曼"
+            },
+            {
+                "role": "色彩設計",
+                "name": "野地弘納"
+            },
+            {
+                "role": "美術設定",
+                "name": "高橋麻穂、海津利子"
+            },
+            {
+                "role": "攝影監督",
+                "name": "伊藤康行"
+            },
+            {
+                "role": "3D導演",
+                "name": "山本祐希江"
+            },
+            {
+                "role": "剪接",
+                "name": "齋藤朱里"
+            },
+            {
+                "role": "音效指導",
+                "name": "納谷僚介"
+            },
+            {
+                "role": "音樂",
+                "name": "R・O・N"
+            },
+            {
+                "role": "動畫製作",
+                "name": "Diomedéa"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://futsalboys.com/anime"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/Futsal_Boys!!!!!"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/futsal_boys"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -1577,7 +4883,105 @@
             "新作"
         ],
         "streams": [],
-        "external_ids": []
+        "external_ids": [],
+        "themes": [],
+        "trailers": [],
+        "cast": [
+            {
+                "character": "明坂芹菜",
+                "actor": "新田恵海"
+            },
+            {
+                "character": "御形アリシアナ",
+                "actor": "福原綾香"
+            },
+            {
+                "character": "天王洲なずな",
+                "actor": "山本彩乃"
+            },
+            {
+                "character": "小仏凪",
+                "actor": "佐倉薫"
+            },
+            {
+                "character": "箱部なる",
+                "actor": "M・A・O"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "七条レタス、齊藤キャベツ"
+            },
+            {
+                "role": "角色原案",
+                "name": "Hisasi"
+            },
+            {
+                "role": "企画",
+                "name": "CHUNITHM"
+            },
+            {
+                "role": "導演",
+                "name": "田中千駿"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "田中千駿、石倉礼"
+            },
+            {
+                "role": "角色設計",
+                "name": "佐藤健史、後藤香織"
+            },
+            {
+                "role": "美術監督",
+                "name": "魏斯曼"
+            },
+            {
+                "role": "色彩設計",
+                "name": "池田ひとみ"
+            },
+            {
+                "role": "デザインサポート",
+                "name": "佐藤啓太"
+            },
+            {
+                "role": "攝影監督",
+                "name": "石山智之"
+            },
+            {
+                "role": "剪接",
+                "name": "柳圭介"
+            },
+            {
+                "role": "音效指導",
+                "name": "西山寛基"
+            },
+            {
+                "role": "音樂",
+                "name": "D.watt"
+            },
+            {
+                "role": "動畫製作人",
+                "name": "映月"
+            },
+            {
+                "role": "動畫製作",
+                "name": "暁"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://chunithm.sega.jp/irodorimidori/anime/"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/irodorimidori5"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -1638,7 +5042,124 @@
         ],
         "external_ids": {
             "mal": "44055"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=LaRNddpJpVo",
+                "thumbnail": "https://img.youtube.com/vi/LaRNddpJpVo/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "佐々木秀鳴",
+                "actor": "白井悠介"
+            },
+            {
+                "character": "宮野由美",
+                "actor": "斉藤壮馬"
+            },
+            {
+                "character": "平野大河",
+                "actor": "松岡禎丞"
+            },
+            {
+                "character": "小笠原次郎",
+                "actor": "小野友樹"
+            },
+            {
+                "character": "半澤雅人",
+                "actor": "内田雄馬"
+            },
+            {
+                "character": "暮沢 丞",
+                "actor": "新井良平"
+            },
+            {
+                "character": "田代権三郎",
+                "actor": "市来光弘"
+            }
+        ],
+        "staff": [
+            {
+                "role": "導演",
+                "name": "石平信司"
+            },
+            {
+                "role": "副導演",
+                "name": "上野壮大"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "中村能子"
+            },
+            {
+                "role": "角色設計",
+                "name": "藤井まき"
+            },
+            {
+                "role": "美術監督",
+                "name": "黛昌樹"
+            },
+            {
+                "role": "色彩設計",
+                "name": "桂木今里"
+            },
+            {
+                "role": "攝影監督",
+                "name": "近藤慎与"
+            },
+            {
+                "role": "剪接",
+                "name": "白石あかね"
+            },
+            {
+                "role": "音效指導",
+                "name": "はたしょう二"
+            },
+            {
+                "role": "音樂",
+                "name": "澁江夏奈"
+            },
+            {
+                "role": "音楽制作",
+                "name": "日本古倫美亞"
+            },
+            {
+                "role": "音響効果",
+                "name": "出雲範子"
+            },
+            {
+                "role": "音響制作",
+                "name": "スタジオ・ドンファン"
+            },
+            {
+                "role": "動畫製作",
+                "name": "Studio DEEN"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://sasamiya.com/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/%E4%BD%90%E4%BD%90%E6%9C%A8%E8%88%87%E5%AE%AE%E9%87%8E"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/sasamiya_anime"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/44055/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -1679,7 +5200,125 @@
                 "url": null
             }
         ],
-        "external_ids": []
+        "external_ids": [],
+        "themes": [],
+        "trailers": [],
+        "cast": [
+            {
+                "character": "應幾",
+                "actor": "小野賢章"
+            },
+            {
+                "character": "小霊",
+                "actor": "金元寿子"
+            },
+            {
+                "character": "丁研",
+                "actor": "古川慎"
+            },
+            {
+                "character": "洵喬",
+                "actor": "中原麻衣"
+            },
+            {
+                "character": "愛心茶桶",
+                "actor": "福島潤"
+            },
+            {
+                "character": "羅織女",
+                "actor": "大原さやか"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "「幻想三國誌」"
+            },
+            {
+                "role": "導演",
+                "name": "町谷俊輔"
+            },
+            {
+                "role": "副導演",
+                "name": "永居慎平"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "鈴木雅詞"
+            },
+            {
+                "role": "角色設計",
+                "name": "CSPG、油井徹太郎"
+            },
+            {
+                "role": "色彩設計",
+                "name": "金丸祐子"
+            },
+            {
+                "role": "美術監督",
+                "name": "片野坂恵美"
+            },
+            {
+                "role": "美術設定",
+                "name": "大原盛仁"
+            },
+            {
+                "role": "美術アドバイザー",
+                "name": "増山修"
+            },
+            {
+                "role": "CG導演",
+                "name": "宮下るりか"
+            },
+            {
+                "role": "攝影監督",
+                "name": "浅川茂輝"
+            },
+            {
+                "role": "剪接",
+                "name": "宮崎直樹"
+            },
+            {
+                "role": "音樂",
+                "name": "田頭勉"
+            },
+            {
+                "role": "音效指導",
+                "name": "丹下雄二"
+            },
+            {
+                "role": "音楽制作",
+                "name": "GEEKTOYS"
+            },
+            {
+                "role": "音響効果",
+                "name": "宅間麻姫"
+            },
+            {
+                "role": "録音",
+                "name": "佐々木彰"
+            },
+            {
+                "role": "音響制作",
+                "name": "東北新社"
+            },
+            {
+                "role": "動畫製作",
+                "name": "GEEKTOYS"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://gensou-sangokushi.com/"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/gensou_3gokushi"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -1709,7 +5348,37 @@
         ],
         "external_ids": {
             "mal": "49780"
-        }
+        },
+        "themes": [],
+        "trailers": [],
+        "cast": [
+            {
+                "character": "川尻こだま",
+                "actor": "悠木碧"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "川尻こだま"
+            },
+            {
+                "role": "動畫製作",
+                "name": "Lapin Track"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/anime_kakeakami"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/49780/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -1749,7 +5418,91 @@
         ],
         "external_ids": {
             "mal": "39917"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=pf6hEVSNeL8",
+                "thumbnail": "https://img.youtube.com/vi/pf6hEVSNeL8/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "孫一",
+                "actor": "佐藤大樹"
+            },
+            {
+                "character": "織田三郎信長",
+                "actor": "増田俊樹"
+            },
+            {
+                "character": "鶴首",
+                "actor": "荒木健太朗"
+            },
+            {
+                "character": "蛍火",
+                "actor": "永田崇人"
+            },
+            {
+                "character": "黒氷",
+                "actor": "平田裕一郎"
+            },
+            {
+                "character": "木偶",
+                "actor": "spi"
+            },
+            {
+                "character": "アゲハ",
+                "actor": "神里優希"
+            },
+            {
+                "character": "不如帰",
+                "actor": "崎山つばさ"
+            },
+            {
+                "character": "ルシオ・コルテス",
+                "actor": "佐藤流司"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "「錆色のアーマ」プロジェクト"
+            },
+            {
+                "role": "導演",
+                "name": "河原真明"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "江嵜大兄"
+            },
+            {
+                "role": "編劇",
+                "name": "江嵜大兄"
+            },
+            {
+                "role": "動畫製作",
+                "name": "Kigumi"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://rustedarmors-anime.com/"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/armors_anime"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/39917/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -1773,7 +5526,97 @@
         "streams": [],
         "external_ids": {
             "mal": "50285"
-        }
+        },
+        "themes": [],
+        "trailers": [],
+        "cast": [
+            {
+                "character": "まふねこ",
+                "actor": "大地 葉"
+            },
+            {
+                "character": "鬼河原ディレクター",
+                "actor": "間宮康弘"
+            },
+            {
+                "character": "よりちゃん",
+                "actor": "杉山里穂"
+            },
+            {
+                "character": "横山チーフAD",
+                "actor": "広瀬裕也"
+            },
+            {
+                "character": "ナレーション",
+                "actor": "川島 明（麒麟）"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "真船佳奈"
+            },
+            {
+                "role": "導演",
+                "name": "青木 純"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "青木 純"
+            },
+            {
+                "role": "編劇",
+                "name": "青木 純"
+            },
+            {
+                "role": "故事板",
+                "name": "青木 純"
+            },
+            {
+                "role": "角色設計",
+                "name": "青木 純、劉 洋"
+            },
+            {
+                "role": "色彩設計",
+                "name": "吉 兆祺"
+            },
+            {
+                "role": "美術",
+                "name": "方 琦星"
+            },
+            {
+                "role": "音樂",
+                "name": "山田淳平"
+            },
+            {
+                "role": "音楽制作",
+                "name": "ワーロック"
+            },
+            {
+                "role": "音楽協力",
+                "name": "テレビ東京ミュージック"
+            },
+            {
+                "role": "音響効果",
+                "name": "稲田祐介"
+            },
+            {
+                "role": "動畫製作",
+                "name": "神南スタジオ、SPACE NEKO COMPANY"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://www.tv-tokyo.co.jp/anime/oadekinai/"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/50285/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -1797,7 +5640,77 @@
         "streams": [],
         "external_ids": {
             "mal": "50495"
-        }
+        },
+        "themes": [],
+        "trailers": [],
+        "cast": [
+            {
+                "character": "山口リナ",
+                "actor": "山口莉愛"
+            },
+            {
+                "character": "杉浦ユウラ",
+                "actor": "杉浦優來"
+            },
+            {
+                "character": "永山ツバキ",
+                "actor": "永山椿"
+            },
+            {
+                "character": "深澤ヒイロ",
+                "actor": "深澤日彩"
+            },
+            {
+                "character": "比嘉ユウワ",
+                "actor": "比嘉優和"
+            },
+            {
+                "character": "佐藤カンナ",
+                "actor": "佐藤栞奈"
+            },
+            {
+                "character": "森村タケオ",
+                "actor": "木村昴"
+            },
+            {
+                "character": "羽村チノ",
+                "actor": "杉山里穂"
+            }
+        ],
+        "staff": [
+            {
+                "role": "導演",
+                "name": "中田誠"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "藤咲淳一"
+            },
+            {
+                "role": "角色設計",
+                "name": "広岡トシヒト"
+            },
+            {
+                "role": "アニメーション監修",
+                "name": "京極尚彦"
+            },
+            {
+                "role": "動畫製作",
+                "name": "OLM"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://garugaku.com/"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/50495/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -1815,7 +5728,56 @@
             "新作"
         ],
         "streams": [],
-        "external_ids": []
+        "external_ids": [],
+        "themes": [],
+        "trailers": [],
+        "cast": [
+            {
+                "character": "？？？",
+                "actor": "蒼井翔太"
+            },
+            {
+                "character": "？？？",
+                "actor": "榎木淳弥"
+            },
+            {
+                "character": "？？？",
+                "actor": "八代 拓"
+            }
+        ],
+        "staff": [
+            {
+                "role": "マンガクリエイター",
+                "name": "STUDY優作"
+            },
+            {
+                "role": "導演",
+                "name": "ナミキ ヒロシ"
+            },
+            {
+                "role": "音效指導",
+                "name": "サイトウ ユウ"
+            },
+            {
+                "role": "音響制作",
+                "name": "チャンスイン"
+            },
+            {
+                "role": "楽曲制作",
+                "name": "佐々木宏人"
+            },
+            {
+                "role": "動畫製作",
+                "name": "勝鬨スタジオ"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/Shocker_SAN1111"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -1864,7 +5826,68 @@
                 "url": "https://www.youtube.com/playlist?list=PL12UaAf_xzfpGQBXbFQQedRZpN_Gmkxi8"
             }
         ],
-        "external_ids": []
+        "external_ids": [],
+        "themes": [],
+        "trailers": [],
+        "cast": [
+            {
+                "character": "全体演出",
+                "actor": "船田晃"
+            },
+            {
+                "character": "全体演出",
+                "actor": "杉本健一"
+            },
+            {
+                "character": "各話演出",
+                "actor": "平田貢一"
+            },
+            {
+                "character": "各話演出",
+                "actor": "宮䑓直也"
+            },
+            {
+                "character": "各話演出",
+                "actor": "井上洋輔"
+            },
+            {
+                "character": "各話演出",
+                "actor": "横山恵"
+            },
+            {
+                "character": "脚本",
+                "actor": "熊本浩武"
+            },
+            {
+                "character": "脚本",
+                "actor": "佐々木充郭"
+            },
+            {
+                "character": "脚本",
+                "actor": "石上加奈子"
+            },
+            {
+                "character": "作画",
+                "actor": "鹿目凛"
+            },
+            {
+                "character": "作画",
+                "actor": "jimmy"
+            }
+        ],
+        "staff": [
+            {
+                "role": "？？？",
+                "name": "津田寛治、木津つばさ、深澤大河、篠田諒、園山敬介、沢井正棋、ぽんず、沢田敏子、二又一成、森レイ子、千本木彩花、松田利冴、山崎夏菜、奈日抽ねね、水科葵"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://www.tv-tokyo.co.jp/anime/yamishibai10/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -1885,7 +5908,78 @@
             "新作"
         ],
         "streams": [],
-        "external_ids": []
+        "external_ids": [],
+        "themes": [],
+        "trailers": [],
+        "cast": [
+            {
+                "character": "バートン",
+                "actor": "櫻井 孝宏"
+            },
+            {
+                "character": "ベレッカ",
+                "actor": "鬼頭 明里"
+            },
+            {
+                "character": "ロン",
+                "actor": "安元 洋貴"
+            },
+            {
+                "character": "ジェーン",
+                "actor": "皆川 純子"
+            },
+            {
+                "character": "バーン",
+                "actor": "小林 由美子"
+            },
+            {
+                "character": "ルーシー",
+                "actor": "悠木 碧"
+            },
+            {
+                "character": "カッペイ",
+                "actor": "村瀬 歩"
+            },
+            {
+                "character": "エマ",
+                "actor": "潘 めぐみ"
+            },
+            {
+                "character": "ガムッチ",
+                "actor": "井上 ほの花"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原案",
+                "name": "森下 一喜"
+            },
+            {
+                "role": "導演",
+                "name": "神戸 守"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "藤田 伸三"
+            },
+            {
+                "role": "角色設計",
+                "name": "鈴木 敦"
+            },
+            {
+                "role": "音效指導",
+                "name": "浦上 靖之"
+            },
+            {
+                "role": "音樂",
+                "name": "小畑 貴裕"
+            },
+            {
+                "role": "動畫製作",
+                "name": "OLM"
+            }
+        ],
+        "links": []
     },
     {
         "season": "202201",
@@ -1909,7 +6003,41 @@
         "streams": [],
         "external_ids": {
             "mal": "50281"
-        }
+        },
+        "themes": [],
+        "trailers": [],
+        "cast": [
+            {
+                "character": "和実ゆい／キュアプレシャス",
+                "actor": "菱川花菜"
+            },
+            {
+                "character": "芙羽ここね／キュアスパイシー",
+                "actor": "清水理沙"
+            },
+            {
+                "character": "華満らん／キュアヤムヤム",
+                "actor": "井口裕香"
+            }
+        ],
+        "staff": [
+            {
+                "role": "動畫製作",
+                "name": "東映動畫"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://www.toei-anim.co.jp/tv/delicious-party_precure/"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/50281/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -1943,7 +6071,93 @@
         ],
         "external_ids": {
             "mal": "49223"
-        }
+        },
+        "themes": [],
+        "trailers": [],
+        "cast": [
+            {
+                "character": "シリウス・イヴェール",
+                "actor": "高塚智人"
+            },
+            {
+                "character": "ディアナ・ディアフェル",
+                "actor": "関根明良"
+            },
+            {
+                "character": "クリス",
+                "actor": "渋谷彩乃"
+            },
+            {
+                "character": "スピカ・ディアフェル",
+                "actor": "仲村宗悟"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "mimu"
+            },
+            {
+                "role": "導演",
+                "name": "騎日月"
+            },
+            {
+                "role": "編劇",
+                "name": "黒崎エーヨ"
+            },
+            {
+                "role": "角色設計",
+                "name": "吉川真一"
+            },
+            {
+                "role": "色彩設計",
+                "name": "わしみ"
+            },
+            {
+                "role": "美術監督",
+                "name": "前塚太一"
+            },
+            {
+                "role": "美術設定",
+                "name": "上垣裕起子"
+            },
+            {
+                "role": "總作畫監督",
+                "name": "吉川真一"
+            },
+            {
+                "role": "攝影監督",
+                "name": "桑良人、簡佳瑩"
+            },
+            {
+                "role": "剪接",
+                "name": "安田ナツキ"
+            },
+            {
+                "role": "音效指導",
+                "name": "西山寛基"
+            },
+            {
+                "role": "音響制作",
+                "name": "スタジオマウス"
+            },
+            {
+                "role": "動畫製作",
+                "name": "studio HōKIBOSHI"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://akuyakureijou.af-original.com/"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/49223/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -2010,7 +6224,115 @@
         ],
         "external_ids": {
             "mal": "47778"
-        }
+        },
+        "themes": [],
+        "trailers": [],
+        "cast": [
+            {
+                "character": "竈門炭治郎",
+                "actor": "花江夏樹"
+            },
+            {
+                "character": "竈門禰豆子",
+                "actor": "鬼頭明里"
+            },
+            {
+                "character": "我妻善逸",
+                "actor": "下野紘"
+            },
+            {
+                "character": "嘴平伊之助",
+                "actor": "松岡禎丞"
+            },
+            {
+                "character": "宇髄天元",
+                "actor": "小西克幸"
+            },
+            {
+                "character": "堕姫（上弦の陸）",
+                "actor": "沢城みゆき"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "吾峠呼世晴"
+            },
+            {
+                "role": "導演",
+                "name": "外崎春雄"
+            },
+            {
+                "role": "編劇",
+                "name": "ufotable"
+            },
+            {
+                "role": "角色設計",
+                "name": "松島晃"
+            },
+            {
+                "role": "配角角色設計",
+                "name": "佐藤美幸、梶山庸子、菊池美花"
+            },
+            {
+                "role": "美術監督",
+                "name": "衛藤功二"
+            },
+            {
+                "role": "色彩設計",
+                "name": "大前祐子"
+            },
+            {
+                "role": "道具設計",
+                "name": "小山将治"
+            },
+            {
+                "role": "總作畫監督",
+                "name": "松島晃"
+            },
+            {
+                "role": "攝影監督",
+                "name": "寺尾優一"
+            },
+            {
+                "role": "3D導演",
+                "name": "西脇一樹"
+            },
+            {
+                "role": "剪接",
+                "name": "神野学"
+            },
+            {
+                "role": "音樂",
+                "name": "梶浦由記、椎名豪"
+            },
+            {
+                "role": "動畫製作",
+                "name": "ufotable"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://kimetsu.com/anime/yukakuhen/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/%E9%AC%BC%E6%BB%85%E4%B9%8B%E5%88%83_%E9%81%8A%E9%83%AD%E7%AF%87"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/kimetsu_off"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/47778/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -2066,7 +6388,152 @@
         ],
         "external_ids": {
             "mal": "40834"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=c1HHoucIxRg",
+                "thumbnail": "https://img.youtube.com/vi/c1HHoucIxRg/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "ボッジ",
+                "actor": "日向未南"
+            },
+            {
+                "character": "カゲ",
+                "actor": "村瀬歩"
+            },
+            {
+                "character": "ダイダ",
+                "actor": "梶 裕貴"
+            },
+            {
+                "character": "ヒリング",
+                "actor": "佐藤利奈"
+            },
+            {
+                "character": "ドーマス",
+                "actor": "江口拓也"
+            },
+            {
+                "character": "ベビン",
+                "actor": "上田燿司"
+            },
+            {
+                "character": "アピス",
+                "actor": "安元洋貴"
+            },
+            {
+                "character": "ドルーシ",
+                "actor": "田所陽向"
+            },
+            {
+                "character": "ホクロ",
+                "actor": "山下大輝"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "十日草輔"
+            },
+            {
+                "role": "導演",
+                "name": "八田洋介"
+            },
+            {
+                "role": "副導演",
+                "name": "今井有文"
+            },
+            {
+                "role": "チーフ演出",
+                "name": "渕上 真"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "岸本 卓"
+            },
+            {
+                "role": "角色設計",
+                "name": "野崎あつこ"
+            },
+            {
+                "role": "配角角色設計",
+                "name": "河毛雅妃"
+            },
+            {
+                "role": "美術監督",
+                "name": "金子雄司"
+            },
+            {
+                "role": "色彩設計",
+                "name": "橋本 賢"
+            },
+            {
+                "role": "美術設定",
+                "name": "藤井一志"
+            },
+            {
+                "role": "總作畫監督",
+                "name": "野崎あつこ、河毛雅妃"
+            },
+            {
+                "role": "主動畫師",
+                "name": "大城 勝、小笠原真、藤井 望"
+            },
+            {
+                "role": "攝影監督",
+                "name": "出水田和人、上田程之"
+            },
+            {
+                "role": "剪接",
+                "name": "廣瀬清志"
+            },
+            {
+                "role": "音樂",
+                "name": "MAYUKO"
+            },
+            {
+                "role": "音效指導",
+                "name": "えびなやすのり"
+            },
+            {
+                "role": "音響効果",
+                "name": "緒方康恭"
+            },
+            {
+                "role": "動畫製作人",
+                "name": "岡田麻衣子"
+            },
+            {
+                "role": "動畫製作",
+                "name": "WIT STUDIO"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://osama-ranking.com/"
+            },
+            {
+                "category": "一般",
+                "label": "wiki",
+                "url": "https://twitter.com/osama_ranking"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/osama_ranking"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/40834/"
+            }
+        ]
     },
     {
         "season": "202201",
@@ -2102,6 +6569,131 @@
         "streams": [],
         "external_ids": {
             "mal": "44961"
-        }
+        },
+        "themes": [],
+        "trailers": [
+            {
+                "url": "https://www.youtube.com/watch?v=50yyXmsXC-Y",
+                "thumbnail": "https://img.youtube.com/vi/50yyXmsXC-Y/mqdefault.jpg"
+            },
+            {
+                "url": "https://www.youtube.com/watch?v=at3lDXweRns",
+                "thumbnail": "https://img.youtube.com/vi/at3lDXweRns/mqdefault.jpg"
+            },
+            {
+                "url": "https://www.youtube.com/watch?v=7egAQcymJSM",
+                "thumbnail": "https://img.youtube.com/vi/7egAQcymJSM/mqdefault.jpg"
+            }
+        ],
+        "cast": [
+            {
+                "character": "架橋 明日",
+                "actor": "入野自由"
+            },
+            {
+                "character": "ナッセ",
+                "actor": "小倉唯"
+            },
+            {
+                "character": "花籠 咲",
+                "actor": "M・A・O"
+            },
+            {
+                "character": "ルベル",
+                "actor": "花江夏樹"
+            },
+            {
+                "character": "六階堂 七斗",
+                "actor": "森川智之"
+            },
+            {
+                "character": "バレ",
+                "actor": "茅野愛衣"
+            },
+            {
+                "character": "生流 奏",
+                "actor": "石川界人"
+            },
+            {
+                "character": "メイザ",
+                "actor": "井上喜久子"
+            },
+            {
+                "character": "底谷 一",
+                "actor": "前野智昭"
+            },
+            {
+                "character": "バルタ",
+                "actor": "緑川光"
+            },
+            {
+                "character": "山田美々々",
+                "actor": "前田佳織里"
+            },
+            {
+                "character": "南河水清",
+                "actor": "千葉翔也"
+            }
+        ],
+        "staff": [
+            {
+                "role": "原作",
+                "name": "大場つぐみ、小畑健"
+            },
+            {
+                "role": "導演",
+                "name": "髙橋秀弥"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "猪爪慎一"
+            },
+            {
+                "role": "角色設計",
+                "name": "大舘康二"
+            },
+            {
+                "role": "美術",
+                "name": "草薙"
+            },
+            {
+                "role": "CGIディレクター",
+                "name": "池田正憲"
+            },
+            {
+                "role": "音效指導",
+                "name": "濱野高年"
+            },
+            {
+                "role": "音響制作",
+                "name": "マジックカプセル"
+            },
+            {
+                "role": "動畫製作",
+                "name": "SIGNAL.MD"
+            }
+        ],
+        "links": [
+            {
+                "category": "一般",
+                "label": "官方網站",
+                "url": "https://anime-platinumend.com/"
+            },
+            {
+                "category": "一般",
+                "label": "維基百科(中文)",
+                "url": "https://zh.wikipedia.org/wiki/Platinum_End"
+            },
+            {
+                "category": "一般",
+                "label": "X(Twitter)",
+                "url": "https://twitter.com/ani_platinumend"
+            },
+            {
+                "category": "資料庫",
+                "label": "MAL",
+                "url": "https://myanimelist.net/anime/44961/"
+            }
+        ]
     }
 ]

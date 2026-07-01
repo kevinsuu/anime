@@ -7260,7 +7260,18 @@
             "浪漫",
             "超自然"
         ],
-        "streams": [],
+        "streams": [
+            {
+                "region": "香港",
+                "platform": "木棉花",
+                "url": null
+            },
+            {
+                "region": "台灣",
+                "platform": "木棉花",
+                "url": null
+            }
+        ],
         "external_ids": {
             "mal": "63150",
             "bangumi": "617123"
