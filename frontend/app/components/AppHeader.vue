@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const route = useRoute()
-const { isAuthed } = useSession()
-const config = useRuntimeConfig()
+const { session, isAuthed } = useSession()
 
 const navItems = [
   { label: '總覽', to: '/', protected: false },
@@ -17,7 +16,7 @@ function isActive(path: string): boolean {
   return route.path === path
 }
 
-function targetFor(item: typeof navItems[number]): string {
+function targetFor(item: { to: string; protected: boolean }): string {
   return item.protected && !isAuthed.value ? '/login' : item.to
 }
 </script>
@@ -47,10 +46,26 @@ function targetFor(item: typeof navItems[number]): string {
         </NuxtLink>
       </nav>
 
-      <div class="hidden text-right text-xs text-gray-500 md:block">
-        <span class="block">{{ isAuthed ? '已登入' : '訪客' }}</span>
-        <strong class="block truncate text-gray-700">{{ config.public.apiBaseUrl }}</strong>
-      </div>
+      <NuxtLink
+        v-if="isAuthed"
+        to="/settings"
+        class="hidden items-center gap-2 rounded-full p-1 pr-3 transition-colors hover:bg-gray-100 md:flex"
+      >
+        <img
+          v-if="session.user?.avatar_url"
+          :src="session.user.avatar_url"
+          alt=""
+          referrerpolicy="no-referrer"
+          class="size-8 shrink-0 rounded-full object-cover ring-2 ring-gray-100"
+        >
+        <span v-else class="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary-50 ring-2 ring-gray-100">
+          <UIcon name="i-lucide-user" class="size-4 text-primary-400" />
+        </span>
+        <strong class="max-w-28 truncate text-sm text-gray-700">{{ session.user?.display_name || session.user?.email }}</strong>
+      </NuxtLink>
+      <NuxtLink v-else to="/login" class="hidden text-xs font-semibold text-gray-500 hover:text-gray-900 md:block">
+        訪客・登入
+      </NuxtLink>
     </div>
   </header>
 </template>
