@@ -137,7 +137,7 @@ final class AnimeListController extends Controller
     private function listForUser(int $userId): array
     {
         return UserAnimeListItem::query()
-            ->with('anime')
+            ->with(['anime', 'collections:id,name'])
             ->where('user_id', $userId)
             ->orderByDesc('updated_at')
             ->orderByDesc('id')
@@ -155,6 +155,9 @@ final class AnimeListController extends Controller
             'note' => $item->note,
             'createdAt' => $item->created_at?->toDateTimeString(),
             'updatedAt' => $item->updated_at?->toDateTimeString(),
+            'collections' => $item->relationLoaded('collections')
+                ? $item->collections->map(fn ($c) => ['id' => $c->id, 'name' => $c->name])->all()
+                : [],
             'anime' => [
                 'id' => $item->anime->id,
                 'name' => $item->anime->name,
