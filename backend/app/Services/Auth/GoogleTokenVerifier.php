@@ -13,7 +13,8 @@ final class GoogleTokenVerifier
             throw new ApiException(422, 'validation_failed', '缺少 Google ID token', ['idToken' => 'required']);
         }
 
-        if ((bool) config('services.dev_auth_bypass') && str_starts_with($idToken, 'dev:')) {
+        $devBypassAllowed = (bool) config('services.dev_auth_bypass') && config('app.env') === 'local';
+        if ($devBypassAllowed && str_starts_with($idToken, 'dev:')) {
             $email = substr($idToken, 4) ?: 'dev@example.com';
 
             return [
