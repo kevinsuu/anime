@@ -13,6 +13,11 @@ COPY composer.json composer.lock ./
 RUN composer install --no-interaction --prefer-dist --no-scripts --no-dev --optimize-autoloader
 
 COPY . .
-RUN composer dump-autoload --optimize --no-dev
+RUN composer dump-autoload --optimize --no-dev \
+    && mkdir -p storage/framework/cache/data \
+        storage/framework/sessions \
+        storage/framework/testing \
+        storage/framework/views \
+        storage/logs
 
 CMD ["php", "artisan", "schedule:work"]

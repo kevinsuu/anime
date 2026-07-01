@@ -26,6 +26,11 @@ COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN rm -f /etc/nginx/sites-enabled/default \
     && chmod +x /usr/local/bin/entrypoint.sh \
+    && mkdir -p /app/storage/framework/cache/data \
+        /app/storage/framework/sessions \
+        /app/storage/framework/testing \
+        /app/storage/framework/views \
+        /app/storage/logs \
     && chown -R www-data:www-data /app/storage /app/bootstrap/cache
 
 EXPOSE 8080
