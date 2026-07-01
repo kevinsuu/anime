@@ -1,44 +1,51 @@
 <script setup lang="ts">
-import { normalizeListItem } from '../../utils/normalize'
-import type { ListItem } from '../../utils/normalize'
+import { normalizeListItem, normalizeCollection } from '../../utils/normalize'
+import type { ListItem, Collection } from '../../utils/normalize'
 
 definePageMeta({ middleware: 'auth' })
 
 const api = useApi()
 const route = useRoute()
 const router = useRouter()
+const toast = useToast()
 
 const list = ref<ListItem[]>([])
+const collections = ref<Collection[]>([])
 const loading = ref(false)
-const error = ref('')
-const notice = ref('')
 
+// Active filter: 'all' | 'watched' | 'unwatched' | 'col:{id}'
 const activeFilter = computed(() => (route.query.filter as string) || 'all')
 
 const filterTabs = [
   { value: 'all', label: '全部' },
   { value: 'watched', label: '已看' },
-  { value: 'unwatched', label: '未看' }
+  { value: 'unwatched', label: '未看' },
 ]
 
-function setFilter(value: string | number) {
-  router.push({ path: '/list', query: value === 'all' ? {} : { filter: String(value) } })
+function setFilter(value: string) {
+  router.push({ path: '/list', query: value === 'all' ? {} : { filter: value } })
 }
 
 const filteredList = computed(() => {
-  if (activeFilter.value === 'watched') return list.value.filter(item => item.watched)
-  if (activeFilter.value === 'unwatched') return list.value.filter(item => !item.watched)
+  const f = activeFilter.value
+  if (f === 'watched') return list.value.filter(i => i.watched)
+  if (f === 'unwatched') return list.value.filter(i => !i.watched)
+  if (f.startsWith('col:')) {
+    const colId = Number(f.slice(4))
+    return list.value.filter(i => i.collections.some(c => c.id === colId))
+  }
   return list.value
 })
 
-async function loadList() {
+// ── List operations ──
+async function loadAll() {
   loading.value = true
-  error.value = ''
   try {
-    const result = await api.myList()
-    list.value = (result.items || []).map(normalizeListItem)
+    const [listRes, colRes] = await Promise.all([api.myList(), api.myCollections()])
+    list.value = (listRes.items || []).map(normalizeListItem)
+    collections.value = (colRes.items || []).map(normalizeCollection)
   } catch (err: any) {
-    error.value = err.message || '載入失敗'
+    toast.add({ title: err.message || '載入失敗', color: 'error' })
   } finally {
     loading.value = false
   }
@@ -47,51 +54,242 @@ async function loadList() {
 async function updateItem(item: ListItem, patch: Record<string, any>) {
   try {
     const result = await api.updateListItem(item.id, patch)
-    const index = list.value.findIndex(existing => existing.id === item.id)
+    const index = list.value.findIndex(e => e.id === item.id)
     if (index >= 0) list.value[index] = normalizeListItem(result.item)
-    notice.value = '清單已更新'
+    toast.add({ title: '清單已更新', color: 'success' })
   } catch (err: any) {
-    error.value = err.message || '更新失敗'
+    toast.add({ title: err.message || '更新失敗', color: 'error' })
   }
 }
 
 async function removeItem(item: ListItem) {
   try {
     await api.deleteListItem(item.id)
-    list.value = list.value.filter(existing => existing.id !== item.id)
-    notice.value = '已從清單移除'
+    list.value = list.value.filter(e => e.id !== item.id)
+    toast.add({ title: '已從清單移除', color: 'neutral' })
   } catch (err: any) {
-    error.value = err.message || '移除失敗'
+    toast.add({ title: err.message || '移除失敗', color: 'error' })
   }
 }
 
-onMounted(loadList)
+// ── Collection operations ──
+const newColName = ref('')
+const creatingCol = ref(false)
+
+async function createCollection() {
+  const name = newColName.value.trim()
+  if (!name) return
+  creatingCol.value = true
+  try {
+    const result = await api.createCollection(name)
+    collections.value.push(normalizeCollection(result.item))
+    newColName.value = ''
+    toast.add({ title: `已建立「${name}」`, color: 'success' })
+  } catch (err: any) {
+    toast.add({ title: err.message || '建立失敗', color: 'error' })
+  } finally {
+    creatingCol.value = false
+  }
+}
+
+async function deleteCollection(col: Collection) {
+  try {
+    await api.deleteCollection(col.id)
+    collections.value = collections.value.filter(c => c.id !== col.id)
+    if (activeFilter.value === `col:${col.id}`) setFilter('all')
+    toast.add({ title: `已刪除「${col.name}」`, color: 'neutral' })
+  } catch (err: any) {
+    toast.add({ title: err.message || '刪除失敗', color: 'error' })
+  }
+}
+
+async function togglePublic(col: Collection) {
+  try {
+    const result = await api.updateCollection(col.id, { is_public: !col.isPublic })
+    const idx = collections.value.findIndex(c => c.id === col.id)
+    if (idx >= 0) collections.value[idx] = normalizeCollection(result.item)
+    return true
+  } catch (err: any) {
+    toast.add({ title: err.message || '更新失敗', color: 'error' })
+    return false
+  }
+}
+
+async function toggleItemInCollection(item: ListItem, col: Collection) {
+  const inCol = item.collections.some(c => c.id === col.id)
+  try {
+    if (inCol) {
+      await api.removeFromCollection(col.id, item.id)
+      item.collections = item.collections.filter(c => c.id !== col.id)
+    } else {
+      await api.addToCollection(col.id, item.id)
+      item.collections = [...item.collections, { id: col.id, name: col.name }]
+    }
+    // Update collection count locally instead of refetching the full list
+    const idx = collections.value.findIndex(c => c.id === col.id)
+    if (idx >= 0) {
+      collections.value[idx].count += inCol ? -1 : 1
+    }
+  } catch (err: any) {
+    toast.add({ title: err.message || '操作失敗', color: 'error' })
+  }
+}
+
+// Copy share link for a collection
+async function copyCollectionLink(col: Collection) {
+  // Already public: clicking again switches it back to private, matching
+  // the button's tooltip ("公開中，點擊設為私人"). No link to copy in that case.
+  if (col.isPublic) {
+    const ok = await togglePublic(col)
+    if (ok) toast.add({ title: '已設為私人', color: 'neutral' })
+    return
+  }
+
+  const ok = await togglePublic(col)
+  if (!ok) return
+  const url = `${window.location.origin}/public/collection/${col.publicSlug}`
+  await navigator.clipboard.writeText(url)
+  toast.add({ title: '已設為公開，分享連結已複製', color: 'success' })
+}
+
+onMounted(loadAll)
 </script>
 
 <template>
-  <div class="space-y-4">
-    <header class="flex items-center justify-between">
-      <h1 class="text-2xl font-bold">我的清單</h1>
-      <UTabs :model-value="activeFilter" :items="filterTabs" @update:model-value="setFilter" />
-    </header>
+  <div class="grid gap-6 lg:grid-cols-[220px_1fr]">
 
-    <UAlert v-if="error" color="error" :title="error" />
-    <UAlert v-if="notice && !error" color="success" :title="notice" />
+    <!-- ── Left: Collections sidebar ── -->
+    <aside class="space-y-4">
+      <div class="sticky top-24 space-y-3">
+        <p class="text-xs font-extrabold uppercase tracking-widest text-gray-400">我的清單</p>
 
-    <div v-if="filteredList.length === 0" class="rounded-md border border-dashed border-gray-300 p-6 text-center text-gray-500">
-      清單目前是空的，先到資料庫搜尋作品，再加入你的追番清單。
-      <UButton class="mt-3" to="/catalog">去搜尋作品</UButton>
-    </div>
+        <!-- Built-in filters -->
+        <nav class="space-y-0.5">
+          <button
+            v-for="tab in filterTabs"
+            :key="tab.value"
+            class="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-semibold transition-colors"
+            :class="activeFilter === tab.value
+              ? 'bg-primary-50 text-primary-700'
+              : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'"
+            @click="setFilter(tab.value)"
+          >
+            <span>{{ tab.label }}</span>
+            <span class="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-bold text-gray-500">
+              {{ tab.value === 'all' ? list.length : tab.value === 'watched' ? list.filter(i=>i.watched).length : list.filter(i=>!i.watched).length }}
+            </span>
+          </button>
+        </nav>
 
-    <div class="space-y-3">
-      <ListItemRow
-        v-for="item in filteredList"
-        :key="item.id"
-        :item="item"
-        :disabled="loading"
-        @update="patch => updateItem(item, patch)"
-        @remove="removeItem(item)"
-      />
+        <!-- Divider -->
+        <div class="border-t border-gray-100 pt-3">
+          <p class="mb-2 text-xs font-extrabold uppercase tracking-widest text-gray-400">自訂清單</p>
+
+          <!-- Collection list -->
+          <nav class="space-y-0.5">
+            <div
+              v-for="col in collections"
+              :key="col.id"
+              class="group flex w-full items-center gap-1 rounded-lg px-3 py-2 text-sm font-semibold transition-colors"
+              :class="activeFilter === `col:${col.id}`
+                ? 'bg-primary-50 text-primary-700'
+                : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'"
+            >
+              <button class="flex flex-1 items-center justify-between" @click="setFilter(`col:${col.id}`)">
+                <span class="truncate">{{ col.name }}</span>
+                <span class="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-bold text-gray-500">{{ col.count }}</span>
+              </button>
+              <!-- Actions -->
+              <div class="flex shrink-0 items-center gap-0.5 opacity-0 transition-opacity group-hover:opacity-100">
+                <button
+                  :title="col.isPublic ? '公開中（點擊設為私人）' : '設為公開並複製連結'"
+                  :aria-label="col.isPublic ? `${col.name}：公開中，點擊設為私人` : `${col.name}：設為公開並複製連結`"
+                  class="rounded p-1 hover:bg-gray-200"
+                  @click.stop="copyCollectionLink(col)"
+                >
+                  <UIcon :name="col.isPublic ? 'i-lucide-globe' : 'i-lucide-link'" class="size-3.5 text-gray-500" />
+                </button>
+                <button
+                  title="刪除清單"
+                  :aria-label="`刪除清單「${col.name}」`"
+                  class="rounded p-1 hover:bg-red-50"
+                  @click.stop="deleteCollection(col)"
+                >
+                  <UIcon name="i-lucide-trash-2" class="size-3.5 text-gray-400 hover:text-red-500" />
+                </button>
+              </div>
+            </div>
+          </nav>
+
+          <!-- New collection input -->
+          <form class="mt-2 flex gap-1.5" @submit.prevent="createCollection">
+            <label for="new-collection-name" class="sr-only">新增清單名稱</label>
+            <input
+              id="new-collection-name"
+              v-model="newColName"
+              maxlength="80"
+              placeholder="新增清單…"
+              class="min-w-0 flex-1 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
+            />
+            <button
+              type="submit"
+              :disabled="!newColName.trim() || creatingCol"
+              class="rounded-lg bg-primary-600 px-2.5 py-1.5 text-sm font-bold text-white transition hover:bg-primary-500 disabled:opacity-40"
+            >
+              <UIcon name="i-lucide-plus" class="size-4" />
+            </button>
+          </form>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── Right: List items ── -->
+    <div class="space-y-5">
+      <header class="space-y-1">
+        <p class="text-xs font-extrabold uppercase tracking-widest text-primary-600">追番清單</p>
+        <div class="flex items-center justify-between">
+          <h1 class="text-3xl font-extrabold tracking-tight text-gray-950">
+            {{ activeFilter.startsWith('col:')
+              ? collections.find(c => c.id === Number(activeFilter.slice(4)))?.name ?? '清單'
+              : '我的清單' }}
+          </h1>
+          <span class="text-sm text-gray-500">共 {{ filteredList.length }} 部</span>
+        </div>
+      </header>
+
+      <div v-if="filteredList.length === 0" class="rounded-xl border border-dashed border-gray-200 p-8 text-center text-gray-500">
+        <UIcon name="i-lucide-inbox" class="mx-auto mb-2 size-8 text-gray-300" />
+        <p class="text-sm font-medium">這裡還沒有作品</p>
+        <NuxtLink to="/seasonal" class="mt-3 inline-block text-xs font-semibold text-primary-600 hover:underline">去新番表加入作品</NuxtLink>
+      </div>
+
+      <TransitionGroup tag="div" name="list-item" class="space-y-3">
+        <ListItemRow
+          v-for="item in filteredList"
+          :key="item.id"
+          :item="item"
+          :collections="collections"
+          :disabled="loading"
+          @update="patch => updateItem(item, patch)"
+          @remove="removeItem(item)"
+          @toggle-collection="(col) => toggleItemInCollection(item, col)"
+        />
+      </TransitionGroup>
     </div>
   </div>
 </template>
+
+<style scoped>
+.list-item-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  position: absolute;
+  width: 100%;
+}
+.list-item-leave-to {
+  opacity: 0;
+  transform: translateX(16px);
+}
+.list-item-move {
+  transition: transform 0.2s ease;
+}
+</style>

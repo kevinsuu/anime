@@ -1,27 +1,32 @@
 <script setup lang="ts">
-import { genreCategories } from '../composables/useSeasonalCatalog'
+import { deriveFilterOptions } from '../composables/useSeasonalCatalog'
+import type { Anime } from '../utils/normalize'
 
 const props = defineProps<{
   open: boolean
   year: number
   season: string
-  category: string
+  sourceTag: string
+  actor: string
   status: string
+  animeList: Anime[]
 }>()
 
 const emit = defineEmits<{
   'update:open': [value: boolean]
   'update:year': [value: number]
   'update:season': [value: string]
-  'update:category': [value: string]
+  'update:sourceTag': [value: string]
+  'update:actor': [value: string]
   'update:status': [value: string]
+  'reset': []
 }>()
 
 const seasonOptions = [
-  { value: 'winter', label: '冬番（1-3 月）' },
-  { value: 'spring', label: '春番（4-6 月）' },
-  { value: 'summer', label: '夏番（7-9 月）' },
-  { value: 'fall', label: '秋番（10-12 月）' }
+  { value: 'winter', label: '冬番（1月）' },
+  { value: 'spring', label: '春番（4月）' },
+  { value: 'summer', label: '夏番（7月）' },
+  { value: 'fall', label: '秋番（10月）' },
 ]
 
 const statusOptions = [
@@ -30,65 +35,153 @@ const statusOptions = [
   { value: 'unlisted', label: '未加入清單' },
   { value: 'watched', label: '已看' },
   { value: 'queued', label: '待補' },
-  { value: 'with-cover', label: '有封面' }
+  { value: 'with-cover', label: '有封面' },
 ]
+
+const filterOptions = computed(() => deriveFilterOptions(props.animeList))
+
+const activeCount = computed(() => {
+  let n = 0
+  if (props.sourceTag) n++
+  if (props.actor) n++
+  if (props.status !== 'all') n++
+  return n
+})
+
+function btn(active: boolean) {
+  return active
+    ? 'bg-primary-500 text-white shadow-sm'
+    : 'bg-white/10 text-gray-200 hover:bg-white/20 hover:text-white'
+}
 </script>
 
 <template>
-  <USlideover :open="open" @update:open="value => emit('update:open', value)">
+  <USlideover :open="open" @update:open="v => emit('update:open', v)">
     <template #content>
-      <div class="flex flex-col gap-6 p-4">
-        <h2 class="text-lg font-bold">篩選</h2>
+      <div class="flex h-full flex-col bg-gray-950 text-white">
 
-        <section class="space-y-2">
-          <p class="text-xs font-bold uppercase text-gray-500">季度選擇</p>
-          <div class="flex gap-2">
-            <UInput
-              :model-value="year"
-              type="number"
-              class="w-24"
-              @update:model-value="value => emit('update:year', Number(value))"
-            />
-            <USelect
-              :model-value="season"
-              :items="seasonOptions"
-              class="flex-1"
-              @update:model-value="value => emit('update:season', value)"
-            />
+        <!-- Header -->
+        <div class="flex items-center justify-between border-b border-white/10 px-5 py-4">
+          <div class="flex items-center gap-2.5">
+            <h2 class="text-base font-bold text-white">篩選條件</h2>
+            <span
+              v-if="activeCount > 0"
+              class="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-primary-500 px-1.5 text-[11px] font-bold text-white"
+            >{{ activeCount }}</span>
           </div>
-        </section>
-
-        <section class="space-y-2">
-          <p class="text-xs font-bold uppercase text-gray-500">分類</p>
-          <div class="flex flex-wrap gap-2">
-            <UButton
-              v-for="genre in genreCategories"
-              :key="genre.key"
-              size="sm"
-              :color="category === genre.key ? 'primary' : 'neutral'"
-              :variant="category === genre.key ? 'solid' : 'outline'"
-              @click="emit('update:category', genre.key)"
+          <div class="flex items-center gap-2">
+            <button
+              v-if="activeCount > 0"
+              class="rounded px-2 py-1 text-xs font-semibold text-gray-400 hover:text-white transition-colors"
+              @click="emit('reset')"
             >
-              {{ genre.label }}
-            </UButton>
-          </div>
-        </section>
-
-        <section class="space-y-2">
-          <p class="text-xs font-bold uppercase text-gray-500">觀看狀態</p>
-          <div class="flex flex-wrap gap-2">
-            <UButton
-              v-for="option in statusOptions"
-              :key="option.value"
-              size="sm"
-              :color="status === option.value ? 'primary' : 'neutral'"
-              :variant="status === option.value ? 'solid' : 'outline'"
-              @click="emit('update:status', option.value)"
+              清除全部
+            </button>
+            <button
+              class="grid h-8 w-8 place-items-center rounded-md text-gray-400 hover:bg-white/10 hover:text-white transition-colors"
+              aria-label="關閉"
+              @click="emit('update:open', false)"
             >
-              {{ option.label }}
-            </UButton>
+              <UIcon name="i-lucide-x" class="size-4" />
+            </button>
           </div>
-        </section>
+        </div>
+
+        <!-- Body -->
+        <div class="flex flex-1 flex-col gap-6 overflow-y-auto px-5 py-5">
+
+          <!-- Season selector -->
+          <section class="space-y-3">
+            <p id="filter-season-label" class="text-[11px] font-bold uppercase tracking-widest text-gray-400">季度</p>
+            <div class="flex gap-2">
+              <label for="filter-year-input" class="sr-only">年份</label>
+              <input
+                id="filter-year-input"
+                :value="year"
+                type="number"
+                aria-labelledby="filter-season-label"
+                class="w-24 rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm text-white outline-none focus:border-primary-400 focus:ring-1 focus:ring-primary-400"
+                @change="emit('update:year', Number(($event.target as HTMLInputElement).value))"
+              />
+              <label for="filter-season-select" class="sr-only">季度</label>
+              <select
+                id="filter-season-select"
+                :value="season"
+                class="flex-1 rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm text-white outline-none focus:border-primary-400"
+                @change="emit('update:season', ($event.target as HTMLSelectElement).value)"
+              >
+                <option v-for="opt in seasonOptions" :key="opt.value" :value="opt.value" class="bg-gray-900">
+                  {{ opt.label }}
+                </option>
+              </select>
+            </div>
+          </section>
+
+          <!-- Source type (種類) -->
+          <section v-if="filterOptions.sources.length > 0" class="space-y-3">
+            <p class="text-[11px] font-bold uppercase tracking-widest text-gray-400">種類</p>
+            <div class="flex flex-wrap gap-2">
+              <button
+                class="rounded-full px-3 py-1 text-xs font-semibold transition-all"
+                :class="btn(!sourceTag)"
+                @click="emit('update:sourceTag', '')"
+              >
+                全部
+              </button>
+              <button
+                v-for="item in filterOptions.sources"
+                :key="item.tag"
+                class="rounded-full px-3 py-1 text-xs font-semibold transition-all"
+                :class="btn(sourceTag === item.tag)"
+                @click="emit('update:sourceTag', sourceTag === item.tag ? '' : item.tag)"
+              >
+                {{ item.tag }}<span class="ml-1 opacity-60">({{ item.count }})</span>
+              </button>
+            </div>
+          </section>
+
+          <!-- Cast actors -->
+          <section v-if="filterOptions.actors.length > 0" class="space-y-3">
+            <p class="text-[11px] font-bold uppercase tracking-widest text-gray-400">配音員</p>
+            <div class="flex flex-wrap gap-2">
+              <button
+                v-for="item in filterOptions.actors"
+                :key="item.actor"
+                class="flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold transition-all"
+                :class="btn(actor === item.actor)"
+                @click="emit('update:actor', actor === item.actor ? '' : item.actor)"
+              >
+                {{ item.actor }}<span class="opacity-60">({{ item.count }})</span>
+              </button>
+            </div>
+          </section>
+
+          <!-- Watch status -->
+          <section class="space-y-3">
+            <p class="text-[11px] font-bold uppercase tracking-widest text-gray-400">觀看狀態</p>
+            <div class="flex flex-wrap gap-2">
+              <button
+                v-for="opt in statusOptions"
+                :key="opt.value"
+                class="rounded-full px-3 py-1 text-xs font-semibold transition-all"
+                :class="btn(status === opt.value)"
+                @click="emit('update:status', opt.value)"
+              >
+                {{ opt.label }}
+              </button>
+            </div>
+          </section>
+        </div>
+
+        <!-- Footer -->
+        <div class="border-t border-white/10 px-5 py-4">
+          <button
+            class="w-full rounded-lg bg-primary-600 py-2.5 text-sm font-bold text-white transition-colors hover:bg-primary-500"
+            @click="emit('update:open', false)"
+          >
+            套用{{ activeCount > 0 ? `（${activeCount} 個條件）` : '' }}
+          </button>
+        </div>
       </div>
     </template>
   </USlideover>
