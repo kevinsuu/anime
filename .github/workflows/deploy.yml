@@ -1,0 +1,87 @@
+name: Deploy
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_OWNER: kevinsuu
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve tag
+        id: tag
+        run: echo "tag=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push backend
+        uses: docker/build-push-action@v6
+        with:
+          context: backend
+          file: backend/Dockerfile.production
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/anime-backend:${{ steps.tag.outputs.tag }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/anime-backend:latest
+
+      - name: Build and push scheduler
+        uses: docker/build-push-action@v6
+        with:
+          context: backend
+          file: backend/Dockerfile.scheduler
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/anime-scheduler:${{ steps.tag.outputs.tag }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/anime-scheduler:latest
+
+      - name: Build and push frontend
+        uses: docker/build-push-action@v6
+        with:
+          context: frontend
+          file: frontend/Dockerfile
+          push: true
+          build-args: |
+            NUXT_PUBLIC_API_BASE_URL=https://anime.kaistarstudio.me/api
+            NUXT_PUBLIC_GOOGLE_CLIENT_ID=${{ secrets.NUXT_PUBLIC_GOOGLE_CLIENT_ID }}
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/anime-frontend:${{ steps.tag.outputs.tag }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/anime-frontend:latest
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script: |
+            set -e
+            cd ${{ secrets.DEPLOY_PATH }}
+            sed -i "s|^BACKEND_IMAGE=.*|BACKEND_IMAGE=ghcr.io/kevinsuu/anime-backend:${{ needs.build-and-push.outputs.tag }}|" .env
+            sed -i "s|^SCHEDULER_IMAGE=.*|SCHEDULER_IMAGE=ghcr.io/kevinsuu/anime-scheduler:${{ needs.build-and-push.outputs.tag }}|" .env
+            sed -i "s|^FRONTEND_IMAGE=.*|FRONTEND_IMAGE=ghcr.io/kevinsuu/anime-frontend:${{ needs.build-and-push.outputs.tag }}|" .env
+            docker compose pull
+            docker compose up -d --remove-orphans
+            docker image prune -f
