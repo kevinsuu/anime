@@ -33,6 +33,39 @@ export interface AnimeStream {
   url: string | null
 }
 
+export interface AnimeExternalId {
+  provider: string
+  external_id: string
+  url: string | null
+}
+
+export interface AnimeTheme {
+  type: string
+  title: string
+  artist: string
+}
+
+export interface AnimeTrailer {
+  url: string
+  thumbnail: string | null
+}
+
+export interface AnimeCastEntry {
+  character: string
+  actor: string
+}
+
+export interface AnimeStaffEntry {
+  role: string
+  name: string
+}
+
+export interface AnimeLink {
+  category: string
+  label: string
+  url: string
+}
+
 export interface Anime {
   id: number
   name: string
@@ -42,11 +75,19 @@ export interface Anime {
   seasonYear: number | null
   seasonCode: string
   airDate: string | null
+  airDateText: string
   episodeCount: number | null
   status: string
+  tags: string[]
   aliases: string[]
   streams: AnimeStream[]
   titleJa: string
+  externalIds: AnimeExternalId[]
+  themes: AnimeTheme[]
+  trailers: AnimeTrailer[]
+  cast: AnimeCastEntry[]
+  staff: AnimeStaffEntry[]
+  links: AnimeLink[]
 }
 
 export function normalizeAnime(item: Record<string, any> = {}): Anime {
@@ -59,8 +100,10 @@ export function normalizeAnime(item: Record<string, any> = {}): Anime {
     seasonYear: item.seasonYear || item.season_year || null,
     seasonCode: item.seasonCode || item.season_code || '',
     airDate: item.airDate || item.air_date || null,
+    airDateText: item.airDateText || item.air_date_text || '',
     episodeCount: item.episodeCount || item.episode_count || null,
     status: item.status || '',
+    tags: Array.isArray(item.tags) ? item.tags : [],
     aliases: Array.isArray(item.aliases) ? item.aliases.map((a: any) => repairText(a)) : [],
     streams: Array.isArray(item.streams)
       ? item.streams.map((s: any) => ({
@@ -71,7 +114,47 @@ export function normalizeAnime(item: Record<string, any> = {}): Anime {
       : [],
     titleJa: repairText(
       (Array.isArray(item.titles) ? item.titles.find((t: any) => t.locale === 'ja')?.title : '') || ''
-    )
+    ),
+    externalIds: Array.isArray(item.external_ids)
+      ? item.external_ids.map((e: any) => ({
+          provider: e.provider,
+          external_id: e.external_id,
+          url: e.url || null
+        }))
+      : [],
+    themes: Array.isArray(item.themes)
+      ? item.themes.map((t: any) => ({ type: t.type || '', title: t.title || '', artist: t.artist || '' }))
+      : [],
+    trailers: Array.isArray(item.trailers)
+      ? item.trailers.map((t: any) => ({ url: t.url || '', thumbnail: t.thumbnail || null }))
+      : [],
+    cast: Array.isArray(item.cast)
+      ? item.cast.map((c: any) => ({ character: repairText(c.character), actor: repairText(c.actor) }))
+      : [],
+    staff: Array.isArray(item.staff)
+      ? item.staff.map((s: any) => ({ role: repairText(s.role), name: repairText(s.name) }))
+      : [],
+    links: Array.isArray(item.links)
+      ? item.links.map((l: any) => ({ category: l.category || '', label: l.label || '', url: l.url || '' }))
+      : []
+  }
+}
+
+export interface Collection {
+  id: number
+  name: string
+  isPublic: boolean
+  publicSlug: string
+  count: number
+}
+
+export function normalizeCollection(item: Record<string, any> = {}): Collection {
+  return {
+    id: item.id,
+    name: item.name || '',
+    isPublic: Boolean(item.is_public),
+    publicSlug: item.public_slug || '',
+    count: item.count ?? 0,
   }
 }
 
@@ -82,6 +165,7 @@ export interface ListItem {
   note: string
   createdAt: string
   updatedAt: string
+  collections: { id: number; name: string }[]
   anime: Anime
 }
 
@@ -93,6 +177,47 @@ export function normalizeListItem(item: Record<string, any> = {}): ListItem {
     note: repairText(item.note || ''),
     createdAt: item.createdAt || item.created_at || '',
     updatedAt: item.updatedAt || item.updated_at || '',
+    collections: Array.isArray(item.collections)
+      ? item.collections.map((c: any) => ({ id: c.id, name: c.name }))
+      : [],
     anime: normalizeAnime(item.anime || {})
+  }
+}
+
+// Source/type tags (種類) get a fixed neutral palette so they read as a
+// distinct category from genre tags, independent of season contents.
+const SOURCE_TAG_COLORS: Record<string, { bg: string; text: string }> = {
+  '新作': { bg: '#dbeafe', text: '#1d4ed8' },
+  '續作': { bg: '#e0e7ff', text: '#4338ca' },
+  '跨季續播': { bg: '#e0e7ff', text: '#4338ca' },
+  '漫畫改編': { bg: '#fef3c7', text: '#b45309' },
+  '小說改編': { bg: '#fde68a', text: '#92400e' },
+  '遊戲改編': { bg: '#dcfce7', text: '#15803d' },
+  '原創作品': { bg: '#fee2e2', text: '#b91c1c' },
+  '改編作品': { bg: '#fef9c3', text: '#a16207' },
+}
+
+function hashString(value: string): number {
+  let hash = 0
+  for (let i = 0; i < value.length; i++) {
+    hash = (hash << 5) - hash + value.charCodeAt(i)
+    hash |= 0
+  }
+  return Math.abs(hash)
+}
+
+// Deterministic color per tag string, stable across seasons/renders since
+// each season's genre mix differs but a given tag (e.g. "奇幻") should always
+// look the same to the user. Source tags use a fixed palette; everything
+// else is spread around the hue wheel via hashing for a muted rainbow effect
+// — low saturation keeps a dense row of chips calm instead of clashing.
+export function tagColor(tag: string): { bg: string; text: string } {
+  const source = SOURCE_TAG_COLORS[tag]
+  if (source) return source
+
+  const hue = hashString(tag) % 360
+  return {
+    bg: `hsl(${hue}, 45%, 96%)`,
+    text: `hsl(${hue}, 35%, 40%)`,
   }
 }
