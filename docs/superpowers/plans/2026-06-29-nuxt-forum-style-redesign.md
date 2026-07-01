@@ -2072,13 +2072,6 @@ export default defineNuxtConfig({
 
 Read `~/anime/.env.example`，用 Edit 把：
 
-```
-VITE_API_BASE_URL=http://localhost:8080
-VITE_GOOGLE_CLIENT_ID=your-google-oauth-client-id.apps.googleusercontent.com
-VITE_ALLOWED_ORIGINS=http://localhost:5173,https://your-github-user.github.io
-VITE_GOOGLE_SECRET=your-google-oauth-client-secret
-```
-
 改為：
 
 ```

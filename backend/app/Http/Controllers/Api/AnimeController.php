@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Exceptions\ApiException;
 use App\Http\Controllers\Controller;
 use App\Models\Anime;
-use App\Services\AnimeCatalog\AnimeImportService;
+use App\Models\User;
 use App\Services\AnimeCatalog\SeasonResolver;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -33,71 +33,133 @@ final class AnimeController extends Controller
             }
         }
 
+        // Year-scoped queries (catalog year browsing, seasonal pages) load
+        // the full year/season without a cap. Unscoped keyword search across
+        // the whole catalog is capped to avoid an excessive payload.
+        $isYearScoped = $year !== null;
+
         $items = Anime::query()
-            ->select([
-                'anime.id',
-                'anime.name',
-                'anime.description',
-                'anime.image_url',
-                'anime.source',
-                'anime.season_year',
-                'anime.season_code',
-                'anime.air_date',
-                'anime.episode_count',
-                'anime.status',
+            ->with([
+                'streams:id,anime_id,region,platform,url',
+                'aliases:id,anime_id,alias',
+                'titles:id,anime_id,locale,title,is_primary',
+                'cast:id,anime_id,character,actor,sort_order',
             ])
-            ->leftJoin('anime_aliases', 'anime_aliases.anime_id', '=', 'anime.id')
-            ->leftJoin('anime_titles', 'anime_titles.anime_id', '=', 'anime.id')
             ->when($query !== '', function ($builder) use ($term): void {
                 $builder->where(function ($where) use ($term): void {
-                    $where->where('anime.name', 'like', $term)
-                        ->orWhere('anime_aliases.alias', 'like', $term)
-                        ->orWhere('anime_titles.title', 'like', $term);
+                    $where->where('name', 'like', $term)
+                        ->orWhereHas('aliases', fn ($q) => $q->where('alias', 'like', $term))
+                        ->orWhereHas('titles', fn ($q) => $q->where('title', 'like', $term));
                 });
             })
-            ->when($year !== null, fn ($builder) => $builder->where('anime.season_year', (int) $year))
-            ->when($season !== '', fn ($builder) => $builder->where('anime.season_code', $season))
-            ->distinct()
-            ->orderByRaw('anime.air_date is null')
-            ->orderBy('anime.air_date')
-            ->orderBy('anime.name')
-            ->limit(50)
-            ->get();
+            ->when($year !== null, fn ($builder) => $builder->where('season_year', (int) $year))
+            ->when($season !== '', fn ($builder) => $builder->where('season_code', $season))
+            ->orderByRaw('air_date is null')
+            ->orderBy('air_date')
+            ->orderBy('name')
+            ->when(! $isYearScoped, fn ($builder) => $builder->limit(200))
+            ->get([
+                'id', 'name', 'description', 'image_url', 'source',
+                'season_year', 'season_code', 'air_date', 'air_date_text', 'episode_count', 'status', 'tags',
+            ]);
 
-        return response()->json(['items' => $items]);
+        return response()->json([
+            'items' => $items->map(fn (Anime $anime) => [
+                'id' => $anime->id,
+                'name' => $anime->name,
+                'description' => $anime->description,
+                'image_url' => $anime->image_url,
+                'source' => $anime->source,
+                'season_year' => $anime->season_year,
+                'season_code' => $anime->season_code,
+                'air_date' => $anime->air_date,
+                'air_date_text' => $anime->air_date_text,
+                'episode_count' => $anime->episode_count,
+                'status' => $anime->status,
+                'tags' => $anime->tags ?? [],
+                'cast' => $anime->cast->map(fn ($c) => [
+                    'character' => $c->character, 'actor' => $c->actor,
+                ])->all(),
+                'aliases' => $anime->aliases->pluck('alias')->all(),
+                'streams' => $anime->streams->map(fn ($s) => [
+                    'region' => $s->region, 'platform' => $s->platform, 'url' => $s->url,
+                ])->all(),
+                'titles' => $anime->titles->map(fn ($t) => [
+                    'locale' => $t->locale, 'title' => $t->title, 'is_primary' => (bool) $t->is_primary,
+                ])->all(),
+            ]),
+        ]);
     }
 
-    public function syncSeasonal(Request $request, AnimeImportService $service): JsonResponse
+    public function show(int $id): JsonResponse
     {
-        $currentSeason = SeasonResolver::current(new \DateTimeImmutable('now'));
+        $anime = Anime::query()
+            ->with([
+                'streams:id,anime_id,region,platform,url',
+                'aliases:id,anime_id,alias',
+                'titles:id,anime_id,locale,title,is_primary',
+                'externalIds:id,anime_id,provider,external_id,url',
+                'themes:id,anime_id,type,title,artist,sort_order',
+                'trailers:id,anime_id,url,thumbnail,sort_order',
+                'cast:id,anime_id,character,actor,sort_order',
+                'staffMembers:id,anime_id,role,name,sort_order',
+                'links:id,anime_id,category,label,url',
+            ])
+            ->findOrFail($id);
 
-        $validator = Validator::make($request->all(), [
-            'year' => ['nullable', 'integer', 'between:1900,2100'],
-            'season' => ['nullable', 'string', 'in:winter,spring,summer,fall'],
-        ], [
-            'year.integer' => '年份格式錯誤',
-            'year.between' => '年份必須介於 1900 到 2100',
-            'season.in' => '季度格式錯誤',
+        return response()->json([
+            'item' => [
+                'id' => $anime->id,
+                'name' => $anime->name,
+                'description' => $anime->description,
+                'image_url' => $anime->image_url,
+                'source' => $anime->source,
+                'season_year' => $anime->season_year,
+                'season_code' => $anime->season_code,
+                'air_date' => $anime->air_date,
+                'air_date_text' => $anime->air_date_text,
+                'episode_count' => $anime->episode_count,
+                'status' => $anime->status,
+                'tags' => $anime->tags ?? [],
+                'aliases' => $anime->aliases->pluck('alias')->all(),
+                'streams' => $anime->streams->map(fn ($s) => [
+                    'region' => $s->region, 'platform' => $s->platform, 'url' => $s->url,
+                ])->all(),
+                'titles' => $anime->titles->map(fn ($t) => [
+                    'locale' => $t->locale, 'title' => $t->title, 'is_primary' => (bool) $t->is_primary,
+                ])->all(),
+                'external_ids' => $anime->externalIds->map(fn ($e) => [
+                    'provider' => $e->provider, 'external_id' => $e->external_id, 'url' => $e->url,
+                ])->all(),
+                'themes' => $anime->themes->map(fn ($t) => [
+                    'type' => $t->type, 'title' => $t->title, 'artist' => $t->artist,
+                ])->all(),
+                'trailers' => $anime->trailers->map(fn ($t) => [
+                    'url' => $t->url, 'thumbnail' => $t->thumbnail,
+                ])->all(),
+                'cast' => $anime->cast->map(fn ($c) => [
+                    'character' => $c->character, 'actor' => $c->actor,
+                ])->all(),
+                'staff' => $anime->staffMembers->map(fn ($s) => [
+                    'role' => $s->role, 'name' => $s->name,
+                ])->all(),
+                'links' => $anime->links->map(fn ($l) => [
+                    'category' => $l->category, 'label' => $l->label, 'url' => $l->url,
+                ])->all(),
+            ],
         ]);
-
-        if ($validator->fails()) {
-            throw new ApiException(422, 'validation_failed', '同步參數驗證失敗', $validator->errors()->toArray());
-        }
-
-        $year = (int) ($request->input('year') ?: $currentSeason['year']);
-        $season = (string) ($request->input('season') ?: $currentSeason['code']);
-
-        try {
-            $result = $service->syncBangumiSeason($year, $season);
-        } catch (\Throwable $exception) {
-            throw new ApiException(502, 'anime_sync_failed', $exception->getMessage());
-        }
-
-        return response()->json(['result' => $result]);
     }
 
     public function store(Request $request): JsonResponse
     {
+        $userId = (int) $request->attributes->get('auth_user_id');
+        $user = User::query()->find($userId);
+        $allowedEmails = config('services.catalog.manual_create_allowed_emails', []);
+
+        if ($user === null || ! in_array($user->email, $allowedEmails, true)) {
+            throw new ApiException(403, 'forbidden', '沒有權限手動建立動漫資料');
+        }
+
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:160'],
             'description' => ['nullable', 'string'],

@@ -11,7 +11,7 @@ export interface SessionUser {
   [key: string]: any
 }
 
-function readStoredSession(): { token?: string; user?: SessionUser } {
+function readStoredSession(): { token?: string; refreshToken?: string; user?: SessionUser } {
   if (typeof window === 'undefined') return {}
   try {
     const value = JSON.parse(localStorage.getItem(SESSION_KEY) || '{}')
@@ -22,24 +22,39 @@ function readStoredSession(): { token?: string; user?: SessionUser } {
   }
 }
 
-export function useSession() {
-  const stored = readStoredSession()
-  const session = reactive({
-    token: stored.token || '',
-    user: stored.user || null as SessionUser | null
-  })
+const session = reactive({
+  token: '',
+  refreshToken: '',
+  user: null as SessionUser | null
+})
 
-  const isAuthed = computed(() => Boolean(session.token && session.user))
+let hydrated = false
+
+const isAuthed = computed(() => Boolean(session.token && session.user))
+
+export function useSession() {
+  // Lazily hydrate from localStorage on first client-side use, since this
+  // module can be imported before `window` exists (e.g. Nuxt's server-side
+  // module resolution even with ssr:false).
+  if (!hydrated && typeof window !== 'undefined') {
+    hydrated = true
+    const stored = readStoredSession()
+    session.token = stored.token || ''
+    session.refreshToken = stored.refreshToken || ''
+    session.user = stored.user || null
+  }
 
   function save() {
     localStorage.setItem(SESSION_KEY, JSON.stringify({
       token: session.token,
+      refreshToken: session.refreshToken,
       user: session.user
     }))
   }
 
-  function setSession(token: string, user: SessionUser) {
+  function setSession(token: string, refreshToken: string, user: SessionUser) {
     session.token = token
+    session.refreshToken = refreshToken
     session.user = user
     save()
   }
@@ -51,6 +66,7 @@ export function useSession() {
 
   function clearSession() {
     session.token = ''
+    session.refreshToken = ''
     session.user = null
     localStorage.removeItem(SESSION_KEY)
   }

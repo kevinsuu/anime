@@ -2,16 +2,16 @@ services:
   mysql:
     image: mysql:8.4
     environment:
-      MYSQL_DATABASE: anime_tracker
-      MYSQL_USER: anime
-      MYSQL_PASSWORD: anime_password
-      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot_password"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_ROOT_PASSWORD}"]
       interval: 5s
       timeout: 3s
       retries: 20
@@ -20,28 +20,31 @@ services:
     build:
       context: ./backend
     environment:
-      APP_NAME: AnimeTracker
-      APP_ENV: local
-      APP_KEY: base64:bG9jYWwtZGV2LWNoYW5nZS10aGlzLWFwcC1rZXk=
-      APP_DEBUG: "true"
-      APP_URL: http://localhost:8080
-      DB_CONNECTION: mysql
-      DB_HOST: mysql
-      DB_PORT: 3306
-      DB_DATABASE: anime_tracker
-      DB_USERNAME: anime
-      DB_PASSWORD: anime_password
-      CACHE_STORE: file
-      SESSION_DRIVER: file
-      QUEUE_CONNECTION: sync
-      JWT_SECRET: local-dev-change-this-secret
-      JWT_TTL_SECONDS: 3600
-      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
-      ALLOWED_ORIGINS: http://localhost:3000
-      DEV_AUTH_BYPASS: "true"
-      BANGUMI_API_BASE_URL: https://api.bgm.tv
-      BANGUMI_USER_AGENT: anime-tracker/1.0
-      HTTP_TIMEOUT_SECONDS: 10
+      APP_NAME: ${APP_NAME}
+      APP_ENV: ${APP_ENV}
+      APP_KEY: ${APP_KEY}
+      APP_DEBUG: ${APP_DEBUG}
+      APP_URL: ${APP_URL}
+      DB_CONNECTION: ${DB_CONNECTION}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      CACHE_STORE: ${CACHE_STORE}
+      SESSION_DRIVER: ${SESSION_DRIVER}
+      QUEUE_CONNECTION: ${QUEUE_CONNECTION}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_TTL_SECONDS: ${JWT_TTL_SECONDS}
+      JWT_REFRESH_TTL_SECONDS: ${JWT_REFRESH_TTL_SECONDS}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
+      DEV_AUTH_BYPASS: ${DEV_AUTH_BYPASS}
+      BANGUMI_API_BASE_URL: ${BANGUMI_API_BASE_URL}
+      BANGUMI_USER_AGENT: ${BANGUMI_USER_AGENT}
+      HTTP_TIMEOUT_SECONDS: ${HTTP_TIMEOUT_SECONDS}
+      CATALOG_MANUAL_CREATE_ALLOWED_EMAILS: ${CATALOG_MANUAL_CREATE_ALLOWED_EMAILS}
     ports:
       - "8080:8080"
     volumes:
@@ -56,9 +59,9 @@ services:
     working_dir: /app
     command: sh -c "npm install && npm run dev"
     environment:
-      NUXT_PUBLIC_API_BASE_URL: http://localhost:8080
-      NUXT_PUBLIC_GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
-      NUXT_PUBLIC_ENABLE_DEV_LOGIN: "true"
+      NUXT_PUBLIC_API_BASE_URL: ${NUXT_PUBLIC_API_BASE_URL}
+      NUXT_PUBLIC_GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      NUXT_PUBLIC_ENABLE_DEV_LOGIN: ${NUXT_PUBLIC_ENABLE_DEV_LOGIN}
       CHOKIDAR_USEPOLLING: "true"
       WATCHPACK_POLLING: "true"
     ports:
@@ -69,12 +72,49 @@ services:
     depends_on:
       - backend
 
+  scheduler:
+    build:
+      context: ./backend
+    command: sh -c "php artisan schedule:work"
+    environment:
+      APP_NAME: ${APP_NAME}
+      APP_ENV: ${APP_ENV}
+      APP_KEY: ${APP_KEY}
+      APP_DEBUG: ${APP_DEBUG}
+      APP_URL: ${APP_URL}
+      DB_CONNECTION: ${DB_CONNECTION}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      CACHE_STORE: ${CACHE_STORE}
+      SESSION_DRIVER: ${SESSION_DRIVER}
+      QUEUE_CONNECTION: ${QUEUE_CONNECTION}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_TTL_SECONDS: ${JWT_TTL_SECONDS}
+      JWT_REFRESH_TTL_SECONDS: ${JWT_REFRESH_TTL_SECONDS}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
+      DEV_AUTH_BYPASS: ${DEV_AUTH_BYPASS}
+      BANGUMI_API_BASE_URL: ${BANGUMI_API_BASE_URL}
+      BANGUMI_USER_AGENT: ${BANGUMI_USER_AGENT}
+      HTTP_TIMEOUT_SECONDS: ${HTTP_TIMEOUT_SECONDS}
+      CATALOG_MANUAL_CREATE_ALLOWED_EMAILS: ${CATALOG_MANUAL_CREATE_ALLOWED_EMAILS}
+    volumes:
+      - ./backend:/app
+      - backend-vendor:/app/vendor
+    depends_on:
+      mysql:
+        condition: service_healthy
+
   phpmyadmin:
     image: phpmyadmin:5
     environment:
       PMA_HOST: mysql
       PMA_USER: root
-      PMA_PASSWORD: root_password
+      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
       - "8081:80"
     depends_on:

@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\Anime;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 final class ApiTest extends TestCase
@@ -62,40 +61,22 @@ final class ApiTest extends TestCase
             ->assertJsonPath('items.0.anime.name', '尖帽子的魔法工房');
     }
 
-    public function test_authenticated_user_can_sync_and_filter_seasonal_anime(): void
+    public function test_anime_index_returns_streams_aliases_and_titles(): void
     {
-        Http::fake([
-            'https://api.bgm.tv/v0/subjects*' => Http::response([
-                'data' => [
-                    [
-                        'id' => 12345,
-                        'name' => 'Witch Hat Atelier',
-                        'name_cn' => '尖帽子的魔法工房',
-                        'summary' => '少女可可展開魔法學徒生活。',
-                        'air_date' => '2026-04-03',
-                        'eps' => 12,
-                        'images' => ['common' => 'https://example.com/witch-hat.jpg'],
-                        'url' => 'http://bgm.tv/subject/12345',
-                    ],
-                ],
-            ]),
+        app(\App\Services\AnimeCatalog\AnimeImportService::class)->importRecord([
+            'season' => '202604', 'season_year' => 2026, 'season_code' => 'spring',
+            'title_zh' => '測試動畫', 'title_ja' => 'テスト',
+            'aliases' => ['別名A'], 'summary' => '介紹', 'cover_image' => 'https://x/y.jpg',
+            'air_date_text' => '', 'air_date' => '2026-04-04', 'tags' => [],
+            'streams' => [['region' => '台灣', 'platform' => '巴哈', 'url' => 'https://a']],
+            'external_ids' => [],
         ]);
 
-        $login = $this->postJson('/auth/google', ['idToken' => 'dev:dev@example.com']);
-        $token = $login->json('token');
-
-        $response = $this->withHeader('Authorization', "Bearer {$token}")
-            ->postJson('/anime/sync-seasonal', ['year' => 2026, 'season' => 'spring'])
-            ->assertOk()
-            ->assertJsonPath('result.provider', 'bangumi');
-
-        $response
-            ->assertJsonPath('result.imported', 1);
-
-        $this->getJson('/anime?year=2026&season=spring')
-            ->assertOk()
-            ->assertJsonPath('items.0.name', '尖帽子的魔法工房')
-            ->assertJsonPath('items.0.season_year', 2026)
-            ->assertJsonPath('items.0.season_code', 'spring');
+        $response = $this->getJson('/anime?year=2026&season=spring')->assertOk();
+        $item = collect($response->json('items'))->firstWhere('name', '測試動畫');
+        $this->assertNotNull($item);
+        $this->assertSame('巴哈', $item['streams'][0]['platform']);
+        $this->assertContains('別名A', $item['aliases']);
+        $this->assertTrue(collect($item['titles'])->contains(fn ($t) => $t['locale'] === 'ja'));
     }
 }

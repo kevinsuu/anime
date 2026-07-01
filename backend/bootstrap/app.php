@@ -1,6 +1,5 @@
 <?php
 
-use App\Console\Commands\SyncSeasonalAnime;
 use App\Exceptions\ApiException;
 use App\Http\Middleware\AuthenticateJwt;
 use Illuminate\Auth\AuthenticationException;
@@ -17,9 +16,6 @@ return Application::configure(basePath: dirname(__DIR__))
         apiPrefix: '',
         health: '/up',
     )
-    ->withCommands([
-        SyncSeasonalAnime::class,
-    ])
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->append(\Illuminate\Http\Middleware\HandleCors::class);
         $middleware->alias([

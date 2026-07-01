@@ -38,6 +38,7 @@ return [
     'jwt' => [
         'secret' => env('JWT_SECRET', 'dev-only-change-me'),
         'ttl_seconds' => (int) env('JWT_TTL_SECONDS', 3600),
+        'refresh_ttl_seconds' => (int) env('JWT_REFRESH_TTL_SECONDS', 60 * 60 * 24 * 30),
     ],
 
     'google' => [
@@ -46,9 +47,20 @@ return [
 
     'dev_auth_bypass' => (bool) env('DEV_AUTH_BYPASS', false),
 
-    'bangumi' => [
-        'base_url' => rtrim(env('BANGUMI_API_BASE_URL', 'https://api.bgm.tv'), '/'),
-        'user_agent' => env('BANGUMI_USER_AGENT', 'anime-tracker/1.0'),
+    'catalog' => [
+        'manual_create_allowed_emails' => array_values(array_filter(array_map(
+            'trim',
+            explode(',', env('CATALOG_MANUAL_CREATE_ALLOWED_EMAILS', 'REDACTED_EMAIL'))
+        ))),
+    ],
+
+    'acgsecrets' => [
+        'base_url' => rtrim(env('ACGSECRETS_BASE_URL', 'https://acgsecrets.hk'), '/'),
+        'user_agent' => env('ACGSECRETS_USER_AGENT', 'anime-tracker/1.0 (+https://github.com/anime-tracker)'),
+        'min_delay_ms' => (int) env('ACGSECRETS_MIN_DELAY_MS', 1000),
+        'max_delay_ms' => (int) env('ACGSECRETS_MAX_DELAY_MS', 3000),
+        'retries' => (int) env('ACGSECRETS_RETRIES', 2),
+        'retry_delay_ms' => (int) env('ACGSECRETS_RETRY_DELAY_MS', 1000),
     ],
 
     'http' => [

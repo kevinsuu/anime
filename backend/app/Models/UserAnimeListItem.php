@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 final class UserAnimeListItem extends Model
 {
@@ -31,5 +32,15 @@ final class UserAnimeListItem extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function collections(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            UserCollection::class,
+            'collection_items',
+            'list_item_id',
+            'collection_id'
+        )->withTimestamps();
     }
 }

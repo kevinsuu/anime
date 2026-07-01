@@ -2,8 +2,7 @@
 const api = useApi()
 const { setSession } = useSession()
 const config = useRuntimeConfig()
-
-const error = ref('')
+const toast = useToast()
 
 declare global {
   interface Window {
@@ -11,8 +10,8 @@ declare global {
   }
 }
 
-async function afterLogin(result: { token: string; user: any }) {
-  setSession(result.token, result.user)
+async function afterLogin(result: { token: string; refreshToken: string; user: any }) {
+  setSession(result.token, result.refreshToken, result.user)
   await navigateTo('/list')
 }
 
@@ -21,7 +20,7 @@ async function handleCredentialResponse(response: { credential: string }) {
     const result = await api.login(response.credential)
     await afterLogin(result)
   } catch (err: any) {
-    error.value = err.message || '登入失敗'
+    toast.add({ title: err.message || '登入失敗', color: 'error' })
   }
 }
 
@@ -30,7 +29,7 @@ async function devLogin() {
     const result = await api.login('dev:dev@example.com')
     await afterLogin(result)
   } catch (err: any) {
-    error.value = err.message || '登入失敗'
+    toast.add({ title: err.message || '登入失敗', color: 'error' })
   }
 }
 
@@ -42,7 +41,12 @@ function renderGoogleButton() {
   })
   const target = document.getElementById('google-signin')
   if (target && target.childElementCount === 0) {
-    window.google.accounts.id.renderButton(target, { theme: 'outline', size: 'large', width: 280 })
+    window.google.accounts.id.renderButton(target, {
+      theme: 'outline',
+      size: 'large',
+      shape: 'pill',
+      width: Math.min(320, target.clientWidth || 320)
+    })
   }
 }
 
@@ -64,19 +68,44 @@ onMounted(() => {
 </script>
 
 <template>
-  <UCard class="mx-auto max-w-lg">
-    <template #header>
-      <h1 class="text-xl font-bold">使用 Google 登入你的追番清單</h1>
-    </template>
+  <div class="relative -mx-4 -mt-6 flex min-h-[calc(100dvh-4rem)] items-center justify-center overflow-hidden px-4 py-12">
+    <!-- Ambient background: soft glow blobs -->
+    <div class="pointer-events-none absolute inset-0 -z-10 bg-gray-50" />
+    <div class="pointer-events-none absolute -top-32 left-1/2 -z-10 size-128 -translate-x-1/2 rounded-full bg-primary-100/70 blur-3xl" />
+    <div class="pointer-events-none absolute -top-24 -right-24 -z-10 size-96 rounded-full bg-primary-200/40 blur-3xl" />
+    <div class="pointer-events-none absolute -bottom-32 -left-24 -z-10 size-96 rounded-full bg-primary-100/60 blur-3xl" />
 
-    <p class="text-sm text-gray-600">後端會驗證 Google ID token，並簽發短效 JWT。前端只保存登入狀態，不保存 Google 密碼。</p>
+    <div class="w-full max-w-sm">
+      <!-- Brand mark -->
+      <div class="mb-8 flex flex-col items-center text-center">
+        <span class="grid size-14 place-items-center rounded-2xl bg-primary-600 text-white shadow-lg shadow-primary-600/25">
+          <UIcon name="i-lucide-sparkles" class="size-7" />
+        </span>
+        <h1 class="mt-5 text-[26px] font-extrabold leading-tight tracking-tight text-gray-950">
+          歡迎回來，繼續你的追番之旅
+        </h1>
+        <p class="mt-2 text-sm text-gray-500">登入動漫庫，同步你的收藏與進度</p>
+      </div>
 
-    <UAlert v-if="error" color="error" :title="error" class="mt-4" />
+      <!-- Sign-in card -->
+      <div class="rounded-2xl border border-gray-200/80 bg-white/90 p-7 shadow-xl shadow-gray-900/5 backdrop-blur-sm">
+        <div id="google-signin" class="flex min-h-[46px] justify-center" />
 
-    <div id="google-signin" class="my-4 min-h-[54px]" />
+        <div v-if="config.public.enableDevLogin" class="mt-4">
+          <div class="mb-4 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-wider text-gray-400">
+            <span class="h-px flex-1 bg-gray-200" />
+            開發用
+            <span class="h-px flex-1 bg-gray-200" />
+          </div>
+          <UButton block variant="outline" color="neutral" @click="devLogin">
+            開發模式登入
+          </UButton>
+        </div>
 
-    <UButton v-if="config.public.enableDevLogin" block variant="outline" @click="devLogin">
-      開發模式登入
-    </UButton>
-  </UCard>
+        <p class="mt-6 text-center text-xs leading-relaxed text-gray-400">
+          我們只讀取你的 Google 帳號基本資料換發登入憑證，<br class="hidden sm:inline">不會取得或保存你的 Google 密碼。
+        </p>
+      </div>
+    </div>
+  </div>
 </template>
