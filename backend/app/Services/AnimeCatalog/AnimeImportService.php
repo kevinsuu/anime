@@ -4,9 +4,14 @@ namespace App\Services\AnimeCatalog;
 
 use App\Models\Anime;
 use App\Models\AnimeAlias;
+use App\Models\AnimeCast;
 use App\Models\AnimeExternalId;
+use App\Models\AnimeLink;
+use App\Models\AnimeStaff;
 use App\Models\AnimeStream;
+use App\Models\AnimeTheme;
 use App\Models\AnimeTitle;
+use App\Models\AnimeTrailer;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
@@ -42,6 +47,8 @@ final class AnimeImportService
                 'season_year' => $record['season_year'] ?? null,
                 'season_code' => $record['season_code'] ?? null,
                 'air_date' => $record['air_date'] ?? null,
+                'air_date_text' => $record['air_date_text'] ?? null,
+                'tags' => $record['tags'] ?? [],
             ]);
             $anime->save();
 
@@ -49,6 +56,11 @@ final class AnimeImportService
             $this->syncAliases($anime, $record);
             $this->syncExternalIds($anime, $record, $payloadHash);
             $this->syncStreams($anime, $record);
+            $this->syncThemes($anime, $record);
+            $this->syncTrailers($anime, $record);
+            $this->syncCast($anime, $record);
+            $this->syncStaff($anime, $record);
+            $this->syncLinks($anime, $record);
 
             return $anime->refresh();
         });
@@ -199,6 +211,90 @@ final class AnimeImportService
                 'url' => sprintf(self::PROVIDER_URLS[$provider], $externalId),
                 'last_synced_at' => now(),
                 'payload_hash' => $payloadHash,
+            ]);
+        }
+    }
+
+    /** @param array<string, mixed> $record */
+    private function syncThemes(Anime $anime, array $record): void
+    {
+        AnimeTheme::query()->where('anime_id', $anime->id)->delete();
+        foreach (($record['themes'] ?? []) as $i => $theme) {
+            $title = trim((string) ($theme['title'] ?? ''));
+            if ($title === '') continue;
+            AnimeTheme::query()->create([
+                'anime_id' => $anime->id,
+                'type' => trim((string) ($theme['type'] ?? '')),
+                'title' => $title,
+                'artist' => trim((string) ($theme['artist'] ?? '')),
+                'sort_order' => $i,
+            ]);
+        }
+    }
+
+    /** @param array<string, mixed> $record */
+    private function syncTrailers(Anime $anime, array $record): void
+    {
+        AnimeTrailer::query()->where('anime_id', $anime->id)->delete();
+        foreach (($record['trailers'] ?? []) as $i => $trailer) {
+            $url = trim((string) ($trailer['url'] ?? ''));
+            if ($url === '') continue;
+            AnimeTrailer::query()->create([
+                'anime_id' => $anime->id,
+                'url' => $url,
+                'thumbnail' => trim((string) ($trailer['thumbnail'] ?? '')) ?: null,
+                'sort_order' => $i,
+            ]);
+        }
+    }
+
+    /** @param array<string, mixed> $record */
+    private function syncCast(Anime $anime, array $record): void
+    {
+        AnimeCast::query()->where('anime_id', $anime->id)->delete();
+        foreach (($record['cast'] ?? []) as $i => $entry) {
+            $character = trim((string) ($entry['character'] ?? ''));
+            $actor = trim((string) ($entry['actor'] ?? ''));
+            if ($character === '' || $actor === '') continue;
+            AnimeCast::query()->create([
+                'anime_id' => $anime->id,
+                'character' => $character,
+                'actor' => $actor,
+                'sort_order' => $i,
+            ]);
+        }
+    }
+
+    /** @param array<string, mixed> $record */
+    private function syncStaff(Anime $anime, array $record): void
+    {
+        AnimeStaff::query()->where('anime_id', $anime->id)->delete();
+        foreach (($record['staff'] ?? []) as $i => $entry) {
+            $role = trim((string) ($entry['role'] ?? ''));
+            $name = trim((string) ($entry['name'] ?? ''));
+            if ($role === '' || $name === '') continue;
+            AnimeStaff::query()->create([
+                'anime_id' => $anime->id,
+                'role' => $role,
+                'name' => $name,
+                'sort_order' => $i,
+            ]);
+        }
+    }
+
+    /** @param array<string, mixed> $record */
+    private function syncLinks(Anime $anime, array $record): void
+    {
+        AnimeLink::query()->where('anime_id', $anime->id)->delete();
+        foreach (($record['links'] ?? []) as $link) {
+            $url = trim((string) ($link['url'] ?? ''));
+            $label = trim((string) ($link['label'] ?? ''));
+            if ($url === '' || $label === '') continue;
+            AnimeLink::query()->create([
+                'anime_id' => $anime->id,
+                'category' => trim((string) ($link['category'] ?? '')),
+                'label' => $label,
+                'url' => $url,
             ]);
         }
     }

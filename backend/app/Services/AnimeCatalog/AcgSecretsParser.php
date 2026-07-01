@@ -70,10 +70,13 @@ final class AcgSecretsParser
 
         $coverImage = $this->coverImage($xpath);
 
-        // The onair area repeats the same text in time_today and a hidden time_tomorrow div;
-        // read the visible time_today entry so air_date_text isn't doubled. Fall back to the
-        // whole onair_times block for layouts that lack the time_today wrapper.
-        $airDateText = $this->firstNonEmpty($xpath, './/div[contains(@class,"time_today")]');
+        // Prefer main_time (regular weekly slot, e.g. #3 onwards) over sub_time (special premiere).
+        // Both are wrapped in time_today; main_time takes precedence when present.
+        // Fall back to the first visible time_today, then the whole onair_times block.
+        $airDateText = $this->firstNonEmpty($xpath, './/div[contains(@class,"time_today") and contains(@class,"main_time")]');
+        if ($airDateText === '') {
+            $airDateText = $this->firstNonEmpty($xpath, './/div[contains(@class,"time_today")]');
+        }
         if ($airDateText === '') {
             $airDateText = $this->firstNonEmpty($xpath, './/div[contains(@class,"onair_times")]');
         }
@@ -93,6 +96,11 @@ final class AcgSecretsParser
             'tags' => $this->tags($xpath),
             'streams' => $this->streams($xpath),
             'external_ids' => $this->externalIds($xpath),
+            'themes' => $this->themes($xpath),
+            'trailers' => $this->trailers($xpath),
+            'cast' => $this->cast($xpath),
+            'staff' => $this->staff($xpath),
+            'links' => $this->links($xpath),
         ];
     }
 
@@ -135,9 +143,9 @@ final class AcgSecretsParser
         };
     }
 
-    private function firstNonEmpty(DOMXPath $xpath, string $query): string
+    private function firstNonEmpty(DOMXPath $xpath, string $query, ?\DOMNode $context = null): string
     {
-        $nodes = $xpath->query($query);
+        $nodes = $context !== null ? $xpath->query($query, $context) : $xpath->query($query);
         if ($nodes === false) {
             return '';
         }
@@ -345,6 +353,213 @@ final class AcgSecretsParser
         }
 
         return $ids;
+    }
+
+    /**
+     * Parse theme songs (OP/ED).
+     *
+     * @return list<array{type: string, title: string, artist: string}>
+     */
+    private function themes(DOMXPath $xpath): array
+    {
+        $nodes = $xpath->query('.//div[contains(@class,"anime_music")]');
+        if ($nodes === false) {
+            return [];
+        }
+
+        $themes = [];
+        foreach ($nodes as $node) {
+            $type = $this->firstNonEmpty($xpath, './/div[contains(@class,"song_type")]', $node);
+            $title = $this->firstNonEmpty($xpath, './/div[contains(@class,"song_name")]', $node);
+            $artist = $this->firstNonEmpty($xpath, './/div[contains(@class,"singer")]', $node);
+
+            if ($title === '') {
+                continue;
+            }
+
+            $themes[] = [
+                'type' => $type,
+                'title' => $title,
+                'artist' => $artist,
+            ];
+        }
+
+        return $themes;
+    }
+
+    /**
+     * Parse promotional video (trailer) YouTube links.
+     *
+     * @return list<array{url: string, thumbnail: string}>
+     */
+    private function trailers(DOMXPath $xpath): array
+    {
+        $nodes = $xpath->query('.//div[contains(@class,"anime_trailers")]//a[contains(@class,"youtube")]');
+        if ($nodes === false) {
+            return [];
+        }
+
+        $trailers = [];
+        foreach ($nodes as $node) {
+            if (! $node instanceof DOMElement) {
+                continue;
+            }
+            $url = trim($node->getAttribute('href'));
+            if ($url === '') {
+                continue;
+            }
+
+            $thumbnail = '';
+            $imgs = $xpath->query('.//img', $node);
+            if ($imgs !== false && $imgs->length > 0 && $imgs->item(0) instanceof DOMElement) {
+                $thumbnail = trim($imgs->item(0)->getAttribute('src'));
+            }
+
+            $trailers[] = ['url' => $url, 'thumbnail' => $thumbnail];
+        }
+
+        return $trailers;
+    }
+
+    /**
+     * Parse cast entries (character → voice actor).
+     *
+     * @return list<array{character: string, actor: string}>
+     */
+    private function cast(DOMXPath $xpath): array
+    {
+        return $this->parsePersonList($xpath, './/div[contains(@class,"anime_cast")]//div[contains(@class,"anime_person")]');
+    }
+
+    /**
+     * Parse staff entries (role → person).
+     *
+     * @return list<array{role: string, name: string}>
+     */
+    private function staff(DOMXPath $xpath): array
+    {
+        $nodes = $xpath->query('.//div[contains(@class,"anime_staff")]//div[contains(@class,"anime_person")]');
+        if ($nodes === false) {
+            return [];
+        }
+
+        $staff = [];
+        foreach ($nodes as $node) {
+            $role = $this->firstNonEmpty($xpath, './/span[contains(@class,"type")]', $node);
+            // Gather all entity names (can be multiple people per role)
+            $nameNodes = $xpath->query('.//span[contains(@class,"entities")]', $node);
+            $names = [];
+            if ($nameNodes !== false) {
+                foreach ($nameNodes as $nameNode) {
+                    // Use innerText of ruby (prefer rt-stripped version via textContent of non-rt nodes)
+                    $rtNodes = $xpath->query('.//rt', $nameNode);
+                    if ($rtNodes !== false) {
+                        foreach ($rtNodes as $rt) {
+                            $rt->parentNode?->removeChild($rt);
+                        }
+                    }
+                    $name = $this->clean($nameNode->textContent);
+                    if ($name !== '') {
+                        $names[] = $name;
+                    }
+                }
+            }
+            if ($role === '' || empty($names)) {
+                continue;
+            }
+            $staff[] = ['role' => $role, 'name' => implode('、', $names)];
+        }
+
+        return $staff;
+    }
+
+    /**
+     * Parse external link groups (e.g. 一般, 資料庫).
+     *
+     * @return list<array{category: string, label: string, url: string}>
+     */
+    private function links(DOMXPath $xpath): array
+    {
+        $groups = $xpath->query('.//div[contains(@class,"anime_link_group")]');
+        if ($groups === false) {
+            return [];
+        }
+
+        $links = [];
+        foreach ($groups as $group) {
+            if (! $group instanceof DOMElement) {
+                continue;
+            }
+            $category = $this->firstNonEmpty($xpath, './/div[contains(@class,"link_group_name")]', $group);
+
+            $anchors = $xpath->query('.//div[contains(@class,"anime_links")]//a', $group);
+            if ($anchors === false) {
+                continue;
+            }
+
+            foreach ($anchors as $anchor) {
+                if (! $anchor instanceof DOMElement) {
+                    continue;
+                }
+                // Skip hidden/memberonly entries
+                $cls = $anchor->getAttribute('class');
+                if (str_contains($cls, 'hide') || str_contains($cls, 'memberonly')) {
+                    continue;
+                }
+                $href = trim($anchor->getAttribute('href'));
+                if ($href === '' || $href === '#') {
+                    continue;
+                }
+                // Remove icon elements to get clean label text
+                $iNodes = $xpath->query('.//i', $anchor);
+                if ($iNodes !== false) {
+                    foreach ($iNodes as $i) {
+                        $i->parentNode?->removeChild($i);
+                    }
+                }
+                $label = $this->clean($anchor->textContent);
+                if ($label === '') {
+                    continue;
+                }
+                $links[] = ['category' => $category, 'label' => $label, 'url' => $href];
+            }
+        }
+
+        return $links;
+    }
+
+    /**
+     * Helper: parse a list of anime_person nodes into [{key, value}] pairs.
+     *
+     * @return list<array{character: string, actor: string}>
+     */
+    private function parsePersonList(DOMXPath $xpath, string $query): array
+    {
+        $nodes = $xpath->query($query);
+        if ($nodes === false) {
+            return [];
+        }
+
+        $persons = [];
+        foreach ($nodes as $node) {
+            $character = $this->firstNonEmpty($xpath, './/span[contains(@class,"type")]', $node);
+            $actorNodes = $xpath->query('.//span[contains(@class,"cast")]', $node);
+            $actors = [];
+            if ($actorNodes !== false) {
+                foreach ($actorNodes as $actorNode) {
+                    $name = $this->clean($actorNode->textContent);
+                    if ($name !== '') {
+                        $actors[] = $name;
+                    }
+                }
+            }
+            if ($character === '' || empty($actors)) {
+                continue;
+            }
+            $persons[] = ['character' => $character, 'actor' => implode('、', $actors)];
+        }
+
+        return $persons;
     }
 
     private function parseAirDate(string $airDateText, int $year): ?string

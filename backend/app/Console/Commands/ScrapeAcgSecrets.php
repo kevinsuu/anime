@@ -76,19 +76,25 @@ final class ScrapeAcgSecrets extends Command
         if ($this->option('all')) {
             return $parser->parseSeasonIndex($client->fetchIndex());
         }
-        $now = new DateTimeImmutable('now');
-        $current = SeasonResolver::current($now);
-        $months = ['winter' => 1, 'spring' => 4, 'summer' => 7, 'fall' => 10];
-        $curMonth = $months[$current['code']];
-        $curYyyymm = sprintf('%04d%02d', $current['year'], $curMonth);
-        $prevMonth = $curMonth - 3;
-        $prevYear = $current['year'];
-        if ($prevMonth < 1) {
-            $prevMonth = 10;
-            $prevYear--;
-        }
-        $prevYyyymm = sprintf('%04d%02d', $prevYear, $prevMonth);
 
-        return [$prevYyyymm, $curYyyymm];
+        // Default: scrape all seasons within the past 2 years up to current season.
+        // Seasons start in Jan(01), Apr(04), Jul(07), Oct(10).
+        $now = new DateTimeImmutable('now');
+        $currentYear = (int) $now->format('Y');
+        $currentMonth = (int) $now->format('n');
+        $seasonMonths = [1, 4, 7, 10];
+
+        $seasons = [];
+        for ($year = $currentYear - 1; $year <= $currentYear; $year++) {
+            foreach ($seasonMonths as $month) {
+                // Skip future seasons
+                if ($year === $currentYear && $month > $currentMonth) {
+                    continue;
+                }
+                $seasons[] = sprintf('%04d%02d', $year, $month);
+            }
+        }
+
+        return $seasons;
     }
 }
