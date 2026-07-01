@@ -27,6 +27,12 @@ export function repairText(value: unknown, fallback = ''): string {
   }
 }
 
+export interface AnimeStream {
+  region: string
+  platform: string
+  url: string | null
+}
+
 export interface Anime {
   id: number
   name: string
@@ -38,6 +44,9 @@ export interface Anime {
   airDate: string | null
   episodeCount: number | null
   status: string
+  aliases: string[]
+  streams: AnimeStream[]
+  titleJa: string
 }
 
 export function normalizeAnime(item: Record<string, any> = {}): Anime {
@@ -51,7 +60,18 @@ export function normalizeAnime(item: Record<string, any> = {}): Anime {
     seasonCode: item.seasonCode || item.season_code || '',
     airDate: item.airDate || item.air_date || null,
     episodeCount: item.episodeCount || item.episode_count || null,
-    status: item.status || ''
+    status: item.status || '',
+    aliases: Array.isArray(item.aliases) ? item.aliases.map((a: any) => repairText(a)) : [],
+    streams: Array.isArray(item.streams)
+      ? item.streams.map((s: any) => ({
+          region: repairText(s.region),
+          platform: repairText(s.platform),
+          url: s.url || null
+        }))
+      : [],
+    titleJa: repairText(
+      (Array.isArray(item.titles) ? item.titles.find((t: any) => t.locale === 'ja')?.title : '') || ''
+    )
   }
 }
 

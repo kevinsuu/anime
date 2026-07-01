@@ -33,8 +33,36 @@ describe('normalizeAnime', () => {
       seasonCode: 'spring',
       airDate: '2026-04-05T23:00:00',
       episodeCount: 12,
-      status: ''
+      status: '',
+      aliases: [],
+      streams: [],
+      titleJa: ''
     })
+  })
+
+  it('maps streams, aliases, and Japanese title from the API', () => {
+    const result = normalizeAnime({
+      id: 1,
+      name: '測試',
+      aliases: ['別名A'],
+      streams: [{ region: '台灣', platform: '巴哈', url: 'https://a' }],
+      titles: [
+        { locale: 'ja', title: 'テスト', is_primary: false },
+        { locale: 'zh-Hant', title: '測試', is_primary: true }
+      ]
+    })
+
+    expect(result.streams).toHaveLength(1)
+    expect(result.streams[0].platform).toBe('巴哈')
+    expect(result.aliases).toContain('別名A')
+    expect(result.titleJa).toBe('テスト')
+  })
+
+  it('defaults new fields when absent', () => {
+    const result = normalizeAnime({ id: 2, name: 'x' })
+    expect(result.streams).toEqual([])
+    expect(result.aliases).toEqual([])
+    expect(result.titleJa).toBe('')
   })
 
   it('falls back to placeholder name when missing', () => {
