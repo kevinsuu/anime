@@ -5,11 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Exceptions\ApiException;
 use App\Http\Controllers\Controller;
 use App\Models\Anime;
-use App\Models\User;
 use App\Services\AnimeCatalog\SeasonResolver;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use InvalidArgumentException;
 
 final class AnimeController extends Controller
@@ -150,39 +148,4 @@ final class AnimeController extends Controller
         ]);
     }
 
-    public function store(Request $request): JsonResponse
-    {
-        $userId = (int) $request->attributes->get('auth_user_id');
-        $user = User::query()->find($userId);
-        $allowedEmails = config('services.catalog.manual_create_allowed_emails', []);
-
-        if ($user === null || ! in_array($user->email, $allowedEmails, true)) {
-            throw new ApiException(403, 'forbidden', '沒有權限手動建立動漫資料');
-        }
-
-        $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:160'],
-            'description' => ['nullable', 'string'],
-            'imageUrl' => ['nullable', 'url', 'starts_with:http://,https://'],
-        ], [
-            'name.required' => '名稱必填且不可超過 160 字',
-            'name.max' => '名稱必填且不可超過 160 字',
-            'imageUrl.url' => '圖片 URL 格式錯誤',
-            'imageUrl.starts_with' => '圖片 URL 必須使用 HTTP 或 HTTPS',
-        ]);
-
-        if ($validator->fails()) {
-            throw new ApiException(422, 'validation_failed', '動漫資料驗證失敗', $validator->errors()->toArray());
-        }
-
-        $anime = Anime::query()->create([
-            'name' => trim((string) $request->input('name')),
-            'description' => trim((string) $request->input('description', '')),
-            'image_url' => trim((string) $request->input('imageUrl', '')),
-            'source' => 'manual',
-            'created_by_user_id' => (int) $request->attributes->get('auth_user_id'),
-        ]);
-
-        return response()->json(['item' => $anime->fresh()], 201);
-    }
 }

@@ -12,7 +12,6 @@ Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('jwt'
 
 Route::get('/anime', [AnimeController::class, 'index']);
 Route::get('/anime/{id}', [AnimeController::class, 'show']);
-Route::post('/anime', [AnimeController::class, 'store'])->middleware('jwt');
 
 Route::middleware('jwt')->group(function (): void {
     Route::get('/me', [AnimeListController::class, 'me']);

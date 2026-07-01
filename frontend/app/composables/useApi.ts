@@ -117,7 +117,6 @@ export function useApi() {
       return request(`/anime${queryString ? `?${queryString}` : ''}`)
     },
     getAnime: (id: number) => request(`/anime/${id}`),
-    createAnime: (payload: Record<string, any>) => request('/anime', { method: 'POST', body: JSON.stringify(payload) }),
     myList: () => request('/my/anime-list'),
     addToList: (animeId: number) => request('/my/anime-list', { method: 'POST', body: JSON.stringify({ animeId }) }),
     updateListItem: (id: number, payload: Record<string, any>) => request(`/my/anime-list/${id}`, { method: 'PATCH', body: JSON.stringify(payload) }),

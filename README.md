@@ -1,19 +1,20 @@
 # 動漫庫
 
-依照 `docs/superpowers/specs/2026-05-25-anime-tracker-mvp-design.md` 建立的動漫追番網站 MVP。
+動漫追番網站：新番瀏覽、個人追番清單、自訂收藏、公開分享清單頁。
 
 ## 功能範圍
 
-- Nuxt 4（SPA 模式）+ Nuxt UI 前端，論壇風格 RWD 介面。
+- Nuxt 4（SPA 模式）+ Nuxt UI 前端，響應式 RWD 介面。
 - Laravel REST API 後端。
 - MySQL 資料庫。
-- Google OAuth ID token 登入，後端簽發短效 JWT。
-- 個人動漫清單、是否看過、評價、備註。
-- 動漫搜尋與手動建立。
-- Bangumi 新番資料匯入，支援季度同步與繁中優先標題。
-- 公開分享清單頁。
+- Google OAuth 登入，後端簽發短效 JWT + 可續期的 refresh token。
+- 個人動漫清單、是否看過、評價、備註、自訂收藏。
+- 動漫資料庫依年份瀏覽與關鍵字搜尋。
+- 動漫詳情頁：角色、聲優、製作人員、主題曲、宣傳片、串流平台連結。
+- 動漫資料透過 acgsecrets.hk 爬蟲每週自動同步（無手動新增介面，見〈資料匯入管線〉）。
+- 公開分享清單頁與收藏頁。
 - 手機版響應式介面。
-- Docker Compose 本機開發環境。
+- Docker Compose 本機開發環境；GitHub Actions + GHCR 正式部署。
 
 ## 本機啟動動漫庫
 
@@ -29,7 +30,9 @@ cp .env.example .env
 docker compose up --build
 ```
 
-後端容器會把本機 `./backend` 掛到容器 `/app`，並使用 Laravel 13 的 `php artisan serve` 啟動。修改一般後端程式碼時，容器會直接讀到本機最新檔案；需要時才重啟或重建 Docker。
+後端容器會把本機 `./backend` 掛到容器 `/app`，並使用 Laravel 的 `php artisan serve` 啟動（僅供本機開發；正式環境改用 PHP-FPM + nginx，見〈部署〉）。修改一般後端程式碼時，容器會直接讀到本機最新檔案；需要時才重啟或重建 Docker。
+
+**所有後端 `php artisan`／`composer` 指令只能在容器內執行**，本機沒有安裝 PHP。
 
 Docker 更新規則：
 
@@ -38,21 +41,11 @@ Docker 更新規則：
 - 改 `backend/config`：檔案會同步進容器；如果 Laravel config cache 已開啟，需清 cache 或重啟 backend。
 - 改 `backend/database/migrations`：檔案會同步進容器，但還要執行 `docker compose exec backend php artisan migrate`。
 - 改 `.env` 或 `docker-compose.yml` 的 `environment`：需要重啟相關 container，例如 `docker compose restart backend`。
-- 改 `frontend/package.json`、`frontend/package-lock.json` 或前端套件：需要重新安裝依賴，通常用 `docker compose up --build frontend` 或 `docker compose restart frontend` 讓 container 重新跑 `npm install`。
+- 改 `frontend/package.json`、`frontend/package-lock.json` 或前端套件：需要重新安裝依賴，通常用 `docker compose up --build frontend` 較乾淨。
 - 改 `backend/composer.json`、`backend/composer.lock` 或 PHP 套件：需要重新安裝依賴，通常用 `docker compose up --build backend` 較乾淨。
-- 改 `backend/Dockerfile` 或 `frontend/Dockerfile`：需要重建 image，使用 `docker compose up --build backend` 或 `docker compose up --build frontend`。
+- 改 `backend/Dockerfile` 或 `frontend/Dockerfile`：需要重建 image，使用 `docker compose up --build <service>`。
 
-前端容器也會把本機 `./frontend` 掛到容器 `/app`。`docker-compose.yml` 另有 `frontend-node-modules` volume，讓 container 自己管理 Linux 版依賴，避免本機 `node_modules` 和 container 互相污染。Compose 也開啟 `CHOKIDAR_USEPOLLING`/`WATCHPACK_POLLING`，讓 Docker Desktop 裡的 Nuxt dev server 比較穩定偵測檔案變更。
-
-後續如果任務包含上述必要改動，應同步重啟或重建對應 Docker 服務，再做驗證。
-
-後端啟動時會自動執行：
-
-```bash
-composer install
-php artisan migrate --force
-php artisan db:seed --force
-```
+前端容器也會把本機 `./frontend` 掛到容器 `/app`。`docker-compose.yml` 另有 `frontend-node-modules` volume，讓 container 自己管理 Linux 版依賴，避免本機 `node_modules` 和 container 互相污染。
 
 服務位置：
 
@@ -60,114 +53,102 @@ php artisan db:seed --force
 - 後端：http://localhost:8080
 - phpMyAdmin：http://localhost:8081
 
-本機 `docker-compose.yml` 預設開啟 `DEV_AUTH_BYPASS=true` 與前端開發登入按鈕，方便不設定 Google OAuth 時測試流程。正式環境必須關閉。
+本機 `docker-compose.yml` 預設開啟 `DEV_AUTH_BYPASS=true` 與前端開發登入按鈕，方便不設定 Google OAuth 時測試流程。**正式環境的 `DEV_AUTH_BYPASS` 只有在 `APP_ENV=local` 時才會生效**（即使誤設為 `true` 也不會在正式環境開後門）。
 
-## 新番資料同步
-
-網站上可從「本季新番」頁選擇年份與季度，按下「同步新番資料」後由後端呼叫 Bangumi API，匯入完成後頁面會刷新該季海報牆。
-
-這個按鈕會呼叫受保護 API：
-
-```http
-POST /anime/sync-seasonal
-Authorization: Bearer <jwt>
-Content-Type: application/json
-
-{
-  "year": 2026,
-  "season": "spring"
-}
-```
-
-查看指定季度資料：
-
-```http
-GET /anime?year=2026&season=spring
-```
-
-同步指定季度的新番資料：
+### 執行測試
 
 ```bash
-docker compose exec backend php artisan anime:sync-seasonal --year=2026 --season=spring
+docker compose exec backend php artisan test              # 全部後端測試
+docker compose exec backend php artisan test --filter=X   # 單一測試
 ```
 
-`season` 可用：`winter`、`spring`、`summer`、`fall`。未帶參數時會同步目前日期所在季度。
+```bash
+cd frontend && npm run test   # 前端測試（Vitest，不需要 Docker）
+```
+
+## 資料匯入管線
+
+動漫資料庫**沒有手動新增介面**，內容完全由爬蟲管線提供，並以 JSON 快照形式進版控（`backend/database/seed/acgsecrets/*.json`，一季一檔）：
+
+```
+爬蟲（ScrapeAcgSecrets） → 解析 HTML（AcgSecretsParser） → 寫入 JSON 快照
+  → 匯入（ImportAcgSecrets） → upsert 進 anime 與相關明細表
+```
+
+排程容器（`scheduler`，執行 `php artisan schedule:work`）每週日 05:00 自動執行。手動執行：
+
+```bash
+docker compose exec backend php artisan anime:scrape-acgsecrets [--all]
+docker compose exec backend php artisan anime:import-acgsecrets
+```
+
+`--all` 會爬全部季度；預設只爬近兩年到目前季度。若要擴充或修正動漫資料，應該調整 parser／importer 邏輯或直接編輯 JSON 快照後重新匯入，而不是手動寫入資料庫。
 
 ## 後端架構
-
-後端已重構為 Laravel 專案架構，並保留 feature-based 的命名邊界：
 
 ```text
 backend/
 ├── app/
-│   ├── Console/Commands/
-│   ├── Exceptions/
+│   ├── Console/Commands/       # ScrapeAcgSecrets、ImportAcgSecrets
 │   ├── Http/
-│   │   ├── Controllers/Api/
-│   │   └── Middleware/
-│   ├── Models/
+│   │   ├── Controllers/Api/    # AnimeController、AnimeListController、AuthController、CollectionController
+│   │   └── Middleware/         # AuthenticateJwt（別名 'jwt'）
+│   ├── Models/                 # Anime 及其明細關聯（cast/staff/themes/trailers/links）等 Eloquent model
 │   └── Services/
-│       ├── AnimeCatalog/
-│       ├── Auth/
-│       └── Shared/
+│       ├── AnimeCatalog/       # AcgSecretsClient、AcgSecretsParser、AnimeImportService、SeasonResolver
+│       ├── Auth/                # GoogleTokenVerifier、JwtService、RefreshTokenService
+│       └── Shared/              # SlugGenerator（公開分享連結）
 ├── bootstrap/
 ├── config/
 ├── database/
 │   ├── migrations/
+│   ├── seed/acgsecrets/        # 爬蟲產出的 JSON 快照
 │   └── seeders/
+├── docker/                     # 正式環境用的 nginx.conf、entrypoint.sh
 ├── public/
 ├── routes/
 └── tests/
 ```
 
-- `app/`: 專案自己的後端程式碼。`Http/Controllers/Api` 是 API controller，`Http/Middleware` 是 JWT middleware，`Models` 是 Eloquent model，`Services` 是外部 API、JWT、Google token 驗證與季度規則。
-- `routes/`: API 路由入口。現在主要看 `routes/api.php`，維持 `/anime`、`/auth/google` 等既有路徑。
-- `database/`: 資料表 migration 與 seed 測試資料。`migrations` 定義 schema，`seeders` 放本機範例資料。
-- `config/`: Laravel 設定檔，讀取 `.env` 後提供 DB、CORS、JWT、Google、Bangumi 等設定。
-- `bootstrap/`: Laravel 啟動設定，不是前端 Bootstrap CSS。`bootstrap/app.php` 會註冊路由、middleware、exception handler。
-- `public/`: 後端 HTTP 對外入口，只保留 `index.php` 與 web server 需要的公開檔；不是前端專案目錄。
-- `storage/`: Laravel runtime 產生的檔案，例如 logs、cache、framework 暫存。目錄要存在，但內容通常不提交，也不用手動改。
-- `vendor/`: Composer 安裝的第三方 PHP 套件，等同 Node 的 `node_modules`。本機會存在，但由 `.gitignore` 排除，不應提交，也不用手動改。
-- `tests/`: PHPUnit 測試，分成 Feature API 測試與 Unit 測試。
+`routes/api.php` 沒有 `/api` 前綴（`apiPrefix: ''`）；正式環境由外層 nginx 把 `/api/*` rewrite 到後端根路徑，讓前後端共用同一個網域。
 
 ## 前端架構
 
-前端為 Nuxt 4（`ssr: false`，純 SPA 模式）搭配 Nuxt UI（Tailwind CSS）：
+Nuxt 4（`ssr: false`，純 SPA 模式）搭配 Nuxt UI：
 
 ```text
 frontend/
 ├── app/
-│   ├── assets/css/        # Tailwind / Nuxt UI 進入點
 │   ├── components/        # AppHeader、AppMobileNav、AnimeGridCard 等共用元件
 │   ├── composables/       # useApi、useSession、useSeasonalCatalog
 │   ├── middleware/        # auth 路由保護
-│   ├── pages/             # 檔案式路由（seasonal、catalog、list、settings、login、public/[slug]）
-│   └── utils/             # normalize.ts（資料正規化、亂碼修復）
+│   ├── pages/             # 檔案式路由（seasonal、catalog、list、settings、login、anime/[id]、public/[slug]）
+│   └── utils/             # normalize.ts（資料正規化、亂碼修復、標籤配色）
 ├── public/
 ├── nuxt.config.ts
 └── package.json
 ```
 
-- `app/pages/`：Nuxt 檔案式路由，`index.vue` 會直接導向 `/seasonal`（新番表為首頁）。
-- `app/middleware/auth.ts`：搭配 `definePageMeta({ middleware: 'auth' })` 保護 `/list`、`/settings`。
-- `app/composables/useApi.ts`：包裝 Laravel API 呼叫，從 `localStorage` 讀取 JWT。
+- `app/pages/index.vue` 直接導向 `/seasonal`（新番表為首頁）。
+- `app/middleware/auth.ts` 搭配 `definePageMeta({ middleware: 'auth' })` 保護 `/list`、`/settings`。
+- `app/composables/useSession.ts` 是**模組層級單例**（非每次呼叫都重建），確保登入狀態在所有元件間一致；首次於瀏覽器端使用時才從 `localStorage` 水合。
+- `app/composables/useApi.ts` 包裝 API 呼叫，401 時自動用 refresh token 換發新 JWT 並重試一次。
+- `/catalog` 預設瀏覽當前年份並在前端分頁（40 筆/頁），瀏覽過的年份會快取在 session 內；關鍵字搜尋則解除年份限制搜全庫。
 - 環境變數一律用 `NUXT_PUBLIC_*` 前綴（會被打進前端 bundle，不能放真正的密鑰）。
 
-## API
+## 認證機制
 
-主要端點：
+Google Identity Services 在前端簽發 ID token → `POST /auth/google` 驗證後（`GoogleTokenVerifier`）簽發短效 JWT（1 小時）+ 輪替式 refresh token（30 天，雜湊後存於 `refresh_tokens` 表，單次使用——每次 `POST /auth/refresh` 都會撤銷舊 token 並換發新的）。
 
-- `POST /auth/google`
+## 主要 API
+
+- `POST /auth/google`、`POST /auth/refresh`、`POST /auth/logout`
 - `GET /me`
-- `GET /anime`
-- `GET /anime?year=<year>&season=<winter|spring|summer|fall>`
-- `POST /anime`
-- `POST /anime/sync-seasonal`
-- `GET /my/anime-list`
-- `POST /my/anime-list`
-- `PATCH /my/anime-list/{itemId}`
-- `DELETE /my/anime-list/{itemId}`
-- `GET /public/lists/{slug}`
+- `GET /anime`、`GET /anime?year=<year>`、`GET /anime/{id}`
+- `GET /my/anime-list`、`POST /my/anime-list`、`PATCH /my/anime-list/{itemId}`、`DELETE /my/anime-list/{itemId}`
+- `GET /my/collections`、`POST /my/collections`、`PATCH /my/collections/{id}`、`DELETE /my/collections/{id}`
+- `POST /my/collections/{id}/items`、`DELETE /my/collections/{id}/items/{listItemId}`
+- `GET /public/lists/{slug}`、`GET /public/collections/{slug}`
 - `POST /me/share-slug/regenerate`
 
 受保護端點需帶：
@@ -176,19 +157,17 @@ frontend/
 Authorization: Bearer <jwt>
 ```
 
-## 部署提醒
+## 部署
 
-前端部署時，只能放公開設定（會被打進前端 bundle，公開可見）：
+正式環境用 GitHub Actions 建置 Docker image、推送到 GHCR（`ghcr.io/kevinsuu/anime-{backend,scheduler,frontend}`），透過 `deploy/docker-compose.yml` 以 SSH 部署。完整的一次性主機設定、必要的 GitHub Secrets、回滾步驟見 `deploy/README.md`。
 
-- `NUXT_PUBLIC_API_BASE_URL`
-- `NUXT_PUBLIC_GOOGLE_CLIENT_ID`
-- `NUXT_PUBLIC_ENABLE_DEV_LOGIN`（正式環境必須為 `false` 或不設定）
+- push 到任何分支 → 只跑 CI（`.github/workflows/ci.yml`）：後端測試、前端 build 檢查、三個 image 的 build dry-run。不會部署。
+- push `vX.Y.Z` 格式的 tag → `.github/workflows/deploy.yml` 建置並推送 image，再 SSH 進主機執行 `docker compose pull && up -d`。
 
-後端部署到 GCP Cloud Run 時，以下值只能放在 Cloud Run 環境變數或 Secret Manager：
+`backend/Dockerfile.production`（PHP-FPM + nginx）與 `backend/Dockerfile.scheduler` 跟本機開發用的 `backend/Dockerfile`（`php artisan serve`）是分開的——開發用伺服器不適合正式環境的並發流量。
 
-- `DB_PASSWORD`
-- `JWT_SECRET`
-- Cloud SQL 連線設定
-- 允許來源 `ALLOWED_ORIGINS`
+不要提交任何 `.env`。Repository 只保留 `.env.example`、`deploy/.env.production.example`。
 
-不要提交 `.env`。repository 只保留 `.env.example`。
+## Commit 規範
+
+所有 commit 訊息請遵循 `docs/commit-guidelines.md`（中文描述 + 英文 type 前綴）。

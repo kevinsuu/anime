@@ -47,13 +47,6 @@ return [
 
     'dev_auth_bypass' => (bool) env('DEV_AUTH_BYPASS', false),
 
-    'catalog' => [
-        'manual_create_allowed_emails' => array_values(array_filter(array_map(
-            'trim',
-            explode(',', env('CATALOG_MANUAL_CREATE_ALLOWED_EMAILS', 'REDACTED_EMAIL'))
-        ))),
-    ],
-
     'acgsecrets' => [
         'base_url' => rtrim(env('ACGSECRETS_BASE_URL', 'https://acgsecrets.hk'), '/'),
         'user_agent' => env('ACGSECRETS_USER_AGENT', 'anime-tracker/1.0 (+https://github.com/anime-tracker)'),
