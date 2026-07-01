@@ -142,6 +142,7 @@ final class AcgSecretsParserTest extends TestCase
             'title_zh', 'title_ja', 'aliases', 'summary',
             'cover_image', 'air_date_text', 'air_date',
             'tags', 'streams', 'external_ids',
+            'cast', 'staff', 'themes', 'trailers', 'links',
         ];
         sort($expected);
         $keys = array_keys($record);
