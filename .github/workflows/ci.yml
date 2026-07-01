@@ -59,6 +59,8 @@ jobs:
           context: backend
           file: backend/Dockerfile.production
           push: false
+          cache-from: type=gha,scope=backend
+          cache-to: type=gha,mode=max,scope=backend
 
       - name: Build scheduler image
         uses: docker/build-push-action@v6
@@ -66,6 +68,8 @@ jobs:
           context: backend
           file: backend/Dockerfile.scheduler
           push: false
+          cache-from: type=gha,scope=scheduler
+          cache-to: type=gha,mode=max,scope=scheduler
 
       - name: Build frontend image
         uses: docker/build-push-action@v6
@@ -73,6 +77,8 @@ jobs:
           context: frontend
           file: frontend/Dockerfile
           push: false
+          cache-from: type=gha,scope=frontend
+          cache-to: type=gha,mode=max,scope=frontend
           build-args: |
             NUXT_PUBLIC_API_BASE_URL=https://anime.kaistarstudio.me/api
             NUXT_PUBLIC_GOOGLE_CLIENT_ID=ci-placeholder.apps.googleusercontent.com

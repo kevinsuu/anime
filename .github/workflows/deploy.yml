@@ -15,14 +15,23 @@ jobs:
     permissions:
       contents: read
       packages: write
-    outputs:
-      tag: ${{ steps.tag.outputs.tag }}
+    strategy:
+      matrix:
+        include:
+          - image: anime-backend
+            context: backend
+            file: backend/Dockerfile.production
+            scope: backend
+          - image: anime-scheduler
+            context: backend
+            file: backend/Dockerfile.scheduler
+            scope: scheduler
+          - image: anime-frontend
+            context: frontend
+            file: frontend/Dockerfile
+            scope: frontend
     steps:
       - uses: actions/checkout@v4
-
-      - name: Resolve tag
-        id: tag
-        run: echo "tag=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
 
       - uses: docker/setup-buildx-action@v3
 
@@ -33,38 +42,34 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push backend
+      - name: Build and push ${{ matrix.image }}
+        if: matrix.image != 'anime-frontend'
         uses: docker/build-push-action@v6
         with:
-          context: backend
-          file: backend/Dockerfile.production
+          context: ${{ matrix.context }}
+          file: ${{ matrix.file }}
           push: true
+          cache-from: type=gha,scope=${{ matrix.scope }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.scope }}
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/anime-backend:${{ steps.tag.outputs.tag }}
-            ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/anime-backend:latest
-
-      - name: Build and push scheduler
-        uses: docker/build-push-action@v6
-        with:
-          context: backend
-          file: backend/Dockerfile.scheduler
-          push: true
-          tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/anime-scheduler:${{ steps.tag.outputs.tag }}
-            ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/anime-scheduler:latest
+            ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ matrix.image }}:${{ github.ref_name }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ matrix.image }}:latest
 
       - name: Build and push frontend
+        if: matrix.image == 'anime-frontend'
         uses: docker/build-push-action@v6
         with:
-          context: frontend
-          file: frontend/Dockerfile
+          context: ${{ matrix.context }}
+          file: ${{ matrix.file }}
           push: true
+          cache-from: type=gha,scope=${{ matrix.scope }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.scope }}
           build-args: |
             NUXT_PUBLIC_API_BASE_URL=https://anime.kaistarstudio.me/api
             NUXT_PUBLIC_GOOGLE_CLIENT_ID=${{ secrets.NUXT_PUBLIC_GOOGLE_CLIENT_ID }}
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/anime-frontend:${{ steps.tag.outputs.tag }}
-            ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/anime-frontend:latest
+            ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ matrix.image }}:${{ github.ref_name }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ matrix.image }}:latest
 
   deploy:
     needs: build-and-push
@@ -79,9 +84,9 @@ jobs:
           script: |
             set -e
             cd ${{ secrets.DEPLOY_PATH }}
-            sed -i "s|^BACKEND_IMAGE=.*|BACKEND_IMAGE=ghcr.io/kevinsuu/anime-backend:${{ needs.build-and-push.outputs.tag }}|" .env
-            sed -i "s|^SCHEDULER_IMAGE=.*|SCHEDULER_IMAGE=ghcr.io/kevinsuu/anime-scheduler:${{ needs.build-and-push.outputs.tag }}|" .env
-            sed -i "s|^FRONTEND_IMAGE=.*|FRONTEND_IMAGE=ghcr.io/kevinsuu/anime-frontend:${{ needs.build-and-push.outputs.tag }}|" .env
+            sed -i "s|^BACKEND_IMAGE=.*|BACKEND_IMAGE=ghcr.io/kevinsuu/anime-backend:${{ github.ref_name }}|" .env
+            sed -i "s|^SCHEDULER_IMAGE=.*|SCHEDULER_IMAGE=ghcr.io/kevinsuu/anime-scheduler:${{ github.ref_name }}|" .env
+            sed -i "s|^FRONTEND_IMAGE=.*|FRONTEND_IMAGE=ghcr.io/kevinsuu/anime-frontend:${{ github.ref_name }}|" .env
             docker compose pull
             docker compose up -d --remove-orphans
             docker image prune -f
