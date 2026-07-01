@@ -29,8 +29,10 @@ final class AnimeImportServiceTest extends TestCase
     {
         $service = app(AnimeImportService::class);
 
-        $anime = $service->importRecord($this->record());
+        $outcome = $service->importRecord($this->record());
+        $anime = $outcome->anime;
 
+        $this->assertFalse($outcome->wasUnchanged);
         $this->assertSame('黃泉雙使', $anime->name);
         $this->assertSame('大綱內容', $anime->description);
         $this->assertSame('https://static.acgsecrets.hk/x.jpg', $anime->image_url);
@@ -71,10 +73,26 @@ final class AnimeImportServiceTest extends TestCase
         $service = app(AnimeImportService::class);
 
         $service->importRecord($this->record());
-        $service->importRecord($this->record(['summary' => '更新後的大綱']));
+        $outcome = $service->importRecord($this->record(['summary' => '更新後的大綱']));
 
+        $this->assertFalse($outcome->wasUnchanged);
         $this->assertSame(1, Anime::count());
         $this->assertSame('更新後的大綱', Anime::first()->description);
         $this->assertSame(1, AnimeStream::count());
+    }
+
+    public function test_import_record_skips_unchanged_payload(): void
+    {
+        $service = app(AnimeImportService::class);
+
+        $service->importRecord($this->record());
+        $firstUpdatedAt = Anime::first()->updated_at;
+
+        $this->travel(1)->hours();
+        $outcome = $service->importRecord($this->record());
+
+        $this->assertTrue($outcome->wasUnchanged);
+        $this->assertSame(1, Anime::count());
+        $this->assertEquals($firstUpdatedAt, Anime::first()->updated_at);
     }
 }

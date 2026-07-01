@@ -28,16 +28,25 @@ final class AnimeImportService
     ];
 
     /**
-     * Upsert one acgsecrets record into anime + related tables.
+     * Upsert one acgsecrets record into anime + related tables. Records whose
+     * content is byte-identical to the last import (tracked via
+     * anime.import_hash) are skipped entirely — no writes, no touched
+     * updated_at — so re-running an import (e.g. on every deploy, or a
+     * hand-written JSON file re-fed through the same pipeline) is a no-op
+     * for anything that hasn't actually changed.
      *
      * @param array<string, mixed> $record
      */
-    public function importRecord(array $record): Anime
+    public function importRecord(array $record): ImportOutcome
     {
         $payloadHash = hash('sha256', json_encode($record, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
 
-        return DB::transaction(function () use ($record, $payloadHash): Anime {
+        return DB::transaction(function () use ($record, $payloadHash): ImportOutcome {
             $anime = $this->resolveAnime($record);
+
+            if ($anime->exists && $anime->import_hash === $payloadHash) {
+                return new ImportOutcome($anime, wasUnchanged: true);
+            }
 
             $anime->fill([
                 'name' => (string) $record['title_zh'],
@@ -49,6 +58,7 @@ final class AnimeImportService
                 'air_date' => $record['air_date'] ?? null,
                 'air_date_text' => $record['air_date_text'] ?? null,
                 'tags' => $record['tags'] ?? [],
+                'import_hash' => $payloadHash,
             ]);
             $anime->save();
 
@@ -62,7 +72,7 @@ final class AnimeImportService
             $this->syncStaff($anime, $record);
             $this->syncLinks($anime, $record);
 
-            return $anime->refresh();
+            return new ImportOutcome($anime->refresh(), wasUnchanged: false);
         });
     }
 
@@ -70,11 +80,12 @@ final class AnimeImportService
      * Import a batch of records.
      *
      * @param array<int, array<string, mixed>> $records
-     * @return array{imported: int, skipped: int, errors: array<int, array<string, mixed>>}
+     * @return array{imported: int, unchanged: int, skipped: int, errors: array<int, array<string, mixed>>}
      */
     public function importSeason(array $records): array
     {
         $imported = 0;
+        $unchanged = 0;
         $skipped = 0;
         $errors = [];
 
@@ -90,8 +101,12 @@ final class AnimeImportService
             }
 
             try {
-                $this->importRecord($record);
-                $imported++;
+                $outcome = $this->importRecord($record);
+                if ($outcome->wasUnchanged) {
+                    $unchanged++;
+                } else {
+                    $imported++;
+                }
             } catch (Throwable $exception) {
                 $skipped++;
                 $errors[] = [
@@ -103,6 +118,7 @@ final class AnimeImportService
 
         return [
             'imported' => $imported,
+            'unchanged' => $unchanged,
             'skipped' => $skipped,
             'errors' => $errors,
         ];

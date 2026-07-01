@@ -35,6 +35,7 @@ final class ImportAcgSecrets extends Command
         $files = glob("{$dir}/*.json") ?: [];
 
         $totalImported = 0;
+        $totalUnchanged = 0;
         $totalSkipped = 0;
 
         foreach ($files as $file) {
@@ -57,12 +58,13 @@ final class ImportAcgSecrets extends Command
 
             $result = $service->importSeason($records);
             $totalImported += $result['imported'];
+            $totalUnchanged += $result['unchanged'];
             $totalSkipped += $result['skipped'];
 
-            $this->line("{$name}: imported {$result['imported']}, skipped {$result['skipped']}");
+            $this->line("{$name}: imported {$result['imported']}, unchanged {$result['unchanged']}, skipped {$result['skipped']}");
         }
 
-        $this->info("Total: imported {$totalImported}, skipped {$totalSkipped}");
+        $this->info("Total: imported {$totalImported}, unchanged {$totalUnchanged}, skipped {$totalSkipped}");
 
         return self::SUCCESS;
     }

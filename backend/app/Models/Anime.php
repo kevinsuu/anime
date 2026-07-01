@@ -22,6 +22,7 @@ final class Anime extends Model
         'episode_count',
         'status',
         'tags',
+        'import_hash',
     ];
 
     protected function casts(): array
