@@ -84,9 +84,19 @@ jobs:
           script: |
             set -e
             cd ${{ secrets.DEPLOY_PATH }}
-            sed -i "s|^BACKEND_IMAGE=.*|BACKEND_IMAGE=ghcr.io/kevinsuu/anime-backend:${{ github.ref_name }}|" .env
-            sed -i "s|^SCHEDULER_IMAGE=.*|SCHEDULER_IMAGE=ghcr.io/kevinsuu/anime-scheduler:${{ github.ref_name }}|" .env
-            sed -i "s|^FRONTEND_IMAGE=.*|FRONTEND_IMAGE=ghcr.io/kevinsuu/anime-frontend:${{ github.ref_name }}|" .env
+            touch .env
+            set_env_var() {
+              key="$1"
+              value="$2"
+              if grep -q "^${key}=" .env; then
+                sed -i "s|^${key}=.*|${key}=${value}|" .env
+              else
+                echo "${key}=${value}" >> .env
+              fi
+            }
+            set_env_var BACKEND_IMAGE "ghcr.io/kevinsuu/anime-backend:${{ github.ref_name }}"
+            set_env_var SCHEDULER_IMAGE "ghcr.io/kevinsuu/anime-scheduler:${{ github.ref_name }}"
+            set_env_var FRONTEND_IMAGE "ghcr.io/kevinsuu/anime-frontend:${{ github.ref_name }}"
             docker compose pull
             docker compose up -d --remove-orphans
             docker image prune -f
