@@ -21,7 +21,6 @@ const list = ref<ListItem[]>([])
 const loading = ref(false)
 const error = ref('')
 const notice = ref('')
-const syncResult = ref<{ fetched: number; imported: number; skipped: number } | null>(null)
 const filterPanelOpen = ref(false)
 
 const listByAnimeId = computed(() => {
@@ -52,23 +51,6 @@ async function loadMyList() {
     list.value = (result.items || []).map(normalizeListItem)
   } catch {
     // 清單載入失敗不阻擋新番表瀏覽，沿用既有行為（不顯示清單狀態即可）
-  }
-}
-
-async function syncSeasonal() {
-  if (!isAuthed.value) return navigateTo('/login')
-
-  loading.value = true
-  error.value = ''
-  try {
-    const result = await api.syncSeasonalAnime({ year: Number(seasonalControls.year), season: seasonalControls.season })
-    syncResult.value = result.result
-    await loadSeasonal()
-    notice.value = '新番資料已同步'
-  } catch (err: any) {
-    error.value = err.message || '同步失敗'
-  } finally {
-    loading.value = false
   }
 }
 
@@ -119,7 +101,7 @@ onMounted(async () => {
     </div>
 
     <div v-if="filteredSeasonal.length === 0 && !error" class="rounded-md border border-dashed border-gray-300 p-6 text-center text-gray-500">
-      這個篩選條件目前沒有資料，試試切換星期或同步新番資料。
+      這個篩選條件目前沒有資料，試試切換星期。
     </div>
 
     <div class="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7">
@@ -139,9 +121,6 @@ onMounted(async () => {
       v-model:season="seasonalControls.season"
       v-model:category="filterState.seasonalCategory"
       v-model:status="filterState.seasonalStatus"
-      :sync-result="syncResult"
-      :loading="loading"
-      @sync="syncSeasonal"
     />
   </div>
 </template>

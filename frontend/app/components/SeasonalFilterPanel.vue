@@ -7,8 +7,6 @@ const props = defineProps<{
   season: string
   category: string
   status: string
-  syncResult: { fetched: number; imported: number; skipped: number } | null
-  loading: boolean
 }>()
 
 const emit = defineEmits<{
@@ -17,7 +15,6 @@ const emit = defineEmits<{
   'update:season': [value: string]
   'update:category': [value: string]
   'update:status': [value: string]
-  sync: []
 }>()
 
 const seasonOptions = [
@@ -41,7 +38,7 @@ const statusOptions = [
   <USlideover :open="open" @update:open="value => emit('update:open', value)">
     <template #content>
       <div class="flex flex-col gap-6 p-4">
-        <h2 class="text-lg font-bold">篩選與同步</h2>
+        <h2 class="text-lg font-bold">篩選</h2>
 
         <section class="space-y-2">
           <p class="text-xs font-bold uppercase text-gray-500">季度選擇</p>
@@ -58,12 +55,6 @@ const statusOptions = [
               class="flex-1"
               @update:model-value="value => emit('update:season', value)"
             />
-          </div>
-          <UButton block :loading="loading" @click="emit('sync')">同步新番資料</UButton>
-          <div v-if="syncResult" class="flex flex-wrap gap-2 text-xs text-gray-600">
-            <span>抓取 {{ syncResult.fetched }}</span>
-            <span>匯入 {{ syncResult.imported }}</span>
-            <span>略過 {{ syncResult.skipped }}</span>
           </div>
         </section>
 

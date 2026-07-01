@@ -58,8 +58,24 @@ function timeLabel(airDate: string | null): string {
       {{ watched ? '已看' : '已加入' }}
     </UBadge>
 
-    <h3 class="absolute inset-x-1 bottom-1 line-clamp-2 text-xs font-bold text-white drop-shadow">
-      {{ anime.name }}
-    </h3>
+    <UBadge
+      v-if="anime.streams.length > 0"
+      color="primary"
+      variant="solid"
+      icon="i-lucide-play"
+      class="absolute bottom-1 right-1"
+      size="sm"
+    >
+      {{ anime.streams.length }}
+    </UBadge>
+
+    <div class="absolute inset-x-1 bottom-1 pr-8">
+      <h3 class="line-clamp-2 text-xs font-bold text-white drop-shadow">
+        {{ anime.name }}
+      </h3>
+      <p v-if="anime.titleJa" class="line-clamp-1 text-[10px] text-gray-300 drop-shadow">
+        {{ anime.titleJa }}
+      </p>
+    </div>
   </button>
 </template>
