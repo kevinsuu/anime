@@ -100,3 +100,15 @@ that means an empty catalog until the first Sunday. To seed immediately after th
 docker compose exec backend php artisan anime:scrape-acgsecrets --all
 docker compose exec backend php artisan anime:import-acgsecrets
 ```
+
+## Personal watched list (seed/mylist)
+
+`backend/database/seed/mylist/` holds personal seed data in the same JSON structure as
+acgsecrets; `anime:import-acgsecrets` imports both directories. If `MYLIST_OWNER_EMAIL`
+is set in the host `.env`, the import also marks every entry of
+`seed/mylist/watched.json` as watched for that user (the account is pre-created and
+claimed automatically on that user's first Google login). Add to the deploy host `.env`:
+
+```
+MYLIST_OWNER_EMAIL=you@example.com
+```
