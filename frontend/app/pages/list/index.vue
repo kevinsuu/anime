@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { normalizeListItem, normalizeCollection } from '../../utils/normalize'
 import type { ListItem, Collection } from '../../utils/normalize'
+import { extractTagOptions, matchesSelectedTags } from '../../utils/listFilters'
+import { tagColor } from '../../utils/normalize'
 
 definePageMeta({ middleware: 'auth' })
 
@@ -26,15 +28,44 @@ function setFilter(value: string) {
   router.push({ path: '/list', query: value === 'all' ? {} : { filter: value } })
 }
 
+// Selected tag filters — separate query param from `filter`, AND-combined with it.
+const selectedTags = computed<string[]>(() => {
+  const raw = route.query.tags
+  if (!raw || typeof raw !== 'string') return []
+  return raw.split(',').filter(Boolean)
+})
+
+function toggleTag(tag: string) {
+  const current = selectedTags.value
+  const next = current.includes(tag)
+    ? current.filter(t => t !== tag)
+    : [...current, tag]
+
+  const query = { ...route.query }
+  if (next.length > 0) query.tags = next.join(',')
+  else delete query.tags
+
+  router.push({ path: '/list', query })
+}
+
+function clearTags() {
+  const query = { ...route.query }
+  delete query.tags
+  router.push({ path: '/list', query })
+}
+
+const tagOptions = computed(() => extractTagOptions(list.value))
+
 const filteredList = computed(() => {
   const f = activeFilter.value
-  if (f === 'watched') return list.value.filter(i => i.watched)
-  if (f === 'unwatched') return list.value.filter(i => !i.watched)
-  if (f.startsWith('col:')) {
+  let base = list.value
+  if (f === 'watched') base = list.value.filter(i => i.watched)
+  else if (f === 'unwatched') base = list.value.filter(i => !i.watched)
+  else if (f.startsWith('col:')) {
     const colId = Number(f.slice(4))
-    return list.value.filter(i => i.collections.some(c => c.id === colId))
+    base = list.value.filter(i => i.collections.some(c => c.id === colId))
   }
-  return list.value
+  return base.filter(i => matchesSelectedTags(i, selectedTags.value))
 })
 
 // ── List operations ──
@@ -256,6 +287,30 @@ onMounted(loadAll)
           <span class="text-sm text-gray-500">共 {{ filteredList.length }} 部</span>
         </div>
       </header>
+
+      <div v-if="tagOptions.length > 0" class="flex flex-wrap items-center gap-1.5">
+        <button
+          v-for="opt in tagOptions"
+          :key="opt.tag"
+          type="button"
+          class="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold transition"
+          :style="selectedTags.includes(opt.tag)
+            ? { backgroundColor: tagColor(opt.tag).text, color: '#fff' }
+            : { backgroundColor: tagColor(opt.tag).bg, color: tagColor(opt.tag).text }"
+          @click="toggleTag(opt.tag)"
+        >
+          {{ opt.tag }}
+          <span class="opacity-70">{{ opt.count }}</span>
+        </button>
+        <button
+          v-if="selectedTags.length > 0"
+          type="button"
+          class="text-xs font-medium text-gray-400 hover:text-gray-700"
+          @click="clearTags"
+        >
+          清除分類
+        </button>
+      </div>
 
       <div v-if="filteredList.length === 0" class="rounded-xl border border-dashed border-gray-200 p-8 text-center text-gray-500">
         <UIcon name="i-lucide-inbox" class="mx-auto mb-2 size-8 text-gray-300" />
