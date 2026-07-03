@@ -96,7 +96,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
         <span
           v-for="tag in item.anime.tags"
           :key="tag"
-          class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold"
+          class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold cursor-default"
           :style="{ backgroundColor: tagColor(tag).bg, color: tagColor(tag).text }"
         >
           {{ tag }}
