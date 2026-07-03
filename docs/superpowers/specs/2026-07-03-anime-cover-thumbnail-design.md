@@ -71,11 +71,21 @@ $table->string('cover_image_path')->nullable()->after('image_url');
 
 - 掃描 `cover_image_path IS NULL AND image_url IS NOT NULL` 的 anime，逐筆呼叫 `ThumbnailService::generate()` 並更新欄位。
 - 分批處理（chunk，例如每批 50 筆）避免一次載入全部資料到記憶體。
+- **請求節流**：每筆之間 `usleep` 100~200ms，避免瞬間對 acgsecrets 發出大量並發請求造成對方壓力或觸發速率限制。目前資料庫有 2664 筆需要 backfill，加上節流預估總耗時 10~20 分鐘（一次性執行，之後新資料靠 import 流程增量產生，不需要重跑此命令）。
 - 輸出處理進度與失敗筆數摘要（沿用專案內其他 Artisan 命令的輸出風格）。
 
 ### 7. 部署持久化（`deploy/docker-compose.yml`）
 
 為 backend 服務新增 named volume，掛載到 `/app/storage/app/public`，確保 `docker compose pull && up -d` 重建容器時縮圖檔案不遺失。需確認 `public/storage` symlink（`php artisan storage:link`）在容器啟動流程（entrypoint）中已建立或需要補上。本地 `docker-compose.yml` 視情況加對應 volume 以保持 dev/prod 行為一致。
+
+**重要說明**：`COPY . .`（Dockerfile 建置步驟）只複製 git 追蹤的檔案；縮圖是執行期產生的衍生檔案、不進 git，因此**新建的 image 本身不含任何縮圖**——縮圖必須在容器跑起來之後，透過 import 流程或手動執行 backfill 命令才會產生。只要 volume mount 正確設定，縮圖與 `cover_image_path` 都持久化在 volume／資料庫中，日後重新部署（`docker compose pull && up -d`）不需要重抓，除非 volume 被移除（如 `docker compose down -v`）或遷移到全新 host 時漏了搬遷 volume 資料。
+
+**首次上線這個功能時的部署步驟**（僅需執行一次）：
+
+1. 部署含本次改動的新版 image（Imagick、新 migration、新命令、volume mount 設定）
+2. `docker compose exec backend php artisan migrate`（建立 `cover_image_path` 欄位）
+3. `docker compose exec backend php artisan anime:generate-thumbnails`（對現有 2664 筆資料一次性 backfill，預估 10~20 分鐘）
+4. 之後每週排程的 `ImportAcgSecrets` 會自動幫新資料產生縮圖，不需要再手動介入
 
 ### 8. 前端清理
 
