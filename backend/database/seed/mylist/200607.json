@@ -1,0 +1,123 @@
+[
+    {
+        "season": "200607",
+        "season_year": 2006,
+        "season_code": "summer",
+        "title_zh": "歡迎加入NHK",
+        "title_ja": "N・H・Kにようこそ！",
+        "aliases": [
+            "欢迎加入NHK！",
+            "欢迎加入N・H・K！",
+            "欢迎来到NHK！",
+            "歡迎加入NHK！"
+        ],
+        "summary": "大學退學第二年的春天，主角家裡蹲廢材佐藤達廣在一事無成下，妄想認為自己的退學跟無職是NHK的全國性陰謀，就在這個時候在他面前出現了之前遇到過叫做中原岬的神秘美少女，並堅持達廣一定要加入計劃治好只會窩在家裡的毛病……",
+        "cover_image": "https://lain.bgm.tv/pic/cover/l/2b/ca/995_1FUkm.jpg",
+        "air_date_text": "2006年7月9日",
+        "air_date": "2006-07-09",
+        "tags": [
+            "TV",
+            "日本",
+            "漫畫改"
+        ],
+        "streams": [],
+        "external_ids": {
+            "bangumi": "995"
+        },
+        "themes": [],
+        "trailers": [],
+        "cast": [
+            {
+                "character": "佐藤達広",
+                "actor": "小泉豊"
+            },
+            {
+                "character": "中原岬",
+                "actor": "牧野由依"
+            },
+            {
+                "character": "山崎薫",
+                "actor": "阪口大助"
+            },
+            {
+                "character": "柏瞳",
+                "actor": "小林沙苗"
+            },
+            {
+                "character": "小林恵",
+                "actor": "早水リサ"
+            },
+            {
+                "character": "torotoro／小林友一",
+                "actor": "竹本英史"
+            },
+            {
+                "character": "緑川七菜子",
+                "actor": "宍戸留美"
+            },
+            {
+                "character": "城ヶ崎彰",
+                "actor": "飛田展男"
+            }
+        ],
+        "staff": [
+            {
+                "role": "動畫製作",
+                "name": "GONZO"
+            },
+            {
+                "role": "製作",
+                "name": "角川書店"
+            },
+            {
+                "role": "製作",
+                "name": "GONZO"
+            },
+            {
+                "role": "製作",
+                "name": "ハピネット"
+            },
+            {
+                "role": "製作",
+                "name": "ビクターエンタテインメント"
+            },
+            {
+                "role": "攝影監督",
+                "name": "北村直樹"
+            },
+            {
+                "role": "色彩設計",
+                "name": "内林裕美"
+            },
+            {
+                "role": "美術監督",
+                "name": "居垣宏"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "西園悟"
+            },
+            {
+                "role": "角色設計",
+                "name": "吉田隆彦"
+            },
+            {
+                "role": "角色設計",
+                "name": "石浜真史"
+            },
+            {
+                "role": "音樂",
+                "name": "パール兄弟"
+            },
+            {
+                "role": "編劇",
+                "name": "西園悟"
+            },
+            {
+                "role": "導演",
+                "name": "山本裕介"
+            }
+        ],
+        "links": []
+    }
+]

@@ -1,0 +1,114 @@
+[
+    {
+        "season": "201610",
+        "season_year": 2016,
+        "season_code": "fall",
+        "title_zh": "月曜日のたわわ",
+        "title_ja": "月曜日のたわわ",
+        "aliases": [
+            "星期一的丰满",
+            "周一的丰饶",
+            "摇曳的星期一",
+            "周一桃夭夭",
+            "Getsuyoubi no Tawawa",
+            "Tawawa on Monday",
+            "星期一的豐滿"
+        ],
+        "summary": "漫畫家の比村奇石によってTwitter上に毎週月曜日にアップロードされるイラスト群。2016年10月よりWebアニメ化されている。",
+        "cover_image": "https://lain.bgm.tv/pic/cover/l/f1/31/194877_mu6PM.jpg",
+        "air_date_text": "2016年10月10日",
+        "air_date": "2016-10-10",
+        "tags": [
+            "漫畫改",
+            "日常",
+            "WEB"
+        ],
+        "streams": [],
+        "external_ids": {
+            "bangumi": "194877"
+        },
+        "themes": [],
+        "trailers": [],
+        "cast": [
+            {
+                "character": "アイちゃん",
+                "actor": "原田彩楓"
+            },
+            {
+                "character": "お兄さん",
+                "actor": "間島淳司"
+            },
+            {
+                "character": "後輩ちゃん",
+                "actor": "茅野愛衣"
+            },
+            {
+                "character": "先輩",
+                "actor": "たくみ靖明"
+            },
+            {
+                "character": "トレーナーさん",
+                "actor": "津田美波"
+            },
+            {
+                "character": "バレー部ちゃん",
+                "actor": "石上静香"
+            },
+            {
+                "character": "歯科衛生士さん",
+                "actor": "能登麻美子"
+            },
+            {
+                "character": "德森さん",
+                "actor": "金元寿子"
+            }
+        ],
+        "staff": [
+            {
+                "role": "製作",
+                "name": "月鈴舎"
+            },
+            {
+                "role": "攝影監督",
+                "name": "中野遼太郎"
+            },
+            {
+                "role": "色彩設計",
+                "name": "坂上康治"
+            },
+            {
+                "role": "美術監督",
+                "name": "松本浩樹"
+            },
+            {
+                "role": "美術監督",
+                "name": "菊地明子"
+            },
+            {
+                "role": "角色設計",
+                "name": "吉井弘幸"
+            },
+            {
+                "role": "音樂",
+                "name": "出羽良彰"
+            },
+            {
+                "role": "導演",
+                "name": "村山公輔"
+            },
+            {
+                "role": "原作",
+                "name": "比村奇石"
+            },
+            {
+                "role": "製作",
+                "name": "NBCユニバーサル・エンターテイメント"
+            },
+            {
+                "role": "動畫製作",
+                "name": "PINE JAM"
+            }
+        ],
+        "links": []
+    }
+]

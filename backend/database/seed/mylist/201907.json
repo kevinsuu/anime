@@ -1,0 +1,138 @@
+[
+    {
+        "season": "201907",
+        "season_year": 2019,
+        "season_code": "summer",
+        "title_zh": "拳願",
+        "title_ja": "ケンガンアシュラ",
+        "aliases": [
+            "拳愿阿修罗",
+            "Kengan Ashura",
+            "拳願阿修羅"
+        ],
+        "summary": "握手成交早已成為過去。在這個世界中，重大交易皆由競技場上的鬥技者用拳頭來決定。",
+        "cover_image": "https://lain.bgm.tv/pic/cover/l/56/80/132817_xDx67.jpg",
+        "air_date_text": "2019年7月31日",
+        "air_date": "2019-07-31",
+        "tags": [
+            "漫畫改",
+            "戰鬥",
+            "WEB"
+        ],
+        "streams": [],
+        "external_ids": {
+            "bangumi": "132817"
+        },
+        "themes": [],
+        "trailers": [],
+        "cast": [
+            {
+                "character": "十鬼蛇王馬",
+                "actor": "鈴木達央"
+            },
+            {
+                "character": "山下一夫",
+                "actor": "チョー"
+            },
+            {
+                "character": "秋山楓",
+                "actor": "内山夕実"
+            },
+            {
+                "character": "乃木英樹",
+                "actor": "中田譲治"
+            },
+            {
+                "character": "初見泉",
+                "actor": "蓮池龍三"
+            },
+            {
+                "character": "因幡良",
+                "actor": "緒方恵美"
+            },
+            {
+                "character": "英はじめ",
+                "actor": "石田彰"
+            },
+            {
+                "character": "沢田慶三郎",
+                "actor": "保志総一朗"
+            },
+            {
+                "character": "桐生刹那",
+                "actor": "浪川大輔"
+            },
+            {
+                "character": "今井コスモ",
+                "actor": "榎木淳弥"
+            },
+            {
+                "character": "御雷零",
+                "actor": "小野大輔"
+            },
+            {
+                "character": "ガオラン・ウォンサワット",
+                "actor": "津田健次郎"
+            }
+        ],
+        "staff": [
+            {
+                "role": "製作",
+                "name": "MAGNET"
+            },
+            {
+                "role": "製作",
+                "name": "KLab株式会社"
+            },
+            {
+                "role": "製作",
+                "name": "NAS"
+            },
+            {
+                "role": "製作",
+                "name": "小学館"
+            },
+            {
+                "role": "製作",
+                "name": "毎日放送"
+            },
+            {
+                "role": "製作",
+                "name": "ポニーキャニオン"
+            },
+            {
+                "role": "攝影監督",
+                "name": "越山麻彦"
+            },
+            {
+                "role": "色彩設計",
+                "name": "加口大朗"
+            },
+            {
+                "role": "美術監督",
+                "name": "阿久澤奈緒子"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "上江洲誠"
+            },
+            {
+                "role": "角色設計",
+                "name": "森田和明"
+            },
+            {
+                "role": "音樂",
+                "name": "高梨康治"
+            },
+            {
+                "role": "編劇",
+                "name": "雑破業"
+            },
+            {
+                "role": "編劇",
+                "name": "上江洲誠"
+            }
+        ],
+        "links": []
+    }
+]

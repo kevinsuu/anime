@@ -1,0 +1,130 @@
+[
+    {
+        "season": "202304",
+        "season_year": 2023,
+        "season_code": "spring",
+        "title_zh": "賽馬娘 Road to the Top",
+        "title_ja": "ウマ娘 プリティーダービー ROAD TO THE TOP",
+        "aliases": [
+            "赛马娘 Pretty Derby 巅峰之路",
+            "赛马娘 Pretty Derby Road to the Top",
+            "Uma Musume: Pretty Derby - Road to the Top",
+            "ウマ娘 プリティーダービー ロードトゥーザトップ",
+            "赛马娘 RTTT / ウマ娘 RTTT",
+            "賽馬娘 Pretty Derby 巔峰之路"
+        ],
+        "summary": "クラシック三冠レース『皐月賞』『日本ダービー』『菊花賞』\r\n一生に一度だけ挑戦できるそのレースで勝つことは、\r\nすべてのウマ娘、すべてのトレーナーにとっての夢である。\r\n\r\n『ナリタトップロード』『アドマイヤベガ』『テイエムオペラオー』三強と呼ばれたウマ娘たちが、\r\n絶対に負けられない想いを胸に頂點を目指し競い合う、熱い熱いクラシック戦線。\r\n\r\n――ウマ娘の新シリーズ配信アニメプロジェクト、いよいよ始動です。",
+        "cover_image": "https://lain.bgm.tv/pic/cover/l/f2/a7/380448_BO7O9.jpg",
+        "air_date_text": "2023年4月16日",
+        "air_date": "2023-04-16",
+        "tags": [
+            "日本",
+            "原創",
+            "運動",
+            "WEB"
+        ],
+        "streams": [],
+        "external_ids": {
+            "bangumi": "380448"
+        },
+        "themes": [],
+        "trailers": [],
+        "cast": [
+            {
+                "character": "オグリキャップ",
+                "actor": "高柳知葉"
+            },
+            {
+                "character": "テイエムオペラオー",
+                "actor": "徳井青空"
+            },
+            {
+                "character": "ハルウララ",
+                "actor": "首藤志奈"
+            },
+            {
+                "character": "メイショウドトウ",
+                "actor": "和多田美咲"
+            },
+            {
+                "character": "ライスシャワー",
+                "actor": "石見舞菜香"
+            },
+            {
+                "character": "アドマイヤベガ",
+                "actor": "咲々木瞳"
+            },
+            {
+                "character": "カレンチャン",
+                "actor": "篠原侑"
+            },
+            {
+                "character": "ナリタトップロード",
+                "actor": "中村カンナ"
+            },
+            {
+                "character": "沖田トレーナー",
+                "actor": "土田大"
+            }
+        ],
+        "staff": [
+            {
+                "role": "製作",
+                "name": "Cygames"
+            },
+            {
+                "role": "攝影監督",
+                "name": "宋思之"
+            },
+            {
+                "role": "攝影監督",
+                "name": "許庭禎"
+            },
+            {
+                "role": "色彩設計",
+                "name": "中原あゆみ"
+            },
+            {
+                "role": "美術監督",
+                "name": "狹田修"
+            },
+            {
+                "role": "美術監督",
+                "name": "金井眞悟"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "小針哲也"
+            },
+            {
+                "role": "角色設計",
+                "name": "山崎淳"
+            },
+            {
+                "role": "編劇",
+                "name": "Cygames"
+            },
+            {
+                "role": "編劇",
+                "name": "和田崇太郎"
+            },
+            {
+                "role": "編劇",
+                "name": "湯澤僚子"
+            },
+            {
+                "role": "編劇",
+                "name": "吉村清子"
+            },
+            {
+                "role": "導演",
+                "name": "廖程芝"
+            },
+            {
+                "role": "原作",
+                "name": "Cygames"
+            }
+        ],
+        "links": []
+    }
+]

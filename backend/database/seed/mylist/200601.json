@@ -1,0 +1,148 @@
+[
+    {
+        "season": "200601",
+        "season_year": 2006,
+        "season_code": "winter",
+        "title_zh": "Fate/stay night",
+        "title_ja": "Fate/stay night",
+        "aliases": [
+            "フェイト/ステイナイト",
+            "圣杯之战",
+            "命运之夜",
+            "命运守护夜",
+            "命运之漫漫长夜",
+            "Fate 系列"
+        ],
+        "summary": "傳說中，聖盃是能夠實現擁有者願望的寶物。 為了讓這聖盃出現必須要進行一項儀式 被聖盃所選的七位魔術師MASTER 將被賜與聖盃所選出的七位使魔SERVANT 劍士“SABER” 槍兵“LANCER” 弓兵“ARCHER” 騎兵“RIDER” 魔術師“CASTER” 暗殺者“ASSASSIN” 狂戰士“BERSERKER” 魔術師必須與這七種類的使魔其中一位訂下契約並證明自己是最適合聖盃的人 換言之，魔術師必須消去其它的魔術師來證明自己是最強的 這樣一整個求取聖盃的儀式被稱為 “聖盃戰爭……",
+        "cover_image": "https://lain.bgm.tv/pic/cover/l/f9/0f/290_6Qi5Q.jpg",
+        "air_date_text": "2006年1月6日",
+        "air_date": "2006-01-06",
+        "tags": [
+            "TV",
+            "TV",
+            "日本",
+            "日本",
+            "奇幻",
+            "奇幻",
+            "戰鬥",
+            "戰鬥",
+            "遊戲改",
+            "遊戲改"
+        ],
+        "streams": [],
+        "external_ids": {
+            "bangumi": "290"
+        },
+        "themes": [],
+        "trailers": [],
+        "cast": [
+            {
+                "character": "アルトリア・ペンドラゴン",
+                "actor": "川澄綾子"
+            },
+            {
+                "character": "ギルガメッシュ",
+                "actor": "関智一"
+            },
+            {
+                "character": "衛宮士郎",
+                "actor": "野田順子"
+            },
+            {
+                "character": "間桐桜",
+                "actor": "下屋則子"
+            },
+            {
+                "character": "エミヤ",
+                "actor": "諏訪部順一"
+            },
+            {
+                "character": "メディア",
+                "actor": "田中敦子"
+            },
+            {
+                "character": "イリヤスフィール・フォン・アインツベルン",
+                "actor": "門脇舞以"
+            },
+            {
+                "character": "間桐慎二",
+                "actor": "神谷浩史"
+            },
+            {
+                "character": "言峰綺礼",
+                "actor": "中田譲治"
+            },
+            {
+                "character": "柳洞一成",
+                "actor": "真殿光昭"
+            },
+            {
+                "character": "遠坂凛",
+                "actor": "植田佳奈"
+            },
+            {
+                "character": "ヘラクレス",
+                "actor": "西前忠久"
+            }
+        ],
+        "staff": [
+            {
+                "role": "動畫製作",
+                "name": "スタジオディーン"
+            },
+            {
+                "role": "製作",
+                "name": "フロンティアワークス"
+            },
+            {
+                "role": "製作",
+                "name": "ジェネオンエンタテインメント"
+            },
+            {
+                "role": "製作",
+                "name": "ノーツ"
+            },
+            {
+                "role": "製作",
+                "name": "TBS"
+            },
+            {
+                "role": "攝影監督",
+                "name": "近藤慎与"
+            },
+            {
+                "role": "色彩設計",
+                "name": "松本真司"
+            },
+            {
+                "role": "美術監督",
+                "name": "小山俊久"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "佐藤卓哉"
+            },
+            {
+                "role": "角色設計",
+                "name": "石原恵治"
+            },
+            {
+                "role": "音樂",
+                "name": "川井憲次"
+            },
+            {
+                "role": "編劇",
+                "name": "花田十輝"
+            },
+            {
+                "role": "編劇",
+                "name": "岡田麿里"
+            },
+            {
+                "role": "編劇",
+                "name": "佐藤卓哉"
+            }
+        ],
+        "links": []
+    }
+]

@@ -37,11 +37,11 @@ final class AnimeImportService
      *
      * @param array<string, mixed> $record
      */
-    public function importRecord(array $record): ImportOutcome
+    public function importRecord(array $record, string $source = 'acgsecrets'): ImportOutcome
     {
         $payloadHash = hash('sha256', json_encode($record, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
 
-        return DB::transaction(function () use ($record, $payloadHash): ImportOutcome {
+        return DB::transaction(function () use ($record, $payloadHash, $source): ImportOutcome {
             $anime = $this->resolveAnime($record);
 
             if ($anime->exists && $anime->import_hash === $payloadHash) {
@@ -52,7 +52,7 @@ final class AnimeImportService
                 'name' => (string) $record['title_zh'],
                 'description' => $record['summary'] ?? null,
                 'image_url' => $record['cover_image'] ?? null,
-                'source' => 'acgsecrets',
+                'source' => $source,
                 'season_year' => $record['season_year'] ?? null,
                 'season_code' => $record['season_code'] ?? null,
                 'air_date' => $record['air_date'] ?? null,
@@ -62,7 +62,7 @@ final class AnimeImportService
             ]);
             $anime->save();
 
-            $this->syncTitles($anime, $record);
+            $this->syncTitles($anime, $record, $source);
             $this->syncAliases($anime, $record);
             $this->syncExternalIds($anime, $record, $payloadHash);
             $this->syncStreams($anime, $record);
@@ -82,7 +82,7 @@ final class AnimeImportService
      * @param array<int, array<string, mixed>> $records
      * @return array{imported: int, unchanged: int, skipped: int, errors: array<int, array<string, mixed>>}
      */
-    public function importSeason(array $records): array
+    public function importSeason(array $records, string $source = 'acgsecrets'): array
     {
         $imported = 0;
         $unchanged = 0;
@@ -101,7 +101,7 @@ final class AnimeImportService
             }
 
             try {
-                $outcome = $this->importRecord($record);
+                $outcome = $this->importRecord($record, $source);
                 if ($outcome->wasUnchanged) {
                     $unchanged++;
                 } else {
@@ -159,7 +159,7 @@ final class AnimeImportService
     /**
      * @param array<string, mixed> $record
      */
-    private function syncTitles(Anime $anime, array $record): void
+    private function syncTitles(Anime $anime, array $record, string $source = 'acgsecrets'): void
     {
         AnimeTitle::query()
             ->where('anime_id', $anime->id)
@@ -181,7 +181,7 @@ final class AnimeImportService
                 'title' => $title,
             ], [
                 'is_primary' => $isPrimary,
-                'source' => 'acgsecrets',
+                'source' => $source,
             ]);
         }
     }

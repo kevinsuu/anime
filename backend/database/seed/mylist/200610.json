@@ -1,0 +1,120 @@
+[
+    {
+        "season": "200610",
+        "season_year": 2006,
+        "season_code": "fall",
+        "title_zh": "Happiness",
+        "title_ja": "はぴねす!",
+        "aliases": [
+            "Happiness!",
+            "爱与魔法"
+        ],
+        "summary": "故事發生在瑞穗學園，那是情人節的前一天，接到損友渡良瀨準的一個電話，魔法科的天才少女神阪春姬將這一切都徹底地顛覆了。魔法科校舍神秘倒塌，男主角和外表優雅實際上卻比誰都愛哭得神阪春姬編進了同一個班級，而後他遇上了各種各樣的同學們……和春姬對著幹的柊杏璃、“不可思議的姐姐”高峰小雪、行動慢于思考的小日向李子、還有美麗的女裝渡良瀨準。",
+        "cover_image": "https://lain.bgm.tv/pic/cover/l/b6/af/8233_e7aV8.jpg",
+        "air_date_text": "2006年10月5日",
+        "air_date": "2006-10-05",
+        "tags": [
+            "TV",
+            "戀愛",
+            "日本",
+            "萌系",
+            "遊戲改",
+            "日常"
+        ],
+        "streams": [],
+        "external_ids": {
+            "bangumi": "8233"
+        },
+        "themes": [],
+        "trailers": [],
+        "cast": [
+            {
+                "character": "小日向雄真",
+                "actor": "大原崇"
+            },
+            {
+                "character": "柊杏璃",
+                "actor": "成瀬未亜"
+            },
+            {
+                "character": "式守伊吹",
+                "actor": "壱智村小真"
+            },
+            {
+                "character": "高溝八輔",
+                "actor": "かわむら拓央"
+            },
+            {
+                "character": "神坂春姫",
+                "actor": "榊原ゆい"
+            },
+            {
+                "character": "小日向すもも",
+                "actor": "後藤麻衣"
+            },
+            {
+                "character": "渡良瀬準",
+                "actor": "結下みちる"
+            }
+        ],
+        "staff": [
+            {
+                "role": "動畫製作",
+                "name": "ARTLAND"
+            },
+            {
+                "role": "製作",
+                "name": "濱田智之"
+            },
+            {
+                "role": "製作",
+                "name": "メディアファクトリー"
+            },
+            {
+                "role": "製作",
+                "name": "松本慶明"
+            },
+            {
+                "role": "製作",
+                "name": "岩崎篤史"
+            },
+            {
+                "role": "製作",
+                "name": "5pb."
+            },
+            {
+                "role": "製作",
+                "name": "片岡義朗"
+            },
+            {
+                "role": "製作",
+                "name": "高橋克典"
+            },
+            {
+                "role": "美術監督",
+                "name": "宮前光春"
+            },
+            {
+                "role": "劇本統籌",
+                "name": "西園悟"
+            },
+            {
+                "role": "角色設計",
+                "name": "小関雅"
+            },
+            {
+                "role": "音樂",
+                "name": "5zizz"
+            },
+            {
+                "role": "編劇",
+                "name": "西園悟"
+            },
+            {
+                "role": "編劇",
+                "name": "古怒田健志"
+            }
+        ],
+        "links": []
+    }
+]

@@ -60,4 +60,10 @@ return [
         'timeout_seconds' => max(1, (int) env('HTTP_TIMEOUT_SECONDS', 10)),
     ],
 
+    // 個人觀看清單(database/seed/mylist/watched.json)的擁有者;
+    // 設定後 anime:import-acgsecrets 會自動把清單標記為此使用者已看過。
+    'mylist' => [
+        'owner_email' => env('MYLIST_OWNER_EMAIL', ''),
+    ],
+
 ];
