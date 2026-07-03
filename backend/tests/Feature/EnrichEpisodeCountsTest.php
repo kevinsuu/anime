@@ -9,16 +9,22 @@ final class EnrichEpisodeCountsTest extends TestCase
 {
     private string $path;
 
+    private string $mylistPath;
+
     protected function setUp(): void
     {
         parent::setUp();
         $this->path = database_path('seed/acgsecrets/_test_enrich.json');
+        $this->mylistPath = database_path('seed/mylist/_test_enrich.json');
     }
 
     protected function tearDown(): void
     {
         if (is_file($this->path)) {
             unlink($this->path);
+        }
+        if (is_file($this->mylistPath)) {
+            unlink($this->mylistPath);
         }
         parent::tearDown();
     }
@@ -181,5 +187,35 @@ final class EnrichEpisodeCountsTest extends TestCase
             ->assertSuccessful();
 
         Http::assertNothingSent();
+    }
+
+    public function test_source_option_targets_the_mylist_directory(): void
+    {
+        file_put_contents($this->mylistPath, json_encode([
+            [
+                'title_zh' => 'mylist 條目',
+                'episode_count' => null,
+                'external_ids' => ['bangumi' => '380448'],
+            ],
+        ], JSON_UNESCAPED_UNICODE));
+
+        Http::fake([
+            'api.bgm.tv/v0/subjects/380448' => Http::response(['total_episodes' => 13]),
+        ]);
+
+        $this->artisan('anime:enrich-episode-counts', ['--source' => 'mylist', '--season' => '_test_enrich'])
+            ->assertSuccessful();
+
+        $records = json_decode((string) file_get_contents($this->mylistPath), true);
+
+        $this->assertSame(13, $records[0]['episode_count']);
+        // The acgsecrets fixture must not have been touched.
+        $this->assertFileDoesNotExist($this->path);
+    }
+
+    public function test_rejects_invalid_source_option(): void
+    {
+        $this->artisan('anime:enrich-episode-counts', ['--source' => 'bogus'])
+            ->assertFailed();
     }
 }

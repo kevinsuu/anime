@@ -131,7 +131,8 @@
                 "name": "北条千夏"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 12
     },
     {
         "season": "201101",
@@ -256,7 +257,8 @@
                 "name": "川元利浩"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 28
     },
     {
         "season": "201101",
@@ -394,7 +396,8 @@
                 "name": "草野紅壱"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 13
     },
     {
         "season": "201101",
@@ -534,6 +537,7 @@
                 "name": "市倉敬"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 12
     }
 ]

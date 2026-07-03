@@ -137,7 +137,8 @@
                 "name": "博報堂DYミュージック&ピクチャーズ"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 12
     },
     {
         "season": "201401",
@@ -274,7 +275,8 @@
                 "name": "和場明子"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 12
     },
     {
         "season": "201401",
@@ -381,7 +383,8 @@
                 "name": "ムトウユージ"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 23
     },
     {
         "season": "201401",
@@ -517,7 +520,8 @@
                 "name": "TECHNOBOYS PULCRAFT GREEN-FUND"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 18
     },
     {
         "season": "201401",
@@ -654,7 +658,8 @@
                 "name": "KADOKAWA"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 12
     },
     {
         "season": "201401",
@@ -781,7 +786,8 @@
                 "name": "博報堂DYミュージック&ピクチャーズ"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 12
     },
     {
         "season": "201401",
@@ -889,7 +895,8 @@
                 "name": "最相茂"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 13
     },
     {
         "season": "201401",
@@ -1020,7 +1027,8 @@
                 "name": "志茂文彦"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 13
     },
     {
         "season": "201401",
@@ -1106,7 +1114,8 @@
                 "name": "美川べるの"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 13
     },
     {
         "season": "201401",
@@ -1233,7 +1242,8 @@
                 "name": "スタジオディーン"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 12
     },
     {
         "season": "201401",
@@ -1375,7 +1385,8 @@
                 "name": "村井秀清"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 11
     },
     {
         "season": "201401",
@@ -1512,7 +1523,8 @@
                 "name": "村上桃子"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 12
     },
     {
         "season": "201401",
@@ -1638,7 +1650,8 @@
                 "name": "菊谷知樹"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 18
     },
     {
         "season": "201401",
@@ -1764,7 +1777,8 @@
                 "name": "佐々木啓悟"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 13
     },
     {
         "season": "201401",
@@ -1900,7 +1914,8 @@
                 "name": "新房昭之"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 20
     },
     {
         "season": "201401",
@@ -1966,6 +1981,7 @@
                 "name": "Z会"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 1
     }
 ]

@@ -132,7 +132,8 @@
                 "name": "中本宗応"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 16
     },
     {
         "season": "200907",
@@ -269,7 +270,8 @@
                 "name": "脇威志"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 14
     },
     {
         "season": "200907",
@@ -398,6 +400,7 @@
                 "name": "Ricotta"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 24
     }
 ]

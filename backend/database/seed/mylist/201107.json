@@ -137,7 +137,8 @@
                 "name": "伊藤美智子"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 12
     },
     {
         "season": "201107",
@@ -273,7 +274,8 @@
                 "name": "岩崎琢"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 12
     },
     {
         "season": "201107",
@@ -414,7 +416,8 @@
                 "name": "太田雅彦"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 14
     },
     {
         "season": "201107",
@@ -533,7 +536,8 @@
                 "name": "鈴木雅詞"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 12
     },
     {
         "season": "201107",
@@ -625,6 +629,7 @@
                 "name": "三鍋尚貴"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 1
     }
 ]

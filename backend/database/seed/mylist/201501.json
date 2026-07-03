@@ -126,7 +126,8 @@
                 "name": "AT-X"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 12
     },
     {
         "season": "201501",
@@ -267,7 +268,8 @@
                 "name": "太布尚弘"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 12
     },
     {
         "season": "201501",
@@ -394,7 +396,8 @@
                 "name": "岡田麿里"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 12
     },
     {
         "season": "201501",
@@ -531,7 +534,8 @@
                 "name": "江夏由結"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 12
     },
     {
         "season": "201501",
@@ -667,7 +671,8 @@
                 "name": "山西太平"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 22
     },
     {
         "season": "201501",
@@ -785,7 +790,8 @@
                 "name": "山口宏"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 12
     },
     {
         "season": "201501",
@@ -905,7 +911,8 @@
                 "name": "高橋脩"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 10
     },
     {
         "season": "201501",
@@ -999,6 +1006,7 @@
                 "name": "石野美樹"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 20
     }
 ]

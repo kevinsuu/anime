@@ -98,7 +98,8 @@
                 "name": "しろ"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 13
     },
     {
         "season": "201301",
@@ -207,7 +208,8 @@
                 "name": "動画工房"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 14
     },
     {
         "season": "201301",
@@ -332,7 +334,8 @@
                 "name": "小野由起子"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 13
     },
     {
         "season": "201301",
@@ -456,7 +459,8 @@
                 "name": "裕時悠示"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 14
     },
     {
         "season": "201301",
@@ -595,7 +599,8 @@
                 "name": "藤澤慶昌"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 13
     },
     {
         "season": "201301",
@@ -725,7 +730,8 @@
                 "name": "高大浩"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 12
     },
     {
         "season": "201301",
@@ -864,7 +870,8 @@
                 "name": "横手美智子"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 21
     },
     {
         "season": "201301",
@@ -993,7 +1000,8 @@
                 "name": "高村和宏"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 12
     },
     {
         "season": "201301",
@@ -1102,7 +1110,8 @@
                 "name": "えのきづ"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 18
     },
     {
         "season": "201301",
@@ -1227,7 +1236,8 @@
                 "name": "高山カツヒコ"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 12
     },
     {
         "season": "201301",
@@ -1366,7 +1376,8 @@
                 "name": "ドコモ・アニメストア"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 10
     },
     {
         "season": "201301",
@@ -1410,6 +1421,7 @@
             }
         ],
         "staff": [],
-        "links": []
+        "links": [],
+        "episode_count": 12
     }
 ]

@@ -137,7 +137,8 @@
                 "name": "上江洲誠"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 13
     },
     {
         "season": "201304",
@@ -269,7 +270,8 @@
                 "name": "ムービック"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 13
     },
     {
         "season": "201304",
@@ -412,7 +414,8 @@
                 "name": "渡航"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 13
     },
     {
         "season": "201304",
@@ -549,7 +552,8 @@
                 "name": "AIC"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 13
     },
     {
         "season": "201304",
@@ -643,7 +647,8 @@
                 "name": "茂木孝浩"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 12
     },
     {
         "season": "201304",
@@ -759,7 +764,8 @@
                 "name": "杉浦理史"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 18
     },
     {
         "season": "201304",
@@ -888,6 +894,7 @@
                 "name": "フロンティアワークス"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 25
     }
 ]

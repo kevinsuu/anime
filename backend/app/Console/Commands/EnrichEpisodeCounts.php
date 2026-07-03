@@ -9,9 +9,11 @@ use RuntimeException;
 use Throwable;
 
 /**
- * Backfills episode_count on existing acgsecrets JSON snapshots via the Bangumi
- * API, for records acgsecrets itself never published a count for. Updates the
- * JSON files in place — it does not re-scrape or touch any other field.
+ * Backfills episode_count on existing acgsecrets/mylist JSON snapshots via the
+ * Bangumi API, for records acgsecrets itself never published a count for.
+ * Updates the JSON files in place — it does not re-scrape or touch any other
+ * field. --source selects which seed directory to process (default acgsecrets);
+ * mylist uses the same record shape and is processed identically.
  *
  * Two lookup paths, tried in order per record:
  *  1. external_ids.bangumi already present -> fetch directly by id.
@@ -23,13 +25,20 @@ use Throwable;
  */
 final class EnrichEpisodeCounts extends Command
 {
-    protected $signature = 'anime:enrich-episode-counts {--season=} {--dry-run}';
+    protected $signature = 'anime:enrich-episode-counts {--source=acgsecrets} {--season=} {--dry-run}';
 
-    protected $description = 'Backfill missing episode_count in acgsecrets JSON snapshots via the Bangumi API.';
+    protected $description = 'Backfill missing episode_count in acgsecrets/mylist JSON snapshots via the Bangumi API.';
 
     public function handle(BangumiClient $client, BangumiTitleMatcher $matcher): int
     {
-        $dir = database_path('seed/acgsecrets');
+        $source = (string) $this->option('source');
+        if (! in_array($source, ['acgsecrets', 'mylist'], true)) {
+            $this->error("Invalid --source: {$source} (expected acgsecrets or mylist)");
+
+            return self::FAILURE;
+        }
+
+        $dir = database_path("seed/{$source}");
         $files = $this->resolveFiles($dir);
 
         if ($files === []) {
@@ -143,7 +152,10 @@ final class EnrichEpisodeCounts extends Command
 
         $files = glob("{$dir}/*.json") ?: [];
 
-        return array_values(array_filter($files, fn ($f) => basename($f) !== 'summary.json'));
+        return array_values(array_filter(
+            $files,
+            fn ($f) => ! in_array(basename($f), ['summary.json', 'watched.json'], true)
+        ));
     }
 
     private function writeJson(string $path, mixed $data): void

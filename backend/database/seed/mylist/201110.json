@@ -129,7 +129,8 @@
                 "name": "大沼心"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 13
     },
     {
         "season": "201110",
@@ -274,7 +275,8 @@
                 "name": "TYPE-MOON"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 25
     },
     {
         "season": "201110",
@@ -414,7 +416,8 @@
                 "name": "T.O Entertainment"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 12
     },
     {
         "season": "201110",
@@ -553,7 +556,8 @@
                 "name": "平野靖士"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 148
     },
     {
         "season": "201110",
@@ -689,7 +693,8 @@
                 "name": "結城信輝"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 18
     },
     {
         "season": "201110",
@@ -821,7 +826,8 @@
                 "name": "浦畑達彦"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 15
     },
     {
         "season": "201110",
@@ -947,7 +953,8 @@
                 "name": "平坂読"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 12
     },
     {
         "season": "201110",
@@ -1083,7 +1090,8 @@
                 "name": "佐藤勝一"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 26
     },
     {
         "season": "201110",
@@ -1222,7 +1230,8 @@
                 "name": "荒木哲郎"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 23
     },
     {
         "season": "201110",
@@ -1317,6 +1326,7 @@
                 "name": "東堂いづみ"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 2
     }
 ]

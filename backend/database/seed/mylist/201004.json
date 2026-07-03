@@ -136,7 +136,8 @@
                 "name": "平田雄三"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 15
     },
     {
         "season": "201004",
@@ -250,7 +251,8 @@
                 "name": "キングレコード"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 12
     },
     {
         "season": "201004",
@@ -387,6 +389,7 @@
                 "name": "高木隆次"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 20
     }
 ]

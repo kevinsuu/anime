@@ -123,7 +123,8 @@
                 "name": "かきふらい"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 14
     },
     {
         "season": "200904",
@@ -260,7 +261,8 @@
                 "name": "GONZO"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 32
     },
     {
         "season": "200904",
@@ -403,6 +405,7 @@
                 "name": "大野木寛"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 68
     }
 ]

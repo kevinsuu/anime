@@ -137,7 +137,8 @@
                 "name": "中野尚美"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 1
     },
     {
         "season": "202110",
@@ -254,6 +255,7 @@
                 "name": "BONES"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 13
     }
 ]

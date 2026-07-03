@@ -89,7 +89,8 @@
                 "name": "よむ"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 13
     },
     {
         "season": "201904",
@@ -219,6 +220,7 @@
                 "name": "TRIGGER"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 1
     }
 ]

@@ -103,7 +103,8 @@
                 "name": "ナガノ"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 257
     },
     {
         "season": "202204",
@@ -234,6 +235,7 @@
                 "name": "佐藤直子"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 1
     }
 ]

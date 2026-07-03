@@ -87,7 +87,8 @@
                 "name": "Atelier Pontdarc"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 13
     },
     {
         "season": "202107",
@@ -216,7 +217,8 @@
                 "name": "クラウドハーツ"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 13
     },
     {
         "season": "202107",
@@ -340,6 +342,7 @@
                 "name": "板垣恵介"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 12
     }
 ]

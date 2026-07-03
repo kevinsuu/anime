@@ -135,7 +135,8 @@
                 "name": "中島かずき"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 28
     },
     {
         "season": "200704",
@@ -280,7 +281,8 @@
                 "name": "菅野よう子"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 26
     },
     {
         "season": "200704",
@@ -419,6 +421,7 @@
                 "name": "村元克彦"
             }
         ],
-        "links": []
+        "links": [],
+        "episode_count": 24
     }
 ]
