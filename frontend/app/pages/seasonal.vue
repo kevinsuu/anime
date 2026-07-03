@@ -4,6 +4,8 @@ import { normalizeAnime, normalizeListItem, normalizeCollection, tagColor } from
 import type { Anime, ListItem, Collection } from '../utils/normalize'
 
 const api = useApi()
+const route = useRoute()
+const router = useRouter()
 const { session, isAuthed } = useSession()
 const { state: filterState, filterSeasonal, activeFilterCount, resetFilters, toggleGenreTag } = useSeasonalCatalog()
 const toast = useToast()
@@ -15,12 +17,17 @@ const seasonLabels: Record<string, string> = {
 const SEASONS = ['winter', 'spring', 'summer', 'fall'] as const
 type Season = typeof SEASONS[number]
 
+function currentSeason(): Season {
+  const month = new Date().getMonth() + 1
+  return month <= 3 ? 'winter' : month <= 6 ? 'spring' : month <= 9 ? 'summer' : 'fall'
+}
+
+const queryYear = Number(route.query.year)
+const querySeason = route.query.season as Season | undefined
+
 const seasonalControls = reactive({
-  year: new Date().getFullYear(),
-  season: (() => {
-    const month = new Date().getMonth() + 1
-    return month <= 3 ? 'winter' : month <= 6 ? 'spring' : month <= 9 ? 'summer' : 'fall'
-  })() as Season
+  year: Number.isInteger(queryYear) ? queryYear : new Date().getFullYear(),
+  season: querySeason && SEASONS.includes(querySeason) ? querySeason : currentSeason()
 })
 
 function prevSeason() {
@@ -35,12 +42,23 @@ function nextSeason() {
   else seasonalControls.season = SEASONS[idx + 1]
 }
 
+const { data: seasonal, pending: loading, error: fetchError } = await useAsyncData(
+  'seasonal',
+  async () => {
+    const result = await api.searchAnime('', { year: seasonalControls.year, season: seasonalControls.season })
+    return (result.items || []).map(normalizeAnime)
+  },
+  { default: () => [] as Anime[], watch: [() => seasonalControls.year, () => seasonalControls.season] }
+)
+
+watch(fetchError, (err) => {
+  if (err) toast.add({ title: err.message || '載入失敗', color: 'error' })
+})
+
 const filterOptions = computed(() => deriveFilterOptions(seasonal.value))
 
-const seasonal = ref<Anime[]>([])
 const list = ref<ListItem[]>([])
 const collections = ref<Collection[]>([])
-const loading = ref(false)
 const filterPanelOpen = ref(false)
 const activePopoverAnimeId = ref<number | null>(null)
 
@@ -51,6 +69,8 @@ const listByAnimeId = computed(() => {
 })
 
 const filteredSeasonal = computed(() => filterSeasonal(seasonal.value, listByAnimeId.value))
+const { visibleCount, sentinelRef } = useProgressiveReveal(filteredSeasonal, 10)
+const visibleSeasonal = computed(() => filteredSeasonal.value.slice(0, visibleCount.value))
 
 // Active filter chips to display inline
 const activeChips = computed(() => {
@@ -66,18 +86,6 @@ const activeChips = computed(() => {
   }
   return chips
 })
-
-async function loadSeasonal() {
-  loading.value = true
-  try {
-    const result = await api.searchAnime('', { year: seasonalControls.year, season: seasonalControls.season })
-    seasonal.value = (result.items || []).map(normalizeAnime)
-  } catch (err: any) {
-    toast.add({ title: err.message || '載入失敗', color: 'error' })
-  } finally {
-    loading.value = false
-  }
-}
 
 async function loadMyList() {
   if (!session.token) return
@@ -147,11 +155,18 @@ async function markWatched(animeId: number) {
 
 watch(() => [seasonalControls.year, seasonalControls.season], () => {
   resetFilters()
-  loadSeasonal()
+  router.replace({ query: { ...route.query, year: String(seasonalControls.year), season: seasonalControls.season } })
 })
 
-onMounted(async () => {
-  await Promise.all([loadSeasonal(), loadMyList()])
+onMounted(loadMyList)
+
+useSeoMeta({
+  title: () => `${seasonalControls.year}年${seasonLabels[seasonalControls.season]}新番表｜動畫新番、動漫庫`,
+  description: () => `${seasonalControls.year}年${seasonLabels[seasonalControls.season]}季動畫新番總覽，追蹤最新動漫新番放送時間、角色資訊與觀看平台。`,
+  ogType: 'website'
+})
+useHead({
+  link: [{ rel: 'canonical', href: () => `https://anime.kaistarstudio.me/seasonal?year=${seasonalControls.year}&season=${seasonalControls.season}` }]
 })
 </script>
 
@@ -270,23 +285,27 @@ onMounted(async () => {
       <p class="mt-1 text-xs text-gray-400">試試切換星期或清除篩選條件</p>
     </div>
 
-    <div v-else class="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5">
-      <AnimeGridCard
-        v-for="anime in filteredSeasonal"
-        :key="anime.id"
-        :anime="anime"
-        :in-list="listByAnimeId.has(anime.id)"
-        :watched="Boolean(listByAnimeId.get(anime.id)?.watched)"
-        :list-item="listByAnimeId.get(anime.id)"
-        :collections="collections"
-        :popover-open="activePopoverAnimeId === anime.id"
-        @add-to-list="addAnime"
-        @mark-watched="markWatched"
-        @toggle-collection="(col) => toggleCollection(anime.id, col)"
-        @open-popover="activePopoverAnimeId = anime.id"
-        @close-popover="activePopoverAnimeId = null"
-      />
-    </div>
+    <template v-else>
+      <div class="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5">
+        <AnimeGridCard
+          v-for="(anime, index) in visibleSeasonal"
+          :key="anime.id"
+          :anime="anime"
+          :in-list="listByAnimeId.has(anime.id)"
+          :watched="Boolean(listByAnimeId.get(anime.id)?.watched)"
+          :list-item="listByAnimeId.get(anime.id)"
+          :collections="collections"
+          :popover-open="activePopoverAnimeId === anime.id"
+          :eager-load="index < 10"
+          @add-to-list="addAnime"
+          @mark-watched="markWatched"
+          @toggle-collection="(col) => toggleCollection(anime.id, col)"
+          @open-popover="activePopoverAnimeId = anime.id"
+          @close-popover="activePopoverAnimeId = null"
+        />
+      </div>
+      <div ref="sentinelRef" class="h-px" aria-hidden="true" />
+    </template>
 
     <SeasonalFilterPanel
       v-model:open="filterPanelOpen"

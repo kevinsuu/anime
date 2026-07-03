@@ -1,4 +1,6 @@
 <script setup lang="ts">
+useSeoMeta({ robots: 'noindex, nofollow' })
+
 const api = useApi()
 const { setSession } = useSession()
 const config = useRuntimeConfig()
@@ -78,9 +80,7 @@ onMounted(() => {
     <div class="w-full max-w-sm">
       <!-- Brand mark -->
       <div class="mb-8 flex flex-col items-center text-center">
-        <span class="grid size-14 place-items-center rounded-2xl bg-primary-600 text-white shadow-lg shadow-primary-600/25">
-          <UIcon name="i-lucide-sparkles" class="size-7" />
-        </span>
+        <img src="/favicon-180.png" alt="Anime Library" class="size-14 rounded-2xl object-cover shadow-lg shadow-primary-600/25">
         <h1 class="mt-5 text-[26px] font-extrabold leading-tight tracking-tight text-gray-950">
           歡迎回來，繼續你的追番之旅
         </h1>

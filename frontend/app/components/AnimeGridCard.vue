@@ -21,6 +21,109 @@ const emit = defineEmits<{
   closePopover: []
 }>()
 
+const cardRef = ref<HTMLElement | null>(null)
+const shouldLoad = useLazyLoad(cardRef, props.eagerLoad)
+
+const imageLoaded = ref(props.eagerLoad)
+const imageError = ref(false)
+const imgEl = ref<HTMLImageElement | null>(null)
+
+// --- TEMP image-loading debug (enable with ?imgdebug=1) -----------------
+// Registers each mounted card into a global registry so the user can dump the
+// live state of every card while a blank one is on screen, and logs each state
+// transition. Remove once the blank-card issue is diagnosed.
+const imgDebug = import.meta.client && new URLSearchParams(location.search).has('imgdebug')
+
+function dbgSnapshot() {
+  const el = imgEl.value
+  const card = cardRef.value
+  // Does the grey placeholder div actually exist in the DOM right now?
+  const placeholder = card?.querySelector('[data-imgph]') as HTMLElement | null
+  return {
+    id: props.anime.id,
+    name: props.anime.name.slice(0, 8),
+    hasUrl: Boolean(props.anime.imageUrl),
+    shouldLoad: shouldLoad.value,
+    imageLoaded: imageLoaded.value,
+    imageError: imageError.value,
+    imgExists: Boolean(el),
+    imgSrc: el?.getAttribute('src') || null,
+    complete: el?.complete ?? null,
+    naturalW: el?.naturalWidth ?? null,
+    phExists: Boolean(placeholder),
+    phBg: placeholder ? getComputedStyle(placeholder).backgroundColor : null,
+    rectTop: card ? Math.round(card.getBoundingClientRect().top) : null,
+    rectH: card ? Math.round(card.getBoundingClientRect().height) : null,
+  }
+}
+
+if (imgDebug) {
+  const g = window as any
+  g.__cardDebug ??= new Map()
+
+  function dumpBlanks(reason: string) {
+    const rows = [...g.__cardDebug.values()].map((fn: any) => fn())
+    // A card is "blank" if it's on screen, has a url, isn't errored, yet has no
+    // painted image (either not revealed, or the browser has no pixels for it).
+    const blank = rows.filter((r: any) =>
+      r.hasUrl && !r.imageError && r.rectTop !== null &&
+      r.rectTop > -400 && r.rectTop < (window.innerHeight + 400) &&
+      !(r.imageLoaded && r.complete && r.naturalW > 0))
+    if (blank.length) {
+      console.warn(`[imgdebug:${reason}] ${blank.length} on-screen blank card(s). Sample of first 6 (plain text):`)
+      for (const r of blank.slice(0, 6)) {
+        console.log(
+          `#${r.id} "${r.name}" | shouldLoad=${r.shouldLoad} loaded=${r.imageLoaded} err=${r.imageError}` +
+          ` | imgExists=${r.imgExists} src=${r.imgSrc ? 'SET' : 'NULL'} complete=${r.complete} naturalW=${r.naturalW}` +
+          ` | placeholder: exists=${r.phExists} bg=${r.phBg}` +
+          ` | rectTop=${r.rectTop} rectH=${r.rectH}`,
+        )
+      }
+    }
+    return blank
+  }
+
+  onMounted(() => {
+    g.__cardDebug.set(props.anime.id, dbgSnapshot)
+    if (!g.__dumpCards) {
+      g.__dumpCards = () => { console.table([...g.__cardDebug.values()].map((fn: any) => fn())); return dumpBlanks('manual') }
+      // Auto-detect: sample shortly after each scroll settles so we catch the
+      // blank frame without you having to type anything mid-scroll.
+      let t: any
+      window.addEventListener('scroll', () => {
+        clearTimeout(t)
+        t = setTimeout(() => dumpBlanks('scroll'), 120)
+      }, { passive: true })
+      console.info('[imgdebug] enabled — just scroll fast; blank cards auto-log. Or call __dumpCards() manually (two underscores).')
+    }
+  })
+  onBeforeUnmount(() => g.__cardDebug?.delete(props.anime.id))
+  watch([shouldLoad, imageLoaded, imageError], (v) => {
+    console.debug(`[imgdebug] #${props.anime.id} ${props.anime.name.slice(0, 8)} shouldLoad=${v[0]} loaded=${v[1]} error=${v[2]}`)
+  })
+}
+// ------------------------------------------------------------------------
+
+// Reveal the image once it has loaded. We kick off `decode()` first as a
+// best-effort way to get the pixels painted before the fade-in, but never let a
+// pending/rejected decode gate visibility — `@load` already guarantees the
+// image is downloaded, so we always flip `imageLoaded` regardless of decode.
+function revealImage() {
+  const el = imgEl.value
+  if (!el) return
+  if (imgDebug) console.debug(`[imgdebug] #${props.anime.id} @load fired, complete=${el.complete} naturalW=${el.naturalWidth}`)
+  if (el.decode) {
+    el.decode().catch(() => {}).finally(() => { imageLoaded.value = true })
+  } else {
+    imageLoaded.value = true
+  }
+}
+
+onMounted(() => {
+  // Image may already be cached/complete before @load can fire.
+  if (imgEl.value?.complete && imgEl.value.naturalWidth > 0) revealImage()
+})
+
 const weekdayColors: Record<string, string> = {
   '一': 'bg-red-500',
   '二': 'bg-orange-500',
@@ -71,13 +174,11 @@ function isInCollection(col: Collection): boolean {
   return props.listItem?.collections.some(c => c.id === col.id) ?? false
 }
 
-async function onCardClick() {
-  try {
-    await navigator.clipboard.writeText(props.anime.name)
-    toast.add({ title: '已複製動漫名稱', description: props.anime.name, color: 'success' })
-  } catch {
-    // Clipboard API unavailable (e.g. insecure context) — navigation still proceeds
-  }
+function onCardClick() {
+  toast.add({ title: '已複製動漫名稱', description: props.anime.name, color: 'neutral', duration: 1000 })
+  // Fire-and-forget: don't block navigation on the clipboard promise, and
+  // don't let a rejection (e.g. insecure context) stop navigation either.
+  navigator.clipboard.writeText(props.anime.name).catch(() => {})
 }
 
 function onAddToList(e: Event) {
@@ -120,23 +221,39 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
 </script>
 
 <template>
-  <div class="relative">
+  <div ref="cardRef" class="relative">
     <NuxtLink
       :to="`/anime/${anime.id}`"
       class="group relative block aspect-3/4 w-full overflow-hidden rounded-lg bg-gray-800 transition-all"
       :class="watched ? 'ring-2 ring-green-400 ring-offset-1' : ''"
       @click="onCardClick"
     >
-      <img
-        v-if="anime.imageUrl"
-        :src="anime.imageUrl"
-        :alt="anime.name"
-        :loading="eagerLoad ? 'eager' : 'lazy'"
-        :fetchpriority="eagerLoad ? 'high' : 'auto'"
-        width="300"
-        height="400"
-        class="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
-      />
+      <template v-if="anime.imageUrl && !imageError">
+        <!-- Persistent placeholder layer sitting *under* the image. It is never
+             removed via v-if: during fast scrolling the browser can defer
+             painting a freshly-shown <img> for a frame or two, and if the
+             placeholder were unmounted at that moment the card would flash
+             fully blank. Keeping a grey layer beneath means the worst case is a
+             grey card, never a white one. Pulses only while still loading. -->
+        <div
+          data-imgph
+          class="absolute inset-0 bg-gray-200"
+          :class="imageLoaded ? '' : 'animate-pulse'"
+          aria-hidden="true"
+        />
+        <img
+          ref="imgEl"
+          :src="shouldLoad ? anime.imageUrl : undefined"
+          :alt="anime.name"
+          :fetchpriority="eagerLoad ? 'high' : 'auto'"
+          width="300"
+          height="400"
+          class="relative h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
+          :class="imageLoaded ? 'opacity-100' : 'opacity-0'"
+          @load="revealImage"
+          @error="imageError = true"
+        />
+      </template>
       <div v-else class="grid h-full w-full place-items-center bg-primary-700 text-3xl font-bold text-white">
         {{ anime.name.slice(0, 1) }}
       </div>
@@ -151,21 +268,27 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
         </span>
       </div>
 
-      <!-- Top-right: weekday + time -->
+      <!-- Top-right: weekday + time + episode count -->
       <div
         v-if="airInfo.weekday"
-        class="absolute right-0 top-0 flex flex-col items-center rounded-bl-lg p-1.5 text-white"
-        :class="airInfo.weekdayColor"
+        class="absolute right-0 top-0 flex flex-col items-center overflow-hidden rounded-bl-lg text-white"
       >
-        <span class="text-[11px] font-extrabold leading-tight">{{ airInfo.weekday }}</span>
-        <span class="text-[10px] font-bold leading-tight">{{ airInfo.time }}</span>
+        <div class="flex flex-col items-center p-1.5" :class="airInfo.weekdayColor">
+          <span class="text-[11px] font-extrabold leading-tight">{{ airInfo.weekday }}</span>
+          <span class="text-[10px] font-bold leading-tight">{{ airInfo.time }}</span>
+        </div>
+        <span
+          v-if="anime.episodeCount"
+          class="w-full bg-gray-500 px-1.5 py-0.5 text-center text-[10px] font-bold leading-tight"
+        >
+          全{{ anime.episodeCount }}集
+        </span>
       </div>
 
-      <!-- Top-right, below the date badge: episode count -->
+      <!-- Top-right, episode count (only when no weekday badge to attach to) -->
       <div
-        v-if="anime.episodeCount"
-        class="absolute right-1.5 rounded-sm bg-black/50 px-1.5 py-0.5 text-[10px] font-bold leading-tight text-white backdrop-blur-sm"
-        :class="airInfo.weekday ? 'top-11' : 'top-1.5'"
+        v-if="anime.episodeCount && !airInfo.weekday"
+        class="absolute right-1.5 top-1.5 rounded-sm bg-black/50 px-1.5 py-0.5 text-[10px] font-bold leading-tight text-white backdrop-blur-sm"
       >
         全{{ anime.episodeCount }}集
       </div>

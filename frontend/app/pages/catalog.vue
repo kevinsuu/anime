@@ -7,8 +7,7 @@ const { isAuthed } = useSession()
 const toast = useToast()
 
 const query = ref('')
-const catalog = ref<Anime[]>([])
-const loading = ref(false)
+const page = ref(1)
 const error = ref('')
 
 // Year browsing mode: default to the current year so we never load the
@@ -18,69 +17,66 @@ const currentYear = new Date().getFullYear()
 const activeYear = ref(currentYear)
 const isSearchMode = computed(() => query.value.trim() !== '')
 
-// Cache per-year results for the session so switching back to a
-// previously-viewed year doesn't re-hit the API.
-const yearCache = new Map<number, Anime[]>()
+const { data: yearData, pending: yearLoading, error: yearFetchError } = await useAsyncData(
+  () => `catalog-year-${activeYear.value}`,
+  async () => {
+    const result = await api.searchAnime('', { year: activeYear.value })
+    return (result.items || []).map(normalizeAnime)
+  },
+  { default: () => [] as Anime[], watch: [activeYear] }
+)
+
+watch(yearFetchError, (err) => {
+  if (err) error.value = err.message || '載入失敗'
+})
+
+// Search results live outside useAsyncData since they're a client-only,
+// user-triggered interaction — no need for them to be SSR-fetched/serialized.
+const searchResults = ref<Anime[] | null>(null)
+const searchLoading = ref(false)
+
+const catalog = computed(() => isSearchMode.value ? (searchResults.value || []) : yearData.value)
+const loading = computed(() => isSearchMode.value ? searchLoading.value : yearLoading.value)
 
 const PAGE_SIZE = 40
-const page = ref(1)
 const totalPages = computed(() => Math.max(1, Math.ceil(catalog.value.length / PAGE_SIZE)))
 const pagedCatalog = computed(() => {
   const start = (page.value - 1) * PAGE_SIZE
   return catalog.value.slice(start, start + PAGE_SIZE)
 })
+const { visibleCount, sentinelRef } = useProgressiveReveal(pagedCatalog, 10)
+const visiblePagedCatalog = computed(() => pagedCatalog.value.slice(0, visibleCount.value))
 
 watch(page, () => {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 })
 
-async function loadYear(year: number) {
-  loading.value = true
+function changeYear(year: number) {
+  query.value = ''
+  searchResults.value = null
   error.value = ''
   page.value = 1
   activeYear.value = year
-
-  const cached = yearCache.get(year)
-  if (cached) {
-    catalog.value = cached
-    loading.value = false
-    return
-  }
-
-  try {
-    const result = await api.searchAnime('', { year })
-    const items = (result.items || []).map(normalizeAnime)
-    yearCache.set(year, items)
-    catalog.value = items
-  } catch (err: any) {
-    error.value = err.message || '載入失敗'
-  } finally {
-    loading.value = false
-  }
-}
-
-function changeYear(year: number) {
-  query.value = ''
-  loadYear(year)
 }
 
 async function search() {
   const q = query.value.trim()
   if (q === '') {
-    loadYear(activeYear.value)
+    searchResults.value = null
+    page.value = 1
     return
   }
 
-  loading.value = true
+  searchLoading.value = true
   error.value = ''
   page.value = 1
   try {
     const result = await api.searchAnime(q)
-    catalog.value = (result.items || []).map(normalizeAnime)
+    searchResults.value = (result.items || []).map(normalizeAnime)
   } catch (err: any) {
     error.value = err.message || '搜尋失敗'
   } finally {
-    loading.value = false
+    searchLoading.value = false
   }
 }
 
@@ -94,7 +90,14 @@ async function addAnime(animeId: number) {
   }
 }
 
-onMounted(() => loadYear(activeYear.value))
+useSeoMeta({
+  title: () => isSearchMode.value ? `搜尋「${query.value}」的結果｜動漫庫` : `${activeYear.value}年動漫作品列表｜動畫資料庫、動漫庫`,
+  description: () => isSearchMode.value ? `在動漫庫搜尋「${query.value}」相關動畫作品。` : `瀏覽${activeYear.value}年度動畫作品完整列表，探索動漫新番與經典動畫資料庫。`,
+  ogType: 'website'
+})
+useHead({
+  link: [{ rel: 'canonical', href: () => isSearchMode.value ? 'https://anime.kaistarstudio.me/catalog' : `https://anime.kaistarstudio.me/catalog?year=${activeYear.value}` }]
+})
 </script>
 
 <template>
@@ -176,17 +179,19 @@ onMounted(() => loadYear(activeYear.value))
     <template v-else>
       <div class="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5">
         <AnimeGridCard
-          v-for="anime in pagedCatalog"
+          v-for="(anime, index) in visiblePagedCatalog"
           :key="anime.id"
           :anime="anime"
           :in-list="false"
           :watched="false"
           :collections="[]"
           :popover-open="false"
+          :eager-load="index < 10"
           @add-to-list="addAnime"
           @mark-watched="addAnime"
         />
       </div>
+      <div ref="sentinelRef" class="h-px" aria-hidden="true" />
 
       <!-- Pagination -->
       <div v-if="totalPages > 1" class="flex items-center justify-center gap-2 pt-2">

@@ -7,9 +7,11 @@ const api = useApi()
 const { isAuthed } = useSession()
 const toast = useToast()
 
-const anime = ref<Anime | null>(null)
-const loading = ref(true)
-const error = ref('')
+const { data: anime, pending: loading, error: fetchError } = await useAsyncData(
+  `anime-${route.params.id}`,
+  async () => normalizeAnime((await api.getAnime(Number(route.params.id))).item)
+)
+const error = computed(() => fetchError.value ? (fetchError.value.message || '載入失敗') : '')
 const addedToList = ref(false)
 
 // Trailer modal
@@ -40,19 +42,6 @@ const seasonMonthMap: Record<string, string> = {
   winter: '1月', spring: '4月', summer: '7月', fall: '10月'
 }
 
-async function load() {
-  loading.value = true
-  error.value = ''
-  try {
-    const result = await api.getAnime(Number(route.params.id))
-    anime.value = normalizeAnime(result.item)
-  } catch (err: any) {
-    error.value = err.message || '載入失敗'
-  } finally {
-    loading.value = false
-  }
-}
-
 async function addToList() {
   if (!isAuthed.value) return navigateTo('/login')
   try {
@@ -75,7 +64,33 @@ const linksByCategory = computed(() => {
   }, {} as Record<string, typeof anime.value.links>)
 })
 
-onMounted(load)
+useSeoMeta({
+  title: () => anime.value ? `${anime.value.name} － 動畫新番介紹｜動漫庫` : '動漫庫',
+  description: () => anime.value ? (anime.value.description || '').slice(0, 120) : undefined,
+  ogTitle: () => anime.value?.name,
+  ogDescription: () => (anime.value?.description || '').slice(0, 200),
+  ogImage: () => anime.value?.imageUrl || undefined,
+  ogType: 'video.tv_show',
+  twitterCard: 'summary_large_image'
+})
+
+useHead({
+  link: [{ rel: 'canonical', href: () => `https://anime.kaistarstudio.me/anime/${route.params.id}` }],
+  script: [{
+    type: 'application/ld+json',
+    innerHTML: computed(() => anime.value ? JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'TVSeries',
+      name: anime.value.name,
+      alternateName: anime.value.titleJa || undefined,
+      description: anime.value.description,
+      image: anime.value.imageUrl || undefined,
+      genre: anime.value.tags,
+      datePublished: anime.value.airDate || undefined,
+      numberOfEpisodes: anime.value.episodeCount || undefined
+    }) : '{}')
+  }]
+})
 </script>
 
 <template>

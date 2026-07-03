@@ -1,6 +1,8 @@
 <script setup lang="ts">
 definePageMeta({ middleware: 'auth' })
 
+useSeoMeta({ robots: 'noindex, nofollow' })
+
 const api = useApi()
 const { session, setUser, clearSession } = useSession()
 const toast = useToast()

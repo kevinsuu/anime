@@ -13,7 +13,7 @@ let refreshPromise: Promise<string> | null = null
 
 export function useApi() {
   const config = useRuntimeConfig()
-  const apiBaseUrl = config.public.apiBaseUrl as string
+  const apiBaseUrl = (import.meta.server ? config.apiBaseUrlInternal : config.public.apiBaseUrl) as string
 
   function readStoredSession(): Record<string, any> {
     if (typeof window === 'undefined') return {}
@@ -78,7 +78,7 @@ export function useApi() {
     try {
       response = await fetch(`${apiBaseUrl}${path}`, { ...options, headers })
     } catch {
-      throw new Error('無法連線到後端 API，請確認 backend container 是否啟動。')
+      throw new Error('無法連線到後端 API，請確認伺服器是否啟動。')
     }
 
     // Access token expired mid-session: silently refresh and retry once,

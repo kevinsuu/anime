@@ -60,6 +60,7 @@ services:
     command: sh -c "npm install && npm run dev"
     environment:
       NUXT_PUBLIC_API_BASE_URL: ${NUXT_PUBLIC_API_BASE_URL}
+      NUXT_API_BASE_URL_INTERNAL: http://backend:8080
       NUXT_PUBLIC_GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
       NUXT_PUBLIC_ENABLE_DEV_LOGIN: ${NUXT_PUBLIC_ENABLE_DEV_LOGIN}
       CHOKIDAR_USEPOLLING: "true"

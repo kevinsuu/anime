@@ -1,2 +1,9 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
+
+/* Lock the root canvas to the light theme so the browser's overscroll
+   (rubber-band) area doesn't show the OS dark-mode navy background. */
+html {
+  color-scheme: light;
+  background-color: var(--color-gray-50);
+}

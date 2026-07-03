@@ -25,12 +25,10 @@ function targetFor(item: { to: string; protected: boolean }): string {
   <header class="sticky top-0 z-30 border-b border-gray-200 bg-white/96 backdrop-blur">
     <div class="mx-auto flex h-16 max-w-6xl items-center gap-4 px-4">
       <NuxtLink to="/" class="flex items-center gap-3 font-bold text-gray-900">
-        <span class="grid h-10 w-10 place-items-center rounded-full bg-primary-600 text-white">
-          <UIcon name="i-lucide-sparkles" class="size-5" />
-        </span>
+        <img src="/favicon-180.png" alt="Anime Library" class="h-10 w-10 shrink-0 rounded-full object-cover">
         <span class="leading-tight">
           <strong class="block">動漫庫</strong>
-          <small class="block text-xs font-normal text-gray-500">Anime Vault</small>
+          <small class="block text-xs font-normal text-gray-500">Anime Library</small>
         </span>
       </NuxtLink>
 

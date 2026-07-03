@@ -4,6 +4,8 @@ import type { ListItem, Collection } from '../../utils/normalize'
 
 definePageMeta({ middleware: 'auth' })
 
+useSeoMeta({ robots: 'noindex, nofollow' })
+
 const api = useApi()
 const route = useRoute()
 const router = useRouter()
