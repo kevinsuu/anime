@@ -297,6 +297,7 @@ onMounted(loadAll)
           :style="selectedTags.includes(opt.tag)
             ? { backgroundColor: tagColor(opt.tag).text, color: '#fff' }
             : { backgroundColor: tagColor(opt.tag).bg, color: tagColor(opt.tag).text }"
+          :aria-pressed="selectedTags.includes(opt.tag)"
           @click="toggleTag(opt.tag)"
         >
           {{ opt.tag }}
