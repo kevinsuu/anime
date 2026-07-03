@@ -25,6 +25,15 @@ final class AuthController extends Controller
         $user = User::query()->where('google_sub', $googleUser['sub'])->first();
 
         if ($user === null) {
+            // 認領由 WatchedManifestImporter 預先建立的帳號(google_sub 為
+            // seed: 佔位);僅限佔位帳號,避免用 email 劫持其他 Google 帳號。
+            $user = User::query()
+                ->where('email', $googleUser['email'])
+                ->where('google_sub', 'like', 'seed:%')
+                ->first();
+        }
+
+        if ($user === null) {
             $user = User::query()->create([
                 'google_sub' => $googleUser['sub'],
                 'email' => $googleUser['email'],
@@ -34,6 +43,7 @@ final class AuthController extends Controller
             ]);
         } else {
             $user->update([
+                'google_sub' => $googleUser['sub'],
                 'email' => $googleUser['email'],
                 'display_name' => $googleUser['name'],
                 'avatar_url' => $googleUser['picture'],
