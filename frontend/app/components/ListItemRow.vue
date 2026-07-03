@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ListItem, Collection } from '../utils/normalize'
+import { tagColor } from '../utils/normalize'
 
 const props = defineProps<{
   item: ListItem
@@ -87,6 +88,18 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
           :class="item.watched ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'"
         >
           {{ item.watched ? '已看完' : '待補完' }}
+        </span>
+      </div>
+
+      <!-- Genre tags (display only, filtering happens in the page's filter bar) -->
+      <div v-if="item.anime.tags.length > 0" class="flex flex-wrap items-center gap-1.5">
+        <span
+          v-for="tag in item.anime.tags"
+          :key="tag"
+          class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold"
+          :style="{ backgroundColor: tagColor(tag).bg, color: tagColor(tag).text }"
+        >
+          {{ tag }}
         </span>
       </div>
 
