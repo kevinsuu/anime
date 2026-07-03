@@ -22,14 +22,13 @@ describe('extractTagOptions', () => {
       makeItem(['戰鬥']),
     ]
     const options = extractTagOptions(list)
-    expect(options).toEqual(
-      expect.arrayContaining([
-        { tag: '戀愛', count: 2 },
-        { tag: '戰鬥', count: 2 },
-        { tag: '搞笑', count: 1 },
-      ])
-    )
-    expect(options).toHaveLength(3)
+    // Ties on count break alphabetically (ascending) for deterministic chip
+    // order: 戀愛/戰鬥 both have count 2, and 戀愛 < 戰鬥 per localeCompare.
+    expect(options).toEqual([
+      { tag: '戀愛', count: 2 },
+      { tag: '戰鬥', count: 2 },
+      { tag: '搞笑', count: 1 },
+    ])
   })
 
   it('ignores items with no tags', () => {

@@ -14,7 +14,7 @@ export function extractTagOptions(list: ListItem[]): TagOption[] {
   }
   return Object.entries(counts)
     .map(([tag, count]) => ({ tag, count }))
-    .sort((a, b) => b.count - a.count)
+    .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag))
 }
 
 export function matchesSelectedTags(item: ListItem, selectedTags: string[]): boolean {
