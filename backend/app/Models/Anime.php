@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 
 final class Anime extends Model
 {
@@ -13,6 +15,7 @@ final class Anime extends Model
         'name',
         'description',
         'image_url',
+        'cover_image_path',
         'source',
         'created_by_user_id',
         'season_year',
@@ -30,6 +33,21 @@ final class Anime extends Model
         return [
             'tags' => 'array',
         ];
+    }
+
+    /**
+     * cover_image_path 有值時優先回傳縮圖 URL（全站共用的靜態檔案，
+     * 由 import 時的 ThumbnailService 產生），否則 fallback 回原始
+     * acgsecrets 圖片網址 —— 縮圖產生失敗或尚未 backfill 的舊資料
+     * 都會走這個 fallback，圖片顯示絕不會比現況更差。
+     */
+    protected function imageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn (mixed $value, array $attributes) => $attributes['cover_image_path'] !== null
+                ? Storage::disk('public')->url($attributes['cover_image_path'])
+                : $value,
+        );
     }
 
     public function titles(): HasMany
