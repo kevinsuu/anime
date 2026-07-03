@@ -14,7 +14,7 @@ describe('useSession', () => {
 
   it('setSession persists token and user, marks authed', () => {
     const { setSession, isAuthed, session } = useSession()
-    setSession('abc123', { id: 1, email: 'a@b.com' })
+    setSession('abc123', 'refresh123', { id: 1, email: 'a@b.com' })
 
     expect(isAuthed.value).toBe(true)
     expect(session.token).toBe('abc123')
@@ -23,7 +23,7 @@ describe('useSession', () => {
 
   it('clearSession removes stored session', () => {
     const { setSession, clearSession, isAuthed } = useSession()
-    setSession('abc123', { id: 1 })
+    setSession('abc123', 'refresh123', { id: 1 })
     clearSession()
 
     expect(isAuthed.value).toBe(false)
@@ -32,7 +32,7 @@ describe('useSession', () => {
 
   it('setUser updates user without touching token', () => {
     const { setSession, setUser, session } = useSession()
-    setSession('abc123', { id: 1, email: 'old@b.com' })
+    setSession('abc123', 'refresh123', { id: 1, email: 'old@b.com' })
     setUser({ id: 1, email: 'new@b.com' })
 
     expect(session.token).toBe('abc123')
