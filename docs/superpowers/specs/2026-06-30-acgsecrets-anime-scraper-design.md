@@ -52,6 +52,11 @@
 
 資料庫:既有 `anime` 等表結構保留(完全適用),但**既有資料全部清除後重建**(全面重構)。首次全量匯入前執行 `php artisan migrate:fresh`(或 truncate `anime` / `anime_titles` / `anime_aliases` / `anime_external_ids` / `anime_streams`),再以 acgsecrets 全量回補。`users` 與 `user_anime_list_items` 視同保留(若無實際使用者資料,`migrate:fresh` 一併重建亦可)。
 
+> **⚠️ 此文件描述的是本功能「首次上線」時的一次性遷移步驟,該遷移早已完成。**
+> **`migrate:fresh` 絕對不可再對現有環境執行**——會清空全部使用者資料(帳號、已看清單、collections)且不可逆。
+> 日常補資料請用 `php artisan anime:import-acgsecrets`(不加 `--fresh`);
+> 需要重建 catalog 資料(不動 users)才用 `--fresh` 選項,且執行前務必先確認这是你要的操作。
+
 ## 資料來源結構(已實測)
 
 - 季別索引 `https://acgsecrets.hk/bangumi/list/` → 內含 40 個季度連結 `/bangumi/YYYYMM/`(`YYYYMM` 為 `201601`、`202604` 等,月份 01/04/07/10 對應冬/春/夏/秋)。
