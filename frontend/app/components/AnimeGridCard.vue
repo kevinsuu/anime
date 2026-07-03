@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import type { Anime, ListItem, Collection } from '../utils/normalize'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   anime: Anime
   inList: boolean
   watched: boolean
   listItem?: ListItem
   collections: Collection[]
   popoverOpen: boolean
-}>()
+  eagerLoad?: boolean
+}>(), {
+  eagerLoad: false
+})
 
 const emit = defineEmits<{
   addToList: [animeId: number]
@@ -62,8 +65,19 @@ function formatDate(airDate: string): string {
   return m ? `${parseInt(m[1])}月${parseInt(m[2])}日` : ''
 }
 
+const toast = useToast()
+
 function isInCollection(col: Collection): boolean {
   return props.listItem?.collections.some(c => c.id === col.id) ?? false
+}
+
+async function onCardClick() {
+  try {
+    await navigator.clipboard.writeText(props.anime.name)
+    toast.add({ title: '已複製動漫名稱', description: props.anime.name, color: 'success' })
+  } catch {
+    // Clipboard API unavailable (e.g. insecure context) — navigation still proceeds
+  }
 }
 
 function onAddToList(e: Event) {
@@ -111,12 +125,14 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
       :to="`/anime/${anime.id}`"
       class="group relative block aspect-3/4 w-full overflow-hidden rounded-lg bg-gray-800 transition-all"
       :class="watched ? 'ring-2 ring-green-400 ring-offset-1' : ''"
+      @click="onCardClick"
     >
       <img
         v-if="anime.imageUrl"
         :src="anime.imageUrl"
         :alt="anime.name"
-        loading="lazy"
+        :loading="eagerLoad ? 'eager' : 'lazy'"
+        :fetchpriority="eagerLoad ? 'high' : 'auto'"
         width="300"
         height="400"
         class="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
@@ -143,6 +159,15 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
       >
         <span class="text-[11px] font-extrabold leading-tight">{{ airInfo.weekday }}</span>
         <span class="text-[10px] font-bold leading-tight">{{ airInfo.time }}</span>
+      </div>
+
+      <!-- Top-right, below the date badge: episode count -->
+      <div
+        v-if="anime.episodeCount"
+        class="absolute right-1.5 rounded-sm bg-black/50 px-1.5 py-0.5 text-[10px] font-bold leading-tight text-white backdrop-blur-sm"
+        :class="airInfo.weekday ? 'top-11' : 'top-1.5'"
+      >
+        全{{ anime.episodeCount }}集
       </div>
 
       <!-- In-list status badge -->

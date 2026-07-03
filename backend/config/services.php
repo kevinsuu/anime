@@ -56,6 +56,15 @@ return [
         'retry_delay_ms' => (int) env('ACGSECRETS_RETRY_DELAY_MS', 1000),
     ],
 
+    'bangumi' => [
+        'base_url' => rtrim(env('BANGUMI_API_BASE_URL', 'https://api.bgm.tv'), '/'),
+        'user_agent' => env('BANGUMI_USER_AGENT', 'anime-tracker/1.0'),
+        'min_delay_ms' => (int) env('BANGUMI_MIN_DELAY_MS', 500),
+        'max_delay_ms' => (int) env('BANGUMI_MAX_DELAY_MS', 1000),
+        'retries' => (int) env('BANGUMI_RETRIES', 2),
+        'retry_delay_ms' => (int) env('BANGUMI_RETRY_DELAY_MS', 1000),
+    ],
+
     'http' => [
         'timeout_seconds' => max(1, (int) env('HTTP_TIMEOUT_SECONDS', 10)),
     ],

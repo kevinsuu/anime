@@ -14,6 +14,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/d5/d53f8e857a0562fef3ac46fd8eb335cf/13e29e15222139ef00217695cb1c922f5c7ad1296d05d4bca664823e02910f85.jpg",
         "air_date_text": "2021年4月10日起／每週六深夜／24時0分",
         "air_date": "2021-04-10",
+        "episode_count": 12,
         "tags": [
             "小說改編",
             "新作",
@@ -55,7 +56,8 @@
             }
         ],
         "external_ids": {
-            "mal": "41457"
+            "mal": "41457",
+            "bangumi": "302189"
         },
         "themes": [],
         "trailers": [
@@ -223,6 +225,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/50/506744c754ef730e396526ec675b24cb/3d809d441b3fbea5ece6e7c91a84416f262e32dd583d2fbedee1a6978abeb5cb.jpg",
         "air_date_text": "2021年4月8日起／每週四／23時30分",
         "air_date": "2021-04-08",
+        "episode_count": 12,
         "tags": [
             "原創作品",
             "續作",
@@ -280,7 +283,8 @@
             }
         ],
         "external_ids": {
-            "mal": "40174"
+            "mal": "40174",
+            "bangumi": "287488"
         },
         "themes": [],
         "trailers": [
@@ -436,6 +440,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/b9/b904d04984d8dc4c89b676b81002711f/0f2bb37493f9ca2f22db4a500483cae1086afeef0e6a35df07ce41498e91fd8f.jpg",
         "air_date_text": "2021年4月5日起／每週一／22時30分",
         "air_date": "2021-04-05",
+        "episode_count": 13,
         "tags": [
             "小說改編",
             "新作",
@@ -467,7 +472,8 @@
             }
         ],
         "external_ids": {
-            "mal": "40938"
+            "mal": "40938",
+            "bangumi": "297254"
         },
         "themes": [],
         "trailers": [
@@ -590,6 +596,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/37/37a51b5336eeb9541c022712aac26267/1b7bd75791c770400c32a81f4a33e22d6da9bc4943a5c9a60a7b2b332c4f796e.jpg",
         "air_date_text": "2021年4月6日起／每週二／23時0分",
         "air_date": "2021-04-06",
+        "episode_count": null,
         "tags": [
             "漫畫改編",
             "新作",
@@ -780,6 +787,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/24/240dfb93f026d9159ee960daa91e3952/abf3614c13fab9308c48f93cf969a76af4bfe8cb3c042b123215fee060406b4c.jpg",
         "air_date_text": "2021年3月27日起／每週六／17時30分",
         "air_date": "2021-03-27",
+        "episode_count": 25,
         "tags": [
             "漫畫改編",
             "續作",
@@ -830,7 +838,8 @@
             }
         ],
         "external_ids": {
-            "mal": "41587"
+            "mal": "41587",
+            "bangumi": "303399"
         },
         "themes": [],
         "trailers": [
@@ -976,6 +985,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/ec/ecbdcef25bd5a2b36d8ed20fb52d3572/ad36084439561deee7c6734728a99291005f5d316f68de26d4bfad8e80837d0f.jpg",
         "air_date_text": "2021年4月14日起／每週三／21時0分",
         "air_date": "2021-04-14",
+        "episode_count": 12,
         "tags": [
             "小說改編",
             "新作",
@@ -1014,7 +1024,8 @@
             }
         ],
         "external_ids": {
-            "mal": "43007"
+            "mal": "43007",
+            "bangumi": "316264"
         },
         "themes": [],
         "trailers": [
@@ -1174,6 +1185,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/4f/4f1b3f0e0f5ba39164fd6f7e8fe28532/a7989d05f6cd207c221c11572d5f6123e009a74fb3cdff7bf7deb50042cdf716.jpg",
         "air_date_text": "2021年4月12日起／每週一／22時50分",
         "air_date": "2021-04-12",
+        "episode_count": 20,
         "tags": [
             "漫畫改編",
             "新作",
@@ -1334,6 +1346,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/2e/2eb30845f64e410be0f860fe5a1907c5/6687374a73d3bf5a4a983309e3b1d32d0db75f233a3e6d298d832756bc90b361.jpg",
         "air_date_text": "2021年4月3日起／每週六／23時30分",
         "air_date": "2021-04-03",
+        "episode_count": null,
         "tags": [
             "原創作品",
             "新作",
@@ -1504,6 +1517,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/fe/fed1c3a4f287ed14ce600e548768faa5/3720143c6305c96c3b9e944b5050eab4c0ef1a3468eea650923db68767f0ec4d.jpg",
         "air_date_text": "2021年4月6日起／每週二／23時30分",
         "air_date": "2021-04-06",
+        "episode_count": 12,
         "tags": [
             "小說改編",
             "新作",
@@ -1545,7 +1559,8 @@
             }
         ],
         "external_ids": {
-            "mal": "42826"
+            "mal": "42826",
+            "bangumi": "314518"
         },
         "themes": [],
         "trailers": [
@@ -1681,6 +1696,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/cc/cc5a1db0772e60a3f3ebe37cd3d2e1ec/1de865362145b18e16127c35219539fbc86b13953e6d8d11419a02c87f0ba48f.jpg",
         "air_date_text": "2021年4月4日起／每週日／21時0分",
         "air_date": "2021-04-04",
+        "episode_count": 12,
         "tags": [
             "小說改編",
             "新作",
@@ -1723,7 +1739,8 @@
             }
         ],
         "external_ids": {
-            "mal": "41456"
+            "mal": "41456",
+            "bangumi": "302190"
         },
         "themes": [],
         "trailers": [
@@ -1825,6 +1842,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/2c/2c1eb2fcb8a79e445fc2c8e99a39cfd9/2a69f08ad722b2b1f6593bcd960b21e552bc1a601d8e9b786388a0aa7e34e4ea.jpg",
         "air_date_text": "2021年4月17日起／每週六／17時35分",
         "air_date": "2021-04-17",
+        "episode_count": 21,
         "tags": [
             "漫畫改編",
             "續作",
@@ -1875,7 +1893,8 @@
             }
         ],
         "external_ids": {
-            "mal": "41402"
+            "mal": "41402",
+            "bangumi": "301740"
         },
         "themes": [],
         "trailers": [],
@@ -1959,6 +1978,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/0d/0d5f6e1c2e191caffecc5d231fbe030b/83e99a652fa3567df723608e6d79cd7f9433ba605922b045fd0a6c582b958a54.png",
         "air_date_text": "2021年4月10日起／每週六／21時0分",
         "air_date": "2021-04-10",
+        "episode_count": 12,
         "tags": [
             "小說改編",
             "新作",
@@ -2025,7 +2045,8 @@
             }
         ],
         "external_ids": {
-            "mal": "40586"
+            "mal": "40586",
+            "bangumi": "292969"
         },
         "themes": [],
         "trailers": [
@@ -2175,6 +2196,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/79/7966f1a9735b517fd6fd2fba0ba7a578/6a397b3348f876ee5de72493521aec2158375cfb49d91185863b2f913cd7173d.jpg",
         "air_date_text": "2021年4月8日起／每週四深夜／25時28分",
         "air_date": "2021-04-08",
+        "episode_count": 10,
         "tags": [
             "小說改編",
             "續作",
@@ -2204,7 +2226,8 @@
             }
         ],
         "external_ids": {
-            "mal": "41623"
+            "mal": "41623",
+            "bangumi": "303864"
         },
         "themes": [],
         "trailers": [
@@ -2387,6 +2410,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/6c/6c016d766f817e75a24bf6119e7e396a/1f02434b0e70e57316ff3c363aecc4946cbb03a558c2d7f6761bd28b3c8025ae.jpg",
         "air_date_text": "2021年4月7日起／每週三／22時30分",
         "air_date": "2021-04-07",
+        "episode_count": 12,
         "tags": [
             "小說改編",
             "新作",
@@ -2420,7 +2444,8 @@
             }
         ],
         "external_ids": {
-            "mal": "44276"
+            "mal": "44276",
+            "bangumi": "321407"
         },
         "themes": [],
         "trailers": [
@@ -2535,6 +2560,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/001586da9e54f35022d3b62845499ec1/602213dc84103d4365aa1e6698f986a5705c2782235229822ef68dc341029ba6.jpg",
         "air_date_text": "2021年4月2日起／每週五／22時0分",
         "air_date": "2021-04-02",
+        "episode_count": 27,
         "tags": [
             "改編作品",
             "新作",
@@ -2560,7 +2586,8 @@
             }
         ],
         "external_ids": {
-            "mal": "40870"
+            "mal": "40870",
+            "bangumi": "296367"
         },
         "themes": [],
         "trailers": [
@@ -2761,6 +2788,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/c7/c7567ffd2de0aa20cecd5e306c107957/039d725592356a8b3710656479cf45affa7ce162f2280e6c255760bf14df52d2.jpg",
         "air_date_text": "2021年4月10日起／每週六深夜／25時0分",
         "air_date": "2021-04-10",
+        "episode_count": 12,
         "tags": [
             "漫畫改編",
             "新作",
@@ -2792,7 +2820,9 @@
                 "url": null
             }
         ],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "309753"
+        },
         "themes": [],
         "trailers": [
             {
@@ -2912,6 +2942,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/f3/f33cf25cd71976d75ebb8422013eeb1f/6377e67da094e256aa9321cec9ab4609a9a123e666c913225980f989b9c085b1.jpg",
         "air_date_text": "2021年4月5日起／每週一／22時0分",
         "air_date": "2021-04-05",
+        "episode_count": 12,
         "tags": [
             "漫畫改編",
             "新作",
@@ -2936,7 +2967,8 @@
             }
         ],
         "external_ids": {
-            "mal": "41103"
+            "mal": "41103",
+            "bangumi": "297456"
         },
         "themes": [],
         "trailers": [
@@ -3103,6 +3135,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/73/731a63b5fc180484d0514ec9efd67a47/4620c9670cdf1d3960ab40ebc22d8e2ebff6d8e9edb994d12e76ee48a95e37aa.jpg",
         "air_date_text": "2021年4月1日起／每週四／22時30分",
         "air_date": "2021-04-01",
+        "episode_count": null,
         "tags": [
             "原創作品",
             "新作",
@@ -3309,6 +3342,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/c8/c809a79cdba901122eb198cfa70303e5/493587d198e94f8caf58b2b38f37e70a4d6d8eb097ebe5f9b6bc9ea67beedc29.jpg",
         "air_date_text": "2021年4月2日起／每週五深夜／26時25分",
         "air_date": "2021-04-02",
+        "episode_count": 12,
         "tags": [
             "漫畫改編",
             "新作",
@@ -3344,7 +3378,8 @@
             }
         ],
         "external_ids": {
-            "mal": "42590"
+            "mal": "42590",
+            "bangumi": "311784"
         },
         "themes": [],
         "trailers": [
@@ -3494,6 +3529,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/81/819c38b37763eef06a3bacb92d57d3f1/09220bb5079caa6e1afbb6ba2e259a820d90bd8bd6e80d7b25751a197987d40e.jpg",
         "air_date_text": "2021年4月5日起／每週一深夜／26時0分",
         "air_date": "2021-04-05",
+        "episode_count": 27,
         "tags": [
             "原創作品",
             "新作",
@@ -3513,7 +3549,8 @@
             }
         ],
         "external_ids": {
-            "mal": "46102"
+            "mal": "46102",
+            "bangumi": "325285"
         },
         "themes": [],
         "trailers": [
@@ -3681,6 +3718,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/ae/aea5dd219c70e1f59495e5d3b2b7b59b/1fd5a61babe2bcd3bdf825ad647e3dffe4fd23ac37ec086dd549f122b41c5d8b.jpg",
         "air_date_text": "2021年4月4日起／每週日／23時0分",
         "air_date": "2021-04-04",
+        "episode_count": 13,
         "tags": [
             "原創作品",
             "續作",
@@ -3723,7 +3761,8 @@
             }
         ],
         "external_ids": {
-            "mal": "40729"
+            "mal": "40729",
+            "bangumi": "294836"
         },
         "themes": [],
         "trailers": [
@@ -3853,6 +3892,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/8c/8cdef3e453d0d831025d16df8ddbcdb1/9e806d9ee7eef2c3926a8881389a75ef0fbad7167e4c2c2bf8cb1fe7fbcbc85c.jpg",
         "air_date_text": "2021年4月10日起／每週六深夜／24時30分",
         "air_date": "2021-04-10",
+        "episode_count": 13,
         "tags": [
             "漫畫改編",
             "新作",
@@ -3885,7 +3925,8 @@
             }
         ],
         "external_ids": {
-            "mal": "43439"
+            "mal": "43439",
+            "bangumi": "316957"
         },
         "themes": [],
         "trailers": [
@@ -4054,6 +4095,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/b5/b59abf982db42bb3390b013c73148ff0/526790894fbd74f495810ad5c1f125a0d64341f9e0cdd8c2c474354d634dc5ce.jpg",
         "air_date_text": "2021年4月4日起／每週日／22時0分",
         "air_date": "2021-04-04",
+        "episode_count": 12,
         "tags": [
             "漫畫改編",
             "新作",
@@ -4079,7 +4121,8 @@
             }
         ],
         "external_ids": {
-            "mal": "40526"
+            "mal": "40526",
+            "bangumi": "292429"
         },
         "themes": [],
         "trailers": [
@@ -4201,6 +4244,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/fe/fe46c3baad7f9330b5a67c9fe7a86e98/a0781055629ca55a4ff2d28d60377eabb3be3082dd2112b0303ab8bbd4f84c11.jpg",
         "air_date_text": "2021年4月7日起／每週三／23時0分",
         "air_date": "2021-04-07",
+        "episode_count": 12,
         "tags": [
             "小說改編",
             "新作",
@@ -4230,7 +4274,8 @@
             }
         ],
         "external_ids": {
-            "mal": "40685"
+            "mal": "40685",
+            "bangumi": "294337"
         },
         "themes": [],
         "trailers": [
@@ -4424,6 +4469,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/c1/c14d2e549e0525c36375e2b3971e826a/6fe13e1b2b0bc7abad0a5e58ae8c8b9c4bab6971ded8c396c0a068ba17a56c8c.jpg",
         "air_date_text": "2021年4月10日起／每週六深夜／24時55分",
         "air_date": "2021-04-10",
+        "episode_count": 25,
         "tags": [
             "漫畫改編",
             "新作",
@@ -4454,7 +4500,9 @@
                 "url": null
             }
         ],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "308588"
+        },
         "themes": [],
         "trailers": [
             {
@@ -4561,6 +4609,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/e9/e94e70063556642612a013aba4fc5810/7c667949283adb82dfcff488dcc07f5de736362cda9d9a13dd1cc69becf6388b.jpg",
         "air_date_text": "2021年4月8日起／每週四／22時10分",
         "air_date": "2021-04-08",
+        "episode_count": 15,
         "tags": [
             "漫畫改編",
             "續作",
@@ -4596,7 +4645,8 @@
             }
         ],
         "external_ids": {
-            "mal": "43591"
+            "mal": "43591",
+            "bangumi": "317615"
         },
         "themes": [],
         "trailers": [
@@ -4738,6 +4788,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/65/65133c855ce30681536b9b1e9c02a673/ba3ee33ed4a6358f6abc9ad287fca7a6a97832325bff0c106244ceca38b1ae96.jpg",
         "air_date_text": "2021年4月10日起／每週六深夜／26時8分",
         "air_date": "2021-04-10",
+        "episode_count": null,
         "tags": [
             "漫畫改編",
             "新作",
@@ -4940,6 +4991,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/9c/9c29b855eb493699ff283e033d91b4b2/5ff53024a50b16ad021eaca19d24a903aaf8d96883a613a166fa2642153db43b.jpg",
         "air_date_text": "2021年4月2日起／每週五深夜／25時23分",
         "air_date": "2021-04-02",
+        "episode_count": 12,
         "tags": [
             "漫畫改編",
             "新作",
@@ -4958,7 +5010,8 @@
             }
         ],
         "external_ids": {
-            "mal": "42395"
+            "mal": "42395",
+            "bangumi": "309921"
         },
         "themes": [],
         "trailers": [
@@ -5074,6 +5127,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/c7/c760fb67e3ba3123530dd0aa0e0d2aa8/7fe9e2352061c6ea9ee9e9e264355771969e77a07d18448c80c53bcf6c9638dc.jpg",
         "air_date_text": "2021年4月8日起／每週四深夜／24時55分",
         "air_date": "2021-04-08",
+        "episode_count": null,
         "tags": [
             "原創作品",
             "新作",
@@ -5278,6 +5332,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/d5/d596a96fe13c8281b8d93c0e7adbdf18/6f3a2f39d798609689b363a43f6bdceccccb02a3fe61e21d1ba10e2c60eed16c.jpg",
         "air_date_text": "2021年4月10日起／每週六深夜／26時0分",
         "air_date": "2021-04-10",
+        "episode_count": 12,
         "tags": [
             "小說改編",
             "新作",
@@ -5302,7 +5357,8 @@
             }
         ],
         "external_ids": {
-            "mal": "40752"
+            "mal": "40752",
+            "bangumi": "295048"
         },
         "themes": [],
         "trailers": [],
@@ -5387,6 +5443,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/33/339239d4a1749c2e3d312a7a3053d120/9d0a52ecfac0aaff7c5e68bc4fe3d8ac042715de3358fa2129203b771f17520c.jpg",
         "air_date_text": "2021年4月14日起／每週三深夜／24時55分",
         "air_date": "2021-04-14",
+        "episode_count": null,
         "tags": [
             "漫畫改編",
             "新作",
@@ -5526,6 +5583,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/54/5478e3a7ef247834c7040edfc7a227cc/cc3baabeab2209d491d3a67d44d04877765e14da0fe51fc616444842d0700a7a.jpg",
         "air_date_text": "2021年4月4日起／每週日／23時30分",
         "air_date": "2021-04-04",
+        "episode_count": 13,
         "tags": [
             "漫畫改編",
             "新作",
@@ -5556,7 +5614,8 @@
             }
         ],
         "external_ids": {
-            "mal": "42774"
+            "mal": "42774",
+            "bangumi": "314163"
         },
         "themes": [],
         "trailers": [
@@ -5730,6 +5789,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/7e/7ed11151df820f4c5ccca6891be611bb/0aea33325d32a1fa9c3f4ef01f4e6a4d7dac724572df21c21aa6b8fa031a71ca.jpg",
         "air_date_text": "2021年4月9日起／每週五深夜／25時25分",
         "air_date": "2021-04-09",
+        "episode_count": 12,
         "tags": [
             "遊戲改編",
             "新作",
@@ -5769,7 +5829,8 @@
             }
         ],
         "external_ids": {
-            "mal": "42307"
+            "mal": "42307",
+            "bangumi": "309300"
         },
         "themes": [],
         "trailers": [
@@ -5930,6 +5991,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/01/01b7a4513409c46352bde64ff88086a1/c50ed43f0332f3525cd24a59b78404a865a4398ea3aff3cd29726427f4f54792.jpg",
         "air_date_text": "2021年4月9日起／每週五深夜／25時55分",
         "air_date": "2021-04-09",
+        "episode_count": 24,
         "tags": [
             "遊戲改編",
             "新作",
@@ -6102,6 +6164,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/f3/f338ade2efb147374d29d6995f1da9f0/18c2433b23ae4852d30e9cf0313de19a9f2e9674786b8cf5a578ceb4e2dfa29d.jpg",
         "air_date_text": "2021年4月6日起／每週二深夜／25時29分",
         "air_date": "2021-04-06",
+        "episode_count": 12,
         "tags": [
             "原創作品",
             "新作",
@@ -6142,7 +6205,8 @@
             }
         ],
         "external_ids": {
-            "mal": "47250"
+            "mal": "47250",
+            "bangumi": "327519"
         },
         "themes": [],
         "trailers": [
@@ -6255,6 +6319,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/49/49c64a28f0e036ef937a847e2b8e78cb/528506176ee04bcbc41d264d70029df2a78a083a2c710cfaf9505db577a34245.jpg",
         "air_date_text": "2021年4月8日起／每週四／23時0分",
         "air_date": "2021-04-08",
+        "episode_count": 12,
         "tags": [
             "原創作品",
             "新作",
@@ -6274,7 +6339,8 @@
             }
         ],
         "external_ids": {
-            "mal": "45665"
+            "mal": "45665",
+            "bangumi": "325586"
         },
         "themes": [],
         "trailers": [
@@ -6429,6 +6495,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/82/82bc83f4150c4eaa82fabb5f4c0a2b19/f65081c8ed45b2715d06953844c8a6edb0a23442619fc031e76a04141b5c8c43.jpg",
         "air_date_text": "2021年4月5日起／每週一深夜／25時59分",
         "air_date": "2021-04-05",
+        "episode_count": 13,
         "tags": [
             "改編作品",
             "新作",
@@ -6450,7 +6517,8 @@
             }
         ],
         "external_ids": {
-            "mal": "41265"
+            "mal": "41265",
+            "bangumi": "299709"
         },
         "themes": [],
         "trailers": [
@@ -6585,6 +6653,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/a6/a62bac2d1d6d76361e9b81f15589712c/fa247bebf353079d53426ad0419ceb003b8fa96ff0877266bf8c7a5e8c8b90c4.jpg",
         "air_date_text": "2021年4月1日起／每週四／17時55分",
         "air_date": "2021-04-01",
+        "episode_count": 52,
         "tags": [
             "漫畫改編",
             "新作",
@@ -6612,7 +6681,8 @@
             }
         ],
         "external_ids": {
-            "mal": "42205"
+            "mal": "42205",
+            "bangumi": "308558"
         },
         "themes": [],
         "trailers": [
@@ -6774,6 +6844,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/d4/d4065da88e610997dd844acf25000194/1ae9f0acb49867a6be8898315292b268faa4e6c66cafd761dee0cc1704e4690d.jpg",
         "air_date_text": "2021年4月9日起／每週五／19時25分",
         "air_date": "2021-04-09",
+        "episode_count": 41,
         "tags": [
             "改編作品",
             "新作",
@@ -6784,7 +6855,8 @@
         ],
         "streams": [],
         "external_ids": {
-            "mal": "46381"
+            "mal": "46381",
+            "bangumi": "325638"
         },
         "themes": [],
         "trailers": [
@@ -6892,6 +6964,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/f9/f90fac80cd7db855718ec9995a6c1149/e51cb5fa2b78a2ae15207c3a0797674f4ea77a267e4718aee384b0cf1c5d604a.jpg",
         "air_date_text": "2021年4月10日起／每週六深夜／25時30分",
         "air_date": "2021-04-10",
+        "episode_count": null,
         "tags": [
             "原創作品",
             "新作",
@@ -7031,6 +7104,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/da/da11f81433b5e858e38b9afec4e8027e/c5965d4ee1769ef2f216acbf19c231cf5e57c8328b40cd285b2381a0d38c4d55.jpg",
         "air_date_text": "2021年4月4日起／每週日／22時30分",
         "air_date": "2021-04-04",
+        "episode_count": 13,
         "tags": [
             "漫畫改編",
             "續作",
@@ -7073,7 +7147,8 @@
             }
         ],
         "external_ids": {
-            "mal": "43325"
+            "mal": "43325",
+            "bangumi": "319252"
         },
         "themes": [],
         "trailers": [
@@ -7205,13 +7280,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/26/266b4fa430485e29eaacdd9e67904a6b/2a42d01fa4b892d3533c6f913d953dab121aed49533d1f2f4e44d097be20f4ca.jpg",
         "air_date_text": "2021年4月10日起／每週六／19時0分",
         "air_date": "2021-04-10",
+        "episode_count": 24,
         "tags": [
             "原創作品",
             "續作"
         ],
         "streams": [],
         "external_ids": {
-            "mal": "44041"
+            "mal": "44041",
+            "bangumi": "324786"
         },
         "themes": [],
         "trailers": [],
@@ -7280,6 +7357,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/e3/e392919d10cd4f54935f6564bc147f8c/977cd5ed9db59db9686a101ccd3e9999a1f383bcfa04edf7c24e858bd45e9db1.jpg",
         "air_date_text": "2021年4月2日起／每週五深夜／24時55分",
         "air_date": "2021-04-02",
+        "episode_count": 12,
         "tags": [
             "漫畫改編",
             "新作",
@@ -7323,7 +7401,8 @@
             }
         ],
         "external_ids": {
-            "mal": "42568"
+            "mal": "42568",
+            "bangumi": "311615"
         },
         "themes": [],
         "trailers": [
@@ -7432,6 +7511,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/93/934ea5381b32bf8c3d0ec3dc9d9c20c4/0ce3a6f7598ffc71ccb705a027848993121ab560ca64470026391c76ba37d3e7.jpg",
         "air_date_text": "2021年4月4日起／每週日深夜／24時0分",
         "air_date": "2021-04-04",
+        "episode_count": null,
         "tags": [
             "遊戲改編",
             "新作",
@@ -7635,6 +7715,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/94/9445d08bb0daedfb9d2be4416db14c0c/70367ea9c91df3fa26f43f04e840d407af151a77ee64084b8fb3e47366fb6dd0.jpg",
         "air_date_text": "2021年4月5日起／每週一深夜／25時30分",
         "air_date": "2021-04-05",
+        "episode_count": 13,
         "tags": [
             "漫畫改編",
             "續作",
@@ -7667,7 +7748,8 @@
             }
         ],
         "external_ids": {
-            "mal": "42938"
+            "mal": "42938",
+            "bangumi": "315516"
         },
         "themes": [],
         "trailers": [
@@ -7817,6 +7899,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/e0/e0920a8ee976081fd89166b8fdb6912c/139b3612ce55bd248dfe2ba094ef44418f7d730920d8c7d6e4eaa608fb227a1c.jpg",
         "air_date_text": "2021年4月3日起／每週六／8時0分",
         "air_date": "2021-04-03",
+        "episode_count": null,
         "tags": [
             "遊戲改編",
             "續作",
@@ -7965,6 +8048,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/7b/7b68b33dd77fde1e0404023f3349b669/84871c72788d7cbbade29aea58e986fc4ae81ef1a42b3ddf1e4b47d44512ff0c.jpg",
         "air_date_text": "2021年4月11日起／每週日／10時30分",
         "air_date": "2021-04-11",
+        "episode_count": 50,
         "tags": [
             "原創作品",
             "續作",
@@ -7976,7 +8060,8 @@
         ],
         "streams": [],
         "external_ids": {
-            "mal": "44273"
+            "mal": "44273",
+            "bangumi": "321387"
         },
         "themes": [],
         "trailers": [],
@@ -8020,6 +8105,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/75/75f2be58d86ead4aacd75bd54f0d15c4/35c0cf2a7983996b983dfc14206923caddc38178e6196c17424d40a8e03e8217.jpg",
         "air_date_text": "2021年4月9日起／每週五深夜／25時50分",
         "air_date": "2021-04-09",
+        "episode_count": 12,
         "tags": [
             "遊戲改編",
             "新作",
@@ -8031,7 +8117,8 @@
         ],
         "streams": [],
         "external_ids": {
-            "mal": "42071"
+            "mal": "42071",
+            "bangumi": "326644"
         },
         "themes": [],
         "trailers": [],
@@ -8155,6 +8242,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/b2/b20ebc89d1ac48e168322e7cf68603ab/ed6526ab7460c36802791bb5f251ba938eff9f3086d8242da3e89182b3728544.jpg",
         "air_date_text": "2021年4月4日起／每週日／9時30分",
         "air_date": "2021-04-04",
+        "episode_count": null,
         "tags": [
             "遊戲改編",
             "新作"
@@ -8299,6 +8387,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/42/42d63f0a52f84fa6a11a588657b0fa54/e833c7f5296c736f062cb64483afe960ae18e3ad98e32d4497f7a8e2de26325c.png",
         "air_date_text": "2021年4月4日起／每週日／8時30分",
         "air_date": "2021-04-04",
+        "episode_count": 50,
         "tags": [
             "遊戲改編",
             "續作",
@@ -8309,7 +8398,8 @@
         ],
         "streams": [],
         "external_ids": {
-            "mal": "46652"
+            "mal": "46652",
+            "bangumi": "327242"
         },
         "themes": [],
         "trailers": [],
@@ -8405,6 +8495,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/5b/5bef148a7bfcb847ca3ac46f2040218c/ce4b7b618e72e9f128fbd002335fbb2395ff5e252f56dea25768c977f763c212.jpg",
         "air_date_text": "2021年4月2日起／每週五／18時55分",
         "air_date": "2021-04-02",
+        "episode_count": 25,
         "tags": [
             "改編作品",
             "新作",
@@ -8414,7 +8505,8 @@
         ],
         "streams": [],
         "external_ids": {
-            "mal": "43778"
+            "mal": "43778",
+            "bangumi": "336281"
         },
         "themes": [],
         "trailers": [],
@@ -8503,12 +8595,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/33/33dd618e1fb56f6706b84f2f513de6fe/4d9dc397cbf43868b49cde526bec3e17970f8e86910fd2b3ba4586a093db7bea.jpg",
         "air_date_text": "2021年4月9日起／每週五／18時25分",
         "air_date": "2021-04-09",
+        "episode_count": 98,
         "tags": [
             "改編作品",
             "新作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "333033"
+        },
         "themes": [],
         "trailers": [
             {
@@ -8614,6 +8709,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/aa/aaa73a10d7f2c5ae7f0fac9451d81660/cf7cd3e86a7363b6ce96a61094cc44c43d43b287c12f03e2b70c209dca478eea.jpg",
         "air_date_text": "2021年4月3日起／每週六深夜／24時57分",
         "air_date": "2021-04-03",
+        "episode_count": 26,
         "tags": [
             "原創作品",
             "新作",
@@ -8622,7 +8718,8 @@
         ],
         "streams": [],
         "external_ids": {
-            "mal": "45618"
+            "mal": "45618",
+            "bangumi": "330889"
         },
         "themes": [],
         "trailers": [
@@ -8702,12 +8799,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/63/63025a8946abe344e905b05c8d730aa2/ca284b83e803f31a715638aeec46ba5ef28ef865a8ced027755715353c19679a.jpg",
         "air_date_text": "2021年4月3日起／每週六／9時0分",
         "air_date": "2021-04-03",
+        "episode_count": 10,
         "tags": [
             "漫畫改編",
             "續作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "239180"
+        },
         "themes": [],
         "trailers": [
             {
@@ -8795,6 +8895,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/f5/f5c8cfbc25cce635f894cd0ccb578303/5f936c0c313fce777324060d1b5d29914d13075e438da8cffcbb9d4c85c20a8f.jpg",
         "air_date_text": "2021年4月6日起／每週二／7時30分",
         "air_date": "2021-04-06",
+        "episode_count": 12,
         "tags": [
             "原創作品",
             "新作",
@@ -8818,7 +8919,8 @@
             }
         ],
         "external_ids": {
-            "mal": "44848"
+            "mal": "44848",
+            "bangumi": "327771"
         },
         "themes": [],
         "trailers": [
@@ -8942,12 +9044,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/d7/d7c4bce0d310a755268bea42e55f5d63/18b4dd603966c8785dd722b32252428d9bc5c880a33d2f5ebb8798fcb597986d.jpg",
         "air_date_text": "2021年4月2日起／每週五／18時20分",
         "air_date": "2021-04-02",
+        "episode_count": 37,
         "tags": [
             "原創作品",
             "續作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "663691"
+        },
         "themes": [],
         "trailers": [],
         "cast": [],
@@ -8979,6 +9084,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/12/12e9a54da587bc6f0e93561fb49abc95/5b453b7f89a3b203b5d3bc00fbd02ceb38e3f089a25a8248fb7e4d1b9043ff8c.png",
         "air_date_text": "2021年4月7日起／每週三／18時45分",
         "air_date": "2021-04-07",
+        "episode_count": null,
         "tags": [
             "漫畫改編",
             "新作",
@@ -8986,7 +9092,8 @@
         ],
         "streams": [],
         "external_ids": {
-            "mal": "42870"
+            "mal": "42870",
+            "bangumi": "316893"
         },
         "themes": [],
         "trailers": [
@@ -9079,6 +9186,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/6b/6b02f6d1cfedaaeec5ec86aa65ce69ec/398065fd7b89f48caac87a0b1537d442036c1709360401a9ac0bcba92487c931.jpg",
         "air_date_text": "2021年4月5日起／每週一／23時57分",
         "air_date": "2021-04-05",
+        "episode_count": 12,
         "tags": [
             "改編作品",
             "新作",
@@ -9086,7 +9194,8 @@
         ],
         "streams": [],
         "external_ids": {
-            "mal": "45587"
+            "mal": "45587",
+            "bangumi": "324727"
         },
         "themes": [],
         "trailers": [],
@@ -9164,12 +9273,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/5c/5cdbe2431444b250cde10bcc2a839104/b5fbcce43d4ad56679422079507f830bb1fe54a4ffa1069b4b8a91378799aa78.jpg",
         "air_date_text": "2021年4月1日起／每週四深夜／27時0分",
         "air_date": "2021-04-01",
+        "episode_count": null,
         "tags": [
             "改編作品",
             "新作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "309170"
+        },
         "themes": [],
         "trailers": [
             {
@@ -9223,6 +9335,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/4d/4dfcc9e15d7b122c3fc804efcf166d0b/e2115735990e611d250d8eff2aba9e4d8a133d7f6f6ea016f34542bb10773e93.jpg",
         "air_date_text": "2021年4月3日起／每週六／7時25分",
         "air_date": "2021-04-03",
+        "episode_count": 52,
         "tags": [
             "改編作品",
             "新作"
@@ -9244,7 +9357,9 @@
                 "url": "https://ani.gamer.com.tw/animeVideo.php?sn=22333"
             }
         ],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "312227"
+        },
         "themes": [],
         "trailers": [
             {
@@ -9316,6 +9431,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/53/531fec8046dfbb4d377c4c788632704e/16484d20e2b83e155679b73600646c4e84c75bf90bf5c6501fc9224e0d0a2538.jpg",
         "air_date_text": "2021年4月4日起／每週日深夜／25時0分",
         "air_date": "2021-04-04",
+        "episode_count": null,
         "tags": [
             "漫畫改編",
             "新作",
@@ -9426,6 +9542,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/af/af080dfed35ec93df7732d3f4f780a8a/b050bc68e49d6f8d5fe54f87a3ceb8a34496fbdefdb80bf53a95f5a1ed3d40e7.jpg",
         "air_date_text": "每週五深夜／24時0分",
         "air_date": null,
+        "episode_count": 24,
         "tags": [
             "原創作品",
             "新作",
@@ -9593,6 +9710,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/f9/f95c856431fa847d13baf9501cae681d/fd408d6cefd04435e881016a74b4f969fbf7d59f8d68c59d9294f1e5926bc166.jpg",
         "air_date_text": "每週五／21時30分",
         "air_date": null,
+        "episode_count": 24,
         "tags": [
             "小說改編",
             "新作",
@@ -9788,6 +9906,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/44/445a89ed8fc07433a71064ab842b9fac/db8f633402180cbb4fcf0927bfa26a085c5f889bb93e4155ec61696dd47ff1a3.jpg",
         "air_date_text": "每週三／17時55分",
         "air_date": null,
+        "episode_count": 24,
         "tags": [
             "漫畫改編",
             "續作",
@@ -9933,6 +10052,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/e0/e0f4b291480ec171896828a44ea80a0e/b4a8839ce78f6c11bc0e8e755db1d0500d8598a917b2c618ae98dd191df561f8.jpg",
         "air_date_text": "每週日／8時30分",
         "air_date": null,
+        "episode_count": 46,
         "tags": [
             "原創作品",
             "新作",
@@ -9944,7 +10064,8 @@
         ],
         "streams": [],
         "external_ids": {
-            "mal": "44191"
+            "mal": "44191",
+            "bangumi": "320857"
         },
         "themes": [],
         "trailers": [
@@ -10045,6 +10166,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/2f/2f880a25df2b1ed24aefe8f391fedfba/ab3afcd490dd084832448ab3d14a386a6b875791376a2a569564f93b5285b330.jpg",
         "air_date_text": "每週六／9時30分",
         "air_date": null,
+        "episode_count": 100,
         "tags": [
             "漫畫改編",
             "新作",

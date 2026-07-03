@@ -57,6 +57,7 @@ final class AnimeImportService
                 'season_code' => $record['season_code'] ?? null,
                 'air_date' => $record['air_date'] ?? null,
                 'air_date_text' => $record['air_date_text'] ?? null,
+                'episode_count' => $record['episode_count'] ?? null,
                 'tags' => $record['tags'] ?? [],
                 'import_hash' => $payloadHash,
             ]);

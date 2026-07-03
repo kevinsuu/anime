@@ -14,6 +14,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/ff/ff68664c514087b799af5c2e193cb76d/7d7eac30410600fd2b9d629493878548a5dccf76fb8b402fb284d28b34f04249.jpg",
         "air_date_text": "2024年4月5日起／每週五／23時0分",
         "air_date": "2024-04-05",
+        "episode_count": 24,
         "tags": [
             "小說改編",
             "續作",
@@ -315,6 +316,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/1e/1ecd04ac78d252a941b8d2f4cc841937/ccb36d4fabffc73984dda7891196001657580b88057cf3c9fccfed3e359d923a.jpg",
         "air_date_text": "2024年4月13日起／每週六／23時0分",
         "air_date": "2024-04-13",
+        "episode_count": 12,
         "tags": [
             "漫畫改編",
             "新作",
@@ -618,6 +620,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/b2/b244a70857fa5bec2e32ded1b8a6e16c/ac8e53b5abe7a5feaef0a5c5a679fa653aad432e912c325e206513afb71f01a2.jpg",
         "air_date_text": "2024年5月12日起／每週日／23時15分",
         "air_date": "2024-05-12",
+        "episode_count": 8,
         "tags": [
             "漫畫改編",
             "續作",
@@ -659,7 +662,8 @@
             }
         ],
         "external_ids": {
-            "mal": "55701"
+            "mal": "55701",
+            "bangumi": "441939"
         },
         "themes": [
             {
@@ -856,6 +860,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/2e/2e78d3c80788559aad5e66b962c87ed7/0428e29ea0e93f74c16cbd4194d6aa0d710511c8fb5198caa416edcacd67b67c.jpg",
         "air_date_text": "2024年4月10日起／每週三／23時30分",
         "air_date": "2024-04-10",
+        "episode_count": 11,
         "tags": [
             "小說改編",
             "續作",
@@ -1162,6 +1167,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/18/18d6a3655ca9515ac9690c34f5ce8a1a/413c60a655a3d85400cc1b75c94ca411160e66328e753709fe001a633f0d7743.jpg",
         "air_date_text": "2024年4月1日起／每週一／21時0分",
         "air_date": "2024-04-01",
+        "episode_count": 12,
         "tags": [
             "原創作品",
             "新作",
@@ -1391,6 +1397,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/1b/1bca1892495f25c4a7599067ec70b699/ec1c8a09287d052b3236e8dda50efa6e7466d073dbfbd26dc59873cc39eb01a4.jpg",
         "air_date_text": "2024年4月6日起／每週六深夜／25時0分",
         "air_date": "2024-04-06",
+        "episode_count": 12,
         "tags": [
             "原創作品",
             "新作",
@@ -1659,6 +1666,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/6b/6b5536b46c8e30f8cf4dadd8287b9cd7/d9634c570a7dba67ee203ea8775928c67d788a2a7297ae80dae4243fe441a32c.jpg",
         "air_date_text": "2024年4月7日起／每週日深夜／24時0分",
         "air_date": "2024-04-07",
+        "episode_count": 12,
         "tags": [
             "小說改編",
             "續作",
@@ -1950,6 +1958,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/0d/0dbc5638a0c00e1180a7d47476ae503e/c143d3044a12bf623668493a3ca3071dcdc2cab98c3dded9ce778672cfd46e67.jpg",
         "air_date_text": "2024年4月5日起／每週五／23時30分",
         "air_date": "2024-04-05",
+        "episode_count": 13,
         "tags": [
             "小說改編",
             "續作",
@@ -2240,6 +2249,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/0b/0b09cac18b8ea8adb575fbc1186beca2/4b6fca2d1da894e05c6e3327eb495282da171987b2b5f7f07be841d94a67bcbf.jpg",
         "air_date_text": "2024年4月1日起／每週一深夜／25時30分",
         "air_date": "2024-04-01",
+        "episode_count": 25,
         "tags": [
             "小說改編",
             "新作",
@@ -2487,6 +2497,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/e5/e560ed7e7a04a66956f5dee0f552025a/99901348805574706035891851ad663ee03bc8c304de0aad380f991df018383d.jpg",
         "air_date_text": "2024年4月7日起／每週日／23時45分",
         "air_date": "2024-04-07",
+        "episode_count": 12,
         "tags": [
             "遊戲改編",
             "新作",
@@ -2724,6 +2735,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/85/8513fbf60de9c66d7446690dd700c18b/baefd2419c0d2e53b5a1723555b8c7c770d91ac34190f0ccce2e79a095f69ae4.jpg",
         "air_date_text": "2024年4月1日起／每週一深夜／24時0分",
         "air_date": "2024-04-01",
+        "episode_count": 12,
         "tags": [
             "小說改編",
             "新作",
@@ -3016,6 +3028,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/24/246830b269da9154dc7d02fe907bc61a/472016845f101dfd56a79791493f4d3992cd24aa2d3bac5a2c464a8e95ac80d4.jpg",
         "air_date_text": "2024年4月7日起／每週日／23時30分",
         "air_date": "2024-04-07",
+        "episode_count": 12,
         "tags": [
             "小說改編",
             "新作",
@@ -3241,6 +3254,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/d5/d517c438aa78c591ad614cba2b46624c/9b152e8ba16ed3e1cd71f4732d0dea1ed8ec119a71cf29244fbf67be8bc301d6.jpg",
         "air_date_text": "2024年4月9日起／每週二／23時30分",
         "air_date": "2024-04-09",
+        "episode_count": 12,
         "tags": [
             "小說改編",
             "新作",
@@ -3478,6 +3492,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/c0/c0d8ac3af127fa444c0cc62f061216e8/7545580e1bcbd1a9fd00415941498e829d1b79364cd653ef005482d594b33e62.jpg",
         "air_date_text": "2024年4月13日起／每週六深夜／25時30分",
         "air_date": "2024-04-13",
+        "episode_count": 12,
         "tags": [
             "小說改編",
             "新作",
@@ -3684,6 +3699,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/c0/c099f7ed7f0053493a117d66c0a56039/f35befcca2b6fb650cb3f242e9397823b788565383120b422e5184f210418596.jpg",
         "air_date_text": "2024年4月4日起／每週四深夜／24時0分",
         "air_date": "2024-04-04",
+        "episode_count": 12,
         "tags": [
             "小說改編",
             "新作",
@@ -3942,6 +3958,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/8f/8f085b062a85793f67457fe8035b02ec/7c09cacff5e996906311fe72b171fabdf47dca01d425d44f6975bd8c89e10b1e.jpg",
         "air_date_text": "2024年4月7日起／每週日／23時30分",
         "air_date": "2024-04-07",
+        "episode_count": 11,
         "tags": [
             "漫畫改編",
             "新作",
@@ -4189,6 +4206,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/0e/0ea3a87f45ba6ebd5c52f9e5dc964320/9e87e0f9838eca6592b98e039d1bb3c785969accd3eeacad6b3214cebad61c72.jpg",
         "air_date_text": "2024年4月7日起／每週日／17時0分",
         "air_date": "2024-04-07",
+        "episode_count": 27,
         "tags": [
             "漫畫改編",
             "新作",
@@ -4449,6 +4467,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/f6/f61dee7af3ae86158881f39264c4b07a/de435231e1f892371261c46cb2c74aec5f2eee995f80de9a2aeb2ec704426f9c.jpg",
         "air_date_text": "2024年4月10日起／每週三／21時0分",
         "air_date": "2024-04-10",
+        "episode_count": 12,
         "tags": [
             "小說改編",
             "新作",
@@ -4644,6 +4663,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/9e/9e26577618fc16a25838f716ea681377/24e7bf7520eb310954b3ab05e7fbac4ebc4d70b8b969c3bebc1ce4504eac8514.jpg",
         "air_date_text": "2024年4月4日起／每週四／23時0分",
         "air_date": "2024-04-04",
+        "episode_count": 12,
         "tags": [
             "漫畫改編",
             "續作",
@@ -4868,6 +4888,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/22/22fc0e0535373e1e1cce1beb4e042f91/f5dcb403b7673f302256db3592eea8b64d765064a0409d73f32ef3280464ea64.jpg",
         "air_date_text": "2024年4月7日起／每週日／17時0分",
         "air_date": "2024-04-07",
+        "episode_count": 13,
         "tags": [
             "改編作品",
             "新作",
@@ -5134,6 +5155,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/04/0486323bc31870956449ad1965e70010/707333bbd2ef1bc8e988e605efac0d1a35ff20ef5b52361e23c3bb18073aa782.jpg",
         "air_date_text": "2024年4月8日起／每週一／23時0分",
         "air_date": "2024-04-08",
+        "episode_count": 12,
         "tags": [
             "小說改編",
             "新作",
@@ -5391,6 +5413,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/d4/d42f630e0aaed2786b4f432ad9445878/f54f47e88cd01829e4319cdd44a05e1667079ab2580a8628f055f73bef543ccb.jpg",
         "air_date_text": "2024年4月13日起／每週六深夜／25時30分",
         "air_date": "2024-04-13",
+        "episode_count": 12,
         "tags": [
             "漫畫改編",
             "新作",
@@ -5631,6 +5654,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/e3/e30b38fd739683369f48a616e9a2608c/b72d7481e57acf233e5dc49f01b4f76ba6462d041b4e5c222991e080d48c3abb.jpg",
         "air_date_text": "2024年4月5日起／每週五深夜／24時30分",
         "air_date": "2024-04-05",
+        "episode_count": 13,
         "tags": [
             "原創作品",
             "新作",
@@ -5814,6 +5838,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/98/989f438b49a6b58012ced30ecff60c84/3faa1f7ac6ded59f8087157bf4757c626f08bbeb242bc5a47bb2c49381f2a499.jpg",
         "air_date_text": "2024年5月4日起／每週六／17時30分",
         "air_date": "2024-05-04",
+        "episode_count": 21,
         "tags": [
             "漫畫改編",
             "續作",
@@ -5862,7 +5887,8 @@
             }
         ],
         "external_ids": {
-            "mal": "54789"
+            "mal": "54789",
+            "bangumi": "425587"
         },
         "themes": [
             {
@@ -6024,6 +6050,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/75/757bcababcfd029a8320d8f5f2d3bf36/051b5587321e2d91048f1685ed094aad790ce55eb061175cc24956f454cf4a22.jpg",
         "air_date_text": "2024年4月12日起／每週五／22時0分",
         "air_date": "2024-04-12",
+        "episode_count": 12,
         "tags": [
             "小說改編",
             "續作",
@@ -6275,6 +6302,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/e7/e7d219d207ec6478929581523a652564/9687d653bfad86c192d390061e4694e34b4dab3679c84f219128913bd193de17.jpg",
         "air_date_text": "2024年4月10日起／每週三／23時30分",
         "air_date": "2024-04-10",
+        "episode_count": 12,
         "tags": [
             "小說改編",
             "續作",
@@ -6509,6 +6537,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/73/7368b36ec8f994ad537862a5fafd0aaa/84ff7914f2650fe47be0eee5be620210dc2fb0c26f4e74591ef5a99299a333a7.jpg",
         "air_date_text": "2024年4月4日起／每週四深夜／25時28分",
         "air_date": "2024-04-04",
+        "episode_count": 12,
         "tags": [
             "小說改編",
             "新作",
@@ -6758,6 +6787,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/33/33e8da8f3fddf0b0f8824168c3d85604/7c21694264e08f0068dbbf3432f6499b675aa5eb265eb232e79685a67c901d92.jpg",
         "air_date_text": "2024年4月1日起／每週一／21時30分",
         "air_date": "2024-04-01",
+        "episode_count": 13,
         "tags": [
             "小說改編",
             "新作",
@@ -7033,6 +7063,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/05/05bd06aa416a74a166d9badd79750074/c6d7bce8d2da583b2ccf2bfe3ac8a12bff7db9a37fbebdf5ccd7d900a0dad061.jpg",
         "air_date_text": "2024年4月13日起／每週六／23時30分",
         "air_date": "2024-04-13",
+        "episode_count": 11,
         "tags": [
             "漫畫改編",
             "續作",
@@ -7222,6 +7253,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/4f/4f0c1e848ed651dfb5202a2bff9abc45/b4f00fff1cc173992122f3a2581f19f5312f0fa5278bc8971b822f363f31e3c9.jpg",
         "air_date_text": "2024年4月3日起／每週三深夜／24時0分",
         "air_date": "2024-04-03",
+        "episode_count": 12,
         "tags": [
             "漫畫改編",
             "新作",
@@ -7459,6 +7491,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/0a/0a954b64b65550aaec691a3a683eb0a8/e431c72b85e7f2483a86bf00fceca303b9c13a2cdf2cbdac63508de42cd2e1ba.jpg",
         "air_date_text": "2024年4月4日起／每週四深夜／24時30分",
         "air_date": "2024-04-04",
+        "episode_count": 12,
         "tags": [
             "小說改編",
             "新作",
@@ -7703,6 +7736,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/6e/6ee99b055c90a20be86dcbf479803c2d/3522a5119a088c44195f38c869bde0b8db01ad26f3787a2ea7834d5ca494d4b7.jpg",
         "air_date_text": "2024年4月1日起／每週一深夜／26時0分",
         "air_date": "2024-04-01",
+        "episode_count": 12,
         "tags": [
             "小說改編",
             "新作",
@@ -7942,6 +7976,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/8d/8d1a8d9e37fed2a4a1a0556b35f4af0d/97780a8e5d0a1eb43b57e01df45f613cba72992577f7f06ecc067246cbd2c13a.jpg",
         "air_date_text": "2024年4月6日起／每週六／22時0分",
         "air_date": "2024-04-06",
+        "episode_count": 12,
         "tags": [
             "漫畫改編",
             "新作",
@@ -8174,6 +8209,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/f8/f8f27084dbe2794f946c1f2d877f0e2b/be76fa816828c28c63efd1eb2699ff7207a082014e8004beb7d5e9aefd60d6cd.jpg",
         "air_date_text": "2024年4月4日起／每週四／23時56分",
         "air_date": "2024-04-04",
+        "episode_count": 12,
         "tags": [
             "漫畫改編",
             "新作",
@@ -8382,6 +8418,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/10/10eef60504928f586a007ce2cf49f252/33313217a650438c4085a9fd1b72e9cddc847b95670fdc7f81747ec9d68df61f.jpg",
         "air_date_text": "2024年4月4日起／每週四深夜／24時26分",
         "air_date": "2024-04-04",
+        "episode_count": 13,
         "tags": [
             "漫畫改編",
             "新作",
@@ -8622,6 +8659,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/fe/feb5abe85c26069a56c3d3a0bf2e9025/c0066afd841be1422ace3c252134e77adeecaec6b2ed159bbb7e55fa0a9faf33.jpg",
         "air_date_text": "2024年4月7日起／每週日／16時30分",
         "air_date": "2024-04-07",
+        "episode_count": 12,
         "tags": [
             "漫畫改編",
             "新作",
@@ -8834,6 +8872,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/3a/3a635972140e147987ebb33e22f20dc9/7e03efc178743a07362feed0e08364e28896d2741a33eb4c2dacde3a5ca1346c.jpg",
         "air_date_text": "2024年4月7日起／每週日／22時0分",
         "air_date": "2024-04-07",
+        "episode_count": 12,
         "tags": [
             "漫畫改編",
             "續作",
@@ -9071,6 +9110,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/8e/8ef64ba265cc2b51f28781055cf33e07/d58d9c044b513d794faf8b4745ba010faac1c07800ac62f4c332593a19ffb3b1.jpg",
         "air_date_text": "2024年4月7日起／每週日／8時30分",
         "air_date": "2024-04-07",
+        "episode_count": 39,
         "tags": [
             "原創作品",
             "續作",
@@ -9297,6 +9337,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/ee/eee8534a67be80c5f8a9ef2717b13ff7/7cdb3bf3947954dc7b486b2e2ae26faa6af6a5c4f8052d3cfba2efcd50384276.jpg",
         "air_date_text": "2024年4月5日起／每週五深夜／25時53分",
         "air_date": "2024-04-05",
+        "episode_count": 12,
         "tags": [
             "原創作品",
             "新作"
@@ -9511,6 +9552,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/df/df46b87878d9bcf9b30be53dcbd9ab8a/2518fcbe42f56082650ae0aabc2d10ddf4b7c34599aa5103179adce26f1c25ce.jpg",
         "air_date_text": "2024年4月10日起／每週三／22時30分",
         "air_date": "2024-04-10",
+        "episode_count": 12,
         "tags": [
             "漫畫改編",
             "新作",
@@ -9724,6 +9766,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/f0/f000c300146975efe7bf388e9e264cf4/a8a1bb5144a9484e122b2e320a8f9ed1952ef7bd67b2c7ce1ef328e04cdc838f.jpg",
         "air_date_text": "2024年4月9日起／每週二深夜／24時0分",
         "air_date": "2024-04-09",
+        "episode_count": 12,
         "tags": [
             "漫畫改編",
             "新作",
@@ -9965,6 +10008,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/fb/fbd07b351fc24fd08d795dd67dc88991/90e634ecdd60f5fecef51bc15f7b2b93c09b285796b6374d1b2e8288833401a7.jpg",
         "air_date_text": "2024年4月9日起／每週二／23時30分",
         "air_date": "2024-04-09",
+        "episode_count": 12,
         "tags": [
             "原創作品",
             "新作",
@@ -10167,6 +10211,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/b9/b9ae78561f30754cb1cba5942c122725/b12b4a9eb47047a1db9011daa7c7177bcd41cc571afcf0bf2eec2ffece3310ac.jpg",
         "air_date_text": "2024年4月5日起／每週五／22時30分",
         "air_date": "2024-04-05",
+        "episode_count": 12,
         "tags": [
             "原創作品",
             "新作",
@@ -10406,6 +10451,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/61/61af5392a25c6ac62355a017ac807987/c02e66a992c01e889740d929970405e9d56ee7c4b873da505cae438f18696ad0.jpg",
         "air_date_text": "2024年4月7日起／每週日／23時30分",
         "air_date": "2024-04-07",
+        "episode_count": 12,
         "tags": [
             "漫畫改編",
             "新作",
@@ -10619,6 +10665,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/b2/b2300d0e2b8e649804da074e4032dffe/b77a4184eb7c252077274b43b221348a0c118f7d5ee2e12b5750d7a368c4b42f.jpg",
         "air_date_text": "2024年4月6日起／每週六深夜／26時0分",
         "air_date": "2024-04-06",
+        "episode_count": 13,
         "tags": [
             "漫畫改編",
             "新作",
@@ -10831,6 +10878,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/dd/dd734c41e06b7d27cb7906a56f5f2b54/b4226db114978f5e7cf0f5fd441b264c9d22e116ff2773ba91de46e2bfaf0915.jpg",
         "air_date_text": "2024年4月8日起／每週一深夜／24時30分",
         "air_date": "2024-04-08",
+        "episode_count": 12,
         "tags": [
             "漫畫改編",
             "新作",
@@ -11034,6 +11082,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/ef/efd431cb290b6ef18807c6a486390b86/0a11e6789471419a1205cc2a1f6abf990d164ece762ffce5ac764f5ea0e8acf7.jpg",
         "air_date_text": "2024年4月2日起／每週二／23時0分",
         "air_date": "2024-04-02",
+        "episode_count": 8,
         "tags": [
             "遊戲改編",
             "續作",
@@ -11197,6 +11246,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/a7/a7d43ea03fdb09ef66365ca58fb64e9b/4e1d1e8abc7761220bd85f1342603827bc6b63362dd8eb9200768127aaa3d7ff.jpg",
         "air_date_text": "2024年4月6日起／每週六／10時0分",
         "air_date": "2024-04-06",
+        "episode_count": 13,
         "tags": [
             "漫畫改編",
             "新作",
@@ -11388,6 +11438,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/47/47d3c64a0524ee7b1def21741ce5af5f/0a6f62005254f14d03395643caf3b042b71c20046d5da5cebb57fee87d3ddc67.jpg",
         "air_date_text": "2024年4月10日起／每週三深夜／24時55分",
         "air_date": "2024-04-10",
+        "episode_count": 12,
         "tags": [
             "漫畫改編",
             "新作",
@@ -11597,6 +11648,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/04/04401feb1fb061f069f8d7b81476bb83/7bdadc47c01f24acbf37d8931a3f5e6a98c14460b4ab702c97725dd4c8f12c01.jpg",
         "air_date_text": "2024年4月6日起／每週六／23時45分",
         "air_date": "2024-04-06",
+        "episode_count": 20,
         "tags": [
             "小說改編",
             "新作",
@@ -11781,6 +11833,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/ef/ef922afb71c3d6e134ea39cb536efae6/a9c55ddb5f2a2e6c24e76a1a018fa30c67e9b61932005c89498ba444091666b8.jpg",
         "air_date_text": "2024年4月6日起／每週六深夜／24時55分",
         "air_date": "2024-04-06",
+        "episode_count": 25,
         "tags": [
             "漫畫改編",
             "新作",
@@ -11984,6 +12037,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/52/5258ae062c0d4d12ba7a2780667336ca/89672668cdf40c785881dcd751feabe7b8049023715b14b93dbb18a832d16cb7.jpg",
         "air_date_text": "2024年4月5日起／每週五／21時54分",
         "air_date": "2024-04-05",
+        "episode_count": 15,
         "tags": [
             "漫畫改編",
             "續作",
@@ -12179,6 +12233,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/6c/6ccb887a73ef9a3b973053ebec20911a/76215734a20c3b1cdae6939185dc74fe9014d1dc96d8c7920df01d9151ae7b03.jpg",
         "air_date_text": "2024年4月3日起／每週三／7時5分",
         "air_date": "2024-04-03",
+        "episode_count": 52,
         "tags": [
             "劇集改編",
             "續作",
@@ -12305,6 +12360,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/ff/ff8644470c34ce370a4cfcdc436f56e0/8c00c1564a9155f8cf07f2531cde2b7e0aff5fa3373960eacb6b8e73337f3a2e.jpg",
         "air_date_text": "2024年4月7日起／每週日／10時0分",
         "air_date": "2024-04-07",
+        "episode_count": 51,
         "tags": [
             "原創作品",
             "新作",
@@ -12461,6 +12517,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/c1/c14d09411981256ba5a89bb5ec6beb14/2dc141c308e1dcd3bcae01639ac120fc22eb6058465c3822a18014efad86b64a.jpg",
         "air_date_text": "2024年4月2日起／每週二／6時0分",
         "air_date": "2024-04-02",
+        "episode_count": 12,
         "tags": [
             "原創作品",
             "續作",
@@ -12556,12 +12613,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/29/29d5e4bbe7287c5beca53f7ab73d64f4/57f2e0dfca82df4dd5f71432cb7baf7750e902b7d1f0e21bdf691faa9d2debdf.jpg",
         "air_date_text": "2024年4月6日起／每週六／7時0分",
         "air_date": "2024-04-06",
+        "episode_count": 13,
         "tags": [
             "原創作品",
             "新作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "480437"
+        },
         "themes": [
             {
                 "type": "THEME",
@@ -12640,12 +12700,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/ba/ba4aa69c1aea2ed368c35b299f960ee1/96861824c15905564f55b3ddfd14fcc978bd9e6d26e8def9319d94767f1391f0.jpg",
         "air_date_text": "2024年4月6日起／每週六／7時0分",
         "air_date": "2024-04-06",
+        "episode_count": 12,
         "tags": [
             "原創作品",
             "新作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "476412"
+        },
         "themes": [
             {
                 "type": "THEME",
@@ -12760,6 +12823,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/9c/9cb59059b417737c00722eaf9402f545/b9a9749dffeee747f06873bad2757c99035a50a37f3ba9efdd1c2fc23c02c45b.jpg",
         "air_date_text": "2024年4月7日起／每週日深夜／25時0分",
         "air_date": "2024-04-07",
+        "episode_count": null,
         "tags": [
             "漫畫改編",
             "新作",
@@ -12876,6 +12940,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/ad/ade4d5274eeb308a732aaf1184fa36f1/461d44ed001a55f724409fec8b12aff6a44d55d4bb2e1f8064d9e5deaae2a9e3.jpg",
         "air_date_text": "每週四／22時30分",
         "air_date": null,
+        "episode_count": 24,
         "tags": [
             "漫畫改編",
             "新作",
@@ -13169,6 +13234,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/f9/f9b9f35e4254f84d2eadcb81a1a85e32/0d0c68e906bbfbd464571dd5204d0881a82866728b87db579e262367b56f2100.jpg",
         "air_date_text": "每週一／23時0分",
         "air_date": null,
+        "episode_count": 25,
         "tags": [
             "小說改編",
             "續作",
@@ -13430,6 +13496,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/f9/f973ac177cbd0c5e2f89eff77a9b8dde/1e4f9225872f181b0bafc684fe85a085e5916cbace936a885b62bc79f28317e3.jpg",
         "air_date_text": "每週四深夜／24時55分",
         "air_date": null,
+        "episode_count": 23,
         "tags": [
             "漫畫改編",
             "續作",

@@ -130,6 +130,41 @@ final class AcgSecretsParserTest extends TestCase
         $this->assertSame([], $record['tags']);
         $this->assertSame([], $record['streams']);
         $this->assertSame([], $record['external_ids']);
+        $this->assertNull($record['episode_count']);
+    }
+
+    public function test_parse_anime_block_leaves_episode_count_null_when_not_published(): void
+    {
+        $parser = new AcgSecretsParser();
+        $record = $parser->parseAnimeBlock($this->fixture('acgsecrets_block.html'), '202604');
+
+        // The fixture's episode_data tag is "2季度" with no "(N集)" suffix, and it
+        // has no air-time remark either, so there is nothing to extract.
+        $this->assertNull($record['episode_count']);
+    }
+
+    public function test_parse_anime_block_extracts_episode_count_from_episode_data_tag(): void
+    {
+        $parser = new AcgSecretsParser();
+        $html = '<div class="acgs-anime-block"><div class="anime_tag">'
+            . '<tags class="episode_data sub_tags">2季度(19集)</tags>'
+            . '</div></div>';
+
+        $record = $parser->parseAnimeBlock($html, '202604');
+
+        $this->assertSame(19, $record['episode_count']);
+    }
+
+    public function test_parse_anime_block_extracts_episode_count_from_air_time_remark(): void
+    {
+        $parser = new AcgSecretsParser();
+        $html = '<div class="acgs-anime-block"><div class="time_today main_time">'
+            . '4月8日起／每週三／22時0分<span class="remark">(喪失篇全11話)</span>'
+            . '</div></div>';
+
+        $record = $parser->parseAnimeBlock($html, '202604');
+
+        $this->assertSame(11, $record['episode_count']);
     }
 
     public function test_parse_anime_block_has_exactly_the_contract_keys(): void
@@ -140,7 +175,7 @@ final class AcgSecretsParserTest extends TestCase
         $expected = [
             'season', 'season_year', 'season_code',
             'title_zh', 'title_ja', 'aliases', 'summary',
-            'cover_image', 'air_date_text', 'air_date',
+            'cover_image', 'air_date_text', 'air_date', 'episode_count',
             'tags', 'streams', 'external_ids',
             'cast', 'staff', 'themes', 'trailers', 'links',
         ];

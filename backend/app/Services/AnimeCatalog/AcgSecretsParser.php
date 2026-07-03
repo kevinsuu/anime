@@ -81,6 +81,8 @@ final class AcgSecretsParser
             $airDateText = $this->firstNonEmpty($xpath, './/div[contains(@class,"onair_times")]');
         }
         $airDate = $this->parseAirDate($airDateText, $year);
+        $tags = $this->tags($xpath);
+        $episodeCount = $this->episodeCount($xpath, $airDateText, $tags);
 
         return [
             'season' => $yyyymm,
@@ -93,7 +95,8 @@ final class AcgSecretsParser
             'cover_image' => $coverImage,
             'air_date_text' => $airDateText,
             'air_date' => $airDate,
-            'tags' => $this->tags($xpath),
+            'episode_count' => $episodeCount,
+            'tags' => $tags,
             'streams' => $this->streams($xpath),
             'external_ids' => $this->externalIds($xpath),
             'themes' => $this->themes($xpath),
@@ -264,6 +267,42 @@ final class AcgSecretsParser
         }
 
         return array_values(array_unique($tags));
+    }
+
+    /**
+     * Total episode count, when acgsecrets happens to publish it. Coverage is
+     * partial by nature of the source site: most entries carry neither form.
+     *
+     * Tried in order:
+     *  - the "(N集)" suffix on the episode_data tag, e.g. "2季度(19集)"
+     *  - a "全N話" remark next to the air time, e.g. "(喪失篇全11話)" — only
+     *    the first cour's count is used when a title splits into multiple cours
+     *
+     * @param list<string> $tags
+     */
+    private function episodeCount(DOMXPath $xpath, string $airDateText, array $tags): ?int
+    {
+        foreach ($tags as $tag) {
+            if (preg_match('/[（(](\d+)集[）)]/u', $tag, $m)) {
+                return (int) $m[1];
+            }
+        }
+
+        $remarkNodes = $xpath->query('.//span[contains(@class,"remark")]');
+        if ($remarkNodes !== false) {
+            foreach ($remarkNodes as $node) {
+                $text = $this->clean($node->textContent);
+                if (preg_match('/全(\d+)話/u', $text, $m)) {
+                    return (int) $m[1];
+                }
+            }
+        }
+
+        if (preg_match('/全(\d+)話/u', $airDateText, $m)) {
+            return (int) $m[1];
+        }
+
+        return null;
     }
 
     /**

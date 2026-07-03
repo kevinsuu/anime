@@ -14,12 +14,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/4SVP4H1.jpg",
         "air_date_text": "2018年1月10日起／每週三深夜／24時0分",
         "air_date": "2018-01-10",
+        "episode_count": 14,
         "tags": [
             "改編作品",
             "新作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "183878"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -131,6 +134,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/uoWwf9o.png",
         "air_date_text": "2018年1月13日起／每週六／23時30分",
         "air_date": "2018-01-13",
+        "episode_count": 24,
         "tags": [
             "原創作品",
             "新作",
@@ -273,6 +277,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/B70hw3o.png",
         "air_date_text": "2018年1月27日起／每週六深夜／24時0分",
         "air_date": "2018-01-27",
+        "episode_count": null,
         "tags": [
             "改編作品",
             "新作"
@@ -357,12 +362,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/PP6bBdp.jpg",
         "air_date_text": "2018年1月8日起／每週一／22時0分",
         "air_date": "2018-01-08",
+        "episode_count": 12,
         "tags": [
             "改編作品",
             "新作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "219658"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -490,12 +498,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/guOO0E2.png",
         "air_date_text": "2018年1月11日起／每週四／21時0分",
         "air_date": "2018-01-11",
+        "episode_count": 12,
         "tags": [
             "改編作品",
             "新作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "220632"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -627,6 +638,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/7tLWaxt.png",
         "air_date_text": "2018年1月12日起／每週五深夜／25時55分",
         "air_date": "2018-01-12",
+        "episode_count": 24,
         "tags": [
             "改編作品",
             "新作",
@@ -761,13 +773,16 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/To2GkQH.png",
         "air_date_text": "2018年1月2日起／每週二／20時30分",
         "air_date": "2018-01-02",
+        "episode_count": 13,
         "tags": [
             "原創作品",
             "新作",
             "13集"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "218708"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -871,12 +886,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/BhJQREH.png",
         "air_date_text": "2018年1月6日起／每週六深夜／24時30分",
         "air_date": "2018-01-06",
+        "episode_count": 12,
         "tags": [
             "改編作品",
             "新作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "214671"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -995,6 +1013,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/92wpgfN.png",
         "air_date_text": "2018年1月7日起／每週日／22時30分",
         "air_date": "2018-01-07",
+        "episode_count": 17,
         "tags": [
             "改編作品",
             "新作",
@@ -1096,12 +1115,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/mS95WVu.png",
         "air_date_text": "2018年1月11日起／每週四深夜／24時55分",
         "air_date": "2018-01-11",
+        "episode_count": 12,
         "tags": [
             "改編作品",
             "新作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "210458"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -1171,13 +1193,16 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/S4FYimz.jpg",
         "air_date_text": "2018年1月9日起／每週二／22時30分",
         "air_date": "2018-01-09",
+        "episode_count": 13,
         "tags": [
             "改編作品",
             "續作",
             "13集"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "211027"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -1261,13 +1286,16 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/Q0xr3GW.png",
         "air_date_text": "2018年1月4日起／每週四／20時0分",
         "air_date": "2018-01-04",
+        "episode_count": 12,
         "tags": [
             "改編作品",
             "新作",
             "12集"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "212146"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -1379,13 +1407,16 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/DXi0lJ2.png",
         "air_date_text": "2018年1月4日起／每週四／23時0分",
         "air_date": "2018-01-04",
+        "episode_count": 22,
         "tags": [
             "改編作品",
             "新作",
             "12集"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "207195"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -1452,13 +1483,16 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/e0WcT9B.png",
         "air_date_text": "2018年1月6日起／每週六深夜／25時0分",
         "air_date": "2018-01-06",
+        "episode_count": 16,
         "tags": [
             "改編作品",
             "新作",
             "12集"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "212279"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -1541,12 +1575,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/k1hEfyl.png",
         "air_date_text": "2018年1月8日起／每週一／23時0分",
         "air_date": "2018-01-08",
+        "episode_count": 12,
         "tags": [
             "改編作品",
             "新作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "219200"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -1632,6 +1669,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/v7LtdoA.jpg",
         "air_date_text": "2018年1月5日起／每週五／21時30分",
         "air_date": "2018-01-05",
+        "episode_count": 24,
         "tags": [
             "原創作品",
             "新作",
@@ -1771,12 +1809,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/D86jWCg.png",
         "air_date_text": "2018年1月11日起／每週四／23時30分",
         "air_date": "2018-01-11",
+        "episode_count": 12,
         "tags": [
             "改編作品",
             "新作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "200589"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -1871,13 +1912,16 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/pX6h2po.png",
         "air_date_text": "2018年1月7日起／每週日／22時30分",
         "air_date": "2018-01-07",
+        "episode_count": 12,
         "tags": [
             "改編作品",
             "新作",
             "12集"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "211066"
+        },
         "themes": [
             {
                 "type": "OP",
@@ -2016,12 +2060,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/b6/b60d3800975defa80b1d3bc416964227/e3b83a84fe81f48990f757ad1dd9cbefdca9f5cc3ff0235228b14523eefce132.jpg",
         "air_date_text": "2018年1月6日起／每週六／23時30分",
         "air_date": "2018-01-06",
+        "episode_count": 12,
         "tags": [
             "改編作品",
             "新作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "198098"
+        },
         "themes": [
             {
                 "type": "OP",
@@ -2127,6 +2174,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/A3IisvE.png",
         "air_date_text": "2018年1月5日起／每週五深夜／24時0分",
         "air_date": "2018-01-05",
+        "episode_count": 24,
         "tags": [
             "改編作品",
             "新作",
@@ -2237,6 +2285,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/6BPGZdl.png",
         "air_date_text": "2018年1月7日起／每週日／7時30分",
         "air_date": "2018-01-07",
+        "episode_count": 22,
         "tags": [
             "改編作品",
             "續作",
@@ -2354,12 +2403,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/DV8FeQC.png",
         "air_date_text": "2018年1月12日起／每週五／22時30分",
         "air_date": "2018-01-12",
+        "episode_count": 12,
         "tags": [
             "改編作品",
             "新作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "219568"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -2458,6 +2510,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/OdrWboW.png",
         "air_date_text": "2018年1月8日起／每週一深夜／26時5分",
         "air_date": "2018-01-08",
+        "episode_count": 25,
         "tags": [
             "改編作品",
             "續作",
@@ -2591,6 +2644,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/z5ValXg.png",
         "air_date_text": "2018年1月7日起／每週日深夜／24時0分",
         "air_date": "2018-01-07",
+        "episode_count": null,
         "tags": [
             "改編作品",
             "續作"
@@ -2684,12 +2738,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/inkaeN0.png",
         "air_date_text": "2018年1月12日起／每週五深夜／26時25分",
         "air_date": "2018-01-12",
+        "episode_count": 12,
         "tags": [
             "改編作品",
             "新作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "210230"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -2839,12 +2896,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/KYlHEzt.png",
         "air_date_text": "2018年1月7日起／每週日深夜／25時35分",
         "air_date": "2018-01-07",
+        "episode_count": 12,
         "tags": [
             "改編作品",
             "續作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "232884"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -2944,6 +3004,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/fuI246Q.png",
         "air_date_text": "2018年1月6日起／每週六／6時30分",
         "air_date": "2018-01-06",
+        "episode_count": 24,
         "tags": [
             "改編作品",
             "續作",
@@ -3078,6 +3139,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/JZ3JQHQ.png",
         "air_date_text": "2018年1月16日起／每週二深夜／25時35分",
         "air_date": "2018-01-16",
+        "episode_count": 24,
         "tags": [
             "改編作品",
             "續作",
@@ -3179,12 +3241,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/r7LkDeT.png",
         "air_date_text": "2018年1月11日起／每週四深夜／26時28分",
         "air_date": "2018-01-11",
+        "episode_count": 12,
         "tags": [
             "改編作品",
             "續作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "221490"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -3295,12 +3360,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/huAbKqr.png",
         "air_date_text": "2018年1月11日起／每週四深夜／26時43分",
         "air_date": "2018-01-11",
+        "episode_count": 12,
         "tags": [
             "改編作品",
             "新作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "221819"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -3378,12 +3446,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/lQv0FPw.png",
         "air_date_text": "2018年1月11日起／每週四深夜／25時58分",
         "air_date": "2018-01-11",
+        "episode_count": 12,
         "tags": [
             "改編作品",
             "新作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "218440"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -3451,12 +3522,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/lo3HLVf.png",
         "air_date_text": "2018年1月10日起／每週三／22時30分",
         "air_date": "2018-01-10",
+        "episode_count": 12,
         "tags": [
             "改編作品",
             "新作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "220458"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -3543,13 +3617,16 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/lPbXABl.png",
         "air_date_text": "2018年1月8日起／每週一深夜／24時0分",
         "air_date": "2018-01-08",
+        "episode_count": 24,
         "tags": [
             "改編作品",
             "續作",
             "24集"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "220187"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -3697,6 +3774,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/r1XLt2e.png",
         "air_date_text": "2018年1月12日起／每週五／22時0分",
         "air_date": "2018-01-12",
+        "episode_count": 23,
         "tags": [
             "改編作品",
             "續作",
@@ -3801,12 +3879,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/rkPfXaP.png",
         "air_date_text": "2018年1月26日起／每週五深夜／24時25分",
         "air_date": "2018-01-26",
+        "episode_count": 12,
         "tags": [
             "原創作品",
             "續作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "230764"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -3917,12 +3998,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/ldIUYx7.jpg",
         "air_date_text": "2018年1月7日起／每週日深夜／24時30分",
         "air_date": "2018-01-07",
+        "episode_count": 12,
         "tags": [
             "改編作品",
             "新作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "228026"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -4017,13 +4101,16 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/3ZlNkJh.jpg",
         "air_date_text": "2018年1月12日起／每週五／21時0分",
         "air_date": "2018-01-12",
+        "episode_count": 13,
         "tags": [
             "改編作品",
             "新作",
             "12集"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "221726"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -4144,13 +4231,16 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/ZuMObcZ.png",
         "air_date_text": "2018年1月6日起／每週六／22時0分",
         "air_date": "2018-01-06",
+        "episode_count": 12,
         "tags": [
             "原創作品",
             "新作",
             "12集"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "207932"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -4241,6 +4331,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/UdnT3Up.png",
         "air_date_text": "2018年1月9日起／每週二深夜／25時40分",
         "air_date": "2018-01-09",
+        "episode_count": 24,
         "tags": [
             "改編作品",
             "續作",
@@ -4359,6 +4450,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/GYLzWvP.png",
         "air_date_text": "2018年1月13日起／每週六／21時0分",
         "air_date": "2018-01-13",
+        "episode_count": null,
         "tags": [
             "改編作品",
             "續作"
@@ -4475,6 +4567,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/ztVk1Ym.png",
         "air_date_text": "2018年1月5日起／每週五／22時30分",
         "air_date": "2018-01-05",
+        "episode_count": null,
         "tags": [
             "改編作品",
             "新作",
@@ -4544,13 +4637,16 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/lnyq7Tb.png",
         "air_date_text": "2018年1月7日起／每週日／23時0分",
         "air_date": "2018-01-07",
+        "episode_count": 13,
         "tags": [
             "改編作品",
             "新作",
             "12集"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "211844"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -4644,6 +4740,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/HQCo4Zt.jpg",
         "air_date_text": "2018年1月8日起／每週一深夜／25時10分",
         "air_date": "2018-01-08",
+        "episode_count": null,
         "tags": [
             "改編作品",
             "續作"
@@ -4716,12 +4813,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/9n4efVc.jpg",
         "air_date_text": "2018年1月6日起／每週六／9時30分",
         "air_date": "2018-01-06",
+        "episode_count": 16,
         "tags": [
             "改編作品",
             "新作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "227778"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -4796,6 +4896,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/5gPN0GI.png",
         "air_date_text": "2018年1月6日起／每週六／7時0分",
         "air_date": "2018-01-06",
+        "episode_count": 37,
         "tags": [
             "原創作品",
             "新作",
@@ -4899,6 +5000,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/4wfnLVD.png",
         "air_date_text": "2018年1月9日起／每週二／22時54分",
         "air_date": "2018-01-09",
+        "episode_count": null,
         "tags": [
             "改編作品",
             "新作",
@@ -5013,12 +5115,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/nhMOqsX.png",
         "air_date_text": "2018年1月7日起／每週日深夜／25時0分",
         "air_date": "2018-01-07",
+        "episode_count": null,
         "tags": [
             "改編作品",
             "新作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "230517"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -5093,12 +5198,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/hTzsXzb.png",
         "air_date_text": "2018年1月8日起／每週一深夜／25時5分",
         "air_date": "2018-01-08",
+        "episode_count": 12,
         "tags": [
             "改編作品",
             "新作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "229165"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -5212,12 +5320,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/dvQqFik.jpg",
         "air_date_text": "2018年1月4日起／每週四／17時59分",
         "air_date": "2018-01-04",
+        "episode_count": 25,
         "tags": [
             "改編作品",
             "新作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "233609"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -5285,12 +5396,15 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/QZ9zUpQ.png",
         "air_date_text": "2018年1月5日起／每週五／21時54分",
         "air_date": "2018-01-05",
+        "episode_count": 13,
         "tags": [
             "改編作品",
             "新作"
         ],
         "streams": [],
-        "external_ids": [],
+        "external_ids": {
+            "bangumi": "229642"
+        },
         "themes": [],
         "trailers": [],
         "cast": [
@@ -5381,6 +5495,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/Gj3zcEs.jpg",
         "air_date_text": "每週二／18時25分",
         "air_date": null,
+        "episode_count": 170,
         "tags": [
             "原創作品",
             "新作",
@@ -5487,6 +5602,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/VsVfk9h.png",
         "air_date_text": "每週六深夜／25時30分",
         "air_date": null,
+        "episode_count": 24,
         "tags": [
             "原創作品",
             "新作",
@@ -5623,6 +5739,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/qzaqwMf.png",
         "air_date_text": "每週六／23時0分",
         "air_date": null,
+        "episode_count": 22,
         "tags": [
             "原創作品",
             "續作",
@@ -5734,6 +5851,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/pMHPJtI.png",
         "air_date_text": "每週一深夜／25時35分",
         "air_date": null,
+        "episode_count": 25,
         "tags": [
             "原創作品",
             "續作",
@@ -5834,6 +5952,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/TSmgU4N.png",
         "air_date_text": "每週六／17時35分",
         "air_date": null,
+        "episode_count": 25,
         "tags": [
             "原創作品",
             "續作",
@@ -5957,6 +6076,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/Omp7KUu.png",
         "air_date_text": "每週五深夜／25時23分",
         "air_date": null,
+        "episode_count": 24,
         "tags": [
             "改編作品",
             "續作",
@@ -6128,6 +6248,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/0GkLLQB.png",
         "air_date_text": "每週六／17時30分",
         "air_date": null,
+        "episode_count": 24,
         "tags": [
             "原創作品",
             "續作",
@@ -6227,6 +6348,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/2YQq5Oq.png",
         "air_date_text": "每週三／23時30分",
         "air_date": null,
+        "episode_count": 26,
         "tags": [
             "改編作品",
             "新作",
@@ -6259,6 +6381,7 @@
         "cover_image": "https://static.acgsecrets.hk/img/00/0000_oldbangumi/ogaPvUc.png",
         "air_date_text": "每週日／10時0分",
         "air_date": null,
+        "episode_count": 24,
         "tags": [
             "改編作品",
             "新作",
