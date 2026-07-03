@@ -8,7 +8,10 @@ export default defineNuxtConfig({
     head: {
       title: '動漫庫',
       htmlAttrs: { lang: 'zh-Hant' },
-      meta: [{ name: 'viewport', content: 'width=device-width, initial-scale=1.0' }]
+      meta: [
+        { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
+        { name: 'google-site-verification', content: 'KnLHCa7un3sS1ij4wsVsfqFSRwYmZBvewLOvZfD-u_4' }
+      ]
     }
   },
   runtimeConfig: {
