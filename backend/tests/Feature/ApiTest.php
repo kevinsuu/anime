@@ -38,6 +38,7 @@ final class ApiTest extends TestCase
             'description' => '魔法工房簡介',
             'image_url' => 'https://example.com/anime.jpg',
             'source' => 'test',
+            'tags' => ['奇幻', '日常'],
         ]);
 
         $create = $this->withHeader('Authorization', "Bearer {$token}")
@@ -45,7 +46,8 @@ final class ApiTest extends TestCase
 
         $create->assertCreated()
             ->assertJsonPath('item.anime.name', '尖帽子的魔法工房')
-            ->assertJsonPath('item.watched', false);
+            ->assertJsonPath('item.watched', false)
+            ->assertJsonPath('item.anime.tags', ['奇幻', '日常']);
 
         $itemId = $create->json('item.id');
 
@@ -58,7 +60,8 @@ final class ApiTest extends TestCase
         $this->withHeader('Authorization', "Bearer {$token}")
             ->getJson('/my/anime-list')
             ->assertOk()
-            ->assertJsonPath('items.0.anime.name', '尖帽子的魔法工房');
+            ->assertJsonPath('items.0.anime.name', '尖帽子的魔法工房')
+            ->assertJsonPath('items.0.anime.tags', ['奇幻', '日常']);
     }
 
     public function test_anime_index_returns_streams_aliases_and_titles(): void
