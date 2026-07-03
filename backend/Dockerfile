@@ -16,4 +16,4 @@ COPY . .
 
 EXPOSE 8080
 
-CMD ["sh", "-c", "touch .env && composer install --no-interaction --prefer-dist && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8080"]
+CMD ["sh", "-c", "composer install --no-interaction --prefer-dist && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8080"]
