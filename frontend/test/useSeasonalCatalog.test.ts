@@ -1,6 +1,23 @@
 import { describe, expect, it } from 'vitest'
-import { deriveFilterOptions, weekdayIndexOf } from '../app/composables/useSeasonalCatalog'
+import { deriveFilterOptions, isGenreTag, weekdayIndexOf } from '../app/composables/useSeasonalCatalog'
 import { normalizeAnime } from '../app/utils/normalize'
+
+describe('isGenreTag', () => {
+  it('returns true for genre/theme tags', () => {
+    expect(isGenreTag('戀愛')).toBe(true)
+    expect(isGenreTag('戰鬥')).toBe(true)
+  })
+
+  it('returns false for source/type tags', () => {
+    expect(isGenreTag('新作')).toBe(false)
+    expect(isGenreTag('漫畫改編')).toBe(false)
+    expect(isGenreTag('續作')).toBe(false)
+  })
+
+  it('returns false for season-count tags like "2季度"', () => {
+    expect(isGenreTag('2季度')).toBe(false)
+  })
+})
 
 describe('deriveFilterOptions', () => {
   it('returns empty lists when the anime list is empty', () => {

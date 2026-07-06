@@ -13,7 +13,14 @@ export const weekdayTabs = [
 ]
 
 // Tags that indicate source/type (種類)
-const SOURCE_TAGS = new Set(['新作', '續作', '漫畫改編', '小說改編', '原創作品', '遊戲改編', '跨季續播'])
+export const SOURCE_TAGS = new Set(['新作', '續作', '漫畫改編', '小說改編', '原創作品', '遊戲改編', '跨季續播'])
+
+// True for tags that represent an actual genre/theme (e.g. 戀愛/戰鬥/搞笑),
+// excluding source/type tags (新作/漫畫改編/…) and season-count tags (e.g. "2季度")
+// — both of which are metadata about the work, not a genre a user would filter by.
+export function isGenreTag(tag: string): boolean {
+  return !SOURCE_TAGS.has(tag) && !tag.match(/^\d+季度/)
+}
 
 // Map Chinese weekday char to JS getDay() index (0=Sun)
 const WEEKDAY_CHAR_TO_INDEX: Record<string, number> = {

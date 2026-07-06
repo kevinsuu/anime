@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { extractTagOptions, matchesSelectedTags } from '../app/utils/listFilters'
+import { applyListFilters, extractTagOptions, matchesSelectedTags } from '../app/utils/listFilters'
 import { normalizeListItem } from '../app/utils/normalize'
 import type { ListItem } from '../app/utils/normalize'
 
@@ -7,6 +7,17 @@ function makeItem(tags: string[], overrides: Record<string, any> = {}): ListItem
   return normalizeListItem({
     id: Math.random(),
     anime: { id: 1, name: '測試作品', tags, ...overrides },
+  })
+}
+
+// Extends makeItem with list-item-level fields (watched, collections) needed
+// for testing applyListFilters' status+tag combination.
+function makeListItem(opts: { tags: string[]; watched?: boolean; collections?: { id: number; name: string }[] }): ListItem {
+  return normalizeListItem({
+    id: Math.random(),
+    watched: opts.watched ?? false,
+    collections: opts.collections ?? [],
+    anime: { id: 1, name: '測試作品', tags: opts.tags },
   })
 }
 
@@ -36,6 +47,16 @@ describe('extractTagOptions', () => {
     expect(extractTagOptions(list)).toEqual([{ tag: '戀愛', count: 1 }])
   })
 
+  it('excludes source/type tags like 新作/漫畫改編 (not a genre)', () => {
+    const list = [makeItem(['新作', '漫畫改編', '戀愛'])]
+    expect(extractTagOptions(list)).toEqual([{ tag: '戀愛', count: 1 }])
+  })
+
+  it('excludes season-count tags like "2季度" (not a genre)', () => {
+    const list = [makeItem(['2季度', '戰鬥'])]
+    expect(extractTagOptions(list)).toEqual([{ tag: '戰鬥', count: 1 }])
+  })
+
   it('sorts options by count descending', () => {
     const list = [makeItem(['戰鬥']), makeItem(['戀愛']), makeItem(['戀愛'])]
     const options = extractTagOptions(list)
@@ -58,5 +79,59 @@ describe('matchesSelectedTags', () => {
   it('returns false when item has none of the selected tags', () => {
     const item = makeItem(['日常'])
     expect(matchesSelectedTags(item, ['戰鬥', '戀愛'])).toBe(false)
+  })
+})
+
+describe('applyListFilters', () => {
+  it('combines the watched status filter with the tag filter (AND)', () => {
+    const list = [
+      makeListItem({ tags: ['戀愛'], watched: true }),   // matches both
+      makeListItem({ tags: ['戀愛'], watched: false }),  // right genre, not watched
+      makeListItem({ tags: ['戰鬥'], watched: true }),   // watched, wrong genre
+    ]
+    const result = applyListFilters(list, 'watched', ['戀愛'])
+    expect(result).toHaveLength(1)
+    expect(result[0].watched).toBe(true)
+    expect(result[0].anime.tags).toEqual(['戀愛'])
+  })
+
+  it('combines the unwatched status filter with the tag filter (AND)', () => {
+    const list = [
+      makeListItem({ tags: ['戀愛'], watched: false }),  // matches both
+      makeListItem({ tags: ['戀愛'], watched: true }),   // right genre, watched
+      makeListItem({ tags: ['戰鬥'], watched: false }),  // unwatched, wrong genre
+    ]
+    const result = applyListFilters(list, 'unwatched', ['戀愛'])
+    expect(result).toHaveLength(1)
+    expect(result[0].watched).toBe(false)
+    expect(result[0].anime.tags).toEqual(['戀愛'])
+  })
+
+  it('combines a collection filter with the tag filter (AND)', () => {
+    const col = { id: 1, name: '我的最愛' }
+    const list = [
+      makeListItem({ tags: ['戀愛'], collections: [col] }),  // matches both
+      makeListItem({ tags: ['戀愛'], collections: [] }),      // right genre, not in collection
+      makeListItem({ tags: ['戰鬥'], collections: [col] }),   // in collection, wrong genre
+    ]
+    const result = applyListFilters(list, 'col:1', ['戀愛'])
+    expect(result).toHaveLength(1)
+    expect(result[0].anime.tags).toEqual(['戀愛'])
+  })
+
+  it('applies no tag filtering when selectedTags is empty', () => {
+    const list = [
+      makeListItem({ tags: ['戀愛'], watched: true }),
+      makeListItem({ tags: ['戰鬥'], watched: true }),
+    ]
+    expect(applyListFilters(list, 'watched', [])).toHaveLength(2)
+  })
+
+  it('returns the full list for the "all" filter with no tags selected', () => {
+    const list = [
+      makeListItem({ tags: ['戀愛'], watched: true }),
+      makeListItem({ tags: [], watched: false }),
+    ]
+    expect(applyListFilters(list, 'all', [])).toHaveLength(2)
   })
 })

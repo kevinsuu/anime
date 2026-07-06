@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import type { ListItem, Collection } from '../utils/normalize'
 import { tagColor } from '../utils/normalize'
+import { isGenreTag } from '../composables/useSeasonalCatalog'
 
 const props = defineProps<{
   item: ListItem
   collections: Collection[]
   disabled: boolean
 }>()
+
+// Only genre/theme tags are shown here — source/type tags (新作/漫畫改編/…)
+// and season-count tags aren't genres, and would be misleading alongside them.
+const genreTags = computed(() => props.item.anime.tags.filter(isGenreTag))
 
 const emit = defineEmits<{
   update: [patch: Record<string, any>]
@@ -92,9 +97,9 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
       </div>
 
       <!-- Genre tags (display only, filtering happens in the page's filter bar) -->
-      <div v-if="item.anime.tags.length > 0" class="flex flex-wrap items-center gap-1.5">
+      <div v-if="genreTags.length > 0" class="flex flex-wrap items-center gap-1.5">
         <span
-          v-for="tag in item.anime.tags"
+          v-for="tag in genreTags"
           :key="tag"
           class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold cursor-default"
           :style="{ backgroundColor: tagColor(tag).bg, color: tagColor(tag).text }"

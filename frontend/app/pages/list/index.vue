@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { normalizeListItem, normalizeCollection } from '../../utils/normalize'
 import type { ListItem, Collection } from '../../utils/normalize'
-import { extractTagOptions, matchesSelectedTags } from '../../utils/listFilters'
+import { applyListFilters, extractTagOptions } from '../../utils/listFilters'
 import { tagColor } from '../../utils/normalize'
 
 definePageMeta({ middleware: 'auth' })
@@ -56,17 +56,7 @@ function clearTags() {
 
 const tagOptions = computed(() => extractTagOptions(list.value))
 
-const filteredList = computed(() => {
-  const f = activeFilter.value
-  let base = list.value
-  if (f === 'watched') base = list.value.filter(i => i.watched)
-  else if (f === 'unwatched') base = list.value.filter(i => !i.watched)
-  else if (f.startsWith('col:')) {
-    const colId = Number(f.slice(4))
-    base = list.value.filter(i => i.collections.some(c => c.id === colId))
-  }
-  return base.filter(i => matchesSelectedTags(i, selectedTags.value))
-})
+const filteredList = computed(() => applyListFilters(list.value, activeFilter.value, selectedTags.value))
 
 // ── List operations ──
 async function loadAll() {
