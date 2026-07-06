@@ -53,7 +53,7 @@ export function deriveFilterOptions(animeList: Anime[]) {
     for (const tag of anime.tags) {
       if (SOURCE_TAGS.has(tag)) {
         sourceCounts[tag] = (sourceCounts[tag] ?? 0) + 1
-      } else if (!tag.match(/^\d+季度/)) {
+      } else if (isGenreTag(tag)) {
         genreCounts[tag] = (genreCounts[tag] ?? 0) + 1
       }
     }
