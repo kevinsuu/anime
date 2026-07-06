@@ -46,6 +46,8 @@ services:
       BANGUMI_API_BASE_URL: ${BANGUMI_API_BASE_URL}
       BANGUMI_USER_AGENT: ${BANGUMI_USER_AGENT}
       HTTP_TIMEOUT_SECONDS: ${HTTP_TIMEOUT_SECONDS}
+    volumes:
+      - backend-storage-public:/app/storage/app/public
     ports:
       - "127.0.0.1:8080:8080"
     depends_on:
@@ -86,6 +88,8 @@ services:
       BANGUMI_API_BASE_URL: ${BANGUMI_API_BASE_URL}
       BANGUMI_USER_AGENT: ${BANGUMI_USER_AGENT}
       HTTP_TIMEOUT_SECONDS: ${HTTP_TIMEOUT_SECONDS}
+    volumes:
+      - backend-storage-public:/app/storage/app/public
     depends_on:
       mysql:
         condition: service_healthy
@@ -102,3 +106,4 @@ services:
 
 volumes:
   mysql-data:
+  backend-storage-public:
