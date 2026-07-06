@@ -62,6 +62,13 @@ final class ApiTest extends TestCase
             ->assertOk()
             ->assertJsonPath('items.0.anime.name', '尖帽子的魔法工房')
             ->assertJsonPath('items.0.anime.tags', ['奇幻', '日常']);
+
+        $publicSlug = $login->json('user.public_slug');
+
+        $this->getJson("/public/lists/{$publicSlug}")
+            ->assertOk()
+            ->assertJsonPath('items.0.anime.name', '尖帽子的魔法工房')
+            ->assertJsonPath('items.0.anime.tags', ['奇幻', '日常']);
     }
 
     public function test_anime_index_returns_streams_aliases_and_titles(): void
