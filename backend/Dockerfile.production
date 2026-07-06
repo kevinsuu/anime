@@ -1,8 +1,10 @@
 FROM php:8.4-fpm AS base
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends unzip git nginx curl \
+    && apt-get install -y --no-install-recommends unzip git nginx curl libmagickwand-dev \
     && docker-php-ext-install pdo_mysql opcache \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick \
     && rm -rf /var/lib/apt/lists/*
 
 RUN { \
@@ -31,6 +33,7 @@ RUN rm -f /etc/nginx/sites-enabled/default \
         /app/storage/framework/testing \
         /app/storage/framework/views \
         /app/storage/logs \
+        /app/storage/app/public/covers \
     && chown -R www-data:www-data /app/storage /app/bootstrap/cache
 
 EXPOSE 8080
