@@ -20,4 +20,16 @@ if (! is_file($envPath)) {
     });
 }
 
+// phpunit.xml's <env ... force="true"> only updates putenv()/$_ENV, not
+// $_SERVER — but Laravel's env() helper (vlucas/phpdotenv Repository) reads
+// $_SERVER first. Without this, force="true" silently does nothing whenever
+// docker-compose's environment: block has already set the same variable at
+// the container/process level (e.g. DB_CONNECTION=mysql, CACHE_STORE=file):
+// $_SERVER keeps the container's real value and RefreshDatabase/Cache tests
+// end up running against the actual dev database/cache instead of the
+// isolated sqlite:memory / array overrides declared in phpunit.xml.
+foreach ($_ENV as $key => $value) {
+    $_SERVER[$key] = $value;
+}
+
 require dirname(__DIR__).'/vendor/autoload.php';

@@ -69,8 +69,6 @@ const listByAnimeId = computed(() => {
 })
 
 const filteredSeasonal = computed(() => filterSeasonal(seasonal.value, listByAnimeId.value))
-const { visibleCount, sentinelRef } = useProgressiveReveal(filteredSeasonal, 10)
-const visibleSeasonal = computed(() => filteredSeasonal.value.slice(0, visibleCount.value))
 
 // Active filter chips to display inline
 const activeChips = computed(() => {
@@ -286,25 +284,25 @@ useHead({
     </div>
 
     <template v-else>
-      <div class="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5">
-        <AnimeGridCard
-          v-for="(anime, index) in visibleSeasonal"
-          :key="anime.id"
-          :anime="anime"
-          :in-list="listByAnimeId.has(anime.id)"
-          :watched="Boolean(listByAnimeId.get(anime.id)?.watched)"
-          :list-item="listByAnimeId.get(anime.id)"
-          :collections="collections"
-          :popover-open="activePopoverAnimeId === anime.id"
-          :eager-load="index < 10"
-          @add-to-list="addAnime"
-          @mark-watched="markWatched"
-          @toggle-collection="(col) => toggleCollection(anime.id, col)"
-          @open-popover="activePopoverAnimeId = anime.id"
-          @close-popover="activePopoverAnimeId = null"
-        />
-      </div>
-      <div ref="sentinelRef" class="h-px" aria-hidden="true" />
+      <AnimeVirtualGrid :items="filteredSeasonal">
+        <template #default="{ item: anime, index }">
+          <AnimeGridCard
+            :key="anime.id"
+            :anime="anime"
+            :in-list="listByAnimeId.has(anime.id)"
+            :watched="Boolean(listByAnimeId.get(anime.id)?.watched)"
+            :list-item="listByAnimeId.get(anime.id)"
+            :collections="collections"
+            :popover-open="activePopoverAnimeId === anime.id"
+            :eager-load="index < 10"
+            @add-to-list="addAnime"
+            @mark-watched="markWatched"
+            @toggle-collection="(col) => toggleCollection(anime.id, col)"
+            @open-popover="activePopoverAnimeId = anime.id"
+            @close-popover="activePopoverAnimeId = null"
+          />
+        </template>
+      </AnimeVirtualGrid>
     </template>
 
     <SeasonalFilterPanel

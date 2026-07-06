@@ -43,7 +43,7 @@ final class AnimeImportService
      */
     public function importRecord(array $record, string $source = 'acgsecrets'): ImportOutcome
     {
-        $payloadHash = hash('sha256', json_encode($record, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+        $payloadHash = $this->computePayloadHash($record);
 
         return DB::transaction(function () use ($record, $payloadHash, $source): ImportOutcome {
             $anime = $this->resolveAnime($record);
@@ -88,6 +88,31 @@ final class AnimeImportService
 
             return new ImportOutcome($anime->refresh(), wasUnchanged: false);
         });
+    }
+
+    /**
+     * @param array<string, mixed> $record
+     */
+    public function computePayloadHash(array $record): string
+    {
+        return hash('sha256', json_encode($record, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+    }
+
+    /**
+     * 判斷這筆記錄是否需要真的處理（新記錄，或內容與上次 import 不同）。
+     * 只做查找 + hash 比對，不寫入任何資料，供命令層在 dispatch job 前先過濾用。
+     *
+     * @param array<string, mixed> $record
+     */
+    public function needsImport(array $record): bool
+    {
+        $anime = $this->resolveAnime($record);
+
+        if (! $anime->exists) {
+            return true;
+        }
+
+        return $anime->import_hash !== $this->computePayloadHash($record);
     }
 
     /**

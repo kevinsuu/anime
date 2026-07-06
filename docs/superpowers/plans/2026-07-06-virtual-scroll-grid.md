@@ -212,7 +212,7 @@ export function useResponsiveGridColumns(containerRef: Ref<HTMLElement | null>, 
 - [ ] **Step 4: 執行測試，確認通過**
 
 Run: `cd /Users/sumingkai/Documents/anime/frontend && npm run test -- useResponsiveGridColumns`
-Expected: `8 passed`
+Expected: `7 passed`
 
 - [ ] **Step 5: 執行完整前端測試套件**
 

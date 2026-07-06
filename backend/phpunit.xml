@@ -18,18 +18,28 @@
         </include>
     </source>
     <php>
-        <env name="APP_ENV" value="local"/>
+        <!--
+        force="true" is required on every var that docker-compose.yml's
+        environment: block also sets (DB_CONNECTION, CACHE_STORE,
+        QUEUE_CONNECTION, SESSION_DRIVER, ...). PHPUnit 10+ only applies an
+        <env> value when the variable isn't already set in the process
+        environment; without force="true" here, the container's real
+        mysql/file/database values win over these test-only overrides, so
+        RefreshDatabase silently runs against the real dev database instead
+        of an isolated sqlite:memory connection.
+        -->
+        <env name="APP_ENV" value="local" force="true"/>
         <env name="APP_KEY" value="base64:SvqiJHNzmqzb2P4GkXwQNDqU6pMDecKto2Xrdk6yTJY="/>
         <env name="APP_MAINTENANCE_DRIVER" value="file"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="BROADCAST_CONNECTION" value="null"/>
-        <env name="CACHE_STORE" value="array"/>
-        <env name="DB_CONNECTION" value="sqlite"/>
-        <env name="DB_DATABASE" value=":memory:"/>
-        <env name="DB_URL" value=""/>
+        <env name="CACHE_STORE" value="array" force="true"/>
+        <env name="DB_CONNECTION" value="sqlite" force="true"/>
+        <env name="DB_DATABASE" value=":memory:" force="true"/>
+        <env name="DB_URL" value="" force="true"/>
         <env name="MAIL_MAILER" value="array"/>
-        <env name="QUEUE_CONNECTION" value="sync"/>
-        <env name="SESSION_DRIVER" value="array"/>
+        <env name="QUEUE_CONNECTION" value="sync" force="true"/>
+        <env name="SESSION_DRIVER" value="array" force="true"/>
         <env name="PULSE_ENABLED" value="false"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
         <env name="NIGHTWATCH_ENABLED" value="false"/>

@@ -44,9 +44,6 @@ const pagedCatalog = computed(() => {
   const start = (page.value - 1) * PAGE_SIZE
   return catalog.value.slice(start, start + PAGE_SIZE)
 })
-const { visibleCount, sentinelRef } = useProgressiveReveal(pagedCatalog, 10)
-const visiblePagedCatalog = computed(() => pagedCatalog.value.slice(0, visibleCount.value))
-
 watch(page, () => {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 })
@@ -177,21 +174,21 @@ useHead({
     </div>
 
     <template v-else>
-      <div class="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5">
-        <AnimeGridCard
-          v-for="(anime, index) in visiblePagedCatalog"
-          :key="anime.id"
-          :anime="anime"
-          :in-list="false"
-          :watched="false"
-          :collections="[]"
-          :popover-open="false"
-          :eager-load="index < 10"
-          @add-to-list="addAnime"
-          @mark-watched="addAnime"
-        />
-      </div>
-      <div ref="sentinelRef" class="h-px" aria-hidden="true" />
+      <AnimeVirtualGrid :items="pagedCatalog">
+        <template #default="{ item: anime, index }">
+          <AnimeGridCard
+            :key="anime.id"
+            :anime="anime"
+            :in-list="false"
+            :watched="false"
+            :collections="[]"
+            :popover-open="false"
+            :eager-load="index < 10"
+            @add-to-list="addAnime"
+            @mark-watched="addAnime"
+          />
+        </template>
+      </AnimeVirtualGrid>
 
       <!-- Pagination -->
       <div v-if="totalPages > 1" class="flex items-center justify-center gap-2 pt-2">

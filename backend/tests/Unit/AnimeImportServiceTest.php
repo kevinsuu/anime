@@ -98,6 +98,42 @@ final class AnimeImportServiceTest extends TestCase
         $this->assertEquals($firstUpdatedAt, Anime::first()->updated_at);
     }
 
+    public function test_compute_payload_hash_matches_internal_import_hash(): void
+    {
+        $service = app(AnimeImportService::class);
+        $record = $this->record();
+
+        $service->importRecord($record);
+
+        $this->assertSame($service->computePayloadHash($record), Anime::first()->import_hash);
+    }
+
+    public function test_needs_import_returns_true_for_new_record(): void
+    {
+        $service = app(AnimeImportService::class);
+
+        $this->assertTrue($service->needsImport($this->record()));
+    }
+
+    public function test_needs_import_returns_false_for_unchanged_existing_record(): void
+    {
+        $service = app(AnimeImportService::class);
+        $record = $this->record();
+
+        $service->importRecord($record);
+
+        $this->assertFalse($service->needsImport($record));
+    }
+
+    public function test_needs_import_returns_true_when_record_changed(): void
+    {
+        $service = app(AnimeImportService::class);
+
+        $service->importRecord($this->record());
+
+        $this->assertTrue($service->needsImport($this->record(['summary' => '更新後的大綱'])));
+    }
+
     public function test_import_record_generates_cover_thumbnail(): void
     {
         Storage::fake('public');
