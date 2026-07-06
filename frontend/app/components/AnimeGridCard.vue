@@ -28,82 +28,6 @@ const imageLoaded = ref(props.eagerLoad)
 const imageError = ref(false)
 const imgEl = ref<HTMLImageElement | null>(null)
 
-// --- TEMP image-loading debug (enable with ?imgdebug=1) -----------------
-// Registers each mounted card into a global registry so the user can dump the
-// live state of every card while a blank one is on screen, and logs each state
-// transition. Remove once the blank-card issue is diagnosed.
-const imgDebug = import.meta.client && new URLSearchParams(location.search).has('imgdebug')
-
-function dbgSnapshot() {
-  const el = imgEl.value
-  const card = cardRef.value
-  // Does the grey placeholder div actually exist in the DOM right now?
-  const placeholder = card?.querySelector('[data-imgph]') as HTMLElement | null
-  return {
-    id: props.anime.id,
-    name: props.anime.name.slice(0, 8),
-    hasUrl: Boolean(props.anime.imageUrl),
-    shouldLoad: shouldLoad.value,
-    imageLoaded: imageLoaded.value,
-    imageError: imageError.value,
-    imgExists: Boolean(el),
-    imgSrc: el?.getAttribute('src') || null,
-    complete: el?.complete ?? null,
-    naturalW: el?.naturalWidth ?? null,
-    phExists: Boolean(placeholder),
-    phBg: placeholder ? getComputedStyle(placeholder).backgroundColor : null,
-    rectTop: card ? Math.round(card.getBoundingClientRect().top) : null,
-    rectH: card ? Math.round(card.getBoundingClientRect().height) : null,
-  }
-}
-
-if (imgDebug) {
-  const g = window as any
-  g.__cardDebug ??= new Map()
-
-  function dumpBlanks(reason: string) {
-    const rows = [...g.__cardDebug.values()].map((fn: any) => fn())
-    // A card is "blank" if it's on screen, has a url, isn't errored, yet has no
-    // painted image (either not revealed, or the browser has no pixels for it).
-    const blank = rows.filter((r: any) =>
-      r.hasUrl && !r.imageError && r.rectTop !== null &&
-      r.rectTop > -400 && r.rectTop < (window.innerHeight + 400) &&
-      !(r.imageLoaded && r.complete && r.naturalW > 0))
-    if (blank.length) {
-      console.warn(`[imgdebug:${reason}] ${blank.length} on-screen blank card(s). Sample of first 6 (plain text):`)
-      for (const r of blank.slice(0, 6)) {
-        console.log(
-          `#${r.id} "${r.name}" | shouldLoad=${r.shouldLoad} loaded=${r.imageLoaded} err=${r.imageError}` +
-          ` | imgExists=${r.imgExists} src=${r.imgSrc ? 'SET' : 'NULL'} complete=${r.complete} naturalW=${r.naturalW}` +
-          ` | placeholder: exists=${r.phExists} bg=${r.phBg}` +
-          ` | rectTop=${r.rectTop} rectH=${r.rectH}`,
-        )
-      }
-    }
-    return blank
-  }
-
-  onMounted(() => {
-    g.__cardDebug.set(props.anime.id, dbgSnapshot)
-    if (!g.__dumpCards) {
-      g.__dumpCards = () => { console.table([...g.__cardDebug.values()].map((fn: any) => fn())); return dumpBlanks('manual') }
-      // Auto-detect: sample shortly after each scroll settles so we catch the
-      // blank frame without you having to type anything mid-scroll.
-      let t: any
-      window.addEventListener('scroll', () => {
-        clearTimeout(t)
-        t = setTimeout(() => dumpBlanks('scroll'), 120)
-      }, { passive: true })
-      console.info('[imgdebug] enabled — just scroll fast; blank cards auto-log. Or call __dumpCards() manually (two underscores).')
-    }
-  })
-  onBeforeUnmount(() => g.__cardDebug?.delete(props.anime.id))
-  watch([shouldLoad, imageLoaded, imageError], (v) => {
-    console.debug(`[imgdebug] #${props.anime.id} ${props.anime.name.slice(0, 8)} shouldLoad=${v[0]} loaded=${v[1]} error=${v[2]}`)
-  })
-}
-// ------------------------------------------------------------------------
-
 // Reveal the image once it has loaded. We kick off `decode()` first as a
 // best-effort way to get the pixels painted before the fade-in, but never let a
 // pending/rejected decode gate visibility — `@load` already guarantees the
@@ -111,7 +35,6 @@ if (imgDebug) {
 function revealImage() {
   const el = imgEl.value
   if (!el) return
-  if (imgDebug) console.debug(`[imgdebug] #${props.anime.id} @load fired, complete=${el.complete} naturalW=${el.naturalWidth}`)
   if (el.decode) {
     el.decode().catch(() => {}).finally(() => { imageLoaded.value = true })
   } else {
