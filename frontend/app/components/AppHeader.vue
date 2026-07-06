@@ -3,9 +3,8 @@ const route = useRoute()
 const { session, isAuthed } = useSession()
 
 const navItems = [
-  { label: '總覽', to: '/', protected: false },
+  { label: '新番總覽', to: '/', protected: false },
   { label: '資料庫', to: '/catalog', protected: false },
-  { label: '本季新番', to: '/seasonal', protected: false },
   { label: '我的清單', to: '/list', protected: true },
   { label: '設定', to: '/settings', protected: true }
 ]
@@ -25,7 +24,7 @@ function targetFor(item: { to: string; protected: boolean }): string {
   <header class="sticky top-0 z-30 border-b border-gray-200 bg-white/96 backdrop-blur">
     <div class="mx-auto flex h-16 max-w-6xl items-center gap-4 px-4">
       <NuxtLink to="/" class="flex items-center gap-3 font-bold text-gray-900">
-        <img src="/favicon-180.png" alt="Anime Library" class="h-10 w-10 shrink-0 rounded-full object-cover">
+        <img src="/favicon-180.png" alt="Anime Library" class="h-10 w-10 shrink-0 rounded-2xl object-cover">
         <span class="leading-tight">
           <strong class="block">動漫庫</strong>
           <small class="block text-xs font-normal text-gray-500">Anime Library</small>

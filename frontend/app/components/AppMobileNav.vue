@@ -3,9 +3,8 @@ const route = useRoute()
 const { isAuthed } = useSession()
 
 const navItems = [
-  { label: '總覽', to: '/', icon: 'i-lucide-home', protected: false },
+  { label: '新番總覽', to: '/', icon: 'i-lucide-home', protected: false },
   { label: '資料庫', to: '/catalog', icon: 'i-lucide-search', protected: false },
-  { label: '本季新番', to: '/seasonal', icon: 'i-lucide-calendar-days', protected: false },
   { label: '我的清單', to: '/list', icon: 'i-lucide-library', protected: true },
   { label: '設定', to: '/settings', icon: 'i-lucide-settings', protected: true }
 ]
