@@ -57,7 +57,7 @@ final class AnimeController extends Controller
             ->orderBy('name')
             ->when(! $isYearScoped, fn ($builder) => $builder->limit(200))
             ->get([
-                'id', 'name', 'description', 'image_url', 'source',
+                'id', 'name', 'description', 'image_url', 'cover_image_path', 'source',
                 'season_year', 'season_code', 'air_date', 'air_date_text', 'episode_count', 'status', 'tags',
             ]);
 
