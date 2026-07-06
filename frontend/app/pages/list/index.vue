@@ -15,6 +15,7 @@ const router = useRouter()
 const toast = useToast()
 
 const list = ref<ListItem[]>([])
+const fullList = ref<ListItem[]>([])
 const collections = ref<Collection[]>([])
 const tagOptions = ref<TagOption[]>([])
 const loading = ref(false)
@@ -83,10 +84,23 @@ watch(selectedTags, async (tags) => {
 async function loadAll() {
   loading.value = true
   try {
-    const [listRes, colRes, tagsRes] = await Promise.all([api.myList(), api.myCollections(), api.myListTags()])
-    list.value = (listRes.items || []).map(normalizeListItem)
+    const initialTags = selectedTags.value
+    const [listRes, colRes, tagsRes] = await Promise.all([
+      api.myList(),
+      api.myCollections(),
+      api.myListTags(),
+    ])
+    const normalizedFullList = (listRes.items || []).map(normalizeListItem)
+    fullList.value = normalizedFullList
     collections.value = (colRes.items || []).map(normalizeCollection)
     tagOptions.value = tagsRes.tags || []
+
+    if (initialTags.length > 0) {
+      const tagRes = await api.myList({ tags: initialTags })
+      list.value = (tagRes.items || []).map(normalizeListItem)
+    } else {
+      list.value = normalizedFullList
+    }
   } catch (err: any) {
     toast.add({ title: err.message || '載入失敗', color: 'error' })
   } finally {
@@ -97,8 +111,11 @@ async function loadAll() {
 async function updateItem(item: ListItem, patch: Record<string, any>) {
   try {
     const result = await api.updateListItem(item.id, patch)
+    const normalized = normalizeListItem(result.item)
     const index = list.value.findIndex(e => e.id === item.id)
-    if (index >= 0) list.value[index] = normalizeListItem(result.item)
+    if (index >= 0) list.value[index] = normalized
+    const fullIndex = fullList.value.findIndex(e => e.id === item.id)
+    if (fullIndex >= 0) fullList.value[fullIndex] = normalized
     toast.add({ title: '清單已更新', color: 'success' })
   } catch (err: any) {
     toast.add({ title: err.message || '更新失敗', color: 'error' })
@@ -109,6 +126,7 @@ async function removeItem(item: ListItem) {
   try {
     await api.deleteListItem(item.id)
     list.value = list.value.filter(e => e.id !== item.id)
+    fullList.value = fullList.value.filter(e => e.id !== item.id)
     toast.add({ title: '已從清單移除', color: 'neutral' })
   } catch (err: any) {
     toast.add({ title: err.message || '移除失敗', color: 'error' })
@@ -168,6 +186,11 @@ async function toggleItemInCollection(item: ListItem, col: Collection) {
       await api.addToCollection(col.id, item.id)
       item.collections = [...item.collections, { id: col.id, name: col.name }]
     }
+    // `item` may be a different object reference than the corresponding entry
+    // in `fullList` (populated from a separate fetch/normalize pass), so sync
+    // the collections membership there too to keep sidebar/tag data consistent.
+    const fullItem = fullList.value.find(e => e.id === item.id)
+    if (fullItem && fullItem !== item) fullItem.collections = item.collections
     // Update collection count locally instead of refetching the full list
     const idx = collections.value.findIndex(c => c.id === col.id)
     if (idx >= 0) {
@@ -219,7 +242,7 @@ onMounted(loadAll)
           >
             <span>{{ tab.label }}</span>
             <span class="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-bold text-gray-500">
-              {{ tab.value === 'all' ? list.length : tab.value === 'watched' ? list.filter(i=>i.watched).length : list.filter(i=>!i.watched).length }}
+              {{ tab.value === 'all' ? fullList.length : tab.value === 'watched' ? fullList.filter(i=>i.watched).length : fullList.filter(i=>!i.watched).length }}
             </span>
           </button>
         </nav>
