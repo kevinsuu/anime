@@ -73,4 +73,47 @@ final class AnimeListTagFilterTest extends TestCase
 
         $this->assertCount(2, $response->json('items'));
     }
+
+    public function test_matches_anime_with_only_one_of_multiple_tags_present(): void
+    {
+        $token = $this->loginToken();
+        $this->addAnimeToList($token, '戀愛戰鬥作品', ['戀愛', '戰鬥']);
+
+        $response = $this->withHeader('Authorization', "Bearer {$token}")
+            ->getJson('/my/anime-list?tags=戀愛,搞笑')
+            ->assertOk();
+
+        $names = collect($response->json('items'))->pluck('anime.name')->all();
+        $this->assertSame(['戀愛戰鬥作品'], $names);
+    }
+
+    public function test_unknown_tag_returns_empty_list(): void
+    {
+        $token = $this->loginToken();
+        $this->addAnimeToList($token, '戀愛作品', ['戀愛']);
+
+        $response = $this->withHeader('Authorization', "Bearer {$token}")
+            ->getJson('/my/anime-list?tags=不存在')
+            ->assertOk();
+
+        $this->assertSame([], $response->json('items'));
+    }
+
+    public function test_tag_filter_only_returns_current_users_items(): void
+    {
+        $tokenA = $this->loginToken();
+
+        $loginB = $this->postJson('/auth/google', ['idToken' => 'dev:otheruser@example.com']);
+        $tokenB = $loginB->json('token');
+
+        $this->addAnimeToList($tokenA, '使用者A的戀愛作品', ['戀愛']);
+        $this->addAnimeToList($tokenB, '使用者B的戀愛作品', ['戀愛']);
+
+        $response = $this->withHeader('Authorization', "Bearer {$tokenA}")
+            ->getJson('/my/anime-list?tags=戀愛')
+            ->assertOk();
+
+        $names = collect($response->json('items'))->pluck('anime.name')->all();
+        $this->assertSame(['使用者A的戀愛作品'], $names);
+    }
 }

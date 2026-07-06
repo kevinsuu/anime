@@ -26,7 +26,10 @@ final class AnimeListController extends Controller
 
     public function index(Request $request): JsonResponse
     {
-        $tags = array_values(array_filter(explode(',', (string) $request->query('tags', ''))));
+        $tags = array_values(array_filter(
+            array_map('trim', explode(',', (string) $request->query('tags', ''))),
+            fn (string $t): bool => $t !== ''
+        ));
 
         return response()->json([
             'items' => $this->listForUser((int) $request->attributes->get('auth_user_id'), $tags),
