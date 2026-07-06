@@ -26,8 +26,10 @@ final class AnimeListController extends Controller
 
     public function index(Request $request): JsonResponse
     {
+        $tags = array_values(array_filter(explode(',', (string) $request->query('tags', ''))));
+
         return response()->json([
-            'items' => $this->listForUser((int) $request->attributes->get('auth_user_id')),
+            'items' => $this->listForUser((int) $request->attributes->get('auth_user_id'), $tags),
         ]);
     }
 
@@ -163,11 +165,20 @@ final class AnimeListController extends Controller
         return response()->json(['user' => $user->fresh()]);
     }
 
-    private function listForUser(int $userId): array
+    private function listForUser(int $userId, array $tags = []): array
     {
         return UserAnimeListItem::query()
             ->with(['anime', 'collections:id,name'])
             ->where('user_id', $userId)
+            ->when($tags !== [], function ($query) use ($tags): void {
+                $query->whereHas('anime', function ($q) use ($tags): void {
+                    $q->where(function ($q2) use ($tags): void {
+                        foreach ($tags as $tag) {
+                            $q2->orWhereJsonContains('tags', $tag);
+                        }
+                    });
+                });
+            })
             ->orderByDesc('updated_at')
             ->orderByDesc('id')
             ->get()
