@@ -50,6 +50,7 @@ services:
     volumes:
       - ./backend:/app
       - backend-vendor:/app/vendor
+      - backend-storage-public:/app/storage/app/public
     depends_on:
       mysql:
         condition: service_healthy
@@ -126,3 +127,4 @@ volumes:
   mysql-data:
   backend-vendor:
   frontend-node-modules:
+  backend-storage-public:
