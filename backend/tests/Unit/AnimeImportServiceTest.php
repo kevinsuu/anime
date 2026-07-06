@@ -6,6 +6,8 @@ use App\Models\Anime;
 use App\Models\AnimeStream;
 use App\Services\AnimeCatalog\AnimeImportService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 final class AnimeImportServiceTest extends TestCase
@@ -94,5 +96,43 @@ final class AnimeImportServiceTest extends TestCase
         $this->assertTrue($outcome->wasUnchanged);
         $this->assertSame(1, Anime::count());
         $this->assertEquals($firstUpdatedAt, Anime::first()->updated_at);
+    }
+
+    public function test_import_record_generates_cover_thumbnail(): void
+    {
+        Storage::fake('public');
+        Http::fake([
+            'static.acgsecrets.hk/*' => Http::response($this->fakeJpegBytes(), 200, ['Content-Type' => 'image/jpeg']),
+        ]);
+
+        $service = app(AnimeImportService::class);
+        $outcome = $service->importRecord($this->record());
+
+        $this->assertNotNull($outcome->anime->cover_image_path);
+        Storage::disk('public')->assertExists($outcome->anime->cover_image_path);
+    }
+
+    public function test_import_record_leaves_cover_image_path_null_when_thumbnail_generation_fails(): void
+    {
+        Storage::fake('public');
+        Http::fake([
+            'static.acgsecrets.hk/*' => Http::response('not found', 404),
+        ]);
+
+        $service = app(AnimeImportService::class);
+        $outcome = $service->importRecord($this->record());
+
+        $this->assertFalse($outcome->wasUnchanged);
+        $this->assertNull($outcome->anime->cover_image_path);
+        $this->assertSame('https://static.acgsecrets.hk/x.jpg', $outcome->anime->getRawOriginal('image_url'));
+    }
+
+    private function fakeJpegBytes(): string
+    {
+        $img = new \Imagick();
+        $img->newImage(2000, 3000, new \ImagickPixel('red'));
+        $img->setImageFormat('jpeg');
+
+        return $img->getImageBlob();
     }
 }
