@@ -6,6 +6,7 @@ use App\Exceptions\ApiException;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserAnimeListItem;
+use App\Services\Shared\GenreTags;
 use App\Services\Shared\SlugGenerator;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
@@ -28,6 +29,34 @@ final class AnimeListController extends Controller
         return response()->json([
             'items' => $this->listForUser((int) $request->attributes->get('auth_user_id')),
         ]);
+    }
+
+    public function tags(Request $request): JsonResponse
+    {
+        $userId = (int) $request->attributes->get('auth_user_id');
+
+        $counts = [];
+        UserAnimeListItem::query()
+            ->where('user_id', $userId)
+            ->with('anime:id,tags')
+            ->get()
+            ->each(function (UserAnimeListItem $item) use (&$counts): void {
+                foreach ($item->anime->tags ?? [] as $tag) {
+                    if (! GenreTags::isGenreTag($tag)) {
+                        continue;
+                    }
+                    $counts[$tag] = ($counts[$tag] ?? 0) + 1;
+                }
+            });
+
+        $tags = collect($counts)
+            ->map(fn (int $count, string $tag) => ['tag' => $tag, 'count' => $count])
+            ->values()
+            ->sortBy([['count', 'desc'], ['tag', 'asc']])
+            ->values()
+            ->all();
+
+        return response()->json(['tags' => $tags]);
     }
 
     public function store(Request $request): JsonResponse
