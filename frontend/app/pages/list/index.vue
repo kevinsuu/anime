@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { normalizeListItem, normalizeCollection } from '../../utils/normalize'
 import type { ListItem, Collection } from '../../utils/normalize'
-import { applyListFilters, extractTagOptions } from '../../utils/listFilters'
+import { applyListFilters } from '../../utils/listFilters'
+import type { TagOption } from '../../utils/listFilters'
 import { tagColor } from '../../utils/normalize'
 
 definePageMeta({ middleware: 'auth' })
@@ -15,7 +16,10 @@ const toast = useToast()
 
 const list = ref<ListItem[]>([])
 const collections = ref<Collection[]>([])
+const tagOptions = ref<TagOption[]>([])
 const loading = ref(false)
+const tagLoading = ref(false)
+let tagRequestId = 0
 
 // Active filter: 'all' | 'watched' | 'unwatched' | 'col:{id}'
 const activeFilter = computed(() => (route.query.filter as string) || 'all')
@@ -56,17 +60,33 @@ function clearTags() {
   router.push({ path: '/list', query })
 }
 
-const tagOptions = computed(() => extractTagOptions(list.value))
+const filteredList = computed(() => applyListFilters(list.value, activeFilter.value))
 
-const filteredList = computed(() => applyListFilters(list.value, activeFilter.value, selectedTags.value))
+watch(selectedTags, async (tags) => {
+  const requestId = ++tagRequestId
+  tagLoading.value = true
+  try {
+    const result = tags.length > 0
+      ? await api.myList({ tags })
+      : await api.myList()
+    if (requestId !== tagRequestId) return
+    list.value = (result.items || []).map(normalizeListItem)
+  } catch (err: any) {
+    if (requestId !== tagRequestId) return
+    toast.add({ title: err.message || '載入失敗', color: 'error' })
+  } finally {
+    if (requestId === tagRequestId) tagLoading.value = false
+  }
+})
 
 // ── List operations ──
 async function loadAll() {
   loading.value = true
   try {
-    const [listRes, colRes] = await Promise.all([api.myList(), api.myCollections()])
+    const [listRes, colRes, tagsRes] = await Promise.all([api.myList(), api.myCollections(), api.myListTags()])
     list.value = (listRes.items || []).map(normalizeListItem)
     collections.value = (colRes.items || []).map(normalizeCollection)
+    tagOptions.value = tagsRes.tags || []
   } catch (err: any) {
     toast.add({ title: err.message || '載入失敗', color: 'error' })
   } finally {
@@ -305,7 +325,7 @@ onMounted(loadAll)
         </button>
       </div>
 
-      <div v-if="loading" class="space-y-3">
+      <div v-if="loading || tagLoading" class="space-y-3">
         <div v-for="i in 5" :key="i" class="h-20 w-full animate-pulse rounded-xl bg-gray-200" />
       </div>
 
