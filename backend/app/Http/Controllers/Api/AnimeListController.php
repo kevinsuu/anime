@@ -163,6 +163,7 @@ final class AnimeListController extends Controller
                 'name' => $item->anime->name,
                 'description' => $item->anime->description,
                 'imageUrl' => $item->anime->image_url,
+                'tags' => $item->anime->tags ?? [],
             ],
         ];
     }

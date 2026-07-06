@@ -32,11 +32,19 @@ describe('normalizeAnime', () => {
       seasonYear: 2026,
       seasonCode: 'spring',
       airDate: '2026-04-05T23:00:00',
+      airDateText: '',
       episodeCount: 12,
       status: '',
+      tags: [],
       aliases: [],
       streams: [],
-      titleJa: ''
+      titleJa: '',
+      externalIds: [],
+      themes: [],
+      trailers: [],
+      cast: [],
+      staff: [],
+      links: []
     })
   })
 
