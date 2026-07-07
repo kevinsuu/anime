@@ -33,12 +33,6 @@ export interface AnimeStream {
   url: string | null
 }
 
-export interface AnimeExternalId {
-  provider: string
-  external_id: string
-  url: string | null
-}
-
 export interface AnimeTheme {
   type: string
   title: string
@@ -82,7 +76,6 @@ export interface Anime {
   aliases: string[]
   streams: AnimeStream[]
   titleJa: string
-  externalIds: AnimeExternalId[]
   themes: AnimeTheme[]
   trailers: AnimeTrailer[]
   cast: AnimeCastEntry[]
@@ -115,13 +108,6 @@ export function normalizeAnime(item: Record<string, any> = {}): Anime {
     titleJa: repairText(
       (Array.isArray(item.titles) ? item.titles.find((t: any) => t.locale === 'ja')?.title : '') || ''
     ),
-    externalIds: Array.isArray(item.external_ids)
-      ? item.external_ids.map((e: any) => ({
-          provider: e.provider,
-          external_id: e.external_id,
-          url: e.url || null
-        }))
-      : [],
     themes: Array.isArray(item.themes)
       ? item.themes.map((t: any) => ({ type: t.type || '', title: t.title || '', artist: t.artist || '' }))
       : [],

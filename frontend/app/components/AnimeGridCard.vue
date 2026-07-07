@@ -6,10 +6,12 @@ const props = withDefaults(defineProps<{
   inList: boolean
   watched: boolean
   listItem?: ListItem
-  collections: Collection[]
-  popoverOpen: boolean
+  collections?: Collection[]
+  popoverOpen?: boolean
   eagerLoad?: boolean
 }>(), {
+  collections: () => [],
+  popoverOpen: false,
   eagerLoad: false
 })
 

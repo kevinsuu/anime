@@ -1,23 +1,6 @@
 <script setup lang="ts">
-const route = useRoute()
 const { session, isAuthed } = useSession()
-
-const navItems = [
-  { label: '新番總覽', to: '/', protected: false },
-  { label: '資料庫', to: '/catalog', protected: false },
-  { label: '我的清單', to: '/list', protected: true },
-  { label: '設定', to: '/settings', protected: true }
-]
-
-function isActive(path: string): boolean {
-  if (path === '/list') return route.path.startsWith('/list')
-  if (path === '/') return route.path === '/' || route.path === '/seasonal'
-  return route.path === path
-}
-
-function targetFor(item: { to: string; protected: boolean }): string {
-  return item.protected && !isAuthed.value ? '/login' : item.to
-}
+const { navItems, isActive, targetFor } = useNav()
 </script>
 
 <template>

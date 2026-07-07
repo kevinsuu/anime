@@ -2,24 +2,20 @@
 const route = useRoute()
 const api = useApi()
 
-const data = ref<{ name: string; count: number; list_items: any[] } | null>(null)
-const loading = ref(true)
-const error = ref('')
-
 const seasonMonthMap: Record<string, string> = {
   winter: '1月', spring: '4月', summer: '7月', fall: '10月'
 }
 
-onMounted(async () => {
-  try {
-    const result = await api.publicCollection(route.params.slug as string)
-    data.value = result.item
-  } catch (err: any) {
-    error.value = err.message || '找不到此清單'
-  } finally {
-    loading.value = false
+// SSR-fetched (public endpoint) so the shared collection link paints its
+// content immediately instead of a client-side loading spinner.
+const { data, pending: loading, error: fetchError } = await useAsyncData(
+  `public-collection-${route.params.slug}`,
+  async () => (await api.publicCollection(route.params.slug as string)).item as {
+    name: string; count: number; list_items: any[]
   }
-})
+)
+
+const error = computed(() => fetchError.value ? (fetchError.value.message || '找不到此清單') : '')
 </script>
 
 <template>

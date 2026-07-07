@@ -181,8 +181,6 @@ useHead({
             :anime="anime"
             :in-list="false"
             :watched="false"
-            :collections="[]"
-            :popover-open="false"
             :eager-load="index < 10"
             @add-to-list="addAnime"
             @mark-watched="addAnime"

@@ -104,7 +104,6 @@ export function useApi() {
   }
 
   return {
-    apiBaseUrl,
     login: (idToken: string) => request('/auth/google', { method: 'POST', body: JSON.stringify({ idToken }) }),
     logout: () => request('/auth/logout', { method: 'POST' }),
     me: () => request('/me'),

@@ -85,22 +85,22 @@ async function loadAll() {
   loading.value = true
   try {
     const initialTags = selectedTags.value
-    const [listRes, colRes, tagsRes] = await Promise.all([
+    // Fire every initial request in parallel — including the tag-filtered list
+    // when a `tags` query param is present — instead of waiting for the full
+    // list before kicking off the filtered fetch.
+    const [listRes, colRes, tagsRes, filteredRes] = await Promise.all([
       api.myList(),
       api.myCollections(),
       api.myListTags(),
+      initialTags.length > 0 ? api.myList({ tags: initialTags }) : Promise.resolve(null),
     ])
     const normalizedFullList = (listRes.items || []).map(normalizeListItem)
     fullList.value = normalizedFullList
     collections.value = (colRes.items || []).map(normalizeCollection)
     tagOptions.value = tagsRes.tags || []
-
-    if (initialTags.length > 0) {
-      const tagRes = await api.myList({ tags: initialTags })
-      list.value = (tagRes.items || []).map(normalizeListItem)
-    } else {
-      list.value = normalizedFullList
-    }
+    list.value = filteredRes
+      ? (filteredRes.items || []).map(normalizeListItem)
+      : normalizedFullList
   } catch (err: any) {
     toast.add({ title: err.message || '載入失敗', color: 'error' })
   } finally {

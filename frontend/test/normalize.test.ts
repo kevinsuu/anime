@@ -39,7 +39,6 @@ describe('normalizeAnime', () => {
       aliases: [],
       streams: [],
       titleJa: '',
-      externalIds: [],
       themes: [],
       trailers: [],
       cast: [],

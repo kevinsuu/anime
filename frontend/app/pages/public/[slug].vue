@@ -1,25 +1,25 @@
 <script setup lang="ts">
 import { normalizeListItem } from '../../utils/normalize'
-import type { ListItem } from '../../utils/normalize'
 
 const route = useRoute()
 const api = useApi()
 
-const publicUser = ref<any>(null)
-const items = ref<ListItem[]>([])
-const error = ref('')
-
-async function load() {
-  try {
+// SSR-fetched (public endpoint, no auth needed) so the shared link renders
+// with content on first paint instead of blank-then-hydrate-then-fetch.
+const { data, error: fetchError } = await useAsyncData(
+  `public-list-${route.params.slug}`,
+  async () => {
     const result = await api.publicList(route.params.slug as string)
-    publicUser.value = result.user
-    items.value = (result.items || []).map(normalizeListItem)
-  } catch (err: any) {
-    error.value = err.message || '載入失敗'
+    return {
+      user: result.user,
+      items: (result.items || []).map(normalizeListItem),
+    }
   }
-}
+)
 
-onMounted(load)
+const publicUser = computed(() => data.value?.user ?? null)
+const items = computed(() => data.value?.items ?? [])
+const error = computed(() => fetchError.value ? (fetchError.value.message || '載入失敗') : '')
 </script>
 
 <template>
@@ -42,7 +42,6 @@ onMounted(load)
         :anime="item.anime"
         :in-list="false"
         :watched="item.watched"
-        @add="() => {}"
       />
     </div>
   </div>

@@ -1,23 +1,5 @@
 <script setup lang="ts">
-const route = useRoute()
-const { isAuthed } = useSession()
-
-const navItems = [
-  { label: '新番總覽', to: '/', icon: 'i-lucide-home', protected: false },
-  { label: '資料庫', to: '/catalog', icon: 'i-lucide-search', protected: false },
-  { label: '我的清單', to: '/list', icon: 'i-lucide-library', protected: true },
-  { label: '設定', to: '/settings', icon: 'i-lucide-settings', protected: true }
-]
-
-function isActive(path: string): boolean {
-  if (path === '/list') return route.path.startsWith('/list')
-  if (path === '/') return route.path === '/' || route.path === '/seasonal'
-  return route.path === path
-}
-
-function targetFor(item: { to: string; protected: boolean }): string {
-  return item.protected && !isAuthed.value ? '/login' : item.to
-}
+const { navItems, isActive, targetFor } = useNav()
 </script>
 
 <template>
