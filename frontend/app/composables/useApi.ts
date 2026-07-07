@@ -117,7 +117,11 @@ export function useApi() {
       return request(`/anime${queryString ? `?${queryString}` : ''}`)
     },
     getAnime: (id: number) => request(`/anime/${id}`),
-    myList: () => request('/my/anime-list'),
+    myList: (params?: { tags?: string[] }) => {
+      const qs = params?.tags?.length ? `?tags=${encodeURIComponent(params.tags.join(','))}` : ''
+      return request(`/my/anime-list${qs}`)
+    },
+    myListTags: () => request('/my/anime-list/tags'),
     addToList: (animeId: number) => request('/my/anime-list', { method: 'POST', body: JSON.stringify({ animeId }) }),
     updateListItem: (id: number, payload: Record<string, any>) => request(`/my/anime-list/${id}`, { method: 'PATCH', body: JSON.stringify(payload) }),
     deleteListItem: (id: number) => request(`/my/anime-list/${id}`, { method: 'DELETE' }),

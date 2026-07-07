@@ -6,6 +6,7 @@ use App\Exceptions\ApiException;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserAnimeListItem;
+use App\Services\Shared\GenreTags;
 use App\Services\Shared\SlugGenerator;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
@@ -25,9 +26,42 @@ final class AnimeListController extends Controller
 
     public function index(Request $request): JsonResponse
     {
+        $tags = array_values(array_filter(
+            array_map('trim', explode(',', (string) $request->query('tags', ''))),
+            fn (string $t): bool => $t !== ''
+        ));
+
         return response()->json([
-            'items' => $this->listForUser((int) $request->attributes->get('auth_user_id')),
+            'items' => $this->listForUser((int) $request->attributes->get('auth_user_id'), $tags),
         ]);
+    }
+
+    public function tags(Request $request): JsonResponse
+    {
+        $userId = (int) $request->attributes->get('auth_user_id');
+
+        $counts = [];
+        UserAnimeListItem::query()
+            ->where('user_id', $userId)
+            ->with('anime:id,tags')
+            ->get()
+            ->each(function (UserAnimeListItem $item) use (&$counts): void {
+                foreach ($item->anime->tags ?? [] as $tag) {
+                    if (! GenreTags::isGenreTag($tag)) {
+                        continue;
+                    }
+                    $counts[$tag] = ($counts[$tag] ?? 0) + 1;
+                }
+            });
+
+        $tags = collect($counts)
+            ->map(fn (int $count, string $tag) => ['tag' => $tag, 'count' => $count])
+            ->values()
+            ->sortBy([['count', 'desc'], ['tag', 'asc']])
+            ->values()
+            ->all();
+
+        return response()->json(['tags' => $tags]);
     }
 
     public function store(Request $request): JsonResponse
@@ -134,11 +168,20 @@ final class AnimeListController extends Controller
         return response()->json(['user' => $user->fresh()]);
     }
 
-    private function listForUser(int $userId): array
+    private function listForUser(int $userId, array $tags = []): array
     {
         return UserAnimeListItem::query()
             ->with(['anime', 'collections:id,name'])
             ->where('user_id', $userId)
+            ->when($tags !== [], function ($query) use ($tags): void {
+                $query->whereHas('anime', function ($q) use ($tags): void {
+                    $q->where(function ($q2) use ($tags): void {
+                        foreach ($tags as $tag) {
+                            $q2->orWhereJsonContains('tags', $tag);
+                        }
+                    });
+                });
+            })
             ->orderByDesc('updated_at')
             ->orderByDesc('id')
             ->get()

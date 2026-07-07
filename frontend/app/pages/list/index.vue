@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { normalizeListItem, normalizeCollection } from '../../utils/normalize'
 import type { ListItem, Collection } from '../../utils/normalize'
-import { applyListFilters, extractTagOptions } from '../../utils/listFilters'
+import { applyListFilters } from '../../utils/listFilters'
+import type { TagOption } from '../../utils/listFilters'
 import { tagColor } from '../../utils/normalize'
 
 definePageMeta({ middleware: 'auth' })
@@ -14,8 +15,12 @@ const router = useRouter()
 const toast = useToast()
 
 const list = ref<ListItem[]>([])
+const fullList = ref<ListItem[]>([])
 const collections = ref<Collection[]>([])
+const tagOptions = ref<TagOption[]>([])
 const loading = ref(false)
+const tagLoading = ref(false)
+let tagRequestId = 0
 
 // Active filter: 'all' | 'watched' | 'unwatched' | 'col:{id}'
 const activeFilter = computed(() => (route.query.filter as string) || 'all')
@@ -56,17 +61,46 @@ function clearTags() {
   router.push({ path: '/list', query })
 }
 
-const tagOptions = computed(() => extractTagOptions(list.value))
+const filteredList = computed(() => applyListFilters(list.value, activeFilter.value))
 
-const filteredList = computed(() => applyListFilters(list.value, activeFilter.value, selectedTags.value))
+watch(selectedTags, async (tags) => {
+  const requestId = ++tagRequestId
+  tagLoading.value = true
+  try {
+    const result = tags.length > 0
+      ? await api.myList({ tags })
+      : await api.myList()
+    if (requestId !== tagRequestId) return
+    list.value = (result.items || []).map(normalizeListItem)
+  } catch (err: any) {
+    if (requestId !== tagRequestId) return
+    toast.add({ title: err.message || '載入失敗', color: 'error' })
+  } finally {
+    if (requestId === tagRequestId) tagLoading.value = false
+  }
+})
 
 // ── List operations ──
 async function loadAll() {
   loading.value = true
   try {
-    const [listRes, colRes] = await Promise.all([api.myList(), api.myCollections()])
-    list.value = (listRes.items || []).map(normalizeListItem)
+    const initialTags = selectedTags.value
+    const [listRes, colRes, tagsRes] = await Promise.all([
+      api.myList(),
+      api.myCollections(),
+      api.myListTags(),
+    ])
+    const normalizedFullList = (listRes.items || []).map(normalizeListItem)
+    fullList.value = normalizedFullList
     collections.value = (colRes.items || []).map(normalizeCollection)
+    tagOptions.value = tagsRes.tags || []
+
+    if (initialTags.length > 0) {
+      const tagRes = await api.myList({ tags: initialTags })
+      list.value = (tagRes.items || []).map(normalizeListItem)
+    } else {
+      list.value = normalizedFullList
+    }
   } catch (err: any) {
     toast.add({ title: err.message || '載入失敗', color: 'error' })
   } finally {
@@ -77,8 +111,11 @@ async function loadAll() {
 async function updateItem(item: ListItem, patch: Record<string, any>) {
   try {
     const result = await api.updateListItem(item.id, patch)
+    const normalized = normalizeListItem(result.item)
     const index = list.value.findIndex(e => e.id === item.id)
-    if (index >= 0) list.value[index] = normalizeListItem(result.item)
+    if (index >= 0) list.value[index] = normalized
+    const fullIndex = fullList.value.findIndex(e => e.id === item.id)
+    if (fullIndex >= 0) fullList.value[fullIndex] = normalized
     toast.add({ title: '清單已更新', color: 'success' })
   } catch (err: any) {
     toast.add({ title: err.message || '更新失敗', color: 'error' })
@@ -89,6 +126,7 @@ async function removeItem(item: ListItem) {
   try {
     await api.deleteListItem(item.id)
     list.value = list.value.filter(e => e.id !== item.id)
+    fullList.value = fullList.value.filter(e => e.id !== item.id)
     toast.add({ title: '已從清單移除', color: 'neutral' })
   } catch (err: any) {
     toast.add({ title: err.message || '移除失敗', color: 'error' })
@@ -148,6 +186,11 @@ async function toggleItemInCollection(item: ListItem, col: Collection) {
       await api.addToCollection(col.id, item.id)
       item.collections = [...item.collections, { id: col.id, name: col.name }]
     }
+    // `item` may be a different object reference than the corresponding entry
+    // in `fullList` (populated from a separate fetch/normalize pass), so sync
+    // the collections membership there too to keep sidebar/tag data consistent.
+    const fullItem = fullList.value.find(e => e.id === item.id)
+    if (fullItem && fullItem !== item) fullItem.collections = item.collections
     // Update collection count locally instead of refetching the full list
     const idx = collections.value.findIndex(c => c.id === col.id)
     if (idx >= 0) {
@@ -199,7 +242,7 @@ onMounted(loadAll)
           >
             <span>{{ tab.label }}</span>
             <span class="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-bold text-gray-500">
-              {{ tab.value === 'all' ? list.length : tab.value === 'watched' ? list.filter(i=>i.watched).length : list.filter(i=>!i.watched).length }}
+              {{ tab.value === 'all' ? fullList.length : tab.value === 'watched' ? fullList.filter(i=>i.watched).length : fullList.filter(i=>!i.watched).length }}
             </span>
           </button>
         </nav>
@@ -305,7 +348,7 @@ onMounted(loadAll)
         </button>
       </div>
 
-      <div v-if="loading" class="space-y-3">
+      <div v-if="loading || tagLoading" class="space-y-3">
         <div v-for="i in 5" :key="i" class="h-20 w-full animate-pulse rounded-xl bg-gray-200" />
       </div>
 
