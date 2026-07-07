@@ -16,3 +16,15 @@ export function applyListFilters(list: ListItem[], statusFilter: string): ListIt
   }
   return list
 }
+
+// 標題搜尋：在已載入的清單上做即時前端過濾，與 applyListFilters 疊加使用。
+// 比對主顯示標題（name）與日文原名（titleJa），不分大小寫、query 先 trim；
+// 空字串不過濾。
+export function applyTitleSearch(list: ListItem[], query: string): ListItem[] {
+  const q = query.trim().toLowerCase()
+  if (q === '') return list
+  return list.filter(item =>
+    item.anime.name.toLowerCase().includes(q) ||
+    item.anime.titleJa.toLowerCase().includes(q)
+  )
+}
