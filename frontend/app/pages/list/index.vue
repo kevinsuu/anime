@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { normalizeListItem, normalizeCollection } from '../../utils/normalize'
 import type { ListItem, Collection } from '../../utils/normalize'
-import { applyListFilters } from '../../utils/listFilters'
+import { applyListFilters, applyTitleSearch } from '../../utils/listFilters'
 import type { TagOption } from '../../utils/listFilters'
 import { tagColor } from '../../utils/normalize'
 
@@ -61,7 +61,12 @@ function clearTags() {
   router.push({ path: '/list', query })
 }
 
-const filteredList = computed(() => applyListFilters(list.value, activeFilter.value))
+// 標題搜尋：只存本地狀態（不進 URL），重整理即清空。
+const searchQuery = ref('')
+
+const filteredList = computed(() =>
+  applyTitleSearch(applyListFilters(list.value, activeFilter.value), searchQuery.value)
+)
 
 watch(selectedTags, async (tags) => {
   const requestId = ++tagRequestId
@@ -323,33 +328,58 @@ onMounted(loadAll)
         </div>
       </header>
 
-      <div v-if="tagOptions.length > 0" class="flex flex-wrap items-center gap-1.5">
-        <button
-          v-for="opt in tagOptions"
-          :key="opt.tag"
-          type="button"
-          class="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold transition"
-          :style="selectedTags.includes(opt.tag)
-            ? { backgroundColor: tagColor(opt.tag).text, color: '#fff' }
-            : { backgroundColor: tagColor(opt.tag).bg, color: tagColor(opt.tag).text }"
-          :aria-pressed="selectedTags.includes(opt.tag)"
-          @click="toggleTag(opt.tag)"
-        >
-          {{ opt.tag }}
-          <span class="opacity-70">{{ opt.count }}</span>
-        </button>
-        <button
-          v-if="selectedTags.length > 0"
-          type="button"
-          class="text-xs font-medium text-gray-400 hover:text-gray-700"
-          @click="clearTags"
-        >
-          清除分類
-        </button>
+      <!-- 搜尋 + 分類卡片：搜尋框即時過濾（無按鈕），分類 chip 以分隔線區隔，
+           與資料庫頁的搜尋卡片一致 -->
+      <div class="space-y-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+        <div class="relative">
+          <label for="list-search" class="sr-only">搜尋清單內作品</label>
+          <UIcon
+            name="i-lucide-search"
+            class="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-400 pointer-events-none"
+          />
+          <input
+            id="list-search"
+            v-model="searchQuery"
+            type="search"
+            placeholder="搜尋清單內作品…"
+            class="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-9 pr-4 text-sm text-gray-900 placeholder:text-gray-400 shadow-sm outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
+          />
+        </div>
+
+        <div v-if="tagOptions.length > 0" class="flex flex-wrap items-center gap-1.5 border-t border-gray-100 pt-3">
+          <button
+            v-for="opt in tagOptions"
+            :key="opt.tag"
+            type="button"
+            class="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold transition"
+            :style="selectedTags.includes(opt.tag)
+              ? { backgroundColor: tagColor(opt.tag).text, color: '#fff' }
+              : { backgroundColor: tagColor(opt.tag).bg, color: tagColor(opt.tag).text }"
+            :aria-pressed="selectedTags.includes(opt.tag)"
+            @click="toggleTag(opt.tag)"
+          >
+            {{ opt.tag }}
+            <span class="opacity-70">{{ opt.count }}</span>
+          </button>
+          <button
+            v-if="selectedTags.length > 0"
+            type="button"
+            class="text-xs font-medium text-gray-400 hover:text-gray-700"
+            @click="clearTags"
+          >
+            清除分類
+          </button>
+        </div>
       </div>
 
       <div v-if="loading || tagLoading" class="space-y-3">
         <div v-for="i in 5" :key="i" class="h-20 w-full animate-pulse rounded-xl bg-gray-200" />
+      </div>
+
+      <div v-else-if="filteredList.length === 0 && searchQuery.trim() !== ''" class="rounded-xl border border-dashed border-gray-200 p-8 text-center text-gray-500">
+        <UIcon name="i-lucide-search-x" class="mx-auto mb-2 size-8 text-gray-300" />
+        <p class="text-sm font-medium">找不到符合「{{ searchQuery.trim() }}」的作品</p>
+        <button type="button" class="mt-3 inline-block text-xs font-semibold text-primary-600 hover:underline" @click="searchQuery = ''">清除搜尋</button>
       </div>
 
       <div v-else-if="filteredList.length === 0" class="rounded-xl border border-dashed border-gray-200 p-8 text-center text-gray-500">
