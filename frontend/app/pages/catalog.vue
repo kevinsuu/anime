@@ -20,12 +20,15 @@ const isRecentMode = computed(() => activeYear.value === null && !isSearchMode.v
 
 // 分類清單（全庫前 20 高頻）
 const tagOptions = ref<{ tag: string; count: number }[]>([])
+const tagsLoading = ref(true)
 onMounted(async () => {
   try {
     const res = await api.catalogTags()
     tagOptions.value = (res.tags || []).slice(0, 20)
   } catch {
     tagOptions.value = []
+  } finally {
+    tagsLoading.value = false
   }
 })
 
@@ -218,8 +221,19 @@ useHead({
         </form>
       </div>
 
+      <!-- 分類 chip 骨架：載入分類清單期間顯示灰色脈動方塊，避免 chip 突然
+           跳出（寬度不一，貼近真實 chip 長短不同的排列） -->
+      <div v-if="!isSearchMode && tagsLoading" class="flex flex-wrap items-center gap-1.5 border-t border-gray-100 pt-3">
+        <div
+          v-for="w in ['w-12', 'w-10', 'w-14', 'w-10', 'w-16', 'w-12', 'w-10', 'w-14', 'w-12', 'w-16']"
+          :key="w"
+          class="h-6 animate-pulse rounded-full bg-gray-200"
+          :class="w"
+        />
+      </div>
+
       <!-- 分類 chip 列（近期／年份模式皆可用，OR 多選，走後端篩選；搜尋中隱藏） -->
-      <div v-if="!isSearchMode && tagOptions.length > 0" class="flex flex-wrap items-center gap-1.5 border-t border-gray-100 pt-3">
+      <div v-if="!isSearchMode && !tagsLoading && tagOptions.length > 0" class="flex flex-wrap items-center gap-1.5 border-t border-gray-100 pt-3">
         <button
           type="button"
           class="rounded-full px-3 py-1 text-xs font-semibold transition"
