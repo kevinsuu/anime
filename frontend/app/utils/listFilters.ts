@@ -28,3 +28,26 @@ export function applyTitleSearch(list: ListItem[], query: string): ListItem[] {
     item.anime.titleJa.toLowerCase().includes(q)
   )
 }
+
+export type ListSortKey = 'added' | 'airDate' | 'year'
+
+// 清單排序（皆新→舊）。非破壞性（複製後排序）。airDate/year 缺值排到最後，
+// 避免 null 污染前段。與 applyListFilters/applyTitleSearch 疊加使用。
+export function applyListSort(list: ListItem[], sort: ListSortKey): ListItem[] {
+  const copy = [...list]
+  if (sort === 'added') {
+    return copy.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+  }
+  if (sort === 'airDate') {
+    return copy.sort((a, b) => nullsLast(a.anime.airDate, b.anime.airDate, (x, y) => y.localeCompare(x)))
+  }
+  return copy.sort((a, b) => nullsLast(a.anime.seasonYear, b.anime.seasonYear, (x, y) => y - x))
+}
+
+// 兩值皆有 → cmp；只有一方為 null → 有值者在前；皆 null → 相等。
+function nullsLast<T>(a: T | null, b: T | null, cmp: (x: T, y: T) => number): number {
+  if (a === null && b === null) return 0
+  if (a === null) return 1
+  if (b === null) return -1
+  return cmp(a, b)
+}

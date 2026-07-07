@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { applyListFilters, applyTitleSearch } from '../app/utils/listFilters'
+import { applyListFilters, applyTitleSearch, applyListSort } from '../app/utils/listFilters'
 import { normalizeListItem } from '../app/utils/normalize'
 import type { ListItem } from '../app/utils/normalize'
 
@@ -8,16 +8,22 @@ function makeListItem(opts: {
   collections?: { id: number; name: string }[]
   name?: string
   titleJa?: string
+  createdAt?: string
+  airDate?: string | null
+  seasonYear?: number | null
 }): ListItem {
   return normalizeListItem({
     id: Math.random(),
     watched: opts.watched ?? false,
     collections: opts.collections ?? [],
+    createdAt: opts.createdAt ?? '2026-01-01 00:00:00',
     anime: {
       id: 1,
       name: opts.name ?? '測試作品',
       tags: [],
       titles: opts.titleJa ? [{ locale: 'ja', title: opts.titleJa }] : [],
+      air_date: opts.airDate ?? null,
+      season_year: opts.seasonYear ?? null,
     },
   })
 }
@@ -114,5 +120,61 @@ describe('applyTitleSearch', () => {
     const result = applyTitleSearch(applyListFilters(list, 'watched'), '芙莉蓮')
     expect(result).toHaveLength(1)
     expect(result[0].anime.name).toBe('芙莉蓮')
+  })
+})
+
+describe('applyListSort', () => {
+  it('sorts by added date (createdAt) newest first', () => {
+    const list = [
+      makeListItem({ name: 'A', createdAt: '2026-01-01 00:00:00' }),
+      makeListItem({ name: 'B', createdAt: '2026-03-01 00:00:00' }),
+      makeListItem({ name: 'C', createdAt: '2026-02-01 00:00:00' }),
+    ]
+    const result = applyListSort(list, 'added')
+    expect(result.map(i => i.anime.name)).toEqual(['B', 'C', 'A'])
+  })
+
+  it('sorts by airDate newest first, nulls last', () => {
+    const list = [
+      makeListItem({ name: 'A', airDate: '2024-04-01' }),
+      makeListItem({ name: 'B', airDate: null }),
+      makeListItem({ name: 'C', airDate: '2026-07-01' }),
+    ]
+    const result = applyListSort(list, 'airDate')
+    expect(result.map(i => i.anime.name)).toEqual(['C', 'A', 'B'])
+  })
+
+  it('sorts by seasonYear newest first, nulls last', () => {
+    const list = [
+      makeListItem({ name: 'A', seasonYear: 2020 }),
+      makeListItem({ name: 'B', seasonYear: null }),
+      makeListItem({ name: 'C', seasonYear: 2026 }),
+    ]
+    const result = applyListSort(list, 'year')
+    expect(result.map(i => i.anime.name)).toEqual(['C', 'A', 'B'])
+  })
+
+  it('does not mutate the input array', () => {
+    const list = [
+      makeListItem({ name: 'A', createdAt: '2026-01-01 00:00:00' }),
+      makeListItem({ name: 'B', createdAt: '2026-03-01 00:00:00' }),
+    ]
+    const before = list.map(i => i.anime.name)
+    applyListSort(list, 'added')
+    expect(list.map(i => i.anime.name)).toEqual(before)
+  })
+
+  it('composes after filters (status → title → sort)', () => {
+    const list = [
+      makeListItem({ name: '芙莉蓮 A', watched: true, createdAt: '2026-01-01 00:00:00' }),
+      makeListItem({ name: '芙莉蓮 B', watched: true, createdAt: '2026-05-01 00:00:00' }),
+      makeListItem({ name: '排球少年', watched: true, createdAt: '2026-09-01 00:00:00' }),
+      makeListItem({ name: '芙莉蓮 C', watched: false, createdAt: '2026-12-01 00:00:00' }),
+    ]
+    const result = applyListSort(
+      applyTitleSearch(applyListFilters(list, 'watched'), '芙莉蓮'),
+      'added'
+    )
+    expect(result.map(i => i.anime.name)).toEqual(['芙莉蓮 B', '芙莉蓮 A'])
   })
 })
