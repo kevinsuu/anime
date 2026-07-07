@@ -68,6 +68,15 @@ const filteredList = computed(() =>
   applyTitleSearch(applyListFilters(list.value, activeFilter.value), searchQuery.value)
 )
 
+// 卡片內是否有任何可清除的篩選（搜尋詞或已選分類），用來顯示「清除全部篩選」。
+const hasActiveFilters = computed(() => searchQuery.value.trim() !== '' || selectedTags.value.length > 0)
+
+// 一鍵清掉搜尋詞與已選分類（狀態切換 all/watched/unwatched 不在此範圍）。
+function clearAllFilters() {
+  searchQuery.value = ''
+  clearTags()
+}
+
 watch(selectedTags, async (tags) => {
   const requestId = ++tagRequestId
   tagLoading.value = true
@@ -328,22 +337,33 @@ onMounted(loadAll)
         </div>
       </header>
 
-      <!-- 搜尋 + 分類卡片：搜尋框即時過濾（無按鈕），分類 chip 以分隔線區隔，
-           與資料庫頁的搜尋卡片一致 -->
+      <!-- 搜尋 + 分類卡片：搜尋框即時過濾，右側「清除全部篩選」一鍵清搜尋＋分類，
+           分類 chip 以分隔線區隔，與資料庫頁的搜尋卡片一致 -->
       <div class="space-y-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
-        <div class="relative">
-          <label for="list-search" class="sr-only">搜尋清單內作品</label>
-          <UIcon
-            name="i-lucide-search"
-            class="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-400 pointer-events-none"
-          />
-          <input
-            id="list-search"
-            v-model="searchQuery"
-            type="search"
-            placeholder="搜尋清單內作品…"
-            class="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-9 pr-4 text-sm text-gray-900 placeholder:text-gray-400 shadow-sm outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
-          />
+        <div class="flex items-center gap-2">
+          <div class="relative flex-1">
+            <label for="list-search" class="sr-only">搜尋清單內作品</label>
+            <UIcon
+              name="i-lucide-search"
+              class="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-400 pointer-events-none"
+            />
+            <input
+              id="list-search"
+              v-model="searchQuery"
+              type="search"
+              placeholder="搜尋清單內作品…"
+              class="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-9 pr-4 text-sm text-gray-900 placeholder:text-gray-400 shadow-sm outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
+            />
+          </div>
+          <button
+            v-if="hasActiveFilters"
+            type="button"
+            class="inline-flex shrink-0 items-center gap-1 rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm font-semibold text-gray-600 shadow-sm transition hover:bg-gray-50"
+            @click="clearAllFilters"
+          >
+            <UIcon name="i-lucide-x" class="size-4" />
+            清除全部篩選
+          </button>
         </div>
 
         <div v-if="tagOptions.length > 0" class="flex flex-wrap items-center gap-1.5 border-t border-gray-100 pt-3">
@@ -360,14 +380,6 @@ onMounted(loadAll)
           >
             {{ opt.tag }}
             <span class="opacity-70">{{ opt.count }}</span>
-          </button>
-          <button
-            v-if="selectedTags.length > 0"
-            type="button"
-            class="text-xs font-medium text-gray-400 hover:text-gray-700"
-            @click="clearTags"
-          >
-            清除分類
           </button>
         </div>
       </div>
