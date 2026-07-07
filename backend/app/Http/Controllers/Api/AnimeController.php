@@ -6,6 +6,7 @@ use App\Exceptions\ApiException;
 use App\Http\Controllers\Controller;
 use App\Models\Anime;
 use App\Services\AnimeCatalog\SeasonResolver;
+use App\Services\Shared\GenreTags;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
@@ -146,6 +147,31 @@ final class AnimeController extends Controller
                 ])->all(),
             ],
         ]);
+    }
+
+    public function tags(): JsonResponse
+    {
+        $counts = [];
+        Anime::query()
+            ->select(['id', 'tags'])
+            ->get()
+            ->each(function (Anime $anime) use (&$counts): void {
+                foreach ($anime->tags ?? [] as $tag) {
+                    if (! GenreTags::isGenreTag($tag)) {
+                        continue;
+                    }
+                    $counts[$tag] = ($counts[$tag] ?? 0) + 1;
+                }
+            });
+
+        $tags = collect($counts)
+            ->map(fn (int $count, string $tag) => ['tag' => $tag, 'count' => $count])
+            ->values()
+            ->sortBy([['count', 'desc'], ['tag', 'asc']])
+            ->values()
+            ->all();
+
+        return response()->json(['tags' => $tags]);
     }
 
 }

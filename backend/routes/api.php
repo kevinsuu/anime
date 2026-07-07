@@ -11,6 +11,7 @@ Route::post('/auth/refresh', [AuthController::class, 'refresh']);
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('jwt');
 
 Route::get('/anime', [AnimeController::class, 'index']);
+Route::get('/anime/tags', [AnimeController::class, 'tags']);
 Route::get('/anime/{id}', [AnimeController::class, 'show']);
 
 Route::middleware('jwt')->group(function (): void {
