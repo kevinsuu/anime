@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { normalizeListItem, normalizeCollection } from '../../utils/normalize'
 import type { ListItem, Collection } from '../../utils/normalize'
-import { applyListFilters, applyTitleSearch } from '../../utils/listFilters'
+import { applyListFilters, applyTitleSearch, applyListSort } from '../../utils/listFilters'
+import type { ListSortKey } from '../../utils/listFilters'
 import type { TagOption } from '../../utils/listFilters'
 import { tagColor } from '../../utils/normalize'
 
@@ -64,8 +65,14 @@ function clearTags() {
 // 標題搜尋：只存本地狀態（不進 URL），重整理即清空。
 const searchQuery = ref('')
 
+// 排序：只存本地狀態。預設「加入日期」。
+const sortKey = ref<ListSortKey>('added')
+
 const filteredList = computed(() =>
-  applyTitleSearch(applyListFilters(list.value, activeFilter.value), searchQuery.value)
+  applyListSort(
+    applyTitleSearch(applyListFilters(list.value, activeFilter.value), searchQuery.value),
+    sortKey.value
+  )
 )
 
 // 卡片內是否有任何可清除的篩選（搜尋詞或已選分類），用來顯示「清除全部篩選」。
@@ -337,24 +344,49 @@ onMounted(loadAll)
         </div>
       </header>
 
-      <!-- 搜尋 + 分類卡片：搜尋框即時過濾，右側「清除全部篩選」一鍵清搜尋＋分類，
-           分類 chip 以分隔線區隔，與資料庫頁的搜尋卡片一致 -->
+      <!-- 搜尋 + 排序 + 分類卡片：與資料庫頁模板一致——左排序下拉、中搜尋框、
+           右綠色搜尋鈕；分類 chip 以分隔線區隔。搜尋為即時過濾，搜尋鈕純裝飾對齊
+           （submit 不觸發查詢）。「清除全部篩選」一鍵清搜尋＋分類。 -->
       <div class="space-y-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
-        <div class="flex items-center gap-2">
-          <div class="relative flex-1">
-            <label for="list-search" class="sr-only">搜尋清單內作品</label>
-            <UIcon
-              name="i-lucide-search"
-              class="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-400 pointer-events-none"
-            />
-            <input
-              id="list-search"
-              v-model="searchQuery"
-              type="search"
-              placeholder="搜尋清單內作品…"
-              class="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-9 pr-4 text-sm text-gray-900 placeholder:text-gray-400 shadow-sm outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
-            />
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <!-- 排序下拉（對齊 catalog 左控制項位置） -->
+          <div class="shrink-0">
+            <label for="list-sort" class="sr-only">排序方式</label>
+            <select
+              id="list-sort"
+              v-model="sortKey"
+              class="w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm font-semibold text-gray-700 shadow-sm outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100 sm:w-auto"
+            >
+              <option value="added">加入日期</option>
+              <option value="airDate">播出日期</option>
+              <option value="year">年份</option>
+            </select>
           </div>
+
+          <!-- 搜尋框 + 綠色搜尋鈕（即時過濾；按鈕純裝飾對齊 catalog，submit 不觸發查詢） -->
+          <form class="flex flex-1 gap-2" @submit.prevent>
+            <div class="relative flex-1">
+              <label for="list-search" class="sr-only">搜尋清單內作品</label>
+              <UIcon
+                name="i-lucide-search"
+                class="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-400 pointer-events-none"
+              />
+              <input
+                id="list-search"
+                v-model="searchQuery"
+                type="search"
+                placeholder="搜尋清單內作品…"
+                class="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-9 pr-4 text-sm text-gray-900 placeholder:text-gray-400 shadow-sm outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
+              />
+            </div>
+            <button
+              type="submit"
+              class="rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+            >
+              搜尋
+            </button>
+          </form>
+
           <button
             v-if="hasActiveFilters"
             type="button"
