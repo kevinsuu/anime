@@ -39,6 +39,8 @@ final class ApiTest extends TestCase
             'image_url' => 'https://example.com/anime.jpg',
             'source' => 'test',
             'tags' => ['奇幻', '日常'],
+            'season_year' => 2025,
+            'air_date' => '2025-10-04',
         ]);
 
         $create = $this->withHeader('Authorization', "Bearer {$token}")
@@ -61,7 +63,9 @@ final class ApiTest extends TestCase
             ->getJson('/my/anime-list')
             ->assertOk()
             ->assertJsonPath('items.0.anime.name', '尖帽子的魔法工房')
-            ->assertJsonPath('items.0.anime.tags', ['奇幻', '日常']);
+            ->assertJsonPath('items.0.anime.tags', ['奇幻', '日常'])
+            ->assertJsonPath('items.0.anime.season_year', 2025)
+            ->assertJsonPath('items.0.anime.air_date', '2025-10-04');
 
         $publicSlug = $login->json('user.public_slug');
 

@@ -207,6 +207,8 @@ final class AnimeListController extends Controller
                 'description' => $item->anime->description,
                 'imageUrl' => $item->anime->image_url,
                 'tags' => $item->anime->tags ?? [],
+                'season_year' => $item->anime->season_year,
+                'air_date' => $item->anime->air_date,
             ],
         ];
     }
