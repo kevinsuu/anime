@@ -107,14 +107,16 @@ export function useApi() {
     login: (idToken: string) => request('/auth/google', { method: 'POST', body: JSON.stringify({ idToken }) }),
     logout: () => request('/auth/logout', { method: 'POST' }),
     me: () => request('/me'),
-    searchAnime: (query: string, filters: { year?: number | string; season?: string } = {}) => {
+    searchAnime: (query: string, filters: { year?: number | string; season?: string; tags?: string[] } = {}) => {
       const params = new URLSearchParams()
       if (query) params.set('q', query)
       if (filters.year) params.set('year', String(filters.year))
       if (filters.season) params.set('season', filters.season)
+      if (filters.tags?.length) params.set('tags', filters.tags.join(','))
       const queryString = params.toString()
       return request(`/anime${queryString ? `?${queryString}` : ''}`)
     },
+    catalogTags: () => request('/anime/tags'),
     getAnime: (id: number) => request(`/anime/${id}`),
     myList: (params?: { tags?: string[] }) => {
       const qs = params?.tags?.length ? `?tags=${encodeURIComponent(params.tags.join(','))}` : ''
