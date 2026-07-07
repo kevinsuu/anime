@@ -143,95 +143,100 @@ useHead({
       </div>
     </header>
 
-    <!-- 近期 / 年份切換（搜尋中隱藏） -->
-    <div v-if="!isSearchMode" class="flex items-center gap-2">
-      <button
-        type="button"
-        :disabled="loading"
-        class="rounded-lg border px-3 py-1.5 text-sm font-semibold shadow-sm transition disabled:opacity-40"
-        :class="isRecentMode
-          ? 'border-primary-500 bg-primary-50 text-primary-700'
-          : 'border-gray-200 bg-white text-gray-600 hover:bg-gray-50'"
-        @click="changeYear(null)"
-      >
-        近期
-      </button>
-      <div class="flex items-center gap-1">
-        <button
-          type="button"
-          :disabled="loading"
-          class="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:bg-gray-50 disabled:opacity-40"
-          aria-label="上一年"
-          @click="changeYear((activeYear ?? currentYear) - 1)"
-        >
-          <UIcon name="i-lucide-chevron-left" class="size-4" />
-        </button>
-        <span class="min-w-16 text-center text-sm font-bold text-gray-700">
-          {{ activeYear !== null ? `${activeYear} 年` : '選擇年份' }}
-        </span>
-        <button
-          type="button"
-          :disabled="loading || (activeYear !== null && activeYear >= currentYear)"
-          class="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:bg-gray-50 disabled:opacity-40"
-          aria-label="下一年"
-          @click="changeYear((activeYear ?? currentYear - 1) + 1)"
-        >
-          <UIcon name="i-lucide-chevron-right" class="size-4" />
-        </button>
-      </div>
-    </div>
-
-    <!-- 分類 chip 列（近期／年份模式皆可用，OR 多選，走後端篩選；搜尋中隱藏） -->
-    <div v-if="!isSearchMode && tagOptions.length > 0" class="flex flex-wrap items-center gap-1.5">
-      <button
-        type="button"
-        class="rounded-full px-3 py-1 text-xs font-semibold transition"
-        :class="selectedTags.length === 0
-          ? 'bg-primary-600 text-white'
-          : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
-        @click="clearTags()"
-      >
-        全部
-      </button>
-      <button
-        v-for="item in tagOptions"
-        :key="item.tag"
-        type="button"
-        class="rounded-full px-3 py-1 text-xs font-semibold transition"
-        :class="selectedTags.includes(item.tag) ? 'ring-2 ring-primary-500' : 'hover:opacity-80'"
-        :style="{ backgroundColor: tagColor(item.tag).bg, color: tagColor(item.tag).text }"
-        @click="toggleTag(item.tag)"
-      >
-        {{ item.tag }}
-      </button>
-    </div>
-
     <UAlert v-if="error" color="error" :title="error" />
 
-    <form class="flex gap-2" @submit.prevent="search">
-      <div class="relative flex-1">
-        <label for="catalog-search" class="sr-only">搜尋動漫資料庫</label>
-        <UIcon
-          name="i-lucide-search"
-          class="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-400 pointer-events-none"
-        />
-        <input
-          id="catalog-search"
-          v-model="query"
-          type="search"
-          placeholder="例如：芙莉蓮、Bocchi、排球少年"
-          class="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-9 pr-4 text-sm text-gray-900 placeholder:text-gray-400 shadow-sm outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
-        />
+    <!-- 篩選面板：年份切換 + 搜尋 + 分類 chip 集中在一張卡片，與下方作品格線區隔 -->
+    <div class="space-y-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <!-- 近期 / 年份切換（搜尋中隱藏） -->
+        <div v-if="!isSearchMode" class="flex shrink-0 items-center gap-2">
+          <button
+            type="button"
+            :disabled="loading"
+            class="rounded-lg border px-3 py-1.5 text-sm font-semibold shadow-sm transition disabled:opacity-40"
+            :class="isRecentMode
+              ? 'border-primary-500 bg-primary-50 text-primary-700'
+              : 'border-gray-200 bg-white text-gray-600 hover:bg-gray-50'"
+            @click="changeYear(null)"
+          >
+            近期
+          </button>
+          <div class="flex items-center gap-1">
+            <button
+              type="button"
+              :disabled="loading"
+              class="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:bg-gray-50 disabled:opacity-40"
+              aria-label="上一年"
+              @click="changeYear((activeYear ?? currentYear) - 1)"
+            >
+              <UIcon name="i-lucide-chevron-left" class="size-4" />
+            </button>
+            <span class="min-w-16 text-center text-sm font-bold text-gray-700">
+              {{ activeYear !== null ? `${activeYear} 年` : '選擇年份' }}
+            </span>
+            <button
+              type="button"
+              :disabled="loading || (activeYear !== null && activeYear >= currentYear)"
+              class="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:bg-gray-50 disabled:opacity-40"
+              aria-label="下一年"
+              @click="changeYear((activeYear ?? currentYear - 1) + 1)"
+            >
+              <UIcon name="i-lucide-chevron-right" class="size-4" />
+            </button>
+          </div>
+        </div>
+
+        <form class="flex flex-1 gap-2" @submit.prevent="search">
+          <div class="relative flex-1">
+            <label for="catalog-search" class="sr-only">搜尋動漫資料庫</label>
+            <UIcon
+              name="i-lucide-search"
+              class="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-400 pointer-events-none"
+            />
+            <input
+              id="catalog-search"
+              v-model="query"
+              type="search"
+              placeholder="例如：芙莉蓮、Bocchi、排球少年"
+              class="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-9 pr-4 text-sm text-gray-900 placeholder:text-gray-400 shadow-sm outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
+            />
+          </div>
+          <button
+            type="submit"
+            :disabled="loading"
+            class="rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:opacity-60"
+          >
+            <UIcon v-if="loading" name="i-lucide-loader-circle" class="size-4 animate-spin" />
+            <span v-else>搜尋</span>
+          </button>
+        </form>
       </div>
-      <button
-        type="submit"
-        :disabled="loading"
-        class="rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:opacity-60"
-      >
-        <UIcon v-if="loading" name="i-lucide-loader-circle" class="size-4 animate-spin" />
-        <span v-else>搜尋</span>
-      </button>
-    </form>
+
+      <!-- 分類 chip 列（近期／年份模式皆可用，OR 多選，走後端篩選；搜尋中隱藏） -->
+      <div v-if="!isSearchMode && tagOptions.length > 0" class="flex flex-wrap items-center gap-1.5 border-t border-gray-100 pt-3">
+        <button
+          type="button"
+          class="rounded-full px-3 py-1 text-xs font-semibold transition"
+          :class="selectedTags.length === 0
+            ? 'bg-primary-600 text-white'
+            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
+          @click="clearTags()"
+        >
+          全部
+        </button>
+        <button
+          v-for="item in tagOptions"
+          :key="item.tag"
+          type="button"
+          class="rounded-full px-3 py-1 text-xs font-semibold transition"
+          :class="selectedTags.includes(item.tag) ? 'ring-2 ring-primary-500' : 'hover:opacity-80'"
+          :style="{ backgroundColor: tagColor(item.tag).bg, color: tagColor(item.tag).text }"
+          @click="toggleTag(item.tag)"
+        >
+          {{ item.tag }}
+        </button>
+      </div>
+    </div>
 
     <!-- Loading skeleton: matches PAGE_SIZE so the layout doesn't jump when real content arrives -->
     <div v-if="loading" class="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5">
