@@ -30,7 +30,6 @@ onMounted(async () => {
 })
 
 // 主要資料來源：依 activeYear / query / selectedTags 向後端查詢
-const catalog = ref<Anime[]>([])
 const loading = ref(false)
 let requestId = 0
 
@@ -55,11 +54,18 @@ async function loadCatalog() {
   }
 }
 
-// 進站載入近期模式
-await useAsyncData('catalog-initial', async () => {
-  await loadCatalog()
-  return true
-}, { default: () => true })
+// 進站載入近期模式：讓 useAsyncData 直接接管查詢結果，回傳值進 payload、
+// hydration 後仍在，避免 client 端重跑跳過導致 catalog 落空的空狀態 bug。
+const { data: initialData, pending: initialPending } = await useAsyncData(
+  'catalog-initial',
+  async () => {
+    const result = await api.searchAnime('', {})
+    return (result.items || []) as Record<string, any>[]
+  }
+)
+
+// catalog 以初始資料為基礎；後續互動由 loadCatalog 直接覆寫。
+const catalog = ref<Anime[]>((initialData.value || []).map(normalizeAnime))
 
 const PAGE_SIZE = 40
 const totalPages = computed(() => Math.max(1, Math.ceil(catalog.value.length / PAGE_SIZE)))
@@ -239,7 +245,7 @@ useHead({
     </div>
 
     <!-- Loading skeleton: matches PAGE_SIZE so the layout doesn't jump when real content arrives -->
-    <div v-if="loading" class="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5">
+    <div v-if="loading || initialPending" class="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5">
       <div v-for="i in PAGE_SIZE" :key="i" class="aspect-3/4 w-full animate-pulse rounded-md bg-gray-200" />
     </div>
 
