@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { normalizeAnime } from '../utils/normalize'
+import { normalizeAnime, tagColor } from '../utils/normalize'
 import type { Anime } from '../utils/normalize'
 
 const api = useApi()
@@ -10,33 +10,56 @@ const query = ref('')
 const page = ref(1)
 const error = ref('')
 
-// Year browsing mode: default to the current year so we never load the
-// full 2016–2026 catalog at once. Searching (query non-empty) switches to
-// an unscoped full-catalog search instead.
 const currentYear = new Date().getFullYear()
-const activeYear = ref(currentYear)
+// activeYear = null → 近期模式（不限年份，air_date 新到舊，50 筆）
+// activeYear = 數字 → 年份瀏覽模式
+const activeYear = ref<number | null>(null)
+const selectedTags = ref<string[]>([])
 const isSearchMode = computed(() => query.value.trim() !== '')
+const isRecentMode = computed(() => activeYear.value === null && !isSearchMode.value)
 
-const { data: yearData, pending: yearLoading, error: yearFetchError } = await useAsyncData(
-  () => `catalog-year-${activeYear.value}`,
-  async () => {
-    const result = await api.searchAnime('', { year: activeYear.value })
-    return (result.items || []).map(normalizeAnime)
-  },
-  { default: () => [] as Anime[], watch: [activeYear] }
-)
-
-watch(yearFetchError, (err) => {
-  if (err) error.value = err.message || '載入失敗'
+// 分類清單（全庫前 20 高頻）
+const tagOptions = ref<{ tag: string; count: number }[]>([])
+onMounted(async () => {
+  try {
+    const res = await api.catalogTags()
+    tagOptions.value = (res.tags || []).slice(0, 20)
+  } catch {
+    tagOptions.value = []
+  }
 })
 
-// Search results live outside useAsyncData since they're a client-only,
-// user-triggered interaction — no need for them to be SSR-fetched/serialized.
-const searchResults = ref<Anime[] | null>(null)
-const searchLoading = ref(false)
+// 主要資料來源：依 activeYear / query / selectedTags 向後端查詢
+const catalog = ref<Anime[]>([])
+const loading = ref(false)
+let requestId = 0
 
-const catalog = computed(() => isSearchMode.value ? (searchResults.value || []) : yearData.value)
-const loading = computed(() => isSearchMode.value ? searchLoading.value : yearLoading.value)
+async function loadCatalog() {
+  const id = ++requestId
+  loading.value = true
+  error.value = ''
+  try {
+    const q = query.value.trim()
+    const filters: { year?: number; tags?: string[] } = {}
+    if (activeYear.value !== null && !isSearchMode.value) filters.year = activeYear.value
+    if (selectedTags.value.length > 0) filters.tags = selectedTags.value
+    const result = await api.searchAnime(q, filters)
+    if (id !== requestId) return
+    catalog.value = (result.items || []).map(normalizeAnime)
+  } catch (err: any) {
+    if (id !== requestId) return
+    error.value = err.message || '載入失敗'
+    catalog.value = []
+  } finally {
+    if (id === requestId) loading.value = false
+  }
+}
+
+// 進站載入近期模式
+await useAsyncData('catalog-initial', async () => {
+  await loadCatalog()
+  return true
+}, { default: () => true })
 
 const PAGE_SIZE = 40
 const totalPages = computed(() => Math.max(1, Math.ceil(catalog.value.length / PAGE_SIZE)))
@@ -48,33 +71,34 @@ watch(page, () => {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 })
 
-function changeYear(year: number) {
+function changeYear(year: number | null) {
   query.value = ''
-  searchResults.value = null
-  error.value = ''
+  selectedTags.value = []
   page.value = 1
   activeYear.value = year
+  loadCatalog()
+}
+
+function toggleTag(tag: string) {
+  const idx = selectedTags.value.indexOf(tag)
+  if (idx >= 0) selectedTags.value.splice(idx, 1)
+  else selectedTags.value.push(tag)
+  page.value = 1
+  loadCatalog()
+}
+
+function clearTags() {
+  if (selectedTags.value.length === 0) return
+  selectedTags.value = []
+  page.value = 1
+  loadCatalog()
 }
 
 async function search() {
-  const q = query.value.trim()
-  if (q === '') {
-    searchResults.value = null
-    page.value = 1
-    return
-  }
-
-  searchLoading.value = true
-  error.value = ''
   page.value = 1
-  try {
-    const result = await api.searchAnime(q)
-    searchResults.value = (result.items || []).map(normalizeAnime)
-  } catch (err: any) {
-    error.value = err.message || '搜尋失敗'
-  } finally {
-    searchLoading.value = false
-  }
+  // 搜尋時脫離年份模式（回到不限年份），保留 selectedTags
+  if (query.value.trim() !== '') activeYear.value = null
+  await loadCatalog()
 }
 
 async function addAnime(animeId: number) {
@@ -88,12 +112,22 @@ async function addAnime(animeId: number) {
 }
 
 useSeoMeta({
-  title: () => isSearchMode.value ? `搜尋「${query.value}」的結果｜動漫庫` : `${activeYear.value}年動漫作品列表｜動畫資料庫、動漫庫`,
-  description: () => isSearchMode.value ? `在動漫庫搜尋「${query.value}」相關動畫作品。` : `瀏覽${activeYear.value}年度動畫作品完整列表，探索動漫新番與經典動畫資料庫。`,
+  title: () => isSearchMode.value
+    ? `搜尋「${query.value}」的結果｜動漫庫`
+    : activeYear.value !== null
+      ? `${activeYear.value}年動漫作品列表｜動畫資料庫、動漫庫`
+      : '近期動漫作品｜動畫資料庫、動漫庫',
+  description: () => isSearchMode.value
+    ? `在動漫庫搜尋「${query.value}」相關動畫作品。`
+    : activeYear.value !== null
+      ? `瀏覽${activeYear.value}年度動畫作品完整列表，探索動漫新番與經典動畫資料庫。`
+      : '瀏覽近期動畫作品，依播出日期排序，探索最新動漫新番。',
   ogType: 'website'
 })
 useHead({
-  link: [{ rel: 'canonical', href: () => isSearchMode.value ? 'https://anime.kaistarstudio.me/catalog' : `https://anime.kaistarstudio.me/catalog?year=${activeYear.value}` }]
+  link: [{ rel: 'canonical', href: () => isSearchMode.value || activeYear.value === null
+    ? 'https://anime.kaistarstudio.me/catalog'
+    : `https://anime.kaistarstudio.me/catalog?year=${activeYear.value}` }]
 })
 </script>
 
@@ -109,26 +143,66 @@ useHead({
       </div>
     </header>
 
-    <!-- Year switcher (hidden while a keyword search is active) -->
-    <div v-if="!isSearchMode" class="flex items-center gap-1">
+    <!-- 近期 / 年份切換（搜尋中隱藏） -->
+    <div v-if="!isSearchMode" class="flex items-center gap-2">
       <button
         type="button"
         :disabled="loading"
-        class="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:bg-gray-50 disabled:opacity-40"
-        aria-label="上一年"
-        @click="changeYear(activeYear - 1)"
+        class="rounded-lg border px-3 py-1.5 text-sm font-semibold shadow-sm transition disabled:opacity-40"
+        :class="isRecentMode
+          ? 'border-primary-500 bg-primary-50 text-primary-700'
+          : 'border-gray-200 bg-white text-gray-600 hover:bg-gray-50'"
+        @click="changeYear(null)"
       >
-        <UIcon name="i-lucide-chevron-left" class="size-4" />
+        近期
       </button>
-      <span class="min-w-16 text-center text-sm font-bold text-gray-700">{{ activeYear }} 年</span>
+      <div class="flex items-center gap-1">
+        <button
+          type="button"
+          :disabled="loading"
+          class="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:bg-gray-50 disabled:opacity-40"
+          aria-label="上一年"
+          @click="changeYear((activeYear ?? currentYear) - 1)"
+        >
+          <UIcon name="i-lucide-chevron-left" class="size-4" />
+        </button>
+        <span class="min-w-16 text-center text-sm font-bold text-gray-700">
+          {{ activeYear !== null ? `${activeYear} 年` : '選擇年份' }}
+        </span>
+        <button
+          type="button"
+          :disabled="loading || (activeYear !== null && activeYear >= currentYear)"
+          class="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:bg-gray-50 disabled:opacity-40"
+          aria-label="下一年"
+          @click="changeYear((activeYear ?? currentYear - 1) + 1)"
+        >
+          <UIcon name="i-lucide-chevron-right" class="size-4" />
+        </button>
+      </div>
+    </div>
+
+    <!-- 分類 chip 列（近期／年份模式皆可用，OR 多選，走後端篩選；搜尋中隱藏） -->
+    <div v-if="!isSearchMode && tagOptions.length > 0" class="flex flex-wrap items-center gap-1.5">
       <button
         type="button"
-        :disabled="loading || activeYear >= currentYear"
-        class="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:bg-gray-50 disabled:opacity-40"
-        aria-label="下一年"
-        @click="changeYear(activeYear + 1)"
+        class="rounded-full px-3 py-1 text-xs font-semibold transition"
+        :class="selectedTags.length === 0
+          ? 'bg-primary-600 text-white'
+          : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
+        @click="clearTags()"
       >
-        <UIcon name="i-lucide-chevron-right" class="size-4" />
+        全部
+      </button>
+      <button
+        v-for="item in tagOptions"
+        :key="item.tag"
+        type="button"
+        class="rounded-full px-3 py-1 text-xs font-semibold transition"
+        :class="selectedTags.includes(item.tag) ? 'ring-2 ring-primary-500' : 'hover:opacity-80'"
+        :style="{ backgroundColor: tagColor(item.tag).bg, color: tagColor(item.tag).text }"
+        @click="toggleTag(item.tag)"
+      >
+        {{ item.tag }}
       </button>
     </div>
 
