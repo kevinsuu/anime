@@ -16,13 +16,17 @@ export interface GridLayout {
   /** 列高（grid 主軸尺寸），對應 WindowScroller 的 item-size prop。 */
   itemSize: number
   /**
-   * 單欄寬度（grid 次軸尺寸），對應 WindowScroller 的
-   * item-secondary-size prop。vue-virtual-scroller 在沒有收到這個
-   * prop 時會直接 fallback 用 itemSize 當次軸尺寸（見套件原始碼
-   * useRecycleScroller 的 `itemSecondarySize || itemSize`），這會讓
-   * 每欄寬度被誤設成列高的值——因為 itemSize 是「寬度 * 4/3」算出來的
-   * 列高，數值遠大於單欄實際寬度，5 欄的總寬會超出容器，多出來的欄位
-   * 被推到可視範圍外，畫面上看起來就像少了一欄。
+   * 單欄 stride（grid 次軸尺寸）＝ containerWidth / columns，對應
+   * WindowScroller 的 item-secondary-size prop。WindowScroller 把第 i 欄
+   * 放在 `i * itemSecondarySize`、寬度也設為 itemSecondarySize，欄與欄之間
+   * 沒有額外 gap，所以這個值必須是「整欄 stride」而非扣掉 gap 的可見卡片寬，
+   * 否則 columns 欄的總寬會少 totalGap，格線右緣比容器短一截。gutter 由
+   * AnimeVirtualGrid 在每個 item 外層加左右各半個 gap 的內邊距形成。
+   *
+   * 注意仍必須明確傳這個 prop：vue-virtual-scroller 在沒收到 item-secondary-size
+   * 時會 fallback 用 itemSize 當次軸尺寸（見套件原始碼 useRecycleScroller
+   * 的 `itemSecondarySize || itemSize`），而 itemSize 是列高、數值遠大於欄寬，
+   * 會讓 5 欄總寬爆出容器、多出的欄被推到可視範圍外，看起來像少了一欄。
    */
   columnWidth: number
 }
@@ -46,9 +50,17 @@ export function calculateGridLayout(viewportWidth: number, containerWidth: numbe
       ? 4
       : 3
 
-  const totalGap = gapPx * (columns - 1)
-  const columnWidth = (containerWidth - totalGap) / columns
-  const itemSize = columnWidth * CARD_ASPECT_HEIGHT_OVER_WIDTH
+  // WindowScroller 把第 i 欄的 item 放在 `i * itemSecondarySize`、寬度設為
+  // itemSecondarySize，欄與欄之間沒有額外 gap。所以 columnWidth（餵給
+  // item-secondary-size）必須是「整欄 stride」＝ containerWidth / columns，
+  // 這樣 columns 欄剛好鋪滿容器寬度、右緣與卡片/標題對齊。gutter 由卡片自身
+  // 的內邊距（px-[gap/2] 之類）形成，不從 stride 扣掉——否則總寬會少 totalGap，
+  // 格線右緣會比容器短一截。
+  const columnWidth = containerWidth / columns
+  // 列高依「可見卡片寬度」（整欄 stride 扣掉一個 gutter 寬 gapPx）維持 3:4 比例，
+  // 讓卡片實際內容區的高寬比正確。
+  const visibleCardWidth = columnWidth - gapPx
+  const itemSize = visibleCardWidth * CARD_ASPECT_HEIGHT_OVER_WIDTH
 
   return { columns, itemSize, columnWidth }
 }

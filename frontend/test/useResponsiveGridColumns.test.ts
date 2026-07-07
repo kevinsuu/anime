@@ -37,33 +37,45 @@ describe('calculateGridLayout', () => {
     expect(result.columns).toBe(5)
   })
 
-  it('calculates itemSize from container width, not viewport width', () => {
-    // viewport=1440（用於欄數判斷 → 5 欄），但容器只有 700px 寬
-    // （用於 itemSize 計算）。
-    // total gap = 12 * (5-1) = 48
-    // columnWidth = (700 - 48) / 5 = 130.4
-    // itemSize = 130.4 * 4/3 = 173.866...
-    const result = calculateGridLayout(1440, 700, 12)
-    expect(result.columns).toBe(5)
-    expect(result.itemSize).toBeCloseTo(173.8666, 3)
-  })
-
-  it('calculates itemSize as columnWidth * 4/3 (aspect-3/4 ratio)', () => {
-    // viewport=containerWidth=1024, gap=12, columns=5
-    // total gap width = 12 * (5-1) = 48
-    // columnWidth = (1024 - 48) / 5 = 195.2
-    // itemSize = 195.2 * 4/3 = 260.266...
+  it('makes the grid fill the full container width (columns * columnWidth === containerWidth)', () => {
+    // WindowScroller 把每欄 item 放在 `column * itemSecondarySize`、寬度
+    // 設為 itemSecondarySize，欄與欄之間沒有額外 gap（見 useRecycleScroller
+    // 原始碼）。所以 columnWidth（= itemSecondarySize）必須是「整個 stride」
+    // ＝ containerWidth / columns，才能讓 columns 欄剛好鋪滿容器寬度、右緣
+    // 與卡片/標題對齊。若把 gap 內化成較窄的 columnWidth，總寬會少 totalGap，
+    // 格線右緣就會比容器短一截（實際回歸：篩選卡片右緣凸出格線約 48px）。
     const result = calculateGridLayout(1024, 1024, 12)
     expect(result.columns).toBe(5)
-    expect(result.itemSize).toBeCloseTo(260.2666, 3)
+    expect(result.columnWidth * result.columns).toBeCloseTo(1024, 5)
+  })
+
+  it('sizes itemSize from the visible card width (stride minus one gap) to keep aspect-3/4', () => {
+    // stride = 1024 / 5 = 204.8（含 gutter 的整欄寬，餵給 item-secondary-size）
+    // 可見卡片寬 = stride - gap = 204.8 - 12 = 192.8
+    // itemSize（列高）= 192.8 * 4/3 = 257.0666...
+    const result = calculateGridLayout(1024, 1024, 12)
+    expect(result.columnWidth).toBeCloseTo(204.8, 3)
+    expect(result.itemSize).toBeCloseTo(257.0666, 3)
+  })
+
+  it('fills container width and sizes itemSize from container width, not viewport width', () => {
+    // viewport=1440（用於欄數判斷 → 5 欄），但容器只有 700px 寬。
+    // stride = 700 / 5 = 140
+    // 可見卡片寬 = 140 - 12 = 128
+    // itemSize = 128 * 4/3 = 170.666...
+    const result = calculateGridLayout(1440, 700, 12)
+    expect(result.columns).toBe(5)
+    expect(result.columnWidth * result.columns).toBeCloseTo(700, 5)
+    expect(result.itemSize).toBeCloseTo(170.6666, 3)
   })
 
   it('calculates itemSize correctly for 3-column layout with zero gap', () => {
     // viewport=containerWidth=300, gap=0, columns=3
-    // columnWidth = 300 / 3 = 100
+    // stride = 300 / 3 = 100，可見卡片寬 = 100 - 0 = 100
     // itemSize = 100 * 4/3 = 133.333...
     const result = calculateGridLayout(300, 300, 0)
     expect(result.columns).toBe(3)
+    expect(result.columnWidth * result.columns).toBeCloseTo(300, 5)
     expect(result.itemSize).toBeCloseTo(133.3333, 3)
   })
 
@@ -77,8 +89,8 @@ describe('calculateGridLayout', () => {
     // 看起來就像少了一欄。這個測試確保 columnWidth 與 itemSize 是兩個
     // 不同的值，防止未來又漏接 item-secondary-size。
     const result = calculateGridLayout(1024, 1024, 12)
-    expect(result.columnWidth).toBeCloseTo(195.2, 3)
-    expect(result.itemSize).toBeCloseTo(260.2666, 3)
+    expect(result.columnWidth).toBeCloseTo(204.8, 3)
+    expect(result.itemSize).toBeCloseTo(257.0666, 3)
     expect(result.columnWidth).not.toBeCloseTo(result.itemSize, 0)
   })
 })

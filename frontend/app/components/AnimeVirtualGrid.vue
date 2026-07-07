@@ -32,7 +32,13 @@ defineSlots<{
         key-field="id"
       >
         <template #default="{ item, index }">
-          <slot :item="item" :index="index" />
+          <!-- 每個 item 的寬度是整欄 stride（columnWidth），gutter 由這層
+               左右各半個 gap 的內邊距形成：相鄰卡片內容之間剛好間隔一個
+               完整 gap，最外側各留半個 gap，讓整排格線在容器內置中、右緣
+               與上方篩選卡片對齊。 -->
+          <div :style="{ paddingLeft: `${gapPx / 2}px`, paddingRight: `${gapPx / 2}px` }">
+            <slot :item="item" :index="index" />
+          </div>
         </template>
       </WindowScroller>
 
