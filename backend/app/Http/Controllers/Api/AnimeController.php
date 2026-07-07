@@ -20,6 +20,11 @@ final class AnimeController extends Controller
         $season = trim((string) $request->query('season', ''));
         $term = "%{$query}%";
 
+        $tags = array_values(array_filter(
+            array_map('trim', explode(',', (string) $request->query('tags', ''))),
+            fn (string $t): bool => $t !== ''
+        ));
+
         if ($year !== null && (! ctype_digit((string) $year) || (int) $year < 1900 || (int) $year > 2100)) {
             throw new ApiException(422, 'validation_failed', '年份格式錯誤');
         }
@@ -36,6 +41,8 @@ final class AnimeController extends Controller
         // the full year/season without a cap. Unscoped keyword search across
         // the whole catalog is capped to avoid an excessive payload.
         $isYearScoped = $year !== null;
+        // Recent mode: no year/season/keyword → newest-first, capped to 50.
+        $isRecentMode = $year === null && $season === '' && $query === '';
 
         $items = Anime::query()
             ->with([
@@ -53,10 +60,22 @@ final class AnimeController extends Controller
             })
             ->when($year !== null, fn ($builder) => $builder->where('season_year', (int) $year))
             ->when($season !== '', fn ($builder) => $builder->where('season_code', $season))
+            ->when($tags !== [], function ($builder) use ($tags): void {
+                $builder->where(function ($where) use ($tags): void {
+                    foreach ($tags as $tag) {
+                        $where->orWhereJsonContains('tags', $tag);
+                    }
+                });
+            })
             ->orderByRaw('air_date is null')
-            ->orderBy('air_date')
+            ->when(
+                $isRecentMode,
+                fn ($builder) => $builder->orderByDesc('air_date'),
+                fn ($builder) => $builder->orderBy('air_date'),
+            )
             ->orderBy('name')
-            ->when(! $isYearScoped, fn ($builder) => $builder->limit(200))
+            ->when($isRecentMode, fn ($builder) => $builder->limit(50))
+            ->when(! $isRecentMode && ! $isYearScoped, fn ($builder) => $builder->limit(200))
             ->get([
                 'id', 'name', 'description', 'image_url', 'cover_image_path', 'source',
                 'season_year', 'season_code', 'air_date', 'air_date_text', 'episode_count', 'status', 'tags',
