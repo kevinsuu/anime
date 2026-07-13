@@ -36,7 +36,7 @@ return [
     ],
 
     'jwt' => [
-        'secret' => env('JWT_SECRET', 'dev-only-change-me'),
+        'secret' => env('JWT_SECRET'),
         'ttl_seconds' => (int) env('JWT_TTL_SECONDS', 3600),
         'refresh_ttl_seconds' => (int) env('JWT_REFRESH_TTL_SECONDS', 60 * 60 * 24 * 30),
     ],

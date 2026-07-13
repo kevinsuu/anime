@@ -83,7 +83,7 @@ Expected: PASS。
 - [ ] **Step 5: Commit**
 
 ```bash
-cd /Users/sumingkai/Documents/anime && git add backend/app/Http/Controllers/Api/AnimeListController.php backend/tests/Feature/ApiTest.php && git commit -m "feat: 清單 API 回傳 anime 的 season_year 與 air_date
+cd <repo> && git add backend/app/Http/Controllers/Api/AnimeListController.php backend/tests/Feature/ApiTest.php && git commit -m "feat: 清單 API 回傳 anime 的 season_year 與 air_date
 
 formatItem 補這兩欄，讓前端能依播出日期/年份排序清單。air_date
 未做 date cast、回傳原始 YYYY-MM-DD 字串。含 ApiTest 斷言。
@@ -199,7 +199,7 @@ describe('applyListSort', () => {
 
 - [ ] **Step 3: 執行確認失敗**
 
-Run: `cd /Users/sumingkai/Documents/anime/frontend && npm run test -- listFilters`
+Run: `cd <repo>/frontend && npm run test -- listFilters`
 Expected: FAIL —— `applyListSort is not a function`。
 
 - [ ] **Step 4: 實作 applyListSort**
@@ -232,13 +232,13 @@ function nullsLast<T>(a: T | null, b: T | null, cmp: (x: T, y: T) => number): nu
 
 - [ ] **Step 5: 執行確認通過**
 
-Run: `cd /Users/sumingkai/Documents/anime/frontend && npm run test -- listFilters`
+Run: `cd <repo>/frontend && npm run test -- listFilters`
 Expected: PASS，全部 applyListSort 案例與既有測試通過。
 
 - [ ] **Step 6: Commit**
 
 ```bash
-cd /Users/sumingkai/Documents/anime && git add frontend/app/utils/listFilters.ts frontend/test/listFilters.test.ts && git commit -m "feat: 新增 applyListSort 清單排序純函式
+cd <repo> && git add frontend/app/utils/listFilters.ts frontend/test/listFilters.test.ts && git commit -m "feat: 新增 applyListSort 清單排序純函式
 
 支援加入日期/播出日期/年份（皆新→舊），非破壞性、缺值排最後，
 與既有過濾疊加。含 Vitest 覆蓋三種排序/不變性/疊加。
@@ -371,7 +371,7 @@ const filteredList = computed(() =>
 
 Run:
 ```bash
-cd /Users/sumingkai/Documents/anime/frontend && npm run build && npm run test
+cd <repo>/frontend && npm run build && npm run test
 ```
 Expected: build 成功、無型別錯誤（`sortKey` 為 `ListSortKey`、`<select v-model>` 綁定正確）；全部測試通過。
 
@@ -386,7 +386,7 @@ Expected: build 成功、無型別錯誤（`sortKey` 為 `ListSortKey`、`<selec
 - [ ] **Step 5: Commit**
 
 ```bash
-cd /Users/sumingkai/Documents/anime && git add frontend/app/pages/list/index.vue && git commit -m "feat: 我的清單套用排序與統一資料庫搜尋卡片模板
+cd <repo> && git add frontend/app/pages/list/index.vue && git commit -m "feat: 我的清單套用排序與統一資料庫搜尋卡片模板
 
 卡片頂排改為 [排序下拉][搜尋框][綠色搜尋鈕]，與資料庫頁一致；排序
 支援加入日期/播出日期/年份（新→舊），filteredList 尾端套 applyListSort。

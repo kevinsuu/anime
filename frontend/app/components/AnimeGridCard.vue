@@ -30,18 +30,12 @@ const imageLoaded = ref(props.eagerLoad)
 const imageError = ref(false)
 const imgEl = ref<HTMLImageElement | null>(null)
 
-// Reveal the image once it has loaded. We kick off `decode()` first as a
-// best-effort way to get the pixels painted before the fade-in, but never let a
-// pending/rejected decode gate visibility — `@load` already guarantees the
-// image is downloaded, so we always flip `imageLoaded` regardless of decode.
+// `load` already guarantees the bytes are available. Reveal immediately rather
+// than waiting on decode(), which can remain pending while the main thread is
+// busy during a fast scroll and unnecessarily keep the placeholder visible.
 function revealImage() {
-  const el = imgEl.value
-  if (!el) return
-  if (el.decode) {
-    el.decode().catch(() => {}).finally(() => { imageLoaded.value = true })
-  } else {
-    imageLoaded.value = true
-  }
+  if (!imgEl.value) return
+  imageLoaded.value = true
 }
 
 onMounted(() => {
@@ -74,15 +68,20 @@ function parseAirInfo(text: string | null, airDate: string | null): AirInfo {
   if (!text) return fallback
 
   const dateMatch = text.match(/(\d{1,2})月(\d{1,2})日/)
-  const dateLabel = dateMatch ? `${dateMatch[1]}月${dateMatch[2]}日首播` : (airDate ? formatDate(airDate) + '首播' : '未定首播')
+  const dateMonth = dateMatch?.[1]
+  const dateDay = dateMatch?.[2]
+  const dateLabel = dateMonth && dateDay
+    ? `${dateMonth}月${dateDay}日首播`
+    : (airDate ? formatDate(airDate) + '首播' : '未定首播')
 
   const wdMatch = text.match(/每週([一二三四五六日])|週([一二三四五六日])/)
-  const weekday = wdMatch ? (wdMatch[1] || wdMatch[2]) : ''
+  const weekday = wdMatch?.[1] ?? wdMatch?.[2] ?? ''
 
   const timeMatch = text.match(/(\d{1,2})時(\d{0,2})分?/)
   let time = ''
-  if (timeMatch) {
-    time = `${timeMatch[1].padStart(2, '0')}:${(timeMatch[2] || '0').padStart(2, '0')}`
+  const hour = timeMatch?.[1]
+  if (hour) {
+    time = `${hour.padStart(2, '0')}:${(timeMatch?.[2] || '0').padStart(2, '0')}`
   }
 
   return { dateLabel, weekday, time, weekdayColor: weekdayColors[weekday] ?? 'bg-gray-500' }
@@ -90,7 +89,9 @@ function parseAirInfo(text: string | null, airDate: string | null): AirInfo {
 
 function formatDate(airDate: string): string {
   const m = airDate.match(/^\d{4}-(\d{2})-(\d{2})/)
-  return m ? `${parseInt(m[1])}月${parseInt(m[2])}日` : ''
+  const month = m?.[1]
+  const day = m?.[2]
+  return month && day ? `${parseInt(month)}月${parseInt(day)}日` : ''
 }
 
 const toast = useToast()

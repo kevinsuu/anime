@@ -15,7 +15,7 @@ let sharedObserver: IntersectionObserver | null = null
 // the viewport during a fast scroll wouldn't get its src set until the observer
 // gets around to firing — leaving a blank card. We use this margin to
 // synchronously check on mount whether the card is already in range.
-const ROOT_MARGIN_PX = 1500
+export const IMAGE_PRELOAD_DISTANCE_PX = 1500
 
 function getObserver(): IntersectionObserver {
   if (!sharedObserver) {
@@ -29,7 +29,7 @@ function getObserver(): IntersectionObserver {
           }
         }
       },
-      { rootMargin: `${ROOT_MARGIN_PX}px 0px` },
+      { rootMargin: `${IMAGE_PRELOAD_DISTANCE_PX}px 0px` },
     )
   }
   return sharedObserver
@@ -43,7 +43,7 @@ function getObserver(): IntersectionObserver {
 function isNearViewport(el: HTMLElement): boolean {
   const rect = el.getBoundingClientRect()
   const viewportH = window.innerHeight || document.documentElement.clientHeight
-  return rect.bottom >= -ROOT_MARGIN_PX && rect.top <= viewportH + ROOT_MARGIN_PX
+  return rect.bottom >= -IMAGE_PRELOAD_DISTANCE_PX && rect.top <= viewportH + IMAGE_PRELOAD_DISTANCE_PX
 }
 
 /**

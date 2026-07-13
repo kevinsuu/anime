@@ -116,7 +116,7 @@ const catalog = ref<Anime[]>((initialData.value || []).map(normalizeAnime))
 
 Run:
 ```bash
-cd /Users/sumingkai/Documents/anime/frontend && npm run build
+cd <repo>/frontend && npm run build
 ```
 Expected: 建置成功、無型別錯誤。特別確認無 "Cannot find name 'catalog'" 或 "used before declaration" 類錯誤（若出現，代表有 computed 在 `catalog` 宣告前引用，需將 `catalog` 宣告上移到那些 computed 之前、但仍在 `useAsyncData` 之後）。
 
@@ -124,7 +124,7 @@ Expected: 建置成功、無型別錯誤。特別確認無 "Cannot find name 'ca
 
 Run:
 ```bash
-cd /Users/sumingkai/Documents/anime/frontend && npm run test
+cd <repo>/frontend && npm run test
 ```
 Expected: 既有測試全數通過（本改動不觸及被測的 util/composable，應維持綠燈）。
 
@@ -132,7 +132,7 @@ Expected: 既有測試全數通過（本改動不觸及被測的 util/composable
 
 啟動 dev 環境（若尚未啟動）：
 ```bash
-cd /Users/sumingkai/Documents/anime && docker compose up -d frontend
+cd <repo> && docker compose up -d frontend
 ```
 在瀏覽器開 `http://localhost:3000/catalog`，連續重新整理 5～10 次，確認：
 - 每次都穩定顯示近期作品資料（不再出現偶發「沒有找到符合的作品」空狀態）。
@@ -142,7 +142,7 @@ cd /Users/sumingkai/Documents/anime && docker compose up -d frontend
 - [ ] **Step 7: Commit**
 
 ```bash
-cd /Users/sumingkai/Documents/anime && git add frontend/app/pages/catalog.vue && git commit -m "fix: 資料庫頁初始載入改由 useAsyncData 接管資料
+cd <repo> && git add frontend/app/pages/catalog.vue && git commit -m "fix: 資料庫頁初始載入改由 useAsyncData 接管資料
 
 原本 useAsyncData handler 回傳 true、以副作用寫入獨立 catalog ref，
 ssr: true 下該 ref 不進 payload，client hydration 跳過重跑導致重新

@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { WindowScroller } from 'vue-virtual-scroller'
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
+import { IMAGE_PRELOAD_DISTANCE_PX } from '../composables/useLazyLoad'
 import { useResponsiveGridColumns } from '../composables/useResponsiveGridColumns'
 import type { Anime } from '../utils/normalize'
 
@@ -29,6 +30,7 @@ defineSlots<{
         :item-size="itemSize"
         :item-secondary-size="columnWidth"
         :grid-items="columns"
+        :buffer="IMAGE_PRELOAD_DISTANCE_PX"
         key-field="id"
       >
         <template #default="{ item, index }">

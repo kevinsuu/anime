@@ -3,6 +3,7 @@
 namespace App\Services\Auth;
 
 use App\Exceptions\ApiException;
+use RuntimeException;
 
 final class JwtService
 {
@@ -19,7 +20,7 @@ final class JwtService
             $this->base64Url(json_encode($header, JSON_THROW_ON_ERROR)),
             $this->base64Url(json_encode($payload, JSON_THROW_ON_ERROR)),
         ];
-        $signature = hash_hmac('sha256', implode('.', $segments), (string) config('services.jwt.secret'), true);
+        $signature = hash_hmac('sha256', implode('.', $segments), $this->secret(), true);
         $segments[] = $this->base64Url($signature);
 
         return implode('.', $segments);
@@ -33,7 +34,7 @@ final class JwtService
         }
 
         [$header, $payload, $signature] = $parts;
-        $expected = $this->base64Url(hash_hmac('sha256', "{$header}.{$payload}", (string) config('services.jwt.secret'), true));
+        $expected = $this->base64Url(hash_hmac('sha256', "{$header}.{$payload}", $this->secret(), true));
         if (! hash_equals($expected, $signature)) {
             throw new ApiException(401, 'invalid_token', '登入憑證無效');
         }
@@ -48,6 +49,17 @@ final class JwtService
         }
 
         return $claims;
+    }
+
+    private function secret(): string
+    {
+        $secret = trim((string) config('services.jwt.secret'));
+
+        if ($secret === '') {
+            throw new RuntimeException('JWT_SECRET must be configured.');
+        }
+
+        return $secret;
     }
 
     private function base64Url(string $value): string

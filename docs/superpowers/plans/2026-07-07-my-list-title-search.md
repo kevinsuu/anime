@@ -134,7 +134,7 @@ describe('applyTitleSearch', () => {
 
 - [ ] **Step 3: 執行測試確認失敗**
 
-Run: `cd /Users/sumingkai/Documents/anime/frontend && npm run test -- listFilters`
+Run: `cd <repo>/frontend && npm run test -- listFilters`
 Expected: FAIL —「applyTitleSearch is not a function」或 import 找不到（因為函式尚未實作）。
 
 - [ ] **Step 4: 實作 applyTitleSearch**
@@ -157,13 +157,13 @@ export function applyTitleSearch(list: ListItem[], query: string): ListItem[] {
 
 - [ ] **Step 5: 執行測試確認通過**
 
-Run: `cd /Users/sumingkai/Documents/anime/frontend && npm run test -- listFilters`
+Run: `cd <repo>/frontend && npm run test -- listFilters`
 Expected: PASS，`applyTitleSearch` 全部案例通過、`applyListFilters` 既有案例仍通過。
 
 - [ ] **Step 6: Commit**
 
 ```bash
-cd /Users/sumingkai/Documents/anime && git add frontend/app/utils/listFilters.ts frontend/test/listFilters.test.ts && git commit -m "feat: 新增 applyTitleSearch 清單標題過濾純函式
+cd <repo> && git add frontend/app/utils/listFilters.ts frontend/test/listFilters.test.ts && git commit -m "feat: 新增 applyTitleSearch 清單標題過濾純函式
 
 比對 anime.name 與 titleJa、不分大小寫、trim、空字串不過濾，
 與 applyListFilters 疊加。含 Vitest 覆蓋命中/大小寫/trim/疊加。
@@ -297,7 +297,7 @@ const filteredList = computed(() =>
 
 Run:
 ```bash
-cd /Users/sumingkai/Documents/anime/frontend && npm run build && npm run test
+cd <repo>/frontend && npm run build && npm run test
 ```
 Expected: build 成功、無型別錯誤；全部測試通過。
 
@@ -312,7 +312,7 @@ Expected: build 成功、無型別錯誤；全部測試通過。
 - [ ] **Step 6: Commit**
 
 ```bash
-cd /Users/sumingkai/Documents/anime && git add frontend/app/pages/list/index.vue && git commit -m "feat: 我的清單頁加入標題搜尋卡片
+cd <repo> && git add frontend/app/pages/list/index.vue && git commit -m "feat: 我的清單頁加入標題搜尋卡片
 
 header 下方新增白底卡片：即時搜尋框（無按鈕）＋分類 chip 收進同卡片，
 樣式參考資料庫頁。filteredList 疊加 applyTitleSearch；搜尋無結果顯示

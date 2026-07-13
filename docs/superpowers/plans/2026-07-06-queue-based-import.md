@@ -76,7 +76,7 @@ QUEUE_CONNECTION=database
 
 - [ ] **Step 5: 確認 `docker-compose.yml` 與 `deploy/docker-compose.yml` 的 `QUEUE_CONNECTION` 設定方式**
 
-Run: `grep -n "QUEUE_CONNECTION" /Users/sumingkai/Documents/anime/docker-compose.yml /Users/sumingkai/Documents/anime/deploy/docker-compose.yml`
+Run: `grep -n "QUEUE_CONNECTION" <repo>/docker-compose.yml <repo>/deploy/docker-compose.yml`
 
 以這次指令的實際輸出為準決定怎麼編輯：
 - 若 `docker-compose.yml` 是 `QUEUE_CONNECTION: ${QUEUE_CONNECTION}`（從 `.env` 插值），Step 4 改完 `.env` 後這裡不需要再動。

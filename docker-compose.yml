@@ -7,7 +7,7 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
-      - "3306:3306"
+      - "127.0.0.1:3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
     healthcheck:
@@ -39,14 +39,13 @@ services:
       JWT_REFRESH_TTL_SECONDS: ${JWT_REFRESH_TTL_SECONDS}
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
       MYLIST_OWNER_EMAIL: ${MYLIST_OWNER_EMAIL}
-      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
       DEV_AUTH_BYPASS: ${DEV_AUTH_BYPASS}
       BANGUMI_API_BASE_URL: ${BANGUMI_API_BASE_URL}
       BANGUMI_USER_AGENT: ${BANGUMI_USER_AGENT}
       HTTP_TIMEOUT_SECONDS: ${HTTP_TIMEOUT_SECONDS}
     ports:
-      - "8080:8080"
+      - "127.0.0.1:8080:8080"
     volumes:
       - ./backend:/app
       - backend-vendor:/app/vendor
@@ -67,7 +66,7 @@ services:
       CHOKIDAR_USEPOLLING: "true"
       WATCHPACK_POLLING: "true"
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     volumes:
       - ./frontend:/app
       - frontend-node-modules:/app/node_modules
@@ -98,7 +97,6 @@ services:
       JWT_REFRESH_TTL_SECONDS: ${JWT_REFRESH_TTL_SECONDS}
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
       MYLIST_OWNER_EMAIL: ${MYLIST_OWNER_EMAIL}
-      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
       DEV_AUTH_BYPASS: ${DEV_AUTH_BYPASS}
       BANGUMI_API_BASE_URL: ${BANGUMI_API_BASE_URL}
@@ -118,7 +116,7 @@ services:
       PMA_USER: root
       PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
-      - "8081:80"
+      - "127.0.0.1:8081:80"
     depends_on:
       mysql:
         condition: service_healthy

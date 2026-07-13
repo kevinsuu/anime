@@ -126,7 +126,7 @@ describe('calculateGridLayout', () => {
 
 - [ ] **Step 2: 執行測試，確認因檔案不存在而失敗**
 
-Run: `cd /Users/sumingkai/Documents/anime/frontend && npm run test -- useResponsiveGridColumns`
+Run: `cd <repo>/frontend && npm run test -- useResponsiveGridColumns`
 Expected: FAIL（找不到模組 `../app/composables/useResponsiveGridColumns`）
 
 - [ ] **Step 3: 實作 `useResponsiveGridColumns.ts`**
@@ -211,12 +211,12 @@ export function useResponsiveGridColumns(containerRef: Ref<HTMLElement | null>, 
 
 - [ ] **Step 4: 執行測試，確認通過**
 
-Run: `cd /Users/sumingkai/Documents/anime/frontend && npm run test -- useResponsiveGridColumns`
+Run: `cd <repo>/frontend && npm run test -- useResponsiveGridColumns`
 Expected: `7 passed`
 
 - [ ] **Step 5: 執行完整前端測試套件**
 
-Run: `cd /Users/sumingkai/Documents/anime/frontend && npm run test`
+Run: `cd <repo>/frontend && npm run test`
 Expected: 全部 PASS（原有測試不受影響）
 
 **不要 commit**——留在工作區，繼續下一個 Task。
@@ -291,7 +291,7 @@ defineSlots<{
 
 - [ ] **Step 2: 型別檢查確認元件語法正確**
 
-Run: `cd /Users/sumingkai/Documents/anime/frontend && npx vue-tsc --noEmit -p tsconfig.json`
+Run: `cd <repo>/frontend && npx vue-tsc --noEmit -p tsconfig.json`
 Expected: 無錯誤輸出（若有既有的、與本次改動無關的錯誤，需先確認是否為既有問題；本次新增的 `AnimeVirtualGrid.vue` 不應產生新的型別錯誤）
 
 **不要 commit**——留在工作區，繼續下一個 Task。
@@ -370,12 +370,12 @@ const visibleSeasonal = computed(() => filteredSeasonal.value.slice(0, visibleCo
 
 - [ ] **Step 3: 型別檢查**
 
-Run: `cd /Users/sumingkai/Documents/anime/frontend && npx vue-tsc --noEmit -p tsconfig.json`
+Run: `cd <repo>/frontend && npx vue-tsc --noEmit -p tsconfig.json`
 Expected: 無新增錯誤
 
 - [ ] **Step 4: 執行前端測試套件**
 
-Run: `cd /Users/sumingkai/Documents/anime/frontend && npm run test`
+Run: `cd <repo>/frontend && npm run test`
 Expected: 全部 PASS
 
 **不要 commit**——留在工作區，繼續下一個 Task。
@@ -448,12 +448,12 @@ const visiblePagedCatalog = computed(() => pagedCatalog.value.slice(0, visibleCo
 
 - [ ] **Step 3: 型別檢查**
 
-Run: `cd /Users/sumingkai/Documents/anime/frontend && npx vue-tsc --noEmit -p tsconfig.json`
+Run: `cd <repo>/frontend && npx vue-tsc --noEmit -p tsconfig.json`
 Expected: 無新增錯誤
 
 - [ ] **Step 4: 執行前端測試套件**
 
-Run: `cd /Users/sumingkai/Documents/anime/frontend && npm run test`
+Run: `cd <repo>/frontend && npm run test`
 Expected: 全部 PASS
 
 **不要 commit**——留在工作區，繼續下一個 Task。
@@ -469,18 +469,18 @@ Expected: 全部 PASS
 
 - [ ] **Step 1: 確認沒有其他檔案還在使用 `useProgressiveReveal`**
 
-Run: `grep -rn "useProgressiveReveal" /Users/sumingkai/Documents/anime/frontend/app /Users/sumingkai/Documents/anime/frontend/test`
+Run: `grep -rn "useProgressiveReveal" <repo>/frontend/app <repo>/frontend/test`
 Expected: 無任何輸出（代表沒有任何檔案還在引用它）
 
 - [ ] **Step 2: 刪除檔案**
 
-Run: `rm /Users/sumingkai/Documents/anime/frontend/app/composables/useProgressiveReveal.ts`
+Run: `rm <repo>/frontend/app/composables/useProgressiveReveal.ts`
 
 - [ ] **Step 3: 型別檢查與測試套件確認整體沒有回歸**
 
 Run:
 ```bash
-cd /Users/sumingkai/Documents/anime/frontend
+cd <repo>/frontend
 npx vue-tsc --noEmit -p tsconfig.json
 npm run test
 ```
@@ -521,7 +521,7 @@ Expected: 容器狀態為 running
 
 Run:
 ```bash
-cd /Users/sumingkai/Documents/anime/frontend
+cd <repo>/frontend
 npm run test
 npx vue-tsc --noEmit -p tsconfig.json
 ```

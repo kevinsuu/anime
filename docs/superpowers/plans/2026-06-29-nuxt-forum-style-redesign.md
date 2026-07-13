@@ -2078,8 +2078,10 @@ Read `~/anime/.env.example`，用 Edit 把：
 NUXT_PUBLIC_API_BASE_URL=http://localhost:8080
 NUXT_PUBLIC_GOOGLE_CLIENT_ID=your-google-oauth-client-id.apps.googleusercontent.com
 NUXT_PUBLIC_ALLOWED_ORIGINS=http://localhost:3000,https://your-github-user.github.io
-NUXT_PUBLIC_GOOGLE_SECRET=your-google-oauth-client-secret
 ```
+
+`NUXT_PUBLIC_*` values are bundled into client code. Never place an OAuth
+client secret or any other credential in this namespace.
 
 - [ ] **Step 3: 更新 docker-compose.yml 的 frontend service**
 
