@@ -22,7 +22,8 @@ COPY composer.json composer.lock ./
 RUN composer install --no-interaction --prefer-dist --no-scripts --no-dev --optimize-autoloader
 
 COPY . .
-RUN composer dump-autoload --optimize --no-dev
+# Package discovery boots Laravel before runtime secrets are available.
+RUN APP_ENV=build composer dump-autoload --optimize --no-dev
 
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
