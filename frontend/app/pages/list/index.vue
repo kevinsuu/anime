@@ -213,9 +213,12 @@ async function toggleItemInCollection(item: ListItem, col: Collection) {
     const fullItem = fullList.value.find(e => e.id === item.id)
     if (fullItem && fullItem !== item) fullItem.collections = item.collections
     // Update collection count locally instead of refetching the full list
-    const idx = collections.value.findIndex(c => c.id === col.id)
+    const idx = collections.value ? collections.value.findIndex(c => c.id === col.id) : -1
     if (idx >= 0) {
-      collections.value[idx].count += inCol ? -1 : 1
+      const target = collections.value && collections.value[idx]
+      if (target && typeof target.count === 'number') {
+        target.count += inCol ? -1 : 1
+      }
     }
   } catch (err: any) {
     toast.add({ title: err.message || '操作失敗', color: 'error' })

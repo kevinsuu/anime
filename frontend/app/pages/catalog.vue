@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { normalizeAnime, tagColor } from '../utils/normalize'
-import type { Anime } from '../utils/normalize'
+import { normalizeAnime, normalizeListItem, normalizeCollection, tagColor } from '../utils/normalize'
+import type { Anime, ListItem, Collection } from '../utils/normalize'
 
 const api = useApi()
-const { isAuthed } = useSession()
+const { session, isAuthed } = useSession()
 const toast = useToast()
 
 const query = ref('')
@@ -70,6 +70,29 @@ const { data: initialData, pending: initialPending } = await useAsyncData(
 // catalog 以初始資料為基礎；後續互動由 loadCatalog 直接覆寫。
 const catalog = ref<Anime[]>((initialData.value || []).map(normalizeAnime))
 
+// 使用者清單狀態：用來讓卡片的 ❤️（已收藏）/ ✅（已看）正確反映實際狀態
+const list = ref<ListItem[]>([])
+const collections = ref<Collection[]>([])
+const activePopoverAnimeId = ref<number | null>(null)
+
+const listByAnimeId = computed(() => {
+  const map = new Map<number, ListItem>()
+  list.value.forEach(item => map.set(item.anime.id, item))
+  return map
+})
+
+async function loadMyList() {
+  if (!session.token) return
+  try {
+    const [listRes, colRes] = await Promise.all([api.myList(), api.myCollections()])
+    list.value = (listRes.items || []).map(normalizeListItem)
+    collections.value = (colRes.items || []).map(normalizeCollection)
+  } catch (err: any) {
+    toast.add({ title: err.message || '載入清單失敗', color: 'error' })
+  }
+}
+onMounted(loadMyList)
+
 const PAGE_SIZE = 40
 const totalPages = computed(() => Math.max(1, Math.ceil(catalog.value.length / PAGE_SIZE)))
 const pagedCatalog = computed(() => {
@@ -112,11 +135,56 @@ async function search() {
 
 async function addAnime(animeId: number) {
   if (!isAuthed.value) return navigateTo('/login')
+  if (listByAnimeId.value.has(animeId)) return
   try {
     await api.addToList(animeId)
+    await loadMyList()
     toast.add({ title: '已加入清單', color: 'success' })
   } catch (err: any) {
     toast.add({ title: err.message || '加入失敗', color: 'error' })
+  }
+}
+
+async function markWatched(animeId: number) {
+  if (!isAuthed.value) return navigateTo('/login')
+  try {
+    const existing = listByAnimeId.value.get(animeId)
+    if (existing) {
+      await api.updateListItem(existing.id, { watched: !existing.watched })
+    } else {
+      await api.addToList(animeId)
+      // Item is now in the list even if the watched-flag update below fails,
+      // so always reload afterwards regardless of outcome (see finally).
+      const freshList = await api.myList()
+      const freshItem = (freshList.items || []).find((i: any) => i.anime?.id === animeId)
+      if (freshItem) await api.updateListItem(freshItem.id, { watched: true })
+    }
+    const item = listByAnimeId.value.get(animeId)
+    toast.add({ title: item?.watched ? '已標記為看完' : '已取消已看', color: 'success' })
+  } catch (err: any) {
+    toast.add({ title: err.message || '操作失敗，清單狀態已重新整理', color: 'error' })
+  } finally {
+    await loadMyList()
+  }
+}
+
+async function toggleCollection(animeId: number, col: Collection) {
+  if (!isAuthed.value) return
+  const listItem = listByAnimeId.value.get(animeId)
+  if (!listItem) return
+  const inCol = listItem.collections.some(c => c.id === col.id)
+  try {
+    if (inCol) {
+      await api.removeFromCollection(col.id, listItem.id)
+      listItem.collections = listItem.collections.filter(c => c.id !== col.id)
+    } else {
+      await api.addToCollection(col.id, listItem.id)
+      listItem.collections = [...listItem.collections, { id: col.id, name: col.name }]
+    }
+    const idx = collections.value.findIndex(c => c.id === col.id)
+    if (idx >= 0) collections.value[idx].count += inCol ? -1 : 1
+  } catch (err: any) {
+    toast.add({ title: err.message || '操作失敗', color: 'error' })
   }
 }
 
@@ -278,11 +346,17 @@ useHead({
           <AnimeGridCard
             :key="anime.id"
             :anime="anime"
-            :in-list="false"
-            :watched="false"
+            :in-list="listByAnimeId.has(anime.id)"
+            :watched="Boolean(listByAnimeId.get(anime.id)?.watched)"
+            :list-item="listByAnimeId.get(anime.id)"
+            :collections="collections"
+            :popover-open="activePopoverAnimeId === anime.id"
             :eager-load="index < 10"
             @add-to-list="addAnime"
-            @mark-watched="addAnime"
+            @mark-watched="markWatched"
+            @toggle-collection="(col) => toggleCollection(anime.id, col)"
+            @open-popover="activePopoverAnimeId = anime.id"
+            @close-popover="activePopoverAnimeId = null"
           />
         </template>
       </AnimeVirtualGrid>
