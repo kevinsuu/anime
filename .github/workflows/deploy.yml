@@ -99,5 +99,4 @@ jobs:
             set_env_var FRONTEND_IMAGE "ghcr.io/kevinsuu/anime-frontend:${{ github.ref_name }}"
             docker compose pull
             docker compose up -d --remove-orphans
-            docker compose exec -T backend php artisan migrate --force
             docker image prune -f

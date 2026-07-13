@@ -78,9 +78,9 @@ git push --tags
 ```
 
 Watch the Actions run. On success, `docker compose ps` on the host should show `backend`,
-`scheduler`, `frontend`, and `mysql` all healthy. The deploy workflow also runs
-`docker compose exec backend php artisan migrate --force` automatically — no manual DB setup step
-needed after the first deploy.
+`scheduler`, `frontend`, and `mysql` all healthy. The backend entrypoint runs
+`php artisan migrate --force` before starting PHP-FPM and nginx, so migrations have a single
+execution owner and no manual DB setup step is needed after the first deploy.
 
 ## Rollback
 
