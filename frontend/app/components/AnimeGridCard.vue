@@ -29,6 +29,7 @@ const shouldLoad = useLazyLoad(cardRef, props.eagerLoad)
 const imageLoaded = ref(props.eagerLoad)
 const imageError = ref(false)
 const imgEl = ref<HTMLImageElement | null>(null)
+const hasUsableImage = computed(() => Boolean(props.anime.imageUrl) && !imageError.value)
 
 // `load` already guarantees the bytes are available. Reveal immediately rather
 // than waiting on decode(), which can remain pending while the main thread is
@@ -154,7 +155,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
       :class="watched ? 'ring-2 ring-green-400 ring-offset-1' : ''"
       @click="onCardClick"
     >
-      <template v-if="anime.imageUrl && !imageError">
+      <template v-if="hasUsableImage">
         <!-- Persistent placeholder layer sitting *under* the image. It is never
              removed via v-if: during fast scrolling the browser can defer
              painting a freshly-shown <img> for a frame or two, and if the
@@ -180,12 +181,21 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
           @error="imageError = true"
         />
       </template>
-      <div v-else class="grid h-full w-full place-items-center bg-primary-700 text-3xl font-bold text-white">
+      <div
+        v-else
+        data-image-fallback
+        class="grid h-full w-full place-items-center bg-gray-100 text-3xl font-bold text-gray-400 ring-1 ring-inset ring-gray-200"
+      >
         {{ anime.name.slice(0, 1) }}
       </div>
 
       <!-- Gradient overlay -->
-      <div class="pointer-events-none absolute inset-0 bg-linear-to-b from-black/60 via-transparent to-black/80" />
+      <div
+        class="pointer-events-none absolute inset-0 bg-linear-to-b"
+        :class="hasUsableImage
+          ? 'from-black/60 via-transparent to-black/80'
+          : 'from-transparent via-transparent to-gray-200/80'"
+      />
 
       <!-- Top-left: date label -->
       <div class="absolute left-0 top-0 p-1.5">
@@ -252,7 +262,10 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
 
       <!-- Title -->
       <div class="absolute inset-x-1.5 bottom-1 pr-7">
-        <h3 class="line-clamp-3 text-xs font-bold leading-snug text-white drop-shadow">
+        <h3
+          class="line-clamp-3 text-xs font-bold leading-snug"
+          :class="hasUsableImage ? 'text-white drop-shadow' : 'text-gray-800'"
+        >
           {{ anime.name }}
         </h3>
       </div>
