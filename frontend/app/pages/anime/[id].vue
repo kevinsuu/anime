@@ -4,6 +4,7 @@ import type { Anime } from '../../utils/normalize'
 import { seasonMonthLabels } from '../../utils/season'
 
 const route = useRoute()
+const router = useRouter()
 const api = useApi()
 const { isAuthed } = useSession()
 const toast = useToast()
@@ -14,6 +15,14 @@ const { data: anime, pending: loading, error: fetchError } = await useAsyncData(
 )
 const error = computed(() => fetchError.value ? (fetchError.value.message || '載入失敗') : '')
 const addedToList = ref(false)
+
+function goBack() {
+  if (import.meta.client && window.history.length > 1) {
+    router.back()
+    return
+  }
+  navigateTo('/seasonal')
+}
 
 // Trailer modal
 const activeTrailerUrl = ref<string | null>(null)
@@ -93,13 +102,14 @@ useHead({
 <template>
   <div>
     <!-- Back -->
-    <NuxtLink
-      to="/seasonal"
+    <button
+      type="button"
       class="mb-6 inline-flex items-center gap-1.5 text-sm font-semibold text-gray-500 hover:text-gray-900 transition-colors"
+      @click="goBack"
     >
       <UIcon name="i-lucide-chevron-left" class="size-4" />
-      返回新番表
-    </NuxtLink>
+      返回上一頁
+    </button>
 
     <!-- Loading -->
     <div v-if="loading" class="space-y-6">

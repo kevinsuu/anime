@@ -155,7 +155,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
     <NuxtLink
       :to="`/anime/${anime.id}`"
       class="group relative block aspect-3/4 w-full overflow-hidden rounded-lg bg-gray-800 transition-all duration-300"
-      :class="watched ? 'watched-card ring-2 ring-emerald-400 ring-offset-1' : ''"
+      :class="watched ? 'watched-card' : ''"
       @click="onCardClick"
     >
       <template v-if="hasUsableImage">
@@ -210,6 +210,13 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
       <div
         v-if="watched"
         class="watched-foil pointer-events-none absolute inset-0"
+        aria-hidden="true"
+      />
+
+      <!-- Inset border sits above the artwork instead of outside the card. -->
+      <div
+        v-if="watched"
+        class="pointer-events-none absolute inset-0 z-10 rounded-lg ring-2 ring-inset ring-emerald-400"
         aria-hidden="true"
       />
 
