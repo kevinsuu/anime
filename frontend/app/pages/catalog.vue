@@ -11,7 +11,7 @@ const {
   pendingInList,
   pendingWatched,
   loadMyList,
-  addAnime,
+  toggleAnimeInList,
   markWatched,
   toggleCollection
 } = useAnimeListActions()
@@ -288,7 +288,7 @@ useHead({
             :collections="collections"
             :popover-open="activePopoverAnimeId === anime.id"
             :eager-load="index < HIGH_PRIORITY_IMAGE_COUNT"
-            @add-to-list="addAnime"
+            @add-to-list="toggleAnimeInList"
             @mark-watched="markWatched"
             @toggle-collection="(col) => toggleCollection(anime.id, col)"
             @open-popover="activePopoverAnimeId = anime.id"

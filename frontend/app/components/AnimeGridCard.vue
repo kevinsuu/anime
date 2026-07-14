@@ -112,9 +112,12 @@ function onAddToList(e: Event) {
   e.preventDefault()
   e.stopPropagation()
   emit('addToList', props.anime.id)
-  // Only show collection popover for heart (add), not for check (watched)
-  if (props.collections.length > 0) {
+  // Removing from the main list also removes collection memberships, so close
+  // the popover. Only a newly-added title should offer collection choices.
+  if (!props.inList && props.collections.length > 0) {
     props.popoverOpen ? emit('closePopover') : emit('openPopover')
+  } else {
+    emit('closePopover')
   }
 }
 
@@ -151,8 +154,8 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
   <div ref="cardRef" class="relative">
     <NuxtLink
       :to="`/anime/${anime.id}`"
-      class="group relative block aspect-3/4 w-full overflow-hidden rounded-lg bg-gray-800 transition-all"
-      :class="watched ? 'ring-2 ring-green-400 ring-offset-1' : ''"
+      class="group relative block aspect-3/4 w-full overflow-hidden rounded-lg bg-gray-800 transition-all duration-300"
+      :class="watched ? 'watched-card ring-2 ring-emerald-400 ring-offset-1' : ''"
       @click="onCardClick"
     >
       <template v-if="hasUsableImage">
@@ -178,7 +181,10 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
           width="300"
           height="400"
           class="relative h-full w-full object-cover transition-[opacity,transform] duration-300 group-hover:scale-105"
-          :class="imageLoaded ? 'opacity-100' : 'opacity-0'"
+          :class="[
+            imageLoaded ? 'opacity-100' : 'opacity-0',
+            watched ? 'saturate-[.68] brightness-[.92]' : ''
+          ]"
           @load="revealImage"
           @error="imageError = true"
         />
@@ -197,6 +203,14 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
         :class="hasUsableImage
           ? 'from-black/60 via-transparent to-black/80'
           : 'from-transparent via-transparent to-gray-200/80'"
+      />
+
+      <!-- A restrained foil wash makes completed titles feel collected rather
+           than disabled. The artwork stays readable instead of turning grey. -->
+      <div
+        v-if="watched"
+        class="watched-foil pointer-events-none absolute inset-0"
+        aria-hidden="true"
       />
 
       <!-- Top-left: date label -->
@@ -244,10 +258,11 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
       <UBadge
         v-if="watched"
         color="success"
-        class="absolute left-1.5 top-9"
+        class="absolute left-1.5 top-9 border border-white/50 shadow-md shadow-emerald-950/20"
         size="sm"
       >
-        已看
+        <UIcon name="i-lucide-badge-check" class="mr-0.5 size-3" />
+        已收錄
       </UBadge>
 
       <!-- Streams badge -->
@@ -281,12 +296,12 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
           type="button"
           class="group/btn relative flex h-7 w-7 items-center justify-center rounded-full shadow-md transition-transform active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
           :class="inList ? 'bg-rose-500 text-white' : 'bg-white/90 text-gray-700 hover:bg-rose-500 hover:text-white'"
-          :aria-label="inList ? '已收藏' : '加入清單'"
+          :aria-label="inList ? '取消收藏' : '加入收藏'"
           @click="onAddToList"
         >
           <UIcon name="i-lucide-heart" class="size-3.5" :class="inList ? 'fill-current' : ''" />
           <span class="pointer-events-none absolute bottom-full right-0 mb-1.5 whitespace-nowrap rounded bg-gray-900 px-2 py-0.5 text-[11px] font-semibold text-white opacity-0 transition-opacity group-hover/btn:opacity-100">
-            {{ inList ? '已收藏' : '加入清單' }}
+            {{ inList ? '取消收藏' : '加入收藏' }}
           </span>
         </button>
 
@@ -363,5 +378,26 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
 .pop-fade-leave-to {
   opacity: 0;
   transform: translateY(-4px);
+}
+
+.watched-card {
+  box-shadow: 0 8px 22px rgb(16 185 129 / 0.16);
+}
+
+.watched-foil {
+  background:
+    linear-gradient(135deg, transparent 24%, rgb(255 255 255 / 0.13) 42%, transparent 58%),
+    linear-gradient(to bottom, rgb(16 185 129 / 0.06), rgb(6 78 59 / 0.16));
+  background-size: 220% 220%, 100% 100%;
+  animation: watched-foil-shift 5.5s ease-in-out infinite;
+}
+
+@keyframes watched-foil-shift {
+  0%, 70%, 100% { background-position: 130% 0, 0 0; }
+  86% { background-position: -40% 100%, 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .watched-foil { animation: none; }
 }
 </style>

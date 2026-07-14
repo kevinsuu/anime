@@ -11,6 +11,7 @@ export function useAnimeListActions() {
   const pendingInList = reactive(new Set<number>())
   const pendingWatched = reactive(new Set<number>())
   const pendingCollections = reactive(new Set<string>())
+  const pendingListOperations = reactive(new Set<number>())
 
   const listByAnimeId = computed(() => {
     const items = new Map<number, ListItem>()
@@ -29,24 +30,55 @@ export function useAnimeListActions() {
     }
   }
 
-  async function addAnime(animeId: number) {
+  async function toggleAnimeInList(animeId: number) {
     if (!isAuthed.value) return navigateTo('/login')
-    if (listByAnimeId.value.has(animeId) || pendingInList.has(animeId)) return
+    if (pendingListOperations.has(animeId) || pendingWatched.has(animeId)) return
+    pendingListOperations.add(animeId)
+    const existing = listByAnimeId.value.get(animeId)
+
+    if (existing) {
+      const index = list.value.findIndex(item => item.id === existing.id)
+      const collectionCounts = new Map(existing.collections.map(collection => {
+        const target = collections.value.find(item => item.id === collection.id)
+        return [collection.id, target?.count ?? null] as const
+      }))
+      if (index >= 0) list.value.splice(index, 1)
+      for (const collection of existing.collections) {
+        const target = collections.value.find(item => item.id === collection.id)
+        if (target) target.count = Math.max(0, target.count - 1)
+      }
+      try {
+        await api.deleteListItem(existing.id)
+        toast.add({ title: '已取消收藏', color: 'warning' })
+      } catch (err: any) {
+        if (index >= 0) list.value.splice(index, 0, existing)
+        for (const [collectionId, count] of collectionCounts) {
+          const target = collections.value.find(item => item.id === collectionId)
+          if (target && count !== null) target.count = count
+        }
+        toast.add({ title: err.message || '取消收藏失敗', color: 'error' })
+      } finally {
+        pendingListOperations.delete(animeId)
+      }
+      return
+    }
+
     pendingInList.add(animeId)
     try {
       const result = await api.addToList(animeId)
       list.value.push(normalizeListItem(result.item))
-      toast.add({ title: '已加入清單', color: 'success' })
+      toast.add({ title: '已加入收藏', color: 'success' })
     } catch (err: any) {
-      toast.add({ title: err.message || '加入失敗', color: 'error' })
+      toast.add({ title: err.message || '加入收藏失敗', color: 'error' })
     } finally {
       pendingInList.delete(animeId)
+      pendingListOperations.delete(animeId)
     }
   }
 
   async function markWatched(animeId: number) {
     if (!isAuthed.value) return navigateTo('/login')
-    if (pendingWatched.has(animeId)) return
+    if (pendingWatched.has(animeId) || pendingListOperations.has(animeId)) return
     pendingWatched.add(animeId)
     const existing = listByAnimeId.value.get(animeId)
     const previousWatched = existing?.watched ?? false
@@ -65,7 +97,10 @@ export function useAnimeListActions() {
         const result = await api.updateListItem(created.item.id, { watched: true })
         list.value.push(normalizeListItem(result.item))
       }
-      toast.add({ title: nextWatched ? '已標記為看完' : '已取消已看', color: 'success' })
+      toast.add({
+        title: nextWatched ? '已標記為看完' : '已取消已看',
+        color: nextWatched ? 'success' : 'warning'
+      })
     } catch (err: any) {
       if (existing) existing.watched = previousWatched
       else if (createdItem) list.value.push(createdItem)
@@ -97,6 +132,10 @@ export function useAnimeListActions() {
       } else {
         await api.addToCollection(collection.id, listItem.id)
       }
+      toast.add({
+        title: inCollection ? `已從「${collection.name}」移除` : `已加入「${collection.name}」`,
+        color: inCollection ? 'warning' : 'success'
+      })
     } catch (err: any) {
       listItem.collections = previousCollections
       if (collectionIndex >= 0 && previousCount !== null) collections.value[collectionIndex].count = previousCount
@@ -113,7 +152,7 @@ export function useAnimeListActions() {
     pendingInList,
     pendingWatched,
     loadMyList,
-    addAnime,
+    toggleAnimeInList,
     markWatched,
     toggleCollection
   }
