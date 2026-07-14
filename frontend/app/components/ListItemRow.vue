@@ -57,7 +57,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
 </script>
 
 <template>
-  <div class="flex gap-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition hover:shadow-md">
+  <div class="flex w-full min-w-0 max-w-full gap-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition hover:shadow-md">
     <!-- Cover -->
     <NuxtLink :to="`/anime/${item.anime.id}`" class="shrink-0">
       <img
@@ -139,7 +139,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
           <!-- Popover -->
           <div
             v-if="colPopoverOpen"
-            class="absolute left-0 top-full z-20 mt-1.5 w-52 rounded-xl border border-gray-200 bg-white py-1 shadow-lg"
+            class="absolute right-0 top-full z-20 mt-1.5 w-52 max-w-[calc(100vw-3rem)] rounded-xl border border-gray-200 bg-white py-1 shadow-lg sm:right-auto sm:left-0"
           >
             <p class="px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-gray-400">選擇清單</p>
             <button

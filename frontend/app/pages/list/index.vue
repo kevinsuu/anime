@@ -252,7 +252,7 @@ onMounted(loadAll)
 </script>
 
 <template>
-  <div class="relative grid gap-6 lg:grid-cols-[220px_1fr]">
+  <div class="relative grid w-full min-w-0 max-w-full gap-6 lg:grid-cols-[clamp(180px,20vw,220px)_minmax(0,1fr)]">
     <div
       v-if="loading"
       class="fixed inset-0 z-40 grid place-items-center bg-white/80 backdrop-blur-sm"
@@ -277,8 +277,8 @@ onMounted(loadAll)
     </div>
 
     <!-- ── Left: Collections sidebar ── -->
-    <aside class="space-y-4">
-      <div class="sticky top-24 space-y-3">
+    <aside class="min-w-0 space-y-4">
+      <div class="sticky top-24 min-w-0 space-y-3">
         <p class="text-xs font-extrabold uppercase tracking-widest text-gray-400">我的清單</p>
 
         <!-- Built-in filters -->
@@ -313,7 +313,7 @@ onMounted(loadAll)
                 ? 'bg-primary-50 text-primary-700'
                 : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'"
             >
-              <button class="flex flex-1 items-center justify-between" @click="setFilter(`col:${col.id}`)">
+              <button class="flex min-w-0 flex-1 items-center justify-between" @click="setFilter(`col:${col.id}`)">
                 <span class="truncate">{{ col.name }}</span>
                 <span class="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-bold text-gray-500">{{ col.count }}</span>
               </button>
@@ -362,24 +362,24 @@ onMounted(loadAll)
     </aside>
 
     <!-- ── Right: List items ── -->
-    <div class="space-y-5">
+    <div class="min-w-0 space-y-5">
       <header class="space-y-1">
         <p class="text-xs font-extrabold uppercase tracking-widest text-primary-600">追番清單</p>
-        <div class="flex items-center justify-between">
-          <h1 class="text-3xl font-extrabold tracking-tight text-gray-950">
+        <div class="flex min-w-0 items-center justify-between gap-4">
+          <h1 class="min-w-0 truncate text-3xl font-extrabold tracking-tight text-gray-950">
             {{ activeFilter.startsWith('col:')
               ? collections.find(c => c.id === Number(activeFilter.slice(4)))?.name ?? '清單'
               : '我的清單' }}
           </h1>
-          <span class="text-sm text-gray-500">共 {{ filteredList.length }} 部</span>
+          <span class="shrink-0 text-sm text-gray-500">共 {{ filteredList.length }} 部</span>
         </div>
       </header>
 
       <!-- 搜尋 + 排序 + 分類卡片：與資料庫頁模板一致——左排序下拉、中搜尋框、
            右綠色搜尋鈕；分類 chip 以分隔線區隔。搜尋為即時過濾，搜尋鈕純裝飾對齊
            （submit 不觸發查詢）。「清除全部篩選」一鍵清搜尋＋分類。 -->
-      <div class="space-y-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
-        <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+      <div class="min-w-0 max-w-full space-y-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+        <div class="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-center">
           <!-- 排序下拉（對齊 catalog 左控制項位置） -->
           <div class="shrink-0">
             <label for="list-sort" class="sr-only">排序方式</label>
@@ -395,8 +395,8 @@ onMounted(loadAll)
           </div>
 
           <!-- 搜尋框 + 綠色搜尋鈕（即時過濾；按鈕純裝飾對齊 catalog，submit 不觸發查詢） -->
-          <form class="flex flex-1 gap-2" @submit.prevent>
-            <div class="relative flex-1">
+          <form class="flex min-w-0 flex-1 gap-2" @submit.prevent>
+            <div class="relative min-w-0 flex-1">
               <label for="list-search" class="sr-only">搜尋清單內作品</label>
               <UIcon
                 name="i-lucide-search"
@@ -407,7 +407,7 @@ onMounted(loadAll)
                 v-model="searchQuery"
                 type="search"
                 placeholder="搜尋清單內作品…"
-                class="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-9 pr-4 text-sm text-gray-900 placeholder:text-gray-400 shadow-sm outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
+                class="min-w-0 w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-9 pr-4 text-sm text-gray-900 placeholder:text-gray-400 shadow-sm outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
               />
             </div>
             <button
@@ -429,7 +429,7 @@ onMounted(loadAll)
           </button>
         </div>
 
-        <div v-if="tagOptions.length > 0" class="flex flex-wrap items-center gap-1.5 border-t border-gray-100 pt-3">
+        <div v-if="tagOptions.length > 0" class="flex min-w-0 flex-wrap items-center gap-1.5 border-t border-gray-100 pt-3">
           <button
             v-for="opt in tagOptions"
             :key="opt.tag"
@@ -463,7 +463,7 @@ onMounted(loadAll)
         <NuxtLink to="/seasonal" class="mt-3 inline-block text-xs font-semibold text-primary-600 hover:underline">去新番表加入作品</NuxtLink>
       </div>
 
-      <TransitionGroup v-else tag="div" name="list-item" class="space-y-3">
+      <TransitionGroup v-else tag="div" name="list-item" class="min-w-0 space-y-3">
         <ListItemRow
           v-for="item in filteredList"
           :key="item.id"
