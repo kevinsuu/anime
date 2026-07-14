@@ -6,6 +6,7 @@ use App\Models\Anime;
 use App\Models\AnimeStream;
 use App\Services\AnimeCatalog\AnimeImportService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
@@ -81,6 +82,103 @@ final class AnimeImportServiceTest extends TestCase
         $this->assertSame(1, Anime::count());
         $this->assertSame('更新後的大綱', Anime::first()->description);
         $this->assertSame(1, AnimeStream::count());
+    }
+
+    public function test_import_record_merges_orphan_created_before_external_id_enrichment(): void
+    {
+        $service = app(AnimeImportService::class);
+        $springRecord = $this->record([
+            'season' => '202004',
+            'season_year' => 2020,
+            'season_code' => 'spring',
+            'title_zh' => '天晴爛漫！',
+            'title_ja' => '天晴爛漫！',
+            'cover_image' => null,
+            'air_date' => '2020-04-10',
+            'external_ids' => [],
+        ]);
+        $summerRecord = array_merge($springRecord, [
+            'season' => '202007',
+            'season_code' => 'summer',
+            'air_date' => null,
+            'air_date_text' => '每週五／21時0分',
+        ]);
+
+        $canonicalId = $service->importRecord($springRecord)->anime->id;
+        $duplicateId = $service->importRecord($summerRecord)->anime->id;
+
+        $now = now();
+        $userId = DB::table('users')->insertGetId([
+            'google_sub' => 'duplicate-test-user',
+            'email' => 'duplicate@example.com',
+            'display_name' => 'Duplicate Test',
+            'avatar_url' => null,
+            'public_slug' => 'duplicate-test-user',
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+        $canonicalListItemId = DB::table('user_anime_list_items')->insertGetId([
+            'user_id' => $userId,
+            'anime_id' => $canonicalId,
+            'watched' => false,
+            'rating' => null,
+            'note' => null,
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+        $duplicateListItemId = DB::table('user_anime_list_items')->insertGetId([
+            'user_id' => $userId,
+            'anime_id' => $duplicateId,
+            'watched' => true,
+            'rating' => 5,
+            'note' => '延期後資料',
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+        $collectionId = DB::table('user_collections')->insertGetId([
+            'user_id' => $userId,
+            'name' => '2020 夏季',
+            'public_slug' => null,
+            'is_public' => false,
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+        DB::table('collection_items')->insert([
+            'collection_id' => $collectionId,
+            'list_item_id' => $duplicateListItemId,
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+
+        $springRecord['external_ids'] = ['bangumi' => '292542'];
+        $summerRecord['external_ids'] = ['bangumi' => '292542'];
+        $service->importRecord($springRecord);
+        $service->importRecord($summerRecord);
+
+        $this->assertSame(1, Anime::count());
+        $this->assertDatabaseMissing('anime', ['id' => $duplicateId]);
+        $this->assertDatabaseHas('anime', [
+            'id' => $canonicalId,
+            'season_year' => 2020,
+            'season_code' => 'summer',
+        ]);
+        $this->assertDatabaseHas('anime_external_ids', [
+            'anime_id' => $canonicalId,
+            'provider' => 'bangumi',
+            'external_id' => '292542',
+        ]);
+        $this->assertDatabaseHas('user_anime_list_items', [
+            'id' => $canonicalListItemId,
+            'anime_id' => $canonicalId,
+            'watched' => true,
+            'rating' => 5,
+            'note' => '延期後資料',
+        ]);
+        $this->assertDatabaseMissing('user_anime_list_items', ['id' => $duplicateListItemId]);
+        $this->assertDatabaseHas('collection_items', [
+            'collection_id' => $collectionId,
+            'list_item_id' => $canonicalListItemId,
+        ]);
     }
 
     public function test_import_record_skips_unchanged_payload(): void

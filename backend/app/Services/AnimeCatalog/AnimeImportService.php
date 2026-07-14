@@ -27,7 +27,10 @@ final class AnimeImportService
         'bangumi' => 'https://bgm.tv/subject/%s',
     ];
 
-    public function __construct(private readonly ThumbnailService $thumbnails)
+    public function __construct(
+        private readonly ThumbnailService $thumbnails,
+        private readonly AnimeDuplicateMerger $duplicates,
+    )
     {
     }
 
@@ -47,9 +50,10 @@ final class AnimeImportService
 
         return DB::transaction(function () use ($record, $payloadHash, $source): ImportOutcome {
             $anime = $this->resolveAnime($record);
+            $mergedDuplicate = $this->mergeOrphanDuplicates($anime, $record, $source);
 
             if ($anime->exists && $anime->import_hash === $payloadHash) {
-                return new ImportOutcome($anime, wasUnchanged: true);
+                return new ImportOutcome($anime->refresh(), wasUnchanged: ! $mergedDuplicate);
             }
 
             $coverImage = $record['cover_image'] ?? null;
@@ -193,6 +197,41 @@ final class AnimeImportService
             ->first();
 
         return $matched ?? new Anime();
+    }
+
+    /**
+     * Merge rows created before an external ID was available. Once a later
+     * import resolves the canonical row by external ID, an orphan with the
+     * same incoming season and title is safe to fold into it.
+     *
+     * @param array<string, mixed> $record
+     */
+    private function mergeOrphanDuplicates(Anime $canonical, array $record, string $source): bool
+    {
+        $externalIds = array_filter(
+            $record['external_ids'] ?? [],
+            fn (mixed $id): bool => $id !== null && $id !== '',
+        );
+
+        if (! $canonical->exists || $externalIds === []) {
+            return false;
+        }
+
+        $duplicates = Anime::query()
+            ->where('id', '!=', $canonical->id)
+            ->where('season_year', $record['season_year'] ?? null)
+            ->where('season_code', $record['season_code'] ?? null)
+            ->where('name', (string) $record['title_zh'])
+            ->where('source', $source)
+            ->whereNull('created_by_user_id')
+            ->whereDoesntHave('externalIds')
+            ->get();
+
+        foreach ($duplicates as $duplicate) {
+            $this->duplicates->merge($canonical, $duplicate);
+        }
+
+        return $duplicates->isNotEmpty();
     }
 
     /**
