@@ -17,8 +17,9 @@ services:
       retries: 20
 
   db-backup:
-    image: mysql:8.4
-    entrypoint: ["/usr/local/bin/schedule-backups.sh"]
+    image: anime-db-backup:local
+    build:
+      context: ./docker/mysql-backup
     environment:
       DB_HOST: mysql
       DB_PORT: 3306
@@ -28,8 +29,6 @@ services:
       BACKUP_RETENTION_DAYS: ${BACKUP_RETENTION_DAYS:-30}
       TZ: Asia/Taipei
     volumes:
-      - ./docker/mysql-backup/backup.sh:/usr/local/bin/backup.sh:ro
-      - ./docker/mysql-backup/schedule-backups.sh:/usr/local/bin/schedule-backups.sh:ro
       - ./backups/mysql:/backups
     depends_on:
       mysql:

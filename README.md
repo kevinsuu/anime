@@ -63,6 +63,33 @@ Docker 更新規則：
 docker compose up -d mysql db-backup
 ```
 
+正式主機只保留 Compose 檔時，先在已登入 GHCR 的本機建置並推送備份 image（預設為 `ghcr.io/kevinsuu/anime-db-backup:latest`）：
+
+```bash
+./scripts/build-backup-image.sh
+```
+
+上面的預設模式會推送 image，因此 GHCR 登入必須使用具有 `write:packages` 權限的 Personal Access Token (classic)。如果只想驗證本機能否成功建置、不推送到 GHCR：
+
+```bash
+BACKUP_OUTPUT=load ./scripts/build-backup-image.sh
+```
+
+只載入本機的 image 無法被遠端主機使用；遠端 Compose 要能拉取時，仍須推送到 registry，或另行用 `docker save`／`docker load` 傳輸。
+
+也可以指定其他 image tag 或遠端主機架構：
+
+```bash
+BACKUP_IMAGE=ghcr.io/kevinsuu/anime-db-backup:v1 BACKUP_PLATFORMS=linux/amd64 ./scripts/build-backup-image.sh
+```
+
+接著在遠端 `.env` 設定相同的 `BACKUP_IMAGE`，再執行：
+
+```bash
+docker compose pull db-backup
+docker compose up -d db-backup
+```
+
 立即手動建立一份備份：
 
 ```bash
