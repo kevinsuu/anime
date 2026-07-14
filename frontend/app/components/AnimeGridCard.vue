@@ -155,7 +155,6 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
     <NuxtLink
       :to="`/anime/${anime.id}`"
       class="group relative block aspect-3/4 w-full overflow-hidden rounded-lg bg-gray-800 transition-all duration-300"
-      :class="watched ? 'watched-card' : ''"
       @click="onCardClick"
     >
       <template v-if="hasUsableImage">
@@ -181,10 +180,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
           width="300"
           height="400"
           class="relative h-full w-full object-cover transition-[opacity,transform] duration-300 group-hover:scale-105"
-          :class="[
-            imageLoaded ? 'opacity-100' : 'opacity-0',
-            watched ? 'saturate-[.68] brightness-[.92]' : ''
-          ]"
+          :class="imageLoaded ? 'opacity-100' : 'opacity-0'"
           @load="revealImage"
           @error="imageError = true"
         />
@@ -205,20 +201,18 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
           : 'from-transparent via-transparent to-gray-200/80'"
       />
 
-      <!-- A restrained foil wash makes completed titles feel collected rather
-           than disabled. The artwork stays readable instead of turning grey. -->
+      <!-- Four translucent corner marks communicate completion without
+           tinting or covering the artwork. -->
       <div
         v-if="watched"
-        class="watched-foil pointer-events-none absolute inset-0"
+        class="pointer-events-none absolute inset-0 z-10"
         aria-hidden="true"
-      />
-
-      <!-- Inset border sits above the artwork instead of outside the card. -->
-      <div
-        v-if="watched"
-        class="pointer-events-none absolute inset-0 z-10 rounded-lg ring-2 ring-inset ring-emerald-400"
-        aria-hidden="true"
-      />
+      >
+        <span class="absolute left-0 top-0 size-7 rounded-tl-lg border-l-4 border-t-4 border-emerald-400/80" />
+        <span class="absolute right-0 top-0 size-7 rounded-tr-lg border-r-4 border-t-4 border-emerald-400/80" />
+        <span class="absolute bottom-0 left-0 size-7 rounded-bl-lg border-b-4 border-l-4 border-emerald-400/80" />
+        <span class="absolute bottom-0 right-0 size-7 rounded-br-lg border-b-4 border-r-4 border-emerald-400/80" />
+      </div>
 
       <!-- Top-left: date label -->
       <div class="absolute left-0 top-0 p-1.5">
@@ -387,24 +381,4 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
   transform: translateY(-4px);
 }
 
-.watched-card {
-  box-shadow: 0 8px 22px rgb(16 185 129 / 0.16);
-}
-
-.watched-foil {
-  background:
-    linear-gradient(135deg, transparent 24%, rgb(255 255 255 / 0.13) 42%, transparent 58%),
-    linear-gradient(to bottom, rgb(16 185 129 / 0.06), rgb(6 78 59 / 0.16));
-  background-size: 220% 220%, 100% 100%;
-  animation: watched-foil-shift 5.5s ease-in-out infinite;
-}
-
-@keyframes watched-foil-shift {
-  0%, 70%, 100% { background-position: 130% 0, 0 0; }
-  86% { background-position: -40% 100%, 0 0; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .watched-foil { animation: none; }
-}
 </style>
