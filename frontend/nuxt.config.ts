@@ -1,3 +1,7 @@
+const defaultApiBaseUrl = 'https://anime.kaistarstudio.me/api'
+const publicApiBaseUrl = (process.env.NUXT_PUBLIC_API_BASE_URL || defaultApiBaseUrl).replace(/\/$/, '')
+const internalApiBaseUrl = (process.env.NUXT_API_BASE_URL_INTERNAL || publicApiBaseUrl).replace(/\/$/, '')
+
 export default defineNuxtConfig({
   compatibilityDate: '2026-06-29',
   devtools: { enabled: true },
@@ -34,13 +38,12 @@ export default defineNuxtConfig({
     }
   },
   runtimeConfig: {
-    // Server-side (SSR) requests run inside the frontend container, where
-    // `localhost` doesn't reach the backend container — they need the
-    // Docker-network service URL instead. Falls back to the public URL when
-    // not set, so nothing breaks in environments without an internal DNS name.
-    apiBaseUrlInternal: process.env.NUXT_API_BASE_URL_INTERNAL || process.env.NUXT_PUBLIC_API_BASE_URL || 'http://localhost:8080',
+    // A standalone `npm run dev` uses the deployed API, so frontend work does
+    // not require Laravel/MySQL locally. Docker Compose still overrides these
+    // values with its backend service URL for full-stack development.
+    apiBaseUrlInternal: internalApiBaseUrl,
     public: {
-      apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL || 'http://localhost:8080',
+      apiBaseUrl: publicApiBaseUrl,
       googleClientId: process.env.NUXT_PUBLIC_GOOGLE_CLIENT_ID || '',
       enableDevLogin: process.env.NUXT_PUBLIC_ENABLE_DEV_LOGIN === 'true'
     }

@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { normalizeAnime, tagColor } from '../utils/normalize'
 import type { Anime } from '../utils/normalize'
+import { HIGH_PRIORITY_IMAGE_COUNT } from '../composables/useLazyLoad'
 
 const api = useApi()
 const toast = useToast()
 const {
   collections,
   listByAnimeId,
+  pendingInList,
+  pendingWatched,
   loadMyList,
   addAnime,
   markWatched,
@@ -279,12 +282,12 @@ useHead({
           <AnimeGridCard
             :key="anime.id"
             :anime="anime"
-            :in-list="listByAnimeId.has(anime.id)"
-            :watched="Boolean(listByAnimeId.get(anime.id)?.watched)"
+            :in-list="listByAnimeId.has(anime.id) || pendingInList.has(anime.id)"
+            :watched="Boolean(listByAnimeId.get(anime.id)?.watched) || pendingWatched.has(anime.id)"
             :list-item="listByAnimeId.get(anime.id)"
             :collections="collections"
             :popover-open="activePopoverAnimeId === anime.id"
-            :eager-load="index < 10"
+            :eager-load="index < HIGH_PRIORITY_IMAGE_COUNT"
             @add-to-list="addAnime"
             @mark-watched="markWatched"
             @toggle-collection="(col) => toggleCollection(anime.id, col)"

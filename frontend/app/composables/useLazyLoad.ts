@@ -2,10 +2,9 @@ import { type Ref, ref } from 'vue'
 
 /**
  * Shared IntersectionObserver for all lazy-loaded images.
- * Uses a generous rootMargin (1500px) so images start loading well before
- * the user scrolls to them — much more aggressive than the browser's native
- * `loading="lazy"` (~1250px in Chrome), which can miss images during fast
- * scrolling.
+ * Mounts images shortly before they enter the viewport. Keeping this window
+ * bounded prevents a page of covers from competing with the visible row on
+ * initial navigation, while still leaving enough time for normal scrolling.
  */
 const callbacks = new WeakMap<Element, () => void>()
 let sharedObserver: IntersectionObserver | null = null
@@ -15,7 +14,12 @@ let sharedObserver: IntersectionObserver | null = null
 // the viewport during a fast scroll wouldn't get its src set until the observer
 // gets around to firing — leaving a blank card. We use this margin to
 // synchronously check on mount whether the card is already in range.
-export const IMAGE_PRELOAD_DISTANCE_PX = 1500
+export const IMAGE_PRELOAD_DISTANCE_PX = 700
+
+// Five cards is one full desktop row. Remaining near-viewport cards still get
+// a src immediately, but stay at normal/low browser priority so the first row
+// wins the initial network contention.
+export const HIGH_PRIORITY_IMAGE_COUNT = 5
 
 function getObserver(): IntersectionObserver {
   if (!sharedObserver) {
@@ -48,7 +52,7 @@ function isNearViewport(el: HTMLElement): boolean {
 
 /**
  * Returns a reactive boolean that flips to `true` once the element is within
- * 1500px of the viewport. Use this to defer setting image `src` until the
+ * the preload window. Use this to defer setting image `src` until the
  * card is near-visible, replacing native `loading="lazy"`.
  */
 export function useLazyLoad(el: Ref<HTMLElement | null>, eager = false): Ref<boolean> {

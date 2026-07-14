@@ -8,6 +8,9 @@ export function useAnimeListActions() {
 
   const list = ref<ListItem[]>([])
   const collections = ref<Collection[]>([])
+  const pendingInList = reactive(new Set<number>())
+  const pendingWatched = reactive(new Set<number>())
+  const pendingCollections = reactive(new Set<string>())
 
   const listByAnimeId = computed(() => {
     const items = new Map<number, ListItem>()
@@ -28,34 +31,48 @@ export function useAnimeListActions() {
 
   async function addAnime(animeId: number) {
     if (!isAuthed.value) return navigateTo('/login')
-    if (listByAnimeId.value.has(animeId)) return
+    if (listByAnimeId.value.has(animeId) || pendingInList.has(animeId)) return
+    pendingInList.add(animeId)
     try {
-      await api.addToList(animeId)
-      await loadMyList()
+      const result = await api.addToList(animeId)
+      list.value.push(normalizeListItem(result.item))
       toast.add({ title: '已加入清單', color: 'success' })
     } catch (err: any) {
       toast.add({ title: err.message || '加入失敗', color: 'error' })
+    } finally {
+      pendingInList.delete(animeId)
     }
   }
 
   async function markWatched(animeId: number) {
     if (!isAuthed.value) return navigateTo('/login')
+    if (pendingWatched.has(animeId)) return
+    pendingWatched.add(animeId)
+    const existing = listByAnimeId.value.get(animeId)
+    const previousWatched = existing?.watched ?? false
+    const nextWatched = existing ? !existing.watched : true
+    let createdItem: ListItem | null = null
+    if (existing) existing.watched = nextWatched
     try {
-      const existing = listByAnimeId.value.get(animeId)
       if (existing) {
-        await api.updateListItem(existing.id, { watched: !existing.watched })
+        const result = await api.updateListItem(existing.id, { watched: nextWatched })
+        const index = list.value.findIndex(item => item.id === existing.id)
+        if (index >= 0) list.value[index] = normalizeListItem(result.item)
       } else {
-        await api.addToList(animeId)
-        const freshList = await api.myList()
-        const freshItem = (freshList.items || []).find((item: any) => item.anime?.id === animeId)
-        if (freshItem) await api.updateListItem(freshItem.id, { watched: true })
+        pendingInList.add(animeId)
+        const created = await api.addToList(animeId)
+        createdItem = normalizeListItem(created.item)
+        const result = await api.updateListItem(created.item.id, { watched: true })
+        list.value.push(normalizeListItem(result.item))
       }
-      const item = listByAnimeId.value.get(animeId)
-      toast.add({ title: item?.watched ? '已標記為看完' : '已取消已看', color: 'success' })
+      toast.add({ title: nextWatched ? '已標記為看完' : '已取消已看', color: 'success' })
     } catch (err: any) {
-      toast.add({ title: err.message || '操作失敗，清單狀態已重新整理', color: 'error' })
+      if (existing) existing.watched = previousWatched
+      else if (createdItem) list.value.push(createdItem)
+      toast.add({ title: err.message || '操作失敗，已恢復原狀態', color: 'error' })
     } finally {
-      await loadMyList()
+      pendingInList.delete(animeId)
+      pendingWatched.delete(animeId)
     }
   }
 
@@ -63,19 +80,29 @@ export function useAnimeListActions() {
     if (!isAuthed.value) return
     const listItem = listByAnimeId.value.get(animeId)
     if (!listItem) return
+    const operationKey = `${listItem.id}:${collection.id}`
+    if (pendingCollections.has(operationKey)) return
+    pendingCollections.add(operationKey)
     const inCollection = listItem.collections.some(item => item.id === collection.id)
+    const previousCollections = [...listItem.collections]
+    const collectionIndex = collections.value.findIndex(item => item.id === collection.id)
+    const previousCount = collectionIndex >= 0 ? collections.value[collectionIndex].count : null
+    listItem.collections = inCollection
+      ? listItem.collections.filter(item => item.id !== collection.id)
+      : [...listItem.collections, { id: collection.id, name: collection.name }]
+    if (collectionIndex >= 0) collections.value[collectionIndex].count += inCollection ? -1 : 1
     try {
       if (inCollection) {
         await api.removeFromCollection(collection.id, listItem.id)
-        listItem.collections = listItem.collections.filter(item => item.id !== collection.id)
       } else {
         await api.addToCollection(collection.id, listItem.id)
-        listItem.collections = [...listItem.collections, { id: collection.id, name: collection.name }]
       }
-      const index = collections.value.findIndex(item => item.id === collection.id)
-      if (index >= 0) collections.value[index].count += inCollection ? -1 : 1
     } catch (err: any) {
+      listItem.collections = previousCollections
+      if (collectionIndex >= 0 && previousCount !== null) collections.value[collectionIndex].count = previousCount
       toast.add({ title: err.message || '操作失敗', color: 'error' })
+    } finally {
+      pendingCollections.delete(operationKey)
     }
   }
 
@@ -83,6 +110,8 @@ export function useAnimeListActions() {
     list,
     collections,
     listByAnimeId,
+    pendingInList,
+    pendingWatched,
     loadMyList,
     addAnime,
     markWatched,

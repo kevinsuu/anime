@@ -19,7 +19,7 @@ const list = ref<ListItem[]>([])
 const fullList = ref<ListItem[]>([])
 const collections = ref<Collection[]>([])
 const tagOptions = ref<TagOption[]>([])
-const loading = ref(false)
+const loading = ref(true)
 const tagLoading = ref(false)
 let tagRequestId = 0
 
@@ -130,6 +130,10 @@ async function loadAll() {
 }
 
 async function updateItem(item: ListItem, patch: Record<string, any>) {
+  const fullItem = fullList.value.find(entry => entry.id === item.id)
+  const previous = Object.fromEntries(Object.keys(patch).map(key => [key, (item as any)[key]]))
+  Object.assign(item, patch)
+  if (fullItem && fullItem !== item) Object.assign(fullItem, patch)
   try {
     const result = await api.updateListItem(item.id, patch)
     const normalized = normalizeListItem(result.item)
@@ -139,6 +143,8 @@ async function updateItem(item: ListItem, patch: Record<string, any>) {
     if (fullIndex >= 0) fullList.value[fullIndex] = normalized
     toast.add({ title: '清單已更新', color: 'success' })
   } catch (err: any) {
+    Object.assign(item, previous)
+    if (fullItem && fullItem !== item) Object.assign(fullItem, previous)
     toast.add({ title: err.message || '更新失敗', color: 'error' })
   }
 }
@@ -199,28 +205,28 @@ async function togglePublic(col: Collection) {
 
 async function toggleItemInCollection(item: ListItem, col: Collection) {
   const inCol = item.collections.some(c => c.id === col.id)
+  const previousCollections = [...item.collections]
+  const fullItem = fullList.value.find(entry => entry.id === item.id)
+  const previousFullCollections = fullItem ? [...fullItem.collections] : null
+  const collectionIndex = collections.value.findIndex(entry => entry.id === col.id)
+  const previousCount = collectionIndex >= 0 ? collections.value[collectionIndex].count : null
+
+  item.collections = inCol
+    ? item.collections.filter(c => c.id !== col.id)
+    : [...item.collections, { id: col.id, name: col.name }]
+  if (fullItem && fullItem !== item) fullItem.collections = [...item.collections]
+  if (collectionIndex >= 0) collections.value[collectionIndex].count += inCol ? -1 : 1
+
   try {
     if (inCol) {
       await api.removeFromCollection(col.id, item.id)
-      item.collections = item.collections.filter(c => c.id !== col.id)
     } else {
       await api.addToCollection(col.id, item.id)
-      item.collections = [...item.collections, { id: col.id, name: col.name }]
-    }
-    // `item` may be a different object reference than the corresponding entry
-    // in `fullList` (populated from a separate fetch/normalize pass), so sync
-    // the collections membership there too to keep sidebar/tag data consistent.
-    const fullItem = fullList.value.find(e => e.id === item.id)
-    if (fullItem && fullItem !== item) fullItem.collections = item.collections
-    // Update collection count locally instead of refetching the full list
-    const idx = collections.value ? collections.value.findIndex(c => c.id === col.id) : -1
-    if (idx >= 0) {
-      const target = collections.value && collections.value[idx]
-      if (target && typeof target.count === 'number') {
-        target.count += inCol ? -1 : 1
-      }
     }
   } catch (err: any) {
+    item.collections = previousCollections
+    if (fullItem && previousFullCollections) fullItem.collections = previousFullCollections
+    if (collectionIndex >= 0 && previousCount !== null) collections.value[collectionIndex].count = previousCount
     toast.add({ title: err.message || '操作失敗', color: 'error' })
   }
 }
@@ -246,7 +252,19 @@ onMounted(loadAll)
 </script>
 
 <template>
-  <div class="grid gap-6 lg:grid-cols-[220px_1fr]">
+  <div class="relative grid gap-6 lg:grid-cols-[220px_1fr]">
+    <div
+      v-if="loading"
+      class="fixed inset-0 z-40 grid place-items-center bg-white/80 backdrop-blur-sm"
+      role="status"
+      aria-live="polite"
+      aria-label="正在載入我的清單"
+    >
+      <div class="flex flex-col items-center gap-3 rounded-2xl border border-gray-200 bg-white px-8 py-6 shadow-xl shadow-gray-900/10">
+        <UIcon name="i-lucide-loader-circle" class="size-8 animate-spin text-primary-600" />
+        <p class="text-sm font-semibold text-gray-600">正在載入我的清單…</p>
+      </div>
+    </div>
 
     <!-- ── Left: Collections sidebar ── -->
     <aside class="space-y-4">
@@ -419,7 +437,7 @@ onMounted(loadAll)
         </div>
       </div>
 
-      <div v-if="loading || tagLoading" class="space-y-3">
+      <div v-if="tagLoading" class="space-y-3">
         <div v-for="i in 5" :key="i" class="h-20 w-full animate-pulse rounded-xl bg-gray-200" />
       </div>
 

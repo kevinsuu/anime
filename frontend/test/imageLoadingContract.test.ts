@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { IMAGE_PRELOAD_DISTANCE_PX } from '../app/composables/useLazyLoad'
+import { HIGH_PRIORITY_IMAGE_COUNT, IMAGE_PRELOAD_DISTANCE_PX } from '../app/composables/useLazyLoad'
 
 const virtualGridSource = readFileSync(
   resolve(process.cwd(), 'app/components/AnimeVirtualGrid.vue'),
@@ -14,8 +14,15 @@ const gridCardSource = readFileSync(
 
 describe('anime image loading contract', () => {
   it('mounts virtualized cards as far ahead as images are preloaded', () => {
-    expect(IMAGE_PRELOAD_DISTANCE_PX).toBe(1500)
+    expect(IMAGE_PRELOAD_DISTANCE_PX).toBe(700)
     expect(virtualGridSource).toContain(':buffer="IMAGE_PRELOAD_DISTANCE_PX"')
+  })
+
+  it('prioritizes only the first visible desktop row and decodes the rest asynchronously', () => {
+    expect(HIGH_PRIORITY_IMAGE_COUNT).toBe(5)
+    expect(gridCardSource).toContain(":loading=\"eagerLoad ? 'eager' : 'lazy'\"")
+    expect(gridCardSource).toContain(":fetchpriority=\"eagerLoad ? 'high' : 'low'\"")
+    expect(gridCardSource).toContain('decoding="async"')
   })
 
   it('uses a quiet neutral fallback when a cover is unavailable', () => {
