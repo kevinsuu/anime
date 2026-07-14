@@ -105,6 +105,17 @@ jobs:
           envs: DEPLOY_PATH,RELEASE_TAG
           script: |
             set -e
+            # Pasted secrets may retain CR/LF and turn an otherwise valid path
+            # into a different directory name on the remote host.
+            DEPLOY_PATH="$(printf '%s' "${DEPLOY_PATH:-}" | tr -d '\r\n')"
+            if [ -z "$DEPLOY_PATH" ]; then
+              echo "DEPLOY_PATH is empty after removing line breaks." >&2
+              exit 1
+            fi
+            case "$DEPLOY_PATH" in
+              /*) ;;
+              *) echo "DEPLOY_PATH must be an absolute path." >&2; exit 1 ;;
+            esac
             cd -- "$DEPLOY_PATH"
             touch .env
             set_env_var() {
