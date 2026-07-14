@@ -13,6 +13,7 @@ frontend/.nuxt/
 frontend/.output/
 frontend/dist
 vendor/
+backups/
 
 # Credentials and private key material
 *.pem

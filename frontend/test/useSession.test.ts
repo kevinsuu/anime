@@ -38,4 +38,17 @@ describe('useSession', () => {
     expect(session.token).toBe('abc123')
     expect(session.user.email).toBe('new@b.com')
   })
+
+  it('updateTokens keeps reactive and stored tokens in sync', () => {
+    const { setSession, updateTokens, session } = useSession()
+    setSession('old-token', 'old-refresh', { id: 1 })
+    updateTokens('new-token', 'new-refresh')
+
+    expect(session.token).toBe('new-token')
+    expect(session.refreshToken).toBe('new-refresh')
+    expect(JSON.parse(localStorage.getItem('animeTrackerSession') || '{}')).toMatchObject({
+      token: 'new-token',
+      refreshToken: 'new-refresh'
+    })
+  })
 })

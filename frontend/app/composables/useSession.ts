@@ -64,6 +64,12 @@ export function useSession() {
     save()
   }
 
+  function updateTokens(token: string, refreshToken: string) {
+    session.token = token
+    session.refreshToken = refreshToken
+    save()
+  }
+
   function clearSession() {
     session.token = ''
     session.refreshToken = ''
@@ -76,6 +82,7 @@ export function useSession() {
     isAuthed,
     setSession,
     setUser,
+    updateTokens,
     clearSession
   }
 }

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { normalizeAnime, tagColor } from '../../utils/normalize'
 import type { Anime } from '../../utils/normalize'
+import { seasonMonthLabels } from '../../utils/season'
 
 const route = useRoute()
 const api = useApi()
@@ -37,10 +38,6 @@ onMounted(() => {
     if (e.key === 'Escape') closeTrailer()
   })
 })
-
-const seasonMonthMap: Record<string, string> = {
-  winter: '1月', spring: '4月', summer: '7月', fall: '10月'
-}
 
 async function addToList() {
   if (!isAuthed.value) return navigateTo('/login')
@@ -179,7 +176,7 @@ useHead({
           <!-- Title -->
           <div>
             <p v-if="anime.seasonYear" class="text-xs font-extrabold uppercase tracking-widest text-primary-600">
-              {{ anime.seasonYear }}年 {{ seasonMonthMap[anime.seasonCode] ?? anime.seasonCode }}
+              {{ anime.seasonYear }}年 {{ seasonMonthLabels[anime.seasonCode] ?? anime.seasonCode }}
             </p>
             <h1 class="mt-1 text-2xl font-extrabold tracking-tight text-gray-950">{{ anime.name }}</h1>
             <p v-if="anime.titleJa" class="mt-0.5 text-sm text-gray-500">{{ anime.titleJa }}</p>

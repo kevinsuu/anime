@@ -1,10 +1,8 @@
 <script setup lang="ts">
+import { seasonMonthLabels } from '../../../utils/season'
+
 const route = useRoute()
 const api = useApi()
-
-const seasonMonthMap: Record<string, string> = {
-  winter: '1月', spring: '4月', summer: '7月', fall: '10月'
-}
 
 // SSR-fetched (public endpoint) so the shared collection link paints its
 // content immediately instead of a client-side loading spinner.
@@ -61,7 +59,7 @@ const error = computed(() => fetchError.value ? (fetchError.value.message || '�
             {{ li.anime.name }}
           </p>
           <p v-if="li.anime.season_year" class="text-[10px] text-gray-400">
-            {{ li.anime.season_year }}年 {{ seasonMonthMap[li.anime.season_code] ?? li.anime.season_code }}
+            {{ li.anime.season_year }}年 {{ seasonMonthLabels[li.anime.season_code] ?? li.anime.season_code }}
           </p>
         </NuxtLink>
       </div>

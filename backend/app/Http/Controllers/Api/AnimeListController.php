@@ -6,6 +6,7 @@ use App\Exceptions\ApiException;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserAnimeListItem;
+use App\Services\Shared\DelimitedValues;
 use App\Services\Shared\GenreTags;
 use App\Services\Shared\SlugGenerator;
 use Illuminate\Database\QueryException;
@@ -26,10 +27,7 @@ final class AnimeListController extends Controller
 
     public function index(Request $request): JsonResponse
     {
-        $tags = array_values(array_filter(
-            array_map('trim', explode(',', (string) $request->query('tags', ''))),
-            fn (string $t): bool => $t !== ''
-        ));
+        $tags = DelimitedValues::parse((string) $request->query('tags', ''));
 
         return response()->json([
             'items' => $this->listForUser((int) $request->attributes->get('auth_user_id'), $tags),

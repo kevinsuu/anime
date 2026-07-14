@@ -4,8 +4,8 @@ namespace App\Console\Commands;
 
 use App\Services\AnimeCatalog\BangumiClient;
 use App\Services\AnimeCatalog\BangumiTitleMatcher;
+use App\Services\Shared\JsonFileWriter;
 use Illuminate\Console\Command;
-use RuntimeException;
 use Throwable;
 
 /**
@@ -29,7 +29,7 @@ final class EnrichEpisodeCounts extends Command
 
     protected $description = 'Backfill missing episode_count in acgsecrets/mylist JSON snapshots via the Bangumi API.';
 
-    public function handle(BangumiClient $client, BangumiTitleMatcher $matcher): int
+    public function handle(BangumiClient $client, BangumiTitleMatcher $matcher, JsonFileWriter $jsonWriter): int
     {
         $source = (string) $this->option('source');
         if (! in_array($source, ['acgsecrets', 'mylist'], true)) {
@@ -120,7 +120,11 @@ final class EnrichEpisodeCounts extends Command
             }
 
             if (($updated > 0 || $matched > 0) && ! $dryRun) {
-                $this->writeJson($path, $records);
+                $jsonWriter->write(
+                    $path,
+                    $records,
+                    JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT,
+                );
             }
 
             if ($updated > 0 || $matched > 0 || $failed > 0 || $unresolved > 0) {
@@ -158,14 +162,4 @@ final class EnrichEpisodeCounts extends Command
         ));
     }
 
-    private function writeJson(string $path, mixed $data): void
-    {
-        $json = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
-        if ($json === false) {
-            throw new RuntimeException("Failed to encode JSON for {$path}: ".json_last_error_msg());
-        }
-        if (file_put_contents($path, $json) === false) {
-            throw new RuntimeException("Failed to write {$path}");
-        }
-    }
 }

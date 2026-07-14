@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Exceptions\ApiException;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AnimeResource;
 use App\Models\Anime;
 use App\Services\AnimeCatalog\SeasonResolver;
+use App\Services\Shared\DelimitedValues;
 use App\Services\Shared\GenreTags;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -20,10 +22,7 @@ final class AnimeController extends Controller
         $season = trim((string) $request->query('season', ''));
         $term = "%{$query}%";
 
-        $tags = array_values(array_filter(
-            array_map('trim', explode(',', (string) $request->query('tags', ''))),
-            fn (string $t): bool => $t !== ''
-        ));
+        $tags = DelimitedValues::parse((string) $request->query('tags', ''));
 
         if ($year !== null && (! ctype_digit((string) $year) || (int) $year < 1900 || (int) $year > 2100)) {
             throw new ApiException(422, 'validation_failed', '年份格式錯誤');
@@ -82,30 +81,7 @@ final class AnimeController extends Controller
             ]);
 
         return response()->json([
-            'items' => $items->map(fn (Anime $anime) => [
-                'id' => $anime->id,
-                'name' => $anime->name,
-                'description' => $anime->description,
-                'image_url' => $anime->image_url,
-                'source' => $anime->source,
-                'season_year' => $anime->season_year,
-                'season_code' => $anime->season_code,
-                'air_date' => $anime->air_date,
-                'air_date_text' => $anime->air_date_text,
-                'episode_count' => $anime->episode_count,
-                'status' => $anime->status,
-                'tags' => $anime->tags ?? [],
-                'cast' => $anime->cast->map(fn ($c) => [
-                    'character' => $c->character, 'actor' => $c->actor,
-                ])->all(),
-                'aliases' => $anime->aliases->pluck('alias')->all(),
-                'streams' => $anime->streams->map(fn ($s) => [
-                    'region' => $s->region, 'platform' => $s->platform, 'url' => $s->url,
-                ])->all(),
-                'titles' => $anime->titles->map(fn ($t) => [
-                    'locale' => $t->locale, 'title' => $t->title, 'is_primary' => (bool) $t->is_primary,
-                ])->all(),
-            ]),
+            'items' => AnimeResource::collection($items)->resolve(),
         ]);
     }
 
@@ -126,45 +102,7 @@ final class AnimeController extends Controller
             ->findOrFail($id);
 
         return response()->json([
-            'item' => [
-                'id' => $anime->id,
-                'name' => $anime->name,
-                'description' => $anime->description,
-                'image_url' => $anime->image_url,
-                'source' => $anime->source,
-                'season_year' => $anime->season_year,
-                'season_code' => $anime->season_code,
-                'air_date' => $anime->air_date,
-                'air_date_text' => $anime->air_date_text,
-                'episode_count' => $anime->episode_count,
-                'status' => $anime->status,
-                'tags' => $anime->tags ?? [],
-                'aliases' => $anime->aliases->pluck('alias')->all(),
-                'streams' => $anime->streams->map(fn ($s) => [
-                    'region' => $s->region, 'platform' => $s->platform, 'url' => $s->url,
-                ])->all(),
-                'titles' => $anime->titles->map(fn ($t) => [
-                    'locale' => $t->locale, 'title' => $t->title, 'is_primary' => (bool) $t->is_primary,
-                ])->all(),
-                'external_ids' => $anime->externalIds->map(fn ($e) => [
-                    'provider' => $e->provider, 'external_id' => $e->external_id, 'url' => $e->url,
-                ])->all(),
-                'themes' => $anime->themes->map(fn ($t) => [
-                    'type' => $t->type, 'title' => $t->title, 'artist' => $t->artist,
-                ])->all(),
-                'trailers' => $anime->trailers->map(fn ($t) => [
-                    'url' => $t->url, 'thumbnail' => $t->thumbnail,
-                ])->all(),
-                'cast' => $anime->cast->map(fn ($c) => [
-                    'character' => $c->character, 'actor' => $c->actor,
-                ])->all(),
-                'staff' => $anime->staffMembers->map(fn ($s) => [
-                    'role' => $s->role, 'name' => $s->name,
-                ])->all(),
-                'links' => $anime->links->map(fn ($l) => [
-                    'category' => $l->category, 'label' => $l->label, 'url' => $l->url,
-                ])->all(),
-            ],
+            'item' => (new AnimeResource($anime))->resolve(),
         ]);
     }
 

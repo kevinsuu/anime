@@ -4,8 +4,6 @@ interface RequestOptions {
   headers?: Record<string, string>
 }
 
-const SESSION_KEY = 'animeTrackerSession'
-
 // Serializes concurrent 401s onto a single in-flight refresh call so a page
 // that fires several requests at once doesn't burn through refresh-token
 // rotations (each rotation invalidates the previous token).
@@ -14,39 +12,12 @@ let refreshPromise: Promise<string> | null = null
 export function useApi() {
   const config = useRuntimeConfig()
   const apiBaseUrl = (import.meta.server ? config.apiBaseUrlInternal : config.public.apiBaseUrl) as string
-
-  function readStoredSession(): Record<string, any> {
-    if (typeof window === 'undefined') return {}
-    try {
-      return JSON.parse(localStorage.getItem(SESSION_KEY) || '{}')
-    } catch {
-      return {}
-    }
-  }
-
-  function getToken(): string {
-    return readStoredSession().token || ''
-  }
-
-  function getRefreshToken(): string {
-    return readStoredSession().refreshToken || ''
-  }
-
-  function persistTokens(token: string, refreshToken: string) {
-    const stored = readStoredSession()
-    stored.token = token
-    stored.refreshToken = refreshToken
-    localStorage.setItem(SESSION_KEY, JSON.stringify(stored))
-  }
-
-  function clearStoredSession() {
-    localStorage.removeItem(SESSION_KEY)
-  }
+  const { session, updateTokens, clearSession } = useSession()
 
   async function refreshAccessToken(): Promise<string> {
     if (!refreshPromise) {
       refreshPromise = (async () => {
-        const refreshToken = getRefreshToken()
+        const refreshToken = session.refreshToken
         if (!refreshToken) throw new Error('尚未登入')
 
         const response = await fetch(`${apiBaseUrl}/auth/refresh`, {
@@ -56,11 +27,11 @@ export function useApi() {
         })
         const body = await response.json().catch(() => ({}))
         if (!response.ok) {
-          clearStoredSession()
+          clearSession()
           throw new Error(body.message || '登入已失效，請重新登入')
         }
 
-        persistTokens(body.token, body.refreshToken)
+        updateTokens(body.token, body.refreshToken)
         return body.token as string
       })().finally(() => {
         refreshPromise = null
@@ -71,7 +42,7 @@ export function useApi() {
 
   async function request(path: string, options: RequestOptions = {}, isRetry = false): Promise<any> {
     const headers: Record<string, string> = { 'Content-Type': 'application/json', ...(options.headers || {}) }
-    const token = getToken()
+    const token = session.token
     if (token) headers.Authorization = `Bearer ${token}`
 
     let response: Response
@@ -83,7 +54,7 @@ export function useApi() {
 
     // Access token expired mid-session: silently refresh and retry once,
     // so the user isn't bounced back to the login screen every hour.
-    if (response.status === 401 && !isRetry && path !== '/auth/refresh' && getRefreshToken()) {
+    if (response.status === 401 && !isRetry && path !== '/auth/refresh' && session.refreshToken) {
       try {
         await refreshAccessToken()
         return await request(path, options, true)

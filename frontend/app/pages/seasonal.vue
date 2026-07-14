@@ -1,14 +1,21 @@
 <script setup lang="ts">
 import { weekdayTabs, useSeasonalCatalog, deriveFilterOptions } from '../composables/useSeasonalCatalog'
-import { normalizeAnime, normalizeListItem, normalizeCollection, tagColor } from '../utils/normalize'
-import type { Anime, ListItem, Collection } from '../utils/normalize'
+import { normalizeAnime, tagColor } from '../utils/normalize'
+import type { Anime } from '../utils/normalize'
 
 const api = useApi()
 const route = useRoute()
 const router = useRouter()
-const { session, isAuthed } = useSession()
 const { state: filterState, filterSeasonal, activeFilterCount, resetFilters, toggleGenreTag } = useSeasonalCatalog()
 const toast = useToast()
+const {
+  collections,
+  listByAnimeId,
+  loadMyList,
+  addAnime,
+  markWatched,
+  toggleCollection
+} = useAnimeListActions()
 
 const seasonLabels: Record<string, string> = {
   winter: '1月', spring: '4月', summer: '7月', fall: '10月'
@@ -57,16 +64,8 @@ watch(fetchError, (err) => {
 
 const filterOptions = computed(() => deriveFilterOptions(seasonal.value))
 
-const list = ref<ListItem[]>([])
-const collections = ref<Collection[]>([])
 const filterPanelOpen = ref(false)
 const activePopoverAnimeId = ref<number | null>(null)
-
-const listByAnimeId = computed(() => {
-  const map = new Map<number, ListItem>()
-  list.value.forEach(item => map.set(item.anime.id, item))
-  return map
-})
 
 const filteredSeasonal = computed(() => filterSeasonal(seasonal.value, listByAnimeId.value))
 
@@ -84,72 +83,6 @@ const activeChips = computed(() => {
   }
   return chips
 })
-
-async function loadMyList() {
-  if (!session.token) return
-  try {
-    const [listRes, colRes] = await Promise.all([api.myList(), api.myCollections()])
-    list.value = (listRes.items || []).map(normalizeListItem)
-    collections.value = (colRes.items || []).map(normalizeCollection)
-  } catch (err: any) {
-    toast.add({ title: err.message || '載入清單失敗', color: 'error' })
-  }
-}
-
-async function toggleCollection(animeId: number, col: Collection) {
-  if (!isAuthed.value) return
-  const listItem = listByAnimeId.value.get(animeId)
-  if (!listItem) return
-  const inCol = listItem.collections.some(c => c.id === col.id)
-  try {
-    if (inCol) {
-      await api.removeFromCollection(col.id, listItem.id)
-      listItem.collections = listItem.collections.filter(c => c.id !== col.id)
-    } else {
-      await api.addToCollection(col.id, listItem.id)
-      listItem.collections = [...listItem.collections, { id: col.id, name: col.name }]
-    }
-    const idx = collections.value.findIndex(c => c.id === col.id)
-    if (idx >= 0) collections.value[idx].count += inCol ? -1 : 1
-  } catch (err: any) {
-    toast.add({ title: err.message || '操作失敗', color: 'error' })
-  }
-}
-
-async function addAnime(animeId: number) {
-  if (!isAuthed.value) return navigateTo('/login')
-  if (listByAnimeId.value.has(animeId)) return
-  try {
-    await api.addToList(animeId)
-    await loadMyList()
-    toast.add({ title: '已加入清單', color: 'success' })
-  } catch (err: any) {
-    toast.add({ title: err.message || '加入失敗', color: 'error' })
-  }
-}
-
-async function markWatched(animeId: number) {
-  if (!isAuthed.value) return navigateTo('/login')
-  try {
-    const existing = listByAnimeId.value.get(animeId)
-    if (existing) {
-      await api.updateListItem(existing.id, { watched: !existing.watched })
-    } else {
-      await api.addToList(animeId)
-      // Item is now in the list even if the watched-flag update below fails,
-      // so always reload afterwards regardless of outcome (see finally).
-      const freshList = await api.myList()
-      const freshItem = (freshList.items || []).find((i: any) => i.anime?.id === animeId)
-      if (freshItem) await api.updateListItem(freshItem.id, { watched: true })
-    }
-    const item = listByAnimeId.value.get(animeId)
-    toast.add({ title: item?.watched ? '已標記為看完' : '已取消已看', color: 'success' })
-  } catch (err: any) {
-    toast.add({ title: err.message || '操作失敗，清單狀態已重新整理', color: 'error' })
-  } finally {
-    await loadMyList()
-  }
-}
 
 watch(() => [seasonalControls.year, seasonalControls.season], () => {
   resetFilters()

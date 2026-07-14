@@ -53,6 +53,30 @@ Docker 更新規則：
 - 後端：http://localhost:8080
 - phpMyAdmin：http://localhost:8081
 
+### 本機資料庫備份
+
+`db-backup` 容器會依 Asia/Taipei 時區，每天晚上 22:00 後自動備份一次 MySQL。備份檔會寫入本機 `backups/mysql/`，格式為 `anime_tracker_YYYY-MM-DD_HH-MM-SS.sql.gz`；預設保留 30 天，可在 `.env` 用 `BACKUP_RETENTION_DAYS` 調整。
+
+備份容器會隨整組服務啟動；若只需啟動資料庫與備份排程：
+
+```bash
+docker compose up -d mysql db-backup
+```
+
+立即手動建立一份備份：
+
+```bash
+docker compose run --rm --entrypoint /usr/local/bin/backup.sh db-backup
+```
+
+還原前請先確認目標資料庫，以下指令會把指定備份匯入目前 `.env` 的 `DB_DATABASE`：
+
+```bash
+gunzip -c backups/mysql/<備份檔>.sql.gz | docker compose exec -T mysql sh -c 'exec mysql -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE"'
+```
+
+備份是主機上的檔案，不會因 `docker compose down -v` 刪除 named volume 而一起消失；但仍建議定期把 `backups/mysql/` 複製到另一顆磁碟或雲端。
+
 本機 `docker-compose.yml` 預設開啟 `DEV_AUTH_BYPASS=true` 與前端開發登入按鈕，方便不設定 Google OAuth 時測試流程。**正式環境的 `DEV_AUTH_BYPASS` 只有在 `APP_ENV=local` 時才會生效**（即使誤設為 `true` 也不會在正式環境開後門）。
 
 ### 執行測試

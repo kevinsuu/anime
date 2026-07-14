@@ -5,9 +5,9 @@ namespace App\Console\Commands;
 use App\Services\AnimeCatalog\AcgSecretsClient;
 use App\Services\AnimeCatalog\AcgSecretsParser;
 use App\Services\AnimeCatalog\SeasonResolver;
+use App\Services\Shared\JsonFileWriter;
 use DateTimeImmutable;
 use Illuminate\Console\Command;
-use RuntimeException;
 use Throwable;
 
 final class ScrapeAcgSecrets extends Command
@@ -16,7 +16,7 @@ final class ScrapeAcgSecrets extends Command
 
     protected $description = 'Scrape acgsecrets.hk seasonal anime into JSON files.';
 
-    public function handle(AcgSecretsClient $client, AcgSecretsParser $parser): int
+    public function handle(AcgSecretsClient $client, AcgSecretsParser $parser, JsonFileWriter $jsonWriter): int
     {
         $dir = database_path('seed/acgsecrets');
         if (! is_dir($dir) && ! mkdir($dir, 0775, true) && ! is_dir($dir)) {
@@ -32,7 +32,7 @@ final class ScrapeAcgSecrets extends Command
             try {
                 $html = $client->fetchSeason($yyyymm);
                 $records = $parser->parseSeasonPage($html, $yyyymm);
-                $this->writeJson("{$dir}/{$yyyymm}.json", $records,
+                $jsonWriter->write("{$dir}/{$yyyymm}.json", $records,
                     JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
                 $summary['seasons'][$yyyymm] = [
                     'count' => count($records),
@@ -47,24 +47,9 @@ final class ScrapeAcgSecrets extends Command
             }
         }
 
-        $this->writeJson("{$dir}/summary.json", $summary, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        $jsonWriter->write("{$dir}/summary.json", $summary, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
         return empty($summary['failed']) ? self::SUCCESS : self::FAILURE;
-    }
-
-    /**
-     * Encode data to JSON and write it, throwing if encoding or the write fails
-     * so a silent filesystem error cannot be reported as success.
-     */
-    private function writeJson(string $path, mixed $data, int $flags): void
-    {
-        $json = json_encode($data, $flags);
-        if ($json === false) {
-            throw new RuntimeException("Failed to encode JSON for {$path}: ".json_last_error_msg());
-        }
-        if (file_put_contents($path, $json) === false) {
-            throw new RuntimeException("Failed to write {$path}");
-        }
     }
 
     /** @return array<int, string> */
