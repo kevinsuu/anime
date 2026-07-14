@@ -93,16 +93,31 @@ jobs:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
+
+      - name: Encode deployment compose file
+        shell: bash
+        run: |
+          {
+            echo 'COMPOSE_B64<<EOF'
+            base64 -w 0 deploy/docker-compose.yml
+            echo
+            echo EOF
+          } >> "$GITHUB_ENV"
+
       - name: Deploy over SSH
         uses: appleboy/ssh-action@0ff4204d59e8e51228ff73bce53f80d53301dee2 # v1.2.5
         env:
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
           RELEASE_TAG: ${{ github.ref_name }}
+          COMPOSE_B64: ${{ env.COMPOSE_B64 }}
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_SSH_KEY }}
-          envs: DEPLOY_PATH,RELEASE_TAG
+          envs: DEPLOY_PATH,RELEASE_TAG,COMPOSE_B64
           script: |
             set -e
             # Pasted secrets may retain CR/LF and turn an otherwise valid path
@@ -117,6 +132,16 @@ jobs:
               *) echo "DEPLOY_PATH must be an absolute path." >&2; exit 1 ;;
             esac
             cd -- "$DEPLOY_PATH"
+            if [ -z "${COMPOSE_B64:-}" ]; then
+              echo "Encoded docker-compose.yml is empty." >&2
+              exit 1
+            fi
+            if ! printf '%s' "$COMPOSE_B64" | base64 -d > docker-compose.yml.tmp; then
+              rm -f docker-compose.yml.tmp
+              echo "Failed to decode docker-compose.yml." >&2
+              exit 1
+            fi
+            mv docker-compose.yml.tmp docker-compose.yml
             touch .env
             set_env_var() {
               key="$1"
