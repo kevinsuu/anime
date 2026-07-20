@@ -35,13 +35,14 @@ const error = computed(() => fetchError.value ? (fetchError.value.message || '�
       這份公開清單目前沒有作品。
     </div>
 
-    <div class="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-6">
+    <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
       <AnimeGridCard
         v-for="item in items"
         :key="item.id"
         :anime="item.anime"
         :in-list="false"
         :watched="item.watched"
+        :show-actions="false"
       />
     </div>
   </div>

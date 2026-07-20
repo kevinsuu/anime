@@ -1,30 +1,32 @@
 <script setup lang="ts">
-import { normalizeAnime, tagColor } from '../utils/normalize'
-import type { Anime } from '../utils/normalize'
+import { normalizeAnimeSummary, tagColor } from '../utils/normalize'
+import type { AnimeSummary } from '../utils/normalize'
 import { HIGH_PRIORITY_IMAGE_COUNT } from '../composables/useLazyLoad'
 
 const api = useApi()
 const toast = useToast()
-const {
-  collections,
-  listByAnimeId,
-  pendingInList,
-  pendingWatched,
-  loadMyList,
-  toggleAnimeInList,
-  markWatched,
-  toggleCollection
-} = useAnimeListActions()
+const route = useRoute()
+const router = useRouter()
 
-const query = ref('')
-const page = ref(1)
+function routeString(value: unknown): string {
+  return typeof value === 'string' ? value : ''
+}
+
+function routePositiveInt(value: unknown, fallback: number): number {
+  const parsed = Number(routeString(value))
+  return Number.isInteger(parsed) && parsed > 0 ? parsed : fallback
+}
+
+const query = ref(routeString(route.query.q))
+const page = ref(routePositiveInt(route.query.page, 1))
 const error = ref('')
 
 const currentYear = new Date().getFullYear()
 // activeYear = null → 近期模式（不限年份，air_date 新到舊，50 筆）
 // activeYear = 數字 → 年份瀏覽模式
-const activeYear = ref<number | null>(null)
-const selectedTags = ref<string[]>([])
+const routeYear = routePositiveInt(route.query.year, 0)
+const activeYear = ref<number | null>(routeYear >= 1900 && routeYear <= 2100 ? routeYear : null)
+const selectedTags = ref<string[]>(routeString(route.query.tags).split(',').filter(Boolean))
 const isSearchMode = computed(() => query.value.trim() !== '')
 const isRecentMode = computed(() => activeYear.value === null && !isSearchMode.value)
 
@@ -45,19 +47,62 @@ onMounted(async () => {
 // 主要資料來源：依 activeYear / query / selectedTags 向後端查詢
 const loading = ref(false)
 let requestId = 0
+let updatingRoute = false
+const PAGE_SIZE = 40
+
+interface CatalogMeta {
+  page: number
+  per_page: number
+  total: number
+  last_page: number
+  has_more: boolean
+}
+
+function filtersForRequest(requestedPage = page.value) {
+  const filters: { year?: number; tags?: string[]; page: number; perPage: number } = {
+    page: requestedPage,
+    perPage: PAGE_SIZE
+  }
+  if (activeYear.value !== null && !isSearchMode.value) filters.year = activeYear.value
+  if (selectedTags.value.length > 0) filters.tags = selectedTags.value
+  return filters
+}
+
+function catalogRouteQuery(): Record<string, string> {
+  const next: Record<string, string> = {}
+  const q = query.value.trim()
+  if (q) next.q = q
+  if (!q && activeYear.value !== null) next.year = String(activeYear.value)
+  if (selectedTags.value.length > 0) next.tags = selectedTags.value.join(',')
+  if (page.value > 1) next.page = String(page.value)
+  return next
+}
+
+async function syncRoute(mode: 'push' | 'replace' = 'push') {
+  updatingRoute = true
+  try {
+    await router[mode]({ path: '/catalog', query: catalogRouteQuery() })
+  } finally {
+    updatingRoute = false
+  }
+}
 
 async function loadCatalog() {
   const id = ++requestId
   loading.value = true
   error.value = ''
   try {
-    const q = query.value.trim()
-    const filters: { year?: number; tags?: string[] } = {}
-    if (activeYear.value !== null && !isSearchMode.value) filters.year = activeYear.value
-    if (selectedTags.value.length > 0) filters.tags = selectedTags.value
-    const result = await api.searchAnime(q, filters)
+    const result = await api.searchAnimeSummaries(query.value.trim(), filtersForRequest())
     if (id !== requestId) return
-    catalog.value = (result.items || []).map(normalizeAnime)
+    const responseMeta = result.meta as CatalogMeta
+    if (page.value > responseMeta.last_page) {
+      page.value = responseMeta.last_page
+      await syncRoute('replace')
+      await loadCatalog()
+      return
+    }
+    catalog.value = (result.items || []).map(normalizeAnimeSummary)
+    catalogMeta.value = responseMeta
   } catch (err: any) {
     if (id !== requestId) return
     error.value = err.message || '載入失敗'
@@ -70,59 +115,103 @@ async function loadCatalog() {
 // 進站載入近期模式：讓 useAsyncData 直接接管查詢結果，回傳值進 payload、
 // hydration 後仍在，避免 client 端重跑跳過導致 catalog 落空的空狀態 bug。
 const { data: initialData, pending: initialPending } = await useAsyncData(
-  'catalog-initial',
+  `catalog-initial:${query.value.trim()}:${activeYear.value ?? 'recent'}:${selectedTags.value.join(',')}:${page.value}`,
   async () => {
-    const result = await api.searchAnime('', {})
-    return (result.items || []) as Record<string, any>[]
+    let result = await api.searchAnimeSummaries(query.value.trim(), filtersForRequest())
+    const lastPage = Math.max(1, Number(result.meta?.last_page ?? 1))
+    if (page.value > lastPage) {
+      result = await api.searchAnimeSummaries(query.value.trim(), filtersForRequest(lastPage))
+    }
+    return {
+      items: (result.items || []) as Record<string, any>[],
+      meta: result.meta as CatalogMeta
+    }
   }
 )
 
 // catalog 以初始資料為基礎；後續互動由 loadCatalog 直接覆寫。
-const catalog = ref<Anime[]>((initialData.value || []).map(normalizeAnime))
+const catalog = ref<AnimeSummary[]>((initialData.value?.items || []).map(normalizeAnimeSummary))
+const catalogMeta = ref<CatalogMeta>(initialData.value?.meta ?? {
+  page: page.value,
+  per_page: PAGE_SIZE,
+  total: catalog.value.length,
+  last_page: 1,
+  has_more: false
+})
+page.value = catalogMeta.value.page
+const resultTotal = computed(() => catalogMeta.value.total)
+
+const catalogAnimeIds = computed(() => catalog.value.map(anime => anime.id))
+const {
+  statusesByAnimeId,
+  collections,
+  isInList,
+  isWatched,
+  toggleAnimeInList,
+  markWatched,
+  toggleCollection
+} = useAnimeCardStatuses(catalogAnimeIds)
 
 // 使用者清單狀態：用來讓卡片的 ❤️（已收藏）/ ✅（已看）正確反映實際狀態
 const activePopoverAnimeId = ref<number | null>(null)
-onMounted(loadMyList)
-
-const PAGE_SIZE = 40
-const totalPages = computed(() => Math.max(1, Math.ceil(catalog.value.length / PAGE_SIZE)))
-const pagedCatalog = computed(() => {
-  const start = (page.value - 1) * PAGE_SIZE
-  return catalog.value.slice(start, start + PAGE_SIZE)
+onMounted(async () => {
+  if (routePositiveInt(route.query.page, 1) !== page.value) await syncRoute('replace')
 })
-watch(page, () => {
+
+const totalPages = computed(() => Math.max(1, catalogMeta.value.last_page))
+
+async function changePage(nextPage: number) {
+  const normalizedPage = Math.min(Math.max(nextPage, 1), totalPages.value)
+  if (normalizedPage === page.value) return
+  page.value = normalizedPage
+  await syncRoute()
+  await loadCatalog()
   window.scrollTo({ top: 0, behavior: 'smooth' })
-})
+}
 
-function changeYear(year: number | null) {
+async function changeYear(year: number | null) {
   query.value = ''
   selectedTags.value = []
   page.value = 1
   activeYear.value = year
-  loadCatalog()
+  await syncRoute()
+  await loadCatalog()
 }
 
-function toggleTag(tag: string) {
+async function toggleTag(tag: string) {
   const idx = selectedTags.value.indexOf(tag)
   if (idx >= 0) selectedTags.value.splice(idx, 1)
   else selectedTags.value.push(tag)
   page.value = 1
-  loadCatalog()
+  await syncRoute()
+  await loadCatalog()
 }
 
-function clearTags() {
+async function clearTags() {
   if (selectedTags.value.length === 0) return
   selectedTags.value = []
   page.value = 1
-  loadCatalog()
+  await syncRoute()
+  await loadCatalog()
 }
 
 async function search() {
   page.value = 1
   // 搜尋時脫離年份模式（回到不限年份），保留 selectedTags
   if (query.value.trim() !== '') activeYear.value = null
+  await syncRoute()
   await loadCatalog()
 }
+
+watch(() => route.query, async () => {
+  if (updatingRoute) return
+  query.value = routeString(route.query.q)
+  page.value = routePositiveInt(route.query.page, 1)
+  const year = routePositiveInt(route.query.year, 0)
+  activeYear.value = year >= 1900 && year <= 2100 ? year : null
+  selectedTags.value = routeString(route.query.tags).split(',').filter(Boolean)
+  await loadCatalog()
+}, { deep: true })
 
 useSeoMeta({
   title: () => isSearchMode.value
@@ -147,19 +236,67 @@ useHead({
 <template>
   <div class="space-y-5">
     <header class="space-y-1">
-      <p class="text-xs font-extrabold uppercase tracking-widest text-primary-600">資料庫</p>
+      <p class="text-xs font-extrabold uppercase tracking-widest text-primary-700">資料庫</p>
       <div class="flex items-center justify-between gap-4">
-        <h1 class="text-3xl font-extrabold tracking-tight text-gray-950">搜尋動漫資料庫</h1>
+        <h1 class="text-2xl font-extrabold tracking-tight text-gray-950 md:text-3xl">搜尋動漫資料庫</h1>
         <span class="shrink-0 rounded-full bg-gray-100 px-3 py-1 text-sm font-semibold text-gray-700">
-          {{ catalog.length }} 筆
+          {{ resultTotal }} 筆
         </span>
       </div>
     </header>
 
     <UAlert v-if="error" color="error" :title="error" />
 
-    <!-- 篩選面板：年份切換 + 搜尋 + 分類 chip 集中在一張卡片，與下方作品格線區隔 -->
-    <div class="space-y-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+    <!-- 手機版只保留搜尋與篩選入口，年份及分類放進 bottom sheet，
+         避免大量 chip 將首批作品推到首屏之外。 -->
+    <div class="space-y-3 rounded-2xl border border-gray-200 bg-white p-3 shadow-sm md:hidden">
+      <form class="flex min-w-0 gap-2" @submit.prevent="search">
+        <div class="relative min-w-0 flex-1">
+          <label for="catalog-search-mobile" class="sr-only">搜尋動漫資料庫</label>
+          <UIcon
+            name="i-lucide-search"
+            class="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-400"
+          />
+          <input
+            id="catalog-search-mobile"
+            v-model="query"
+            type="search"
+            placeholder="搜尋動漫名稱"
+            class="min-h-11 w-full rounded-lg border border-gray-200 bg-white py-2 pl-9 pr-3 text-sm text-gray-900 placeholder:text-gray-400 shadow-sm outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
+          />
+        </div>
+        <button
+          type="submit"
+          :disabled="loading"
+          class="inline-flex min-h-11 shrink-0 items-center justify-center rounded-lg bg-primary-700 px-4 text-sm font-semibold text-white shadow-sm transition active:bg-primary-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:opacity-60"
+        >
+          <UIcon v-if="loading" name="i-lucide-loader-circle" class="size-4 animate-spin" />
+          <span v-else>搜尋</span>
+        </button>
+      </form>
+
+      <div class="flex min-h-11 items-center justify-between gap-3 border-t border-gray-100 pt-3">
+        <p class="min-w-0 truncate text-xs font-medium text-gray-500">
+          <span>{{ isSearchMode ? '搜尋結果' : activeYear === null ? '近期作品' : `${activeYear} 年` }}</span>
+          <span v-if="selectedTags.length > 0"> · {{ selectedTags.length }} 個分類</span>
+        </p>
+        <CatalogFilterPanel
+          :active-year="activeYear"
+          :current-year="currentYear"
+          :selected-tags="selectedTags"
+          :tag-options="tagOptions"
+          :tags-loading="tagsLoading"
+          :loading="loading"
+          :result-count="resultTotal"
+          @change-year="changeYear"
+          @toggle-tag="toggleTag"
+          @clear-tags="clearTags"
+        />
+      </div>
+    </div>
+
+    <!-- 桌機版沿用既有 inline 篩選 DOM 與外觀。 -->
+    <div class="hidden space-y-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm md:block">
       <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
         <!-- 近期 / 年份切換（搜尋中隱藏） -->
         <div v-if="!isSearchMode" class="flex shrink-0 items-center gap-2">
@@ -263,7 +400,7 @@ useHead({
     </div>
 
     <!-- Loading skeleton: matches PAGE_SIZE so the layout doesn't jump when real content arrives -->
-    <div v-if="loading || initialPending" class="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5">
+    <div v-if="loading || initialPending" class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
       <div v-for="i in PAGE_SIZE" :key="i" class="aspect-3/4 w-full animate-pulse rounded-md bg-gray-200" />
     </div>
 
@@ -277,14 +414,14 @@ useHead({
     </div>
 
     <template v-else>
-      <AnimeVirtualGrid :items="pagedCatalog">
+      <AnimeVirtualGrid :items="catalog">
         <template #default="{ item: anime, index }">
           <AnimeGridCard
             :key="anime.id"
             :anime="anime"
-            :in-list="listByAnimeId.has(anime.id) || pendingInList.has(anime.id)"
-            :watched="Boolean(listByAnimeId.get(anime.id)?.watched) || pendingWatched.has(anime.id)"
-            :list-item="listByAnimeId.get(anime.id)"
+            :in-list="isInList(anime.id)"
+            :watched="isWatched(anime.id)"
+            :status="statusesByAnimeId.get(anime.id)"
             :collections="collections"
             :popover-open="activePopoverAnimeId === anime.id"
             :eager-load="index < HIGH_PRIORITY_IMAGE_COUNT"
@@ -302,9 +439,9 @@ useHead({
         <button
           type="button"
           :disabled="page === 1"
-          class="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:bg-gray-50 disabled:opacity-40"
+          class="flex h-11 w-11 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:bg-gray-50 disabled:opacity-40 md:h-9 md:w-9"
           aria-label="上一頁"
-          @click="page--"
+          @click="changePage(page - 1)"
         >
           <UIcon name="i-lucide-chevron-left" class="size-4" />
         </button>
@@ -314,9 +451,9 @@ useHead({
         <button
           type="button"
           :disabled="page === totalPages"
-          class="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:bg-gray-50 disabled:opacity-40"
+          class="flex h-11 w-11 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:bg-gray-50 disabled:opacity-40 md:h-9 md:w-9"
           aria-label="下一頁"
-          @click="page++"
+          @click="changePage(page + 1)"
         >
           <UIcon name="i-lucide-chevron-right" class="size-4" />
         </button>

@@ -32,6 +32,17 @@ const filterTabs = [
   { value: 'unwatched', label: '未看' },
 ]
 
+const mobileCollectionsOpen = ref(false)
+const collectionPendingDelete = ref<Collection | null>(null)
+const deletingCollectionId = ref<number | null>(null)
+const deleteConfirmationRef = ref<HTMLElement | null>(null)
+
+const activeCollection = computed(() => {
+  if (!activeFilter.value.startsWith('col:')) return null
+  const collectionId = Number(activeFilter.value.slice(4))
+  return collections.value.find(collection => collection.id === collectionId) ?? null
+})
+
 function setFilter(value: string) {
   router.push({ path: '/list', query: value === 'all' ? {} : { filter: value } })
 }
@@ -191,6 +202,29 @@ async function deleteCollection(col: Collection) {
   }
 }
 
+function selectMobileCollection(col: Collection) {
+  setFilter(`col:${col.id}`)
+  mobileCollectionsOpen.value = false
+}
+
+function requestCollectionDelete(col: Collection) {
+  collectionPendingDelete.value = col
+  nextTick(() => deleteConfirmationRef.value?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }))
+}
+
+async function confirmCollectionDelete() {
+  const collection = collectionPendingDelete.value
+  if (!collection || deletingCollectionId.value !== null) return
+
+  deletingCollectionId.value = collection.id
+  try {
+    await deleteCollection(collection)
+    collectionPendingDelete.value = null
+  } finally {
+    deletingCollectionId.value = null
+  }
+}
+
 async function togglePublic(col: Collection) {
   try {
     const result = await api.updateCollection(col.id, { is_public: !col.isPublic })
@@ -208,14 +242,14 @@ async function toggleItemInCollection(item: ListItem, col: Collection) {
   const previousCollections = [...item.collections]
   const fullItem = fullList.value.find(entry => entry.id === item.id)
   const previousFullCollections = fullItem ? [...fullItem.collections] : null
-  const collectionIndex = collections.value.findIndex(entry => entry.id === col.id)
-  const previousCount = collectionIndex >= 0 ? collections.value[collectionIndex].count : null
+  const targetCollection = collections.value.find(entry => entry.id === col.id)
+  const previousCount = targetCollection?.count ?? null
 
   item.collections = inCol
     ? item.collections.filter(c => c.id !== col.id)
     : [...item.collections, { id: col.id, name: col.name }]
   if (fullItem && fullItem !== item) fullItem.collections = [...item.collections]
-  if (collectionIndex >= 0) collections.value[collectionIndex].count += inCol ? -1 : 1
+  if (targetCollection) targetCollection.count += inCol ? -1 : 1
 
   try {
     if (inCol) {
@@ -226,7 +260,7 @@ async function toggleItemInCollection(item: ListItem, col: Collection) {
   } catch (err: any) {
     item.collections = previousCollections
     if (fullItem && previousFullCollections) fullItem.collections = previousFullCollections
-    if (collectionIndex >= 0 && previousCount !== null) collections.value[collectionIndex].count = previousCount
+    if (targetCollection && previousCount !== null) targetCollection.count = previousCount
     toast.add({ title: err.message || '操作失敗', color: 'error' })
   }
 }
@@ -249,6 +283,10 @@ async function copyCollectionLink(col: Collection) {
 }
 
 onMounted(loadAll)
+
+watch(mobileCollectionsOpen, (open) => {
+  if (!open) collectionPendingDelete.value = null
+})
 </script>
 
 <template>
@@ -277,7 +315,7 @@ onMounted(loadAll)
     </div>
 
     <!-- ── Left: Collections sidebar ── -->
-    <aside class="min-w-0 space-y-4">
+    <aside class="hidden min-w-0 space-y-4 md:block">
       <div class="sticky top-24 min-w-0 space-y-3">
         <p class="text-xs font-extrabold uppercase tracking-widest text-gray-400">我的清單</p>
 
@@ -374,6 +412,171 @@ onMounted(loadAll)
           <span class="shrink-0 text-sm text-gray-500">共 {{ filteredList.length }} 部</span>
         </div>
       </header>
+
+      <!-- Mobile list navigation: keep the primary watch states one tap away and
+           move collection management into an accessible bottom sheet. -->
+      <div class="space-y-3 md:hidden">
+        <nav
+          aria-label="清單觀看狀態"
+          class="grid grid-cols-3 rounded-xl border border-gray-200 bg-gray-50 p-1 shadow-sm"
+        >
+          <button
+            v-for="tab in filterTabs"
+            :key="tab.value"
+            type="button"
+            class="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-lg px-2 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-1"
+            :class="activeFilter === tab.value
+              ? 'bg-white text-primary-700 shadow-sm ring-1 ring-gray-200'
+              : 'text-gray-500 active:bg-white/70'"
+            :aria-pressed="activeFilter === tab.value"
+            @click="setFilter(tab.value)"
+          >
+            <span>{{ tab.label }}</span>
+            <span class="text-[11px] opacity-60">
+              {{ tab.value === 'all' ? fullList.length : tab.value === 'watched' ? fullList.filter(item => item.watched).length : fullList.filter(item => !item.watched).length }}
+            </span>
+          </button>
+        </nav>
+
+        <USlideover
+          v-model:open="mobileCollectionsOpen"
+          side="bottom"
+          title="自訂清單"
+          description="選擇清單，或管理公開分享與刪除設定。"
+          :ui="{
+            content: 'max-h-[88dvh] rounded-t-3xl',
+            body: 'overflow-y-auto px-4 sm:px-6',
+            close: 'size-11',
+            footer: 'border-t border-gray-100 px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-3 sm:px-6'
+          }"
+        >
+          <button
+            type="button"
+            class="flex min-h-11 w-full items-center gap-3 rounded-xl border border-gray-200 bg-white px-3 text-left text-sm font-semibold text-gray-700 shadow-sm transition active:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+            aria-haspopup="dialog"
+          >
+            <span class="grid size-8 shrink-0 place-items-center rounded-lg bg-primary-50 text-primary-700">
+              <UIcon name="i-lucide-library" class="size-4" />
+            </span>
+            <span class="min-w-0 flex-1 truncate">
+              {{ activeCollection ? `自訂清單：${activeCollection.name}` : '選擇與管理自訂清單' }}
+            </span>
+            <span class="shrink-0 text-xs font-bold text-gray-400">{{ collections.length }}</span>
+            <UIcon name="i-lucide-chevron-up" class="size-4 shrink-0 text-gray-400" />
+          </button>
+
+          <template #body>
+            <div class="space-y-5">
+              <nav v-if="collections.length > 0" aria-label="自訂清單" class="space-y-2">
+                <div
+                  v-for="col in collections"
+                  :key="col.id"
+                  class="grid min-w-0 grid-cols-[minmax(0,1fr)_44px_44px] overflow-hidden rounded-xl border bg-white shadow-sm"
+                  :class="activeFilter === `col:${col.id}` ? 'border-primary-300 ring-1 ring-primary-100' : 'border-gray-200'"
+                >
+                  <button
+                    type="button"
+                    class="flex min-h-11 min-w-0 items-center gap-3 px-3 text-left transition active:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500"
+                    :aria-current="activeFilter === `col:${col.id}` ? 'page' : undefined"
+                    @click="selectMobileCollection(col)"
+                  >
+                    <UIcon
+                      :name="activeFilter === `col:${col.id}` ? 'i-lucide-folder-open' : 'i-lucide-folder'"
+                      class="size-4 shrink-0 text-primary-600"
+                    />
+                    <span class="min-w-0 flex-1 truncate text-sm font-semibold text-gray-900">{{ col.name }}</span>
+                    <span class="shrink-0 text-xs font-bold text-gray-400">{{ col.count }}</span>
+                  </button>
+                  <button
+                    type="button"
+                    :title="col.isPublic ? '公開中（點擊設為私人）' : '設為公開並複製連結'"
+                    :aria-label="col.isPublic ? `${col.name}：公開中，點擊設為私人` : `${col.name}：設為公開並複製連結`"
+                    class="grid min-h-11 place-items-center border-l border-gray-100 text-gray-500 transition active:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500"
+                    @click="copyCollectionLink(col)"
+                  >
+                    <UIcon :name="col.isPublic ? 'i-lucide-globe' : 'i-lucide-link'" class="size-4" />
+                  </button>
+                  <button
+                    type="button"
+                    :disabled="deletingCollectionId !== null"
+                    :aria-label="`刪除清單「${col.name}」`"
+                    class="grid min-h-11 place-items-center border-l border-gray-100 text-red-500 transition active:bg-red-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-red-500 disabled:opacity-40"
+                    @click="requestCollectionDelete(col)"
+                  >
+                    <UIcon name="i-lucide-trash-2" class="size-4" />
+                  </button>
+                </div>
+              </nav>
+
+              <p v-else class="rounded-xl bg-gray-50 px-4 py-4 text-sm text-gray-500">
+                尚未建立自訂清單。你可以先在下方新增一個。
+              </p>
+
+              <section
+                v-if="collectionPendingDelete"
+                ref="deleteConfirmationRef"
+                aria-labelledby="mobile-delete-collection-title"
+                class="rounded-xl border border-red-200 bg-red-50 p-4"
+                role="alert"
+              >
+                <h3 id="mobile-delete-collection-title" class="text-sm font-bold text-red-800">
+                  刪除「{{ collectionPendingDelete.name }}」？
+                </h3>
+                <p class="mt-1 text-xs leading-5 text-red-700">清單會被刪除，但作品仍會保留在「我的清單」。</p>
+                <div class="mt-3 grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    :disabled="deletingCollectionId !== null"
+                    class="min-h-11 rounded-lg border border-red-200 bg-white px-3 text-sm font-bold text-red-700 transition active:bg-red-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 disabled:opacity-40"
+                    @click="collectionPendingDelete = null"
+                  >
+                    取消
+                  </button>
+                  <button
+                    type="button"
+                    :disabled="deletingCollectionId !== null"
+                    class="min-h-11 rounded-lg bg-red-600 px-3 text-sm font-bold text-white transition active:bg-red-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 disabled:opacity-40"
+                    @click="confirmCollectionDelete"
+                  >
+                    {{ deletingCollectionId === collectionPendingDelete.id ? '刪除中…' : '確認刪除' }}
+                  </button>
+                </div>
+              </section>
+
+              <form class="border-t border-gray-100 pt-5" @submit.prevent="createCollection">
+                <label for="mobile-new-collection-name" class="mb-2 block text-sm font-bold text-gray-900">新增自訂清單</label>
+                <div class="grid grid-cols-[minmax(0,1fr)_44px] gap-2">
+                  <input
+                    id="mobile-new-collection-name"
+                    v-model="newColName"
+                    maxlength="80"
+                    placeholder="輸入清單名稱"
+                    class="min-h-11 min-w-0 rounded-lg border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
+                  />
+                  <button
+                    type="submit"
+                    :disabled="!newColName.trim() || creatingCol"
+                    aria-label="新增自訂清單"
+                    class="grid min-h-11 place-items-center rounded-lg bg-primary-600 text-white transition active:bg-primary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:opacity-40"
+                  >
+                    <UIcon name="i-lucide-plus" class="size-5" />
+                  </button>
+                </div>
+              </form>
+            </div>
+          </template>
+
+          <template #footer="{ close }">
+            <button
+              type="button"
+              class="min-h-11 w-full rounded-lg bg-primary-600 px-4 text-sm font-bold text-white shadow-sm transition active:bg-primary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+              @click="close"
+            >
+              完成
+            </button>
+          </template>
+        </USlideover>
+      </div>
 
       <!-- 搜尋 + 排序 + 分類卡片：與資料庫頁模板一致——左排序下拉、中搜尋框、
            右綠色搜尋鈕；分類 chip 以分隔線區隔。搜尋為即時過濾，搜尋鈕純裝飾對齊

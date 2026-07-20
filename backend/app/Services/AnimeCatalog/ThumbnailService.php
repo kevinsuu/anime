@@ -15,6 +15,8 @@ final class ThumbnailService
 
     private const MAX_HEIGHT = 9999;
 
+    private const WEBP_QUALITY = 68;
+
     /**
      * 下載 $imageUrl 指向的原圖，等比縮放到寬度 400px 並輸出 WebP，
      * 存到 public disk 的 covers/{animeId}.webp。全站共用同一份檔案，
@@ -36,10 +38,12 @@ final class ThumbnailService
                 return null;
             }
 
-            $imagick = new Imagick();
+            $imagick = new Imagick;
             $imagick->readImageBlob($response->body());
             $imagick->resizeImage(self::TARGET_WIDTH, self::MAX_HEIGHT, Imagick::FILTER_LANCZOS, 1, true);
+            $imagick->stripImage();
             $imagick->setImageFormat('webp');
+            $imagick->setImageCompressionQuality(self::WEBP_QUALITY);
 
             $path = "covers/{$animeId}.webp";
             Storage::disk('public')->put($path, $imagick->getImageBlob());

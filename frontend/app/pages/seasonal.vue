@@ -1,24 +1,14 @@
 <script setup lang="ts">
 import { weekdayTabs, useSeasonalCatalog, deriveFilterOptions } from '../composables/useSeasonalCatalog'
 import { HIGH_PRIORITY_IMAGE_COUNT } from '../composables/useLazyLoad'
-import { normalizeAnime, tagColor } from '../utils/normalize'
-import type { Anime } from '../utils/normalize'
+import { normalizeAnimeSummary, tagColor } from '../utils/normalize'
+import type { AnimeSummary } from '../utils/normalize'
 
 const api = useApi()
 const route = useRoute()
 const router = useRouter()
 const { state: filterState, filterSeasonal, activeFilterCount, resetFilters, toggleGenreTag } = useSeasonalCatalog()
 const toast = useToast()
-const {
-  collections,
-  listByAnimeId,
-  pendingInList,
-  pendingWatched,
-  loadMyList,
-  toggleAnimeInList,
-  markWatched,
-  toggleCollection
-} = useAnimeListActions()
 
 const seasonLabels: Record<string, string> = {
   winter: '1月', spring: '4月', summer: '7月', fall: '10月'
@@ -43,23 +33,38 @@ const seasonalControls = reactive({
 function prevSeason() {
   const idx = SEASONS.indexOf(seasonalControls.season)
   if (idx === 0) { seasonalControls.season = 'fall'; seasonalControls.year-- }
-  else seasonalControls.season = SEASONS[idx - 1]
+  else seasonalControls.season = SEASONS[idx - 1] ?? 'winter'
 }
 
 function nextSeason() {
   const idx = SEASONS.indexOf(seasonalControls.season)
   if (idx === 3) { seasonalControls.season = 'winter'; seasonalControls.year++ }
-  else seasonalControls.season = SEASONS[idx + 1]
+  else seasonalControls.season = SEASONS[idx + 1] ?? 'fall'
 }
 
 const { data: seasonal, pending: loading, error: fetchError } = await useAsyncData(
-  'seasonal',
+  `seasonal:${seasonalControls.year}:${seasonalControls.season}`,
   async () => {
-    const result = await api.searchAnime('', { year: seasonalControls.year, season: seasonalControls.season })
-    return (result.items || []).map(normalizeAnime)
+    const result = await api.searchAnimeSummaries('', {
+      year: seasonalControls.year,
+      season: seasonalControls.season,
+      perPage: 100
+    })
+    return (result.items || []).map(normalizeAnimeSummary)
   },
-  { default: () => [] as Anime[], watch: [() => seasonalControls.year, () => seasonalControls.season] }
+  { default: () => [] as AnimeSummary[], watch: [() => seasonalControls.year, () => seasonalControls.season] }
 )
+
+const seasonalAnimeIds = computed(() => seasonal.value.map((anime: AnimeSummary) => anime.id))
+const {
+  statusesByAnimeId,
+  collections,
+  isInList,
+  isWatched,
+  toggleAnimeInList,
+  markWatched,
+  toggleCollection
+} = useAnimeCardStatuses(seasonalAnimeIds)
 
 watch(fetchError, (err) => {
   if (err) toast.add({ title: err.message || '載入失敗', color: 'error' })
@@ -70,7 +75,7 @@ const filterOptions = computed(() => deriveFilterOptions(seasonal.value))
 const filterPanelOpen = ref(false)
 const activePopoverAnimeId = ref<number | null>(null)
 
-const filteredSeasonal = computed(() => filterSeasonal(seasonal.value, listByAnimeId.value))
+const filteredSeasonal = computed(() => filterSeasonal(seasonal.value, statusesByAnimeId))
 
 // Active filter chips to display inline
 const activeChips = computed(() => {
@@ -92,8 +97,6 @@ watch(() => [seasonalControls.year, seasonalControls.season], () => {
   router.replace({ query: { ...route.query, year: String(seasonalControls.year), season: seasonalControls.season } })
 })
 
-onMounted(loadMyList)
-
 useSeoMeta({
   title: () => `${seasonalControls.year}年${seasonLabels[seasonalControls.season]}新番表｜動畫新番、動漫庫`,
   description: () => `${seasonalControls.year}年${seasonLabels[seasonalControls.season]}季動畫新番總覽，追蹤最新動漫新番放送時間、角色資訊與觀看平台。`,
@@ -105,12 +108,12 @@ useHead({
 </script>
 
 <template>
-  <div class="space-y-4">
+  <div class="space-y-3 md:space-y-4">
     <!-- Header: season navigator -->
-    <header class="flex items-center justify-between gap-4">
+    <header class="flex items-center justify-between gap-3 md:gap-4">
       <div class="space-y-0.5">
-        <p class="text-xs font-extrabold uppercase tracking-widest text-primary-600">新番表</p>
-        <h1 class="text-2xl font-extrabold tracking-tight text-gray-950">
+        <p class="text-xs font-extrabold uppercase tracking-widest text-primary-700">新番表</p>
+        <h1 class="text-xl font-extrabold tracking-tight text-gray-950 md:text-2xl">
           {{ seasonalControls.year }}年 {{ seasonLabels[seasonalControls.season] }} 新番表
         </h1>
       </div>
@@ -118,20 +121,20 @@ useHead({
       <div class="flex items-center gap-1 shrink-0">
         <button
           :disabled="loading"
-          class="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:bg-gray-50 disabled:opacity-40"
+          class="flex h-11 w-11 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:bg-gray-50 disabled:opacity-40 md:h-9 md:w-9"
           aria-label="上一季"
           @click="prevSeason"
         >
           <UIcon name="i-lucide-chevron-left" class="size-4" />
         </button>
-        <div class="min-w-28 text-center">
+        <div class="hidden min-w-28 text-center md:block">
           <span class="text-sm font-bold text-gray-700">
             {{ seasonalControls.year }} · {{ seasonLabels[seasonalControls.season] }}
           </span>
         </div>
         <button
           :disabled="loading"
-          class="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:bg-gray-50 disabled:opacity-40"
+          class="flex h-11 w-11 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:bg-gray-50 disabled:opacity-40 md:h-9 md:w-9"
           aria-label="下一季"
           @click="nextSeason"
         >
@@ -142,7 +145,7 @@ useHead({
 
     <!-- 篩選卡片：星期 tabs + 分類篩選 + 已選 chips 集中在一張白底卡片，
          與資料庫/我的清單頁的搜尋卡片一致，統一產品樣式 -->
-    <div class="space-y-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+    <div class="space-y-3 rounded-2xl border border-gray-200 bg-white p-3 shadow-sm md:p-4">
       <!-- Weekday tabs -->
       <div class="flex gap-1 overflow-x-auto pb-0.5" role="tablist" aria-label="依星期篩選">
         <button
@@ -151,16 +154,34 @@ useHead({
           role="tab"
           :aria-selected="filterState.weekday === tab.key"
           :disabled="loading"
-          class="shrink-0 rounded-md px-3 py-1.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:opacity-50"
+          class="min-h-11 shrink-0 rounded-md px-3 py-1.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:opacity-50 md:min-h-0"
           :class="filterState.weekday === tab.key
-            ? 'bg-primary-600 text-white shadow-sm'
+            ? 'bg-primary-700 text-white shadow-sm'
             : 'bg-gray-100 text-gray-800 hover:bg-gray-200 hover:text-gray-950'"
           @click="filterState.weekday = tab.key"
         >{{ tab.label }}</button>
       </div>
 
+      <div class="flex items-center justify-between gap-3 border-t border-gray-100 pt-3 md:hidden">
+        <p class="text-sm text-gray-500">
+          顯示 <strong class="font-extrabold text-gray-900">{{ filteredSeasonal.length }}</strong> / {{ seasonal.length }} 部
+        </p>
+        <button
+          type="button"
+          class="flex min-h-11 shrink-0 items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 text-sm font-bold text-gray-700 shadow-sm"
+          @click="filterPanelOpen = true"
+        >
+          <UIcon name="i-lucide-sliders-horizontal" class="size-4 text-primary-600" />
+          篩選
+          <span
+            v-if="activeFilterCount > 0"
+            class="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-primary-600 px-1.5 text-[11px] font-bold text-white"
+          >{{ activeFilterCount }}</span>
+        </button>
+      </div>
+
       <!-- Genre filter + 更多篩選 on same row -->
-      <div v-if="filterOptions.genres.length > 0" class="flex items-start gap-2 border-t border-gray-100 pt-3">
+      <div v-if="filterOptions.genres.length > 0" class="hidden items-start gap-2 border-t border-gray-100 pt-3 md:flex">
         <div class="flex flex-1 flex-wrap gap-1.5">
           <button
             class="rounded border px-2.5 py-1 text-xs font-semibold transition-colors"
@@ -195,11 +216,11 @@ useHead({
       </div>
 
       <!-- Active filter chips -->
-      <div v-if="activeChips.length > 0" class="flex flex-wrap items-center gap-1.5 border-t border-gray-100 pt-3">
+      <div v-if="activeChips.length > 0" class="flex flex-wrap items-center gap-1.5 overflow-x-auto border-t border-gray-100 pt-3 max-md:flex-nowrap">
         <button
           v-for="chip in activeChips"
           :key="chip.label"
-          class="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors"
+          class="inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors"
           :class="chip.genre ? 'hover:opacity-80' : 'bg-primary-50 text-primary-700 hover:bg-primary-100'"
           :style="chip.genre ? { backgroundColor: tagColor(chip.label).bg, color: tagColor(chip.label).text } : {}"
           @click="chip.clear()"
@@ -207,13 +228,13 @@ useHead({
           {{ chip.label }}
           <UIcon name="i-lucide-x" class="size-3" />
         </button>
-        <button class="text-xs text-gray-400 hover:text-gray-700 underline underline-offset-2" @click="resetFilters()">清除全部</button>
-        <span class="ml-auto text-xs text-gray-500">顯示 <strong class="text-gray-900">{{ filteredSeasonal.length }}</strong> / {{ seasonal.length }} 部</span>
+        <button class="shrink-0 text-xs text-gray-400 underline underline-offset-2 hover:text-gray-700" @click="resetFilters()">清除全部</button>
+        <span class="ml-auto text-xs text-gray-500 max-md:hidden">顯示 <strong class="text-gray-900">{{ filteredSeasonal.length }}</strong> / {{ seasonal.length }} 部</span>
       </div>
     </div>
 
     <!-- Loading skeleton: fills roughly one viewport at the widest (5-col) breakpoint -->
-    <div v-if="loading" class="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5">
+    <div v-if="loading" class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
       <div v-for="i in 20" :key="i" class="aspect-3/4 w-full animate-pulse rounded-lg bg-gray-200" />
     </div>
 
@@ -229,9 +250,9 @@ useHead({
           <AnimeGridCard
             :key="anime.id"
             :anime="anime"
-            :in-list="listByAnimeId.has(anime.id) || pendingInList.has(anime.id)"
-            :watched="Boolean(listByAnimeId.get(anime.id)?.watched) || pendingWatched.has(anime.id)"
-            :list-item="listByAnimeId.get(anime.id)"
+            :in-list="isInList(anime.id)"
+            :watched="isWatched(anime.id)"
+            :status="statusesByAnimeId.get(anime.id)"
             :collections="collections"
             :popover-open="activePopoverAnimeId === anime.id"
             :eager-load="index < HIGH_PRIORITY_IMAGE_COUNT"
@@ -250,6 +271,7 @@ useHead({
       v-model:year="seasonalControls.year"
       v-model:season="seasonalControls.season"
       v-model:source-tag="filterState.sourceTag"
+      v-model:genre-tags="filterState.genreTags"
       v-model:actor="filterState.actor"
       v-model:status="filterState.seasonalStatus"
       :anime-list="seasonal"

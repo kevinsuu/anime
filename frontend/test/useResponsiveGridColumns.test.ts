@@ -2,14 +2,14 @@ import { describe, expect, it } from 'vitest'
 import { calculateGridLayout } from '../app/composables/useResponsiveGridColumns'
 
 describe('calculateGridLayout', () => {
-  it('returns 3 columns below the sm breakpoint (640px viewport)', () => {
+  it('returns 2 columns below the sm breakpoint (640px viewport)', () => {
     const result = calculateGridLayout(375, 375, 12)
-    expect(result.columns).toBe(3)
+    expect(result.columns).toBe(2)
   })
 
-  it('returns 4 columns between sm (640px) and md (768px) viewport', () => {
+  it('returns 3 columns between sm (640px) and md (768px) viewport', () => {
     const result = calculateGridLayout(700, 700, 12)
-    expect(result.columns).toBe(4)
+    expect(result.columns).toBe(3)
   })
 
   it('returns 5 columns at or above the md breakpoint (768px) viewport', () => {
@@ -22,9 +22,9 @@ describe('calculateGridLayout', () => {
     expect(result.columns).toBe(5)
   })
 
-  it('returns 4 columns exactly at the sm breakpoint boundary', () => {
+  it('returns 3 columns exactly at the sm breakpoint boundary', () => {
     const result = calculateGridLayout(640, 640, 12)
-    expect(result.columns).toBe(4)
+    expect(result.columns).toBe(3)
   })
 
   it('bases column count on viewport width, not container width', () => {
@@ -69,14 +69,14 @@ describe('calculateGridLayout', () => {
     expect(result.itemSize).toBeCloseTo(170.6666, 3)
   })
 
-  it('calculates itemSize correctly for 3-column layout with zero gap', () => {
-    // viewport=containerWidth=300, gap=0, columns=3
-    // stride = 300 / 3 = 100，可見卡片寬 = 100 - 0 = 100
-    // itemSize = 100 * 4/3 = 133.333...
+  it('calculates itemSize correctly for 2-column layout with zero gap', () => {
+    // viewport=containerWidth=300, gap=0, columns=2
+    // stride = 300 / 2 = 150，可見卡片寬 = 150 - 0 = 150
+    // itemSize = 150 * 4/3 = 200
     const result = calculateGridLayout(300, 300, 0)
-    expect(result.columns).toBe(3)
+    expect(result.columns).toBe(2)
     expect(result.columnWidth * result.columns).toBeCloseTo(300, 5)
-    expect(result.itemSize).toBeCloseTo(133.3333, 3)
+    expect(result.itemSize).toBeCloseTo(200, 3)
   })
 
   it('returns columnWidth distinct from itemSize (regression: WindowScroller needs both)', () => {

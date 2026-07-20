@@ -32,7 +32,7 @@ const error = computed(() => fetchError.value ? (fetchError.value.message || '�
         <p class="text-sm text-gray-500">共 {{ data.count }} 部作品</p>
       </header>
 
-      <div class="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
+      <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6">
         <NuxtLink
           v-for="li in data.list_items"
           :key="li.id"
@@ -45,6 +45,9 @@ const error = computed(() => fetchError.value ? (fetchError.value.message || '�
               :src="li.anime.image_url"
               :alt="li.anime.name"
               loading="lazy"
+              decoding="async"
+              width="300"
+              height="400"
               class="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
             />
             <div v-else class="grid h-full w-full place-items-center text-2xl font-bold text-white">

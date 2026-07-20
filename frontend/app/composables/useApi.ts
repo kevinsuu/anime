@@ -4,6 +4,35 @@ interface RequestOptions {
   headers?: Record<string, string>
 }
 
+interface AnimeSummaryFilters {
+  year?: number | string
+  season?: string
+  tags?: string[]
+  page?: number
+  perPage?: number
+}
+
+export interface AnimeCardBootstrapStatusPayload {
+  anime_id: number
+  list_item_id: number
+  watched: boolean
+  collection_ids: number[]
+}
+
+export interface AnimeCardBootstrapCollectionPayload {
+  id: number
+  name: string
+  is_public: boolean
+  public_slug: string
+  count: number
+}
+
+export interface AnimeCardBootstrapResponse {
+  user: Record<string, unknown>
+  statuses: AnimeCardBootstrapStatusPayload[]
+  collections: AnimeCardBootstrapCollectionPayload[]
+}
+
 // Serializes concurrent 401s onto a single in-flight refresh call so a page
 // that fires several requests at once doesn't burn through refresh-token
 // rotations (each rotation invalidates the previous token).
@@ -40,7 +69,7 @@ export function useApi() {
     return refreshPromise
   }
 
-  async function request(path: string, options: RequestOptions = {}, isRetry = false): Promise<any> {
+  async function request<T = any>(path: string, options: RequestOptions = {}, isRetry = false): Promise<T> {
     const headers: Record<string, string> = { 'Content-Type': 'application/json', ...(options.headers || {}) }
     const token = session.token
     if (token) headers.Authorization = `Bearer ${token}`
@@ -57,7 +86,7 @@ export function useApi() {
     if (response.status === 401 && !isRetry && path !== '/auth/refresh' && session.refreshToken) {
       try {
         await refreshAccessToken()
-        return await request(path, options, true)
+        return await request<T>(path, options, true)
       } catch {
         // fall through to normal error handling below using the original response
       }
@@ -71,13 +100,16 @@ export function useApi() {
       throw error
     }
 
-    return body
+    return body as T
   }
 
   return {
     login: (idToken: string) => request('/auth/google', { method: 'POST', body: JSON.stringify({ idToken }) }),
     logout: () => request('/auth/logout', { method: 'POST' }),
     me: () => request('/me'),
+    meBootstrap: (animeIds: number[]) => request<AnimeCardBootstrapResponse>(
+      `/me/bootstrap?anime_ids=${animeIds.join(',')}`
+    ),
     searchAnime: (query: string, filters: { year?: number | string; season?: string; tags?: string[] } = {}) => {
       const params = new URLSearchParams()
       if (query) params.set('q', query)
@@ -86,6 +118,17 @@ export function useApi() {
       if (filters.tags?.length) params.set('tags', filters.tags.join(','))
       const queryString = params.toString()
       return request(`/anime${queryString ? `?${queryString}` : ''}`)
+    },
+    searchAnimeSummaries: (query: string, filters: AnimeSummaryFilters = {}) => {
+      const params = new URLSearchParams()
+      if (query) params.set('q', query)
+      if (filters.year) params.set('year', String(filters.year))
+      if (filters.season) params.set('season', filters.season)
+      if (filters.tags?.length) params.set('tags', filters.tags.join(','))
+      if (filters.page) params.set('page', String(filters.page))
+      if (filters.perPage) params.set('per_page', String(filters.perPage))
+      const queryString = params.toString()
+      return request(`/anime/summaries${queryString ? `?${queryString}` : ''}`)
     },
     catalogTags: () => request('/anime/tags'),
     getAnime: (id: number) => request(`/anime/${id}`),

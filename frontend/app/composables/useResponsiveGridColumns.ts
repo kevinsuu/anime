@@ -3,7 +3,8 @@ import { type Ref, ref, onMounted, onBeforeUnmount } from 'vue'
 /**
  * Tailwind 4 預設斷點（這個專案用 @import "tailwindcss"，沒有自訂
  * tailwind.config.js），對應現有卡片網格的
- * grid-cols-3 sm:grid-cols-4 md:grid-cols-5。
+ * grid-cols-2 sm:grid-cols-3 md:grid-cols-5。md 以上維持既有桌機五欄，
+ * 只降低手機卡片密度。
  */
 const SM_BREAKPOINT_PX = 640
 const MD_BREAKPOINT_PX = 768
@@ -47,8 +48,8 @@ export function calculateGridLayout(viewportWidth: number, containerWidth: numbe
   const columns = viewportWidth >= MD_BREAKPOINT_PX
     ? 5
     : viewportWidth >= SM_BREAKPOINT_PX
-      ? 4
-      : 3
+      ? 3
+      : 2
 
   // WindowScroller 把第 i 欄的 item 放在 `i * itemSecondarySize`、寬度設為
   // itemSecondarySize，欄與欄之間沒有額外 gap。所以 columnWidth（餵給
@@ -70,7 +71,7 @@ export function calculateGridLayout(viewportWidth: number, containerWidth: numbe
  * AnimeVirtualGrid 傳給 WindowScroller 的 grid-items / item-size。
  */
 export function useResponsiveGridColumns(containerRef: Ref<HTMLElement | null>, gapPx: number) {
-  const columns = ref(3)
+  const columns = ref(2)
   const itemSize = ref(0)
   const columnWidth = ref(0)
 

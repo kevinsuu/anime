@@ -4,7 +4,7 @@ const { navItems, isActive, targetFor } = useNav()
 
 <template>
   <nav
-    class="fixed inset-x-0 bottom-0 z-40 grid gap-1 border-t border-gray-200 bg-white p-2 shadow-[0_-12px_28px_rgba(15,23,42,0.1)] md:hidden"
+    class="fixed inset-x-0 bottom-0 z-40 grid gap-1 border-t border-gray-200 bg-white px-2 pt-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] shadow-[0_-12px_28px_rgba(15,23,42,0.1)] md:hidden"
     :style="{ gridTemplateColumns: `repeat(${navItems.length}, minmax(0, 1fr))` }"
     aria-label="手機導覽"
   >

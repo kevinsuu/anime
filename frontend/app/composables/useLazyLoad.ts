@@ -14,12 +14,17 @@ let sharedObserver: IntersectionObserver | null = null
 // the viewport during a fast scroll wouldn't get its src set until the observer
 // gets around to firing — leaving a blank card. We use this margin to
 // synchronously check on mount whether the card is already in range.
-export const IMAGE_PRELOAD_DISTANCE_PX = 700
+export const IMAGE_PRELOAD_DISTANCE_PX = 300
+
+// Virtual rendering and image fetching solve different problems. Keep enough
+// DOM mounted ahead of a fast scroll without also asking the browser to fetch
+// every cover in that render window.
+export const VIRTUAL_RENDER_BUFFER_PX = 700
 
 // Five cards is one full desktop row. Remaining near-viewport cards still get
 // a src immediately, but stay at normal/low browser priority so the first row
 // wins the initial network contention.
-export const HIGH_PRIORITY_IMAGE_COUNT = 5
+export const HIGH_PRIORITY_IMAGE_COUNT = 1
 
 function getObserver(): IntersectionObserver {
   if (!sharedObserver) {

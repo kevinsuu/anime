@@ -1,5 +1,5 @@
 import { computed, reactive } from 'vue'
-import type { Anime } from '../utils/normalize'
+import type { AnimeSummary } from '../utils/normalize'
 
 export const weekdayTabs = [
   { key: 'all', label: '全部', dayIndex: null },
@@ -27,13 +27,14 @@ const WEEKDAY_CHAR_TO_INDEX: Record<string, number> = {
   '日': 0, '一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6,
 }
 
-export function weekdayIndexOf(anime: Anime): number | null {
+export function weekdayIndexOf(anime: AnimeSummary): number | null {
   // Prefer air_date_text which explicitly states the weekly broadcast day
   // e.g. "7月7日起／每週二／20時30分" → 二 → 2
   // Must match 每週X or 週X to avoid matching 日期 like "7月5日" → "日"
   if (anime.airDateText) {
     const m = anime.airDateText.match(/每週([一二三四五六日])|週([一二三四五六日])/)
-    if (m) return WEEKDAY_CHAR_TO_INDEX[m[1] || m[2]] ?? null
+    const weekday = m?.[1] ?? m?.[2]
+    if (weekday) return WEEKDAY_CHAR_TO_INDEX[weekday] ?? null
   }
   // Fallback: derive from air_date, parse as local date to avoid UTC-shift
   if (anime.airDate) {
@@ -44,7 +45,7 @@ export function weekdayIndexOf(anime: Anime): number | null {
 }
 
 // Derive dynamic filter options from the loaded anime list
-export function deriveFilterOptions(animeList: Anime[]) {
+export function deriveFilterOptions(animeList: AnimeSummary[]) {
   const sourceCounts: Record<string, number> = {}
   const genreCounts: Record<string, number> = {}
   const actorCounts: Record<string, number> = {}
@@ -57,9 +58,9 @@ export function deriveFilterOptions(animeList: Anime[]) {
         genreCounts[tag] = (genreCounts[tag] ?? 0) + 1
       }
     }
-    for (const c of anime.cast) {
-      if (c.actor && c.actor !== '？？？') {
-        actorCounts[c.actor] = (actorCounts[c.actor] ?? 0) + 1
+    for (const actor of anime.actors) {
+      if (actor && actor !== '？？？') {
+        actorCounts[actor] = (actorCounts[actor] ?? 0) + 1
       }
     }
   }
@@ -96,15 +97,15 @@ export function useSeasonalCatalog() {
     else state.genreTags.push(tag)
   }
 
-  function filterSeasonal(seasonal: Anime[], listByAnimeId: Map<number, { watched: boolean }>) {
-    const activeWeekday = weekdayTabs.find(w => w.key === state.weekday) ?? weekdayTabs[0]
+  function filterSeasonal(seasonal: AnimeSummary[], listByAnimeId: Map<number, { watched: boolean }>) {
+    const activeDayIndex = weekdayTabs.find(w => w.key === state.weekday)?.dayIndex ?? null
 
     return seasonal.filter(anime => {
-      if (activeWeekday.dayIndex !== null && weekdayIndexOf(anime) !== activeWeekday.dayIndex) return false
+      if (activeDayIndex !== null && weekdayIndexOf(anime) !== activeDayIndex) return false
       if (state.sourceTag && !anime.tags.includes(state.sourceTag)) return false
       // OR logic: anime must have at least one of the selected genre tags
       if (state.genreTags.length > 0 && !state.genreTags.some(t => anime.tags.includes(t))) return false
-      if (state.actor && !anime.cast.some(c => c.actor === state.actor)) return false
+      if (state.actor && !anime.actors.includes(state.actor)) return false
 
       const listItem = listByAnimeId.get(anime.id)
       if (state.seasonalStatus === 'listed') return Boolean(listItem)

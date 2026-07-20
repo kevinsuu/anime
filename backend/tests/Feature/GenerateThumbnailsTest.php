@@ -14,7 +14,7 @@ final class GenerateThumbnailsTest extends TestCase
 
     private function fakeJpegBytes(): string
     {
-        $img = new \Imagick();
+        $img = new \Imagick;
         $img->newImage(2000, 3000, new \ImagickPixel('red'));
         $img->setImageFormat('jpeg');
 
@@ -54,6 +54,66 @@ final class GenerateThumbnailsTest extends TestCase
 
         $this->assertNull($noImageUrl->fresh()->cover_image_path);
 
+        Http::assertSentCount(1);
+    }
+
+    public function test_can_scope_backfill_to_a_season(): void
+    {
+        Storage::fake('public');
+        Http::fake([
+            'static.acgsecrets.hk/*' => Http::response($this->fakeJpegBytes(), 200, ['Content-Type' => 'image/jpeg']),
+        ]);
+
+        $target = Anime::create([
+            'name' => '目標季度',
+            'image_url' => 'https://static.acgsecrets.hk/target.jpg',
+            'season_year' => 2026,
+            'season_code' => 'summer',
+        ]);
+        $otherSeason = Anime::create([
+            'name' => '其他季度',
+            'image_url' => 'https://static.acgsecrets.hk/other.jpg',
+            'season_year' => 2026,
+            'season_code' => 'spring',
+        ]);
+
+        $this->artisan('anime:generate-thumbnails', ['--year' => '2026', '--season' => 'summer'])
+            ->assertSuccessful();
+
+        $this->assertNotNull($target->fresh()->cover_image_path);
+        $this->assertNull($otherSeason->fresh()->cover_image_path);
+        Http::assertSentCount(1);
+    }
+
+    public function test_rejects_invalid_scope_options(): void
+    {
+        $this->artisan('anime:generate-thumbnails', ['--year' => '1899'])->assertFailed();
+        $this->artisan('anime:generate-thumbnails', ['--season' => 'monsoon'])->assertFailed();
+    }
+
+    public function test_force_regenerates_existing_thumbnail_within_scope(): void
+    {
+        Storage::fake('public');
+        Http::fake([
+            'static.acgsecrets.hk/*' => Http::response($this->fakeJpegBytes(), 200, ['Content-Type' => 'image/jpeg']),
+        ]);
+
+        $anime = Anime::create([
+            'name' => '重新編碼縮圖',
+            'image_url' => 'https://static.acgsecrets.hk/force.jpg',
+            'cover_image_path' => 'covers/old.webp',
+            'season_year' => 2026,
+            'season_code' => 'summer',
+        ]);
+
+        $this->artisan('anime:generate-thumbnails', [
+            '--year' => '2026',
+            '--season' => 'summer',
+            '--force' => true,
+        ])->assertSuccessful();
+
+        $this->assertSame("covers/{$anime->id}.webp", $anime->fresh()->cover_image_path);
+        Storage::disk('public')->assertExists("covers/{$anime->id}.webp");
         Http::assertSentCount(1);
     }
 }

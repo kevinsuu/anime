@@ -144,6 +144,14 @@ docker compose exec backend php artisan anime:import-acgsecrets
 docker compose exec backend php artisan anime:generate-thumbnails
 ```
 
+若只需先補齊目前要發布的季度，可用範圍選項縮短執行時間，再於離峰時段執行完整補齊：
+
+```bash
+docker compose exec backend php artisan anime:generate-thumbnails --year=2026 --season=summer
+```
+
+縮圖編碼設定更新後，可在同一範圍加上 `--force` 重新產生既有縮圖。
+
 確認 `/api/anime` 回傳的 `image_url` 指向 `/storage/covers/*.webp`，而且請求回應為 `200 image/webp`。
 
 具名儲存卷 `backend-storage-public` 會在容器替換後繼續保留已產生的封面。後續匯入則由 `scheduler` 映像檔自動產生縮圖。

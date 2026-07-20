@@ -60,19 +60,32 @@ export interface AnimeLink {
   url: string
 }
 
-export interface Anime {
+export interface AnimeCardData {
   id: number
   name: string
-  description: string
   imageUrl: string
-  source: string
-  seasonYear: number | null
-  seasonCode: string
   airDate: string | null
   airDateText: string
   episodeCount: number | null
-  status: string
   tags: string[]
+  streamCount: number
+}
+
+export interface AnimeSummary extends AnimeCardData {
+  source: string
+  seasonYear: number | null
+  seasonCode: string
+  status: string
+  actors: string[]
+}
+
+export interface Anime extends AnimeCardData {
+  description: string
+  source: string
+  seasonYear: number | null
+  seasonCode: string
+  status: string
+  actors: string[]
   aliases: string[]
   streams: AnimeStream[]
   titleJa: string
@@ -97,6 +110,10 @@ export function normalizeAnime(item: Record<string, any> = {}): Anime {
     episodeCount: item.episodeCount || item.episode_count || null,
     status: item.status || '',
     tags: Array.isArray(item.tags) ? item.tags : [],
+    streamCount: Number(item.streamCount ?? item.stream_count ?? (Array.isArray(item.streams) ? item.streams.length : 0)),
+    actors: Array.isArray(item.cast)
+      ? [...new Set(item.cast.map((entry: any) => repairText(entry.actor)).filter(Boolean))]
+      : [],
     aliases: Array.isArray(item.aliases) ? item.aliases.map((a: any) => repairText(a)) : [],
     streams: Array.isArray(item.streams)
       ? item.streams.map((s: any) => ({
@@ -123,6 +140,24 @@ export function normalizeAnime(item: Record<string, any> = {}): Anime {
     links: Array.isArray(item.links)
       ? item.links.map((l: any) => ({ category: l.category || '', label: l.label || '', url: l.url || '' }))
       : []
+  }
+}
+
+export function normalizeAnimeSummary(item: Record<string, any> = {}): AnimeSummary {
+  return {
+    id: Number(item.id),
+    name: repairText(item.name, '未命名作品'),
+    imageUrl: item.imageUrl || item.image_url || '',
+    source: item.source || '',
+    seasonYear: item.seasonYear || item.season_year || null,
+    seasonCode: item.seasonCode || item.season_code || '',
+    airDate: item.airDate || item.air_date || null,
+    airDateText: item.airDateText || item.air_date_text || '',
+    episodeCount: item.episodeCount || item.episode_count || null,
+    status: item.status || '',
+    tags: Array.isArray(item.tags) ? item.tags : [],
+    streamCount: Number(item.streamCount ?? item.stream_count ?? 0),
+    actors: Array.isArray(item.actors) ? item.actors.map((actor: unknown) => repairText(actor)).filter(Boolean) : []
   }
 }
 
@@ -204,6 +239,7 @@ export function tagColor(tag: string): { bg: string; text: string } {
   const hue = hashString(tag) % 360
   return {
     bg: `hsl(${hue}, 45%, 96%)`,
-    text: `hsl(${hue}, 35%, 40%)`,
+    // Keep small chips above WCAG AA contrast across the full hue wheel.
+    text: `hsl(${hue}, 45%, 28%)`,
   }
 }

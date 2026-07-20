@@ -77,6 +77,15 @@ server {
     add_header X-Frame-Options "SAMEORIGIN" always;
     add_header X-Content-Type-Options "nosniff" always;
 
+    # Compress SSR HTML and API/text responses. Nuxt also ships precompressed
+    # immutable JS/CSS assets, which nginx forwards using the browser's
+    # Accept-Encoding header.
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 1024;
+    gzip_comp_level 5;
+    gzip_types text/plain text/css application/json application/javascript application/xml image/svg+xml;
+
     location /api/ {
         proxy_pass http://anime_backend/;
         proxy_set_header Host $host;

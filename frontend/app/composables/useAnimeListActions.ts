@@ -120,12 +120,12 @@ export function useAnimeListActions() {
     pendingCollections.add(operationKey)
     const inCollection = listItem.collections.some(item => item.id === collection.id)
     const previousCollections = [...listItem.collections]
-    const collectionIndex = collections.value.findIndex(item => item.id === collection.id)
-    const previousCount = collectionIndex >= 0 ? collections.value[collectionIndex].count : null
+    const targetCollection = collections.value.find(item => item.id === collection.id)
+    const previousCount = targetCollection?.count ?? null
     listItem.collections = inCollection
       ? listItem.collections.filter(item => item.id !== collection.id)
       : [...listItem.collections, { id: collection.id, name: collection.name }]
-    if (collectionIndex >= 0) collections.value[collectionIndex].count += inCollection ? -1 : 1
+    if (targetCollection) targetCollection.count += inCollection ? -1 : 1
     try {
       if (inCollection) {
         await api.removeFromCollection(collection.id, listItem.id)
@@ -138,7 +138,7 @@ export function useAnimeListActions() {
       })
     } catch (err: any) {
       listItem.collections = previousCollections
-      if (collectionIndex >= 0 && previousCount !== null) collections.value[collectionIndex].count = previousCount
+      if (targetCollection && previousCount !== null) targetCollection.count = previousCount
       toast.add({ title: err.message || '操作失敗', color: 'error' })
     } finally {
       pendingCollections.delete(operationKey)

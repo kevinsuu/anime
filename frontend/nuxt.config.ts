@@ -1,6 +1,14 @@
 const defaultApiBaseUrl = 'https://anime.kaistarstudio.me/api'
 const publicApiBaseUrl = (process.env.NUXT_PUBLIC_API_BASE_URL || defaultApiBaseUrl).replace(/\/$/, '')
 const internalApiBaseUrl = (process.env.NUXT_API_BASE_URL_INTERNAL || publicApiBaseUrl).replace(/\/$/, '')
+const publicRouteRules = process.env.NODE_ENV === 'development'
+  ? {}
+  : {
+      '/': { swr: 300 },
+      '/seasonal': { swr: 300 },
+      '/catalog': { swr: 300 },
+      '/anime/**': { swr: 300 }
+    }
 
 export default defineNuxtConfig({
   compatibilityDate: '2026-06-29',
@@ -21,6 +29,13 @@ export default defineNuxtConfig({
   sitemap: {
     sources: ['/api/__sitemap__/anime-urls'],
     exclude: ['/', '/list', '/list/**', '/settings', '/login']
+  },
+  routeRules: publicRouteRules,
+  nitro: {
+    // Emit Brotli/gzip variants for immutable JS/CSS assets. Production nginx
+    // can serve these directly, and the built-in preview server stays
+    // representative when running throttled performance checks.
+    compressPublicAssets: true
   },
   app: {
     head: {

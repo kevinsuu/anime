@@ -1,7 +1,7 @@
 <script setup lang="ts">
-await navigateTo('/seasonal')
+import SeasonalPage from './seasonal.vue'
 </script>
 
 <template>
-  <div />
+  <SeasonalPage />
 </template>

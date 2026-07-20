@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { normalizeAnime, normalizeListItem, repairText } from '../app/utils/normalize'
+import { normalizeAnime, normalizeAnimeSummary, normalizeListItem, repairText } from '../app/utils/normalize'
 
 describe('repairText', () => {
   it('returns the original string when it is not mojibake', () => {
@@ -36,6 +36,8 @@ describe('normalizeAnime', () => {
       episodeCount: 12,
       status: '',
       tags: [],
+      streamCount: 0,
+      actors: [],
       aliases: [],
       streams: [],
       titleJa: '',
@@ -75,6 +77,30 @@ describe('normalizeAnime', () => {
   it('falls back to placeholder name when missing', () => {
     const result = normalizeAnime({})
     expect(result.name).toBe('未命名作品')
+  })
+})
+
+describe('normalizeAnimeSummary', () => {
+  it('maps the lightweight card contract without requiring detail relations', () => {
+    const result = normalizeAnimeSummary({
+      id: 7,
+      name: '測試作品',
+      image_url: '/storage/covers/7.webp',
+      season_year: 2026,
+      season_code: 'summer',
+      stream_count: 3,
+      actors: ['聲優A', '聲優B']
+    })
+
+    expect(result).toMatchObject({
+      id: 7,
+      name: '測試作品',
+      imageUrl: '/storage/covers/7.webp',
+      seasonYear: 2026,
+      seasonCode: 'summer',
+      streamCount: 3,
+      actors: ['聲優A', '聲優B']
+    })
   })
 })
 

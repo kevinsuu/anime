@@ -26,6 +26,8 @@ function goBack() {
 
 // Trailer modal
 const activeTrailerUrl = ref<string | null>(null)
+const trailerDialogRef = ref<HTMLElement | null>(null)
+const trailerTriggerRef = ref<HTMLElement | null>(null)
 
 function youtubeEmbedUrl(url: string): string {
   const match = url.match(/[?&]v=([^&]+)/) || url.match(/youtu\.be\/([^?]+)/)
@@ -33,20 +35,46 @@ function youtubeEmbedUrl(url: string): string {
   return id ? `https://www.youtube.com/embed/${id}?autoplay=1` : url
 }
 
-function openTrailer(url: string) {
+function openTrailer(url: string, event?: Event) {
+  trailerTriggerRef.value = event?.currentTarget instanceof HTMLElement ? event.currentTarget : null
   activeTrailerUrl.value = url
+  nextTick(() => trailerDialogRef.value?.focus())
 }
 
 function closeTrailer() {
+  const trigger = trailerTriggerRef.value
   activeTrailerUrl.value = null
+  nextTick(() => trigger?.focus())
 }
 
-// Close on Escape key
+function onTrailerKeydown(event: KeyboardEvent) {
+  if (!activeTrailerUrl.value) return
+  if (event.key === 'Escape') {
+    event.preventDefault()
+    closeTrailer()
+    return
+  }
+  if (event.key !== 'Tab' || !trailerDialogRef.value) return
+
+  const focusable = Array.from(trailerDialogRef.value.querySelectorAll<HTMLElement>(
+    'button, a[href], iframe, [tabindex]:not([tabindex="-1"])'
+  )).filter(element => !element.hasAttribute('disabled'))
+  if (focusable.length === 0) return
+  const first = focusable[0]
+  const last = focusable[focusable.length - 1]
+  if (event.shiftKey && (document.activeElement === first || document.activeElement === trailerDialogRef.value) && last) {
+    event.preventDefault()
+    last.focus()
+  } else if (!event.shiftKey && document.activeElement === last && first) {
+    event.preventDefault()
+    first.focus()
+  }
+}
+
 onMounted(() => {
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeTrailer()
-  })
+  window.addEventListener('keydown', onTrailerKeydown)
 })
+onBeforeUnmount(() => window.removeEventListener('keydown', onTrailerKeydown))
 
 async function addToList() {
   if (!isAuthed.value) return navigateTo('/login')
@@ -104,7 +132,7 @@ useHead({
     <!-- Back -->
     <button
       type="button"
-      class="mb-6 inline-flex items-center gap-1.5 text-sm font-semibold text-gray-500 hover:text-gray-900 transition-colors"
+      class="mb-3 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-gray-500 transition-colors hover:text-gray-900 md:mb-6 md:min-h-0"
       @click="goBack"
     >
       <UIcon name="i-lucide-chevron-left" class="size-4" />
@@ -113,8 +141,8 @@ useHead({
 
     <!-- Loading -->
     <div v-if="loading" class="space-y-6">
-      <div class="flex gap-6">
-        <div class="h-72 w-48 shrink-0 animate-pulse rounded-xl bg-gray-200" />
+      <div class="flex gap-3 md:gap-6">
+        <div class="h-[150px] w-28 shrink-0 animate-pulse rounded-xl bg-gray-200 md:h-72 md:w-48" />
         <div class="flex-1 space-y-3 pt-2">
           <div class="h-4 w-24 animate-pulse rounded bg-gray-200" />
           <div class="h-8 w-64 animate-pulse rounded bg-gray-200" />
@@ -127,10 +155,61 @@ useHead({
     <UAlert v-else-if="error" color="error" :title="error" />
 
     <template v-else-if="anime">
-      <div class="grid gap-8 lg:grid-cols-[220px_1fr]">
+      <section class="grid grid-cols-[112px_minmax(0,1fr)] gap-3 md:hidden">
+        <img
+          v-if="anime.imageUrl"
+          :src="anime.imageUrl"
+          :alt="anime.name"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          width="112"
+          height="150"
+          class="h-[150px] w-28 rounded-xl object-cover shadow-md"
+        />
+        <div
+          v-else
+          class="flex h-[150px] w-28 items-center justify-center rounded-xl bg-primary-100 text-3xl font-bold text-primary-400"
+        >
+          {{ anime.name.slice(0, 1) }}
+        </div>
+
+        <div class="flex min-w-0 flex-col">
+          <p v-if="anime.seasonYear" class="text-[11px] font-extrabold uppercase tracking-wider text-primary-700">
+            {{ anime.seasonYear }}年 {{ seasonMonthLabels[anime.seasonCode] ?? anime.seasonCode }}
+          </p>
+          <h1 class="mt-0.5 line-clamp-3 text-lg font-extrabold leading-snug tracking-tight text-gray-950">{{ anime.name }}</h1>
+          <p v-if="anime.titleJa" class="mt-1 line-clamp-1 text-xs text-gray-500">{{ anime.titleJa }}</p>
+          <p v-if="anime.episodeCount" class="mt-1 text-xs font-semibold text-gray-500">全 {{ anime.episodeCount }} 集</p>
+          <button
+            :disabled="addedToList"
+            class="mt-auto min-h-11 w-full rounded-lg px-3 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+            :class="addedToList
+              ? 'cursor-default bg-green-100 text-green-700'
+              : 'bg-primary-700 text-white shadow-sm active:bg-primary-800'"
+            @click="addToList"
+          >
+            <span class="flex items-center justify-center gap-1.5">
+              <UIcon :name="addedToList ? 'i-lucide-check' : 'i-lucide-plus'" class="size-4" />
+              {{ addedToList ? '已加入清單' : '加入清單' }}
+            </span>
+          </button>
+        </div>
+      </section>
+
+      <div v-if="anime.tags.length > 0" class="mt-3 flex gap-1.5 overflow-x-auto pb-1 md:hidden">
+        <span
+          v-for="tag in anime.tags"
+          :key="tag"
+          class="shrink-0 rounded-md px-2.5 py-1 text-xs font-semibold"
+          :style="{ backgroundColor: tagColor(tag).bg, color: tagColor(tag).text }"
+        >{{ tag }}</span>
+      </div>
+
+      <div class="mt-5 grid gap-5 md:mt-0 md:gap-8 lg:grid-cols-[220px_1fr]">
 
         <!-- ── Left column ── -->
-        <div class="flex flex-col gap-4">
+        <div class="hidden flex-col gap-4 md:flex">
           <!-- Cover -->
           <img
             v-if="anime.imageUrl"
@@ -138,6 +217,9 @@ useHead({
             :alt="anime.name"
             width="220"
             height="293"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
             class="aspect-3/4 w-full rounded-xl object-cover shadow-md"
           />
           <div
@@ -153,7 +235,7 @@ useHead({
             class="w-full rounded-lg py-2.5 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
             :class="addedToList
               ? 'bg-green-100 text-green-700 cursor-default'
-              : 'bg-primary-600 text-white hover:bg-primary-500 shadow-sm'"
+              : 'bg-primary-700 text-white shadow-sm hover:bg-primary-800'"
             @click="addToList"
           >
             <span class="flex items-center justify-center gap-1.5">
@@ -163,7 +245,7 @@ useHead({
           </button>
 
           <!-- External links：只顯示「一般」分類，不顯示「資料庫」 -->
-          <template v-if="linksByCategory['一般']?.length > 0">
+          <template v-if="(linksByCategory['一般']?.length ?? 0) > 0">
             <div class="space-y-1.5">
               <a
                 v-for="link in linksByCategory['一般']"
@@ -181,11 +263,11 @@ useHead({
         </div>
 
         <!-- ── Right column ── -->
-        <div class="space-y-8">
+        <div class="min-w-0 space-y-8">
 
           <!-- Title -->
-          <div>
-            <p v-if="anime.seasonYear" class="text-xs font-extrabold uppercase tracking-widest text-primary-600">
+          <div class="hidden md:block">
+            <p v-if="anime.seasonYear" class="text-xs font-extrabold uppercase tracking-widest text-primary-700">
               {{ anime.seasonYear }}年 {{ seasonMonthLabels[anime.seasonCode] ?? anime.seasonCode }}
             </p>
             <h1 class="mt-1 text-2xl font-extrabold tracking-tight text-gray-950">{{ anime.name }}</h1>
@@ -208,6 +290,20 @@ useHead({
             <p class="text-sm font-medium text-gray-900">{{ anime.airDateText || anime.airDate }}</p>
           </div>
 
+          <div v-if="(linksByCategory['一般']?.length ?? 0) > 0" class="grid gap-2 md:hidden">
+            <a
+              v-for="link in linksByCategory['一般']"
+              :key="link.url"
+              :href="link.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex min-h-11 items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 text-sm font-semibold text-gray-700 shadow-sm"
+            >
+              <UIcon name="i-lucide-external-link" class="size-4 shrink-0 text-gray-400" />
+              {{ link.label }}
+            </a>
+          </div>
+
           <!-- Summary -->
           <section class="space-y-2">
             <h2 class="text-[11px] font-bold uppercase tracking-widest text-gray-500">故事介紹</h2>
@@ -227,26 +323,26 @@ useHead({
           <!-- Streams -->
           <section v-if="anime.streams.length > 0" class="space-y-2">
             <h2 class="text-[11px] font-bold uppercase tracking-widest text-gray-500">線上觀看</h2>
-            <div class="flex flex-wrap gap-2">
+            <div class="grid gap-2 sm:flex sm:flex-wrap">
               <template v-for="s in anime.streams" :key="`${s.region}-${s.platform}`">
                 <a
                   v-if="s.url"
                   :href="s.url"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition"
+                  class="inline-flex min-h-11 items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm font-semibold text-gray-700 shadow-sm transition hover:bg-gray-50 md:min-h-0"
                 >
                   <UIcon name="i-lucide-play" class="size-3.5 text-primary-500" />
                   {{ s.platform }}
-                  <span class="text-xs text-gray-400">{{ s.region }}</span>
+                  <span class="text-xs text-gray-600">{{ s.region }}</span>
                 </a>
                 <span
                   v-else
-                  class="inline-flex items-center gap-1.5 rounded-lg border border-gray-100 bg-gray-50 px-3 py-1.5 text-sm font-semibold text-gray-500"
+                  class="inline-flex min-h-11 items-center gap-1.5 rounded-lg border border-gray-100 bg-gray-50 px-3 py-1.5 text-sm font-semibold text-gray-500 md:min-h-0"
                 >
                   <UIcon name="i-lucide-play" class="size-3.5 text-gray-300" />
                   {{ s.platform }}
-                  <span class="text-xs text-gray-400">{{ s.region }}</span>
+                  <span class="text-xs text-gray-600">{{ s.region }}</span>
                 </span>
               </template>
             </div>
@@ -261,7 +357,7 @@ useHead({
                 :key="`${theme.type}-${theme.title}`"
                 class="flex items-center gap-3 px-4 py-3"
               >
-                <span class="w-8 shrink-0 rounded bg-gray-100 px-1.5 py-0.5 text-center text-[11px] font-bold text-gray-500">
+                <span class="w-8 shrink-0 rounded bg-gray-100 px-1.5 py-0.5 text-center text-[11px] font-bold text-gray-600">
                   {{ theme.type }}
                 </span>
                 <div class="min-w-0">
@@ -280,8 +376,9 @@ useHead({
                 v-for="(trailer, i) in anime.trailers"
                 :key="trailer.url"
                 type="button"
+                :aria-label="`播放宣傳片 ${i + 1}`"
                 class="group relative block w-full overflow-hidden rounded-lg bg-gray-900 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
-                @click="openTrailer(trailer.url)"
+                @click="openTrailer(trailer.url, $event)"
               >
                 <img
                   v-if="trailer.thumbnail"
@@ -306,14 +403,14 @@ useHead({
           <section v-if="anime.cast.length > 0" class="space-y-2">
             <h2 class="text-[11px] font-bold uppercase tracking-widest text-gray-500">配音員</h2>
             <div class="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
-              <div class="grid grid-cols-2">
+              <div class="grid grid-cols-1 sm:grid-cols-2">
                 <div
                   v-for="entry in anime.cast"
                   :key="entry.character"
                   class="flex items-center gap-3 border-b border-r border-gray-100 px-4 py-3 last:border-b-0 odd:border-r even:border-r-0"
                 >
                   <div class="min-w-0 flex-1">
-                    <p class="truncate text-[11px] font-semibold text-gray-400">{{ entry.character }}</p>
+                    <p class="truncate text-[11px] font-semibold text-gray-600">{{ entry.character }}</p>
                     <p class="truncate text-sm font-bold text-gray-900">{{ entry.actor }}</p>
                   </div>
                 </div>
@@ -325,14 +422,14 @@ useHead({
           <section v-if="anime.staff.length > 0" class="space-y-2">
             <h2 class="text-[11px] font-bold uppercase tracking-widest text-gray-500">製作人員</h2>
             <div class="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
-              <div class="grid grid-cols-2">
+              <div class="grid grid-cols-1 sm:grid-cols-2">
                 <div
                   v-for="entry in anime.staff"
                   :key="entry.role"
                   class="flex items-center gap-3 border-b border-r border-gray-100 px-4 py-3 last:border-b-0 odd:border-r even:border-r-0"
                 >
                   <div class="min-w-0 flex-1">
-                    <p class="truncate text-[11px] font-semibold text-gray-400">{{ entry.role }}</p>
+                    <p class="truncate text-[11px] font-semibold text-gray-600">{{ entry.role }}</p>
                     <p class="text-sm font-medium text-gray-900">{{ entry.name }}</p>
                   </div>
                 </div>
@@ -352,10 +449,18 @@ useHead({
           class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
           @click.self="closeTrailer"
         >
-          <div class="relative w-full max-w-3xl">
+          <div
+            ref="trailerDialogRef"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="trailer-dialog-title"
+            tabindex="-1"
+            class="relative w-full max-w-3xl outline-none"
+          >
+            <h2 id="trailer-dialog-title" class="sr-only">{{ anime?.name }} 宣傳片</h2>
             <!-- Close button -->
             <button
-              class="absolute -top-10 right-0 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              class="absolute -top-12 right-0 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white md:-top-10 md:h-8 md:w-8"
               aria-label="關閉影片"
               @click="closeTrailer"
             >
@@ -365,6 +470,7 @@ useHead({
             <div class="aspect-video w-full overflow-hidden rounded-xl shadow-2xl">
               <iframe
                 :src="youtubeEmbedUrl(activeTrailerUrl)"
+                :title="`${anime?.name ?? '動畫'} 宣傳片`"
                 class="h-full w-full"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

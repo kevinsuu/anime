@@ -70,12 +70,28 @@ jobs:
         working-directory: frontend
         run: npm ci
 
+      - name: Run unit tests
+        working-directory: frontend
+        run: npm run test
+
+      - name: Type check
+        working-directory: frontend
+        run: npm run typecheck
+
       - name: Build (verifies the production build succeeds)
         working-directory: frontend
         run: npm run build
         env:
           NUXT_PUBLIC_API_BASE_URL: https://anime.kaistarstudio.me/api
           NUXT_PUBLIC_GOOGLE_CLIENT_ID: ci-placeholder.apps.googleusercontent.com
+
+      - name: Install Playwright Chromium
+        working-directory: frontend
+        run: npx playwright install --with-deps chromium
+
+      - name: Run browser smoke tests
+        working-directory: frontend
+        run: npm run test:e2e:ci
 
   docker-build:
     runs-on: ubuntu-latest

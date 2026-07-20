@@ -1,18 +1,21 @@
 <script setup lang="ts">
-import type { Anime, ListItem, Collection } from '../utils/normalize'
+import type { AnimeCardData, Collection } from '../utils/normalize'
+import type { AnimeCardStatus } from '../composables/useAnimeCardStatuses'
 
 const props = withDefaults(defineProps<{
-  anime: Anime
+  anime: AnimeCardData
   inList: boolean
   watched: boolean
-  listItem?: ListItem
+  status?: AnimeCardStatus
   collections?: Collection[]
   popoverOpen?: boolean
   eagerLoad?: boolean
+  showActions?: boolean
 }>(), {
   collections: () => [],
   popoverOpen: false,
-  eagerLoad: false
+  eagerLoad: false,
+  showActions: true
 })
 
 const emit = defineEmits<{
@@ -45,13 +48,13 @@ onMounted(() => {
 })
 
 const weekdayColors: Record<string, string> = {
-  '一': 'bg-red-500',
-  '二': 'bg-orange-500',
-  '三': 'bg-yellow-500',
-  '四': 'bg-green-500',
-  '五': 'bg-teal-500',
-  '六': 'bg-blue-500',
-  '日': 'bg-purple-500',
+  '一': 'bg-red-700',
+  '二': 'bg-orange-700',
+  '三': 'bg-yellow-700',
+  '四': 'bg-green-700',
+  '五': 'bg-teal-700',
+  '六': 'bg-blue-700',
+  '日': 'bg-purple-700',
 }
 
 interface AirInfo {
@@ -95,17 +98,8 @@ function formatDate(airDate: string): string {
   return month && day ? `${parseInt(month)}月${parseInt(day)}日` : ''
 }
 
-const toast = useToast()
-
 function isInCollection(col: Collection): boolean {
-  return props.listItem?.collections.some(c => c.id === col.id) ?? false
-}
-
-function onCardClick() {
-  toast.add({ title: '已複製動漫名稱', description: props.anime.name, color: 'neutral', duration: 1000 })
-  // Fire-and-forget: don't block navigation on the clipboard promise, and
-  // don't let a rejection (e.g. insecure context) stop navigation either.
-  navigator.clipboard.writeText(props.anime.name).catch(() => {})
+  return props.status?.collectionIds.includes(col.id) ?? false
 }
 
 function onAddToList(e: Event) {
@@ -151,11 +145,10 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
 </script>
 
 <template>
-  <div ref="cardRef" class="relative">
+  <div ref="cardRef" class="group/card relative">
     <NuxtLink
       :to="`/anime/${anime.id}`"
       class="group relative block aspect-3/4 w-full overflow-hidden rounded-lg bg-gray-800 transition-all duration-300"
-      @click="onCardClick"
     >
       <template v-if="hasUsableImage">
         <!-- Persistent placeholder layer sitting *under* the image. It is never
@@ -268,39 +261,44 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
 
       <!-- Streams badge -->
       <UBadge
-        v-if="anime.streams.length > 0"
+        v-if="anime.streamCount > 0"
         color="primary"
         variant="solid"
         icon="i-lucide-play"
-        class="absolute bottom-1 right-1"
+        class="absolute bottom-1 right-1 max-md:bottom-[3.25rem]"
         size="sm"
       >
-        {{ anime.streams.length }}
+        {{ anime.streamCount }}
       </UBadge>
 
       <!-- Title -->
-      <div class="absolute inset-x-1.5 bottom-1 pr-7">
+      <div class="absolute inset-x-1.5 bottom-1 pr-7 max-md:bottom-[3.25rem] max-md:pr-8">
         <h3
-          class="line-clamp-3 text-xs font-bold leading-snug"
+          class="line-clamp-3 text-xs font-bold leading-snug max-md:line-clamp-2 max-md:text-sm"
           :class="hasUsableImage ? 'text-white drop-shadow' : 'text-gray-800'"
         >
           {{ anime.name }}
         </h3>
       </div>
 
-      <!-- Action buttons -->
+    </NuxtLink>
+
+      <!-- Action buttons are siblings of the navigation link, avoiding nested
+           interactive controls. They stay over the artwork so virtual row
+           height remains unchanged. -->
       <div
-        class="absolute inset-x-0 bottom-0 flex translate-y-full justify-end gap-1 p-1.5 transition-transform duration-150 group-hover:translate-y-0"
+        v-if="showActions"
+        class="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex translate-y-2 justify-end gap-1 p-1.5 opacity-0 transition-[opacity,transform] duration-150 group-hover/card:pointer-events-auto group-hover/card:translate-y-0 group-hover/card:opacity-100 group-focus-within/card:pointer-events-auto group-focus-within/card:translate-y-0 group-focus-within/card:opacity-100 max-md:pointer-events-auto max-md:translate-y-0 max-md:rounded-b-lg max-md:bg-linear-to-t max-md:from-black/80 max-md:to-transparent max-md:pt-4 max-md:opacity-100"
       >
         <!-- Heart -->
         <button
           type="button"
-          class="group/btn relative flex h-7 w-7 items-center justify-center rounded-full shadow-md transition-transform active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          class="group/btn relative flex h-7 w-7 items-center justify-center rounded-full shadow-md transition-transform active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white max-md:h-11 max-md:w-11"
           :class="inList ? 'bg-rose-500 text-white' : 'bg-white/90 text-gray-700 hover:bg-rose-500 hover:text-white'"
           :aria-label="inList ? '取消收藏' : '加入收藏'"
           @click="onAddToList"
         >
-          <UIcon name="i-lucide-heart" class="size-3.5" :class="inList ? 'fill-current' : ''" />
+          <UIcon name="i-lucide-heart" class="size-3.5 max-md:size-5" :class="inList ? 'fill-current' : ''" />
           <span class="pointer-events-none absolute bottom-full right-0 mb-1.5 whitespace-nowrap rounded bg-gray-900 px-2 py-0.5 text-[11px] font-semibold text-white opacity-0 transition-opacity group-hover/btn:opacity-100">
             {{ inList ? '取消收藏' : '加入收藏' }}
           </span>
@@ -309,18 +307,17 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
         <!-- Check -->
         <button
           type="button"
-          class="group/btn relative flex h-7 w-7 items-center justify-center rounded-full shadow-md transition-transform active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          class="group/btn relative flex h-7 w-7 items-center justify-center rounded-full shadow-md transition-transform active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white max-md:h-11 max-md:w-11"
           :class="watched ? 'bg-green-500 text-white' : 'bg-white/90 text-gray-700 hover:bg-green-500 hover:text-white'"
           :aria-label="watched ? '已看完' : '標記已看'"
           @click="onMarkWatched"
         >
-          <UIcon name="i-lucide-check" class="size-3.5" />
+          <UIcon name="i-lucide-check" class="size-3.5 max-md:size-5" />
           <span class="pointer-events-none absolute bottom-full right-0 mb-1.5 whitespace-nowrap rounded bg-gray-900 px-2 py-0.5 text-[11px] font-semibold text-white opacity-0 transition-opacity group-hover/btn:opacity-100">
             {{ watched ? '取消已看' : '標記已看' }}
           </span>
         </button>
       </div>
-    </NuxtLink>
 
     <!-- Collection popover: absolute below card, right-aligned -->
     <Transition name="pop-fade">

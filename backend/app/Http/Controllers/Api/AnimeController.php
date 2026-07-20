@@ -11,6 +11,7 @@ use App\Services\Shared\DelimitedValues;
 use App\Services\Shared\GenreTags;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use InvalidArgumentException;
 
 final class AnimeController extends Controller
@@ -108,27 +109,34 @@ final class AnimeController extends Controller
 
     public function tags(): JsonResponse
     {
-        $counts = [];
-        Anime::query()
-            ->select(['id', 'tags'])
-            ->get()
-            ->each(function (Anime $anime) use (&$counts): void {
-                foreach ($anime->tags ?? [] as $tag) {
-                    if (! GenreTags::isGenreTag($tag)) {
-                        continue;
+        $cacheKey = 'anime:tags:v1';
+        $resolve = fn (): array => Cache::flexible($cacheKey, [240, 300], function (): array {
+            $counts = [];
+            Anime::query()
+                ->select(['id', 'tags'])
+                ->get()
+                ->each(function (Anime $anime) use (&$counts): void {
+                    foreach ($anime->tags ?? [] as $tag) {
+                        if (! GenreTags::isGenreTag($tag)) {
+                            continue;
+                        }
+                        $counts[$tag] = ($counts[$tag] ?? 0) + 1;
                     }
-                    $counts[$tag] = ($counts[$tag] ?? 0) + 1;
-                }
-            });
+                });
 
-        $tags = collect($counts)
-            ->map(fn (int $count, string $tag) => ['tag' => $tag, 'count' => $count])
-            ->values()
-            ->sortBy([['count', 'desc'], ['tag', 'asc']])
-            ->values()
-            ->all();
+            $tags = collect($counts)
+                ->map(fn (int $count, string $tag) => ['tag' => $tag, 'count' => $count])
+                ->values()
+                ->sortBy([['count', 'desc'], ['tag', 'asc']])
+                ->values()
+                ->all();
 
-        return response()->json(['tags' => $tags]);
+            return ['tags' => $tags];
+        }, ['seconds' => 15]);
+        $payload = Cache::has($cacheKey)
+            ? $resolve()
+            : Cache::lock("anime:tags:cold:{$cacheKey}", 15)->block(15, $resolve);
+
+        return response()->json($payload);
     }
-
 }

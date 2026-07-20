@@ -9,7 +9,7 @@
     </a>
     <div class="min-h-dvh bg-gray-50">
       <AppHeader />
-      <main id="main-content" class="mx-auto w-full max-w-6xl px-4 pb-24 pt-6 md:pb-12">
+      <main id="main-content" class="mx-auto w-full max-w-6xl px-4 pb-28 pt-4 md:pb-12 md:pt-6">
         <NuxtPage />
       </main>
       <AppMobileNav />

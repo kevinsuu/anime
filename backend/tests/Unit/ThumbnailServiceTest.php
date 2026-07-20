@@ -15,7 +15,7 @@ final class ThumbnailServiceTest extends TestCase
      */
     private function fakeJpegBytes(int $width = 2000, int $height = 3000): string
     {
-        $img = new \Imagick();
+        $img = new \Imagick;
         $img->newImage($width, $height, new \ImagickPixel('red'));
         $img->setImageFormat('jpeg');
 
@@ -36,10 +36,11 @@ final class ThumbnailServiceTest extends TestCase
         Storage::disk('public')->assertExists('covers/123.webp');
 
         $stored = Storage::disk('public')->get('covers/123.webp');
-        $im = new \Imagick();
+        $im = new \Imagick;
         $im->readImageBlob($stored);
         $this->assertSame(400, $im->getImageWidth());
         $this->assertSame('WEBP', $im->getImageFormat());
+        $this->assertLessThan(100 * 1024, strlen($stored));
     }
 
     public function test_generate_returns_null_when_download_fails(): void
