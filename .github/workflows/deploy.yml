@@ -133,8 +133,8 @@ jobs:
             esac
             cd -- "$DEPLOY_PATH"
             cleanup_unused_images() {
-              echo "Removing unused Docker images created more than 7 days ago..."
-              if ! docker image prune -a -f --filter "until=168h"; then
+              echo "Removing Docker images not referenced by any container..."
+              if ! docker image prune -a -f; then
                 echo "Warning: failed to prune unused Docker images." >&2
               fi
             }
