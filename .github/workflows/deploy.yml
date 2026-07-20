@@ -132,6 +132,22 @@ jobs:
               *) echo "DEPLOY_PATH must be an absolute path." >&2; exit 1 ;;
             esac
             cd -- "$DEPLOY_PATH"
+            cleanup_unused_images() {
+              echo "Removing unused Docker images created more than 7 days ago..."
+              if ! docker image prune -a -f --filter "until=168h"; then
+                echo "Warning: failed to prune unused Docker images." >&2
+              fi
+            }
+            cleanup_on_exit() {
+              deploy_status=$?
+              trap - 0
+              cleanup_unused_images
+              exit "$deploy_status"
+            }
+            # Free disk space before pulling, and also clean up when a later
+            # deployment command fails under set -e.
+            trap cleanup_on_exit 0
+            cleanup_unused_images
             if [ -z "${COMPOSE_B64:-}" ]; then
               echo "Encoded docker-compose.yml is empty." >&2
               exit 1
@@ -157,4 +173,5 @@ jobs:
             set_env_var FRONTEND_IMAGE "ghcr.io/kevinsuu/anime-frontend:${RELEASE_TAG}"
             docker compose pull
             docker compose up -d --remove-orphans
-            docker image prune -f
+            cleanup_unused_images
+            trap - 0
