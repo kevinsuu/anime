@@ -4,6 +4,7 @@ export default defineSitemapEventHandler(async () => {
   const currentYear = new Date().getFullYear()
   const startYear = 2016
   const years = Array.from({ length: currentYear - startYear + 1 }, (_, i) => startYear + i)
+  const seasons = ['winter', 'spring', 'summer', 'fall'] as const
 
   const results = await Promise.all(
     years.map(async (year) => {
@@ -16,5 +17,13 @@ export default defineSitemapEventHandler(async () => {
     })
   )
 
-  return results.flat().map((item) => ({ loc: `/anime/${item.id}`, lastmod: item.air_date || undefined }))
+  const seasonalUrls = years.flatMap(year => seasons.map(season => ({
+    loc: `/?year=${year}&season=${season}`
+  })))
+  const animeUrls = results.flat().map((item) => ({
+    loc: `/anime/${item.id}`,
+    lastmod: item.air_date || undefined
+  }))
+
+  return [...seasonalUrls, ...animeUrls]
 })

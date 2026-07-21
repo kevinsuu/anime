@@ -24,11 +24,12 @@ export default defineNuxtConfig({
     fallback: 'light'
   },
   site: {
-    url: 'https://anime.kaistarstudio.me'
+    url: 'https://anime.kaistarstudio.me',
+    name: '動漫庫'
   },
   sitemap: {
     sources: ['/api/__sitemap__/anime-urls'],
-    exclude: ['/', '/list', '/list/**', '/settings', '/login']
+    exclude: ['/seasonal', '/list', '/list/**', '/settings', '/login']
   },
   routeRules: publicRouteRules,
   nitro: {
@@ -44,6 +45,7 @@ export default defineNuxtConfig({
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
         { name: 'description', content: '動漫庫｜動畫新番表、動漫資料庫，追蹤每季新番與經典動畫作品。' },
+        { property: 'og:site_name', content: '動漫庫' },
         { name: 'google-site-verification', content: 'KnLHCa7un3sS1ij4wsVsfqFSRwYmZBvewLOvZfD-u_4' }
       ],
       link: [

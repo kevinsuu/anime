@@ -760,7 +760,7 @@ watch(mobileCollectionsOpen, (open) => {
       <div v-else-if="filteredList.length === 0" class="rounded-xl border border-dashed border-gray-200 p-8 text-center text-gray-500">
         <UIcon name="i-lucide-inbox" class="mx-auto mb-2 size-8 text-gray-300" />
         <p class="text-sm font-medium">這裡還沒有作品</p>
-        <NuxtLink to="/seasonal" class="mt-3 inline-block text-xs font-semibold text-primary-600 hover:underline">去新番表加入作品</NuxtLink>
+        <NuxtLink to="/" class="mt-3 inline-block text-xs font-semibold text-primary-600 hover:underline">去新番表加入作品</NuxtLink>
       </div>
 
       <TransitionGroup v-else tag="div" name="list-item" class="min-w-0 space-y-3">

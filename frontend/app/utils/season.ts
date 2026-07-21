@@ -25,6 +25,10 @@ export function isSeason(value: unknown): value is Season {
   return typeof value === 'string' && seasons.includes(value as Season)
 }
 
+export function isSeasonSelection(yearValue: unknown, seasonValue: unknown): boolean {
+  return typeof yearValue === 'string' && /^\d{4}$/.test(yearValue) && isSeason(seasonValue)
+}
+
 export function seasonSelection(
   yearValue: unknown,
   seasonValue: unknown,

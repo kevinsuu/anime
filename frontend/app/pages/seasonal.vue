@@ -3,8 +3,14 @@ import { weekdayTabs, useSeasonalCatalog, deriveFilterOptions } from '../composa
 import { HIGH_PRIORITY_IMAGE_COUNT } from '../composables/useLazyLoad'
 import { normalizeAnimeSummary, tagColor } from '../utils/normalize'
 import type { AnimeSummary } from '../utils/normalize'
-import { seasonMonthLabels, seasonSelection, shiftSeason } from '../utils/season'
+import { isSeasonSelection, seasonMonthLabels, seasonSelection, shiftSeason } from '../utils/season'
 import type { SeasonSelection } from '../utils/season'
+
+const props = withDefaults(defineProps<{
+  homepage?: boolean
+}>(), {
+  homepage: false
+})
 
 const api = useApi()
 const route = useRoute()
@@ -113,13 +119,30 @@ watch(() => [route.query.year, route.query.season], () => {
   Object.assign(seasonalControls, selection)
 })
 
+const hasExplicitSeasonQuery = computed(() => isSeasonSelection(route.query.year, route.query.season))
+const isBrandHomepage = computed(() => props.homepage && !hasExplicitSeasonQuery.value)
+const seasonalTitle = computed(() => `${seasonalControls.year}年${seasonMonthLabels[seasonalControls.season]}新番表｜動畫新番、動漫庫`)
+const seasonalDescription = computed(() => `${seasonalControls.year}年${seasonMonthLabels[seasonalControls.season]}季動畫新番總覽，追蹤最新動漫新番放送時間、角色資訊與觀看平台。`)
+const pageTitle = computed(() => isBrandHomepage.value
+  ? '動漫庫｜動畫新番表、動漫資料庫與追番收藏'
+  : seasonalTitle.value)
+const pageDescription = computed(() => isBrandHomepage.value
+  ? '動漫庫提供每季動畫新番表、完整動漫資料庫、播出時間、角色聲優資訊與個人追番收藏功能。'
+  : seasonalDescription.value)
+const canonicalUrl = computed(() => hasExplicitSeasonQuery.value
+  ? `https://anime.kaistarstudio.me/?year=${seasonalControls.year}&season=${seasonalControls.season}`
+  : 'https://anime.kaistarstudio.me/')
+
 useSeoMeta({
-  title: () => `${seasonalControls.year}年${seasonMonthLabels[seasonalControls.season]}新番表｜動畫新番、動漫庫`,
-  description: () => `${seasonalControls.year}年${seasonMonthLabels[seasonalControls.season]}季動畫新番總覽，追蹤最新動漫新番放送時間、角色資訊與觀看平台。`,
+  title: () => pageTitle.value,
+  description: () => pageDescription.value,
+  ogTitle: () => pageTitle.value,
+  ogDescription: () => pageDescription.value,
+  ogSiteName: '動漫庫',
   ogType: 'website'
 })
 useHead({
-  link: [{ rel: 'canonical', href: () => `https://anime.kaistarstudio.me/seasonal?year=${seasonalControls.year}&season=${seasonalControls.season}` }]
+  link: [{ rel: 'canonical', href: () => canonicalUrl.value }]
 })
 </script>
 
@@ -129,9 +152,9 @@ useHead({
     <header class="flex items-center justify-between gap-3 md:gap-4">
       <div class="space-y-0.5">
         <p class="text-xs font-extrabold uppercase tracking-widest text-primary-700">新番表</p>
-        <h1 class="text-xl font-extrabold tracking-tight text-gray-950 md:text-2xl">
+        <component :is="props.homepage ? 'h2' : 'h1'" class="text-xl font-extrabold tracking-tight text-gray-950 md:text-2xl">
           {{ seasonalControls.year }}年 {{ seasonMonthLabels[seasonalControls.season] }} 新番表
-        </h1>
+        </component>
       </div>
       <!-- Season prev/next arrows -->
       <div class="flex items-center gap-1 shrink-0">

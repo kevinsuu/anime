@@ -24,7 +24,7 @@ export function useNav() {
   const { isAuthed } = useSession()
 
   function isActive(path: string): boolean {
-    // /list has sub-routes; '/' is the redirect landing for /seasonal.
+    // /list has sub-routes; '/' and the legacy /seasonal route share the new-season view.
     if (path === '/list') return route.path.startsWith('/list')
     if (path === '/') return route.path === '/' || route.path === '/seasonal'
     return route.path === path

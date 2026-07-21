@@ -22,7 +22,7 @@ function goBack() {
     router.back()
     return
   }
-  navigateTo('/seasonal')
+  navigateTo('/')
 }
 
 // Trailer modal

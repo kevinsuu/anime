@@ -1,7 +1,14 @@
 import { describe, expect, it } from 'vitest'
-import { seasonSelection, shiftSeason } from '../app/utils/season'
+import { isSeasonSelection, seasonSelection, shiftSeason } from '../app/utils/season'
 
 describe('seasonSelection', () => {
+  it('only treats complete valid route values as an explicit season selection', () => {
+    expect(isSeasonSelection('2026', 'summer')).toBe(true)
+    expect(isSeasonSelection('26', 'summer')).toBe(false)
+    expect(isSeasonSelection('2026', 'unknown')).toBe(false)
+    expect(isSeasonSelection(['2026'], 'summer')).toBe(false)
+  })
+
   it('parses a valid route selection', () => {
     expect(seasonSelection('2026', 'spring')).toEqual({ year: 2026, season: 'spring' })
   })
