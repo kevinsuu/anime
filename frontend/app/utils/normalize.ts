@@ -96,68 +96,117 @@ export interface Anime extends AnimeCardData {
   links: AnimeLink[]
 }
 
-export function normalizeAnime(item: Record<string, any> = {}): Anime {
+function asRecord(value: unknown): Record<string, unknown> {
+  return value !== null && typeof value === 'object' && !Array.isArray(value)
+    ? value as Record<string, unknown>
+    : {}
+}
+
+function stringValue(value: unknown, fallback = ''): string {
+  return typeof value === 'string' ? value : fallback
+}
+
+function nullableString(value: unknown): string | null {
+  return typeof value === 'string' && value !== '' ? value : null
+}
+
+function numberValue(value: unknown, fallback = 0): number {
+  const parsed = Number(value)
+  return Number.isFinite(parsed) ? parsed : fallback
+}
+
+function nullableNumber(value: unknown): number | null {
+  if (value === null || value === undefined || value === '') return null
+  const parsed = Number(value)
+  return Number.isFinite(parsed) ? parsed : null
+}
+
+function arrayRecords(value: unknown): Record<string, unknown>[] {
+  return Array.isArray(value) ? value.map(asRecord) : []
+}
+
+function stringArray(value: unknown): string[] {
+  return Array.isArray(value)
+    ? value.filter((entry): entry is string => typeof entry === 'string')
+    : []
+}
+
+function normalizeAnimeCard(item: Record<string, unknown>): AnimeCardData {
   return {
-    id: item.id,
+    id: numberValue(item.id),
     name: repairText(item.name, '未命名作品'),
-    description: repairText(item.description, '尚未整理作品介紹。'),
-    imageUrl: item.imageUrl || item.image_url || '',
-    source: item.source || '',
-    seasonYear: item.seasonYear || item.season_year || null,
-    seasonCode: item.seasonCode || item.season_code || '',
-    airDate: item.airDate || item.air_date || null,
-    airDateText: item.airDateText || item.air_date_text || '',
-    episodeCount: item.episodeCount || item.episode_count || null,
-    status: item.status || '',
-    tags: Array.isArray(item.tags) ? item.tags : [],
-    streamCount: Number(item.streamCount ?? item.stream_count ?? (Array.isArray(item.streams) ? item.streams.length : 0)),
-    actors: Array.isArray(item.cast)
-      ? [...new Set(item.cast.map((entry: any) => repairText(entry.actor)).filter(Boolean))]
-      : [],
-    aliases: Array.isArray(item.aliases) ? item.aliases.map((a: any) => repairText(a)) : [],
-    streams: Array.isArray(item.streams)
-      ? item.streams.map((s: any) => ({
-          region: repairText(s.region),
-          platform: repairText(s.platform),
-          url: s.url || null
-        }))
-      : [],
-    titleJa: repairText(
-      (Array.isArray(item.titles) ? item.titles.find((t: any) => t.locale === 'ja')?.title : '') || ''
-    ),
-    themes: Array.isArray(item.themes)
-      ? item.themes.map((t: any) => ({ type: t.type || '', title: t.title || '', artist: t.artist || '' }))
-      : [],
-    trailers: Array.isArray(item.trailers)
-      ? item.trailers.map((t: any) => ({ url: t.url || '', thumbnail: t.thumbnail || null }))
-      : [],
-    cast: Array.isArray(item.cast)
-      ? item.cast.map((c: any) => ({ character: repairText(c.character), actor: repairText(c.actor) }))
-      : [],
-    staff: Array.isArray(item.staff)
-      ? item.staff.map((s: any) => ({ role: repairText(s.role), name: repairText(s.name) }))
-      : [],
-    links: Array.isArray(item.links)
-      ? item.links.map((l: any) => ({ category: l.category || '', label: l.label || '', url: l.url || '' }))
-      : []
+    imageUrl: stringValue(item.imageUrl) || stringValue(item.image_url),
+    airDate: nullableString(item.airDate) ?? nullableString(item.air_date),
+    airDateText: stringValue(item.airDateText) || stringValue(item.air_date_text),
+    episodeCount: nullableNumber(item.episodeCount ?? item.episode_count),
+    tags: stringArray(item.tags),
+    streamCount: numberValue(
+      item.streamCount ?? item.stream_count,
+      Array.isArray(item.streams) ? item.streams.length : 0
+    )
   }
 }
 
-export function normalizeAnimeSummary(item: Record<string, any> = {}): AnimeSummary {
+export function normalizeAnime(value: unknown = {}): Anime {
+  const item = asRecord(value)
+  const cast = arrayRecords(item.cast)
+  const titles = arrayRecords(item.titles)
+
   return {
-    id: Number(item.id),
-    name: repairText(item.name, '未命名作品'),
-    imageUrl: item.imageUrl || item.image_url || '',
-    source: item.source || '',
-    seasonYear: item.seasonYear || item.season_year || null,
-    seasonCode: item.seasonCode || item.season_code || '',
-    airDate: item.airDate || item.air_date || null,
-    airDateText: item.airDateText || item.air_date_text || '',
-    episodeCount: item.episodeCount || item.episode_count || null,
-    status: item.status || '',
-    tags: Array.isArray(item.tags) ? item.tags : [],
-    streamCount: Number(item.streamCount ?? item.stream_count ?? 0),
-    actors: Array.isArray(item.actors) ? item.actors.map((actor: unknown) => repairText(actor)).filter(Boolean) : []
+    ...normalizeAnimeCard(item),
+    description: repairText(item.description, '尚未整理作品介紹。'),
+    source: stringValue(item.source),
+    seasonYear: nullableNumber(item.seasonYear ?? item.season_year),
+    seasonCode: stringValue(item.seasonCode) || stringValue(item.season_code),
+    status: stringValue(item.status),
+    actors: [...new Set(cast.map(entry => repairText(entry.actor)).filter(Boolean))],
+    aliases: stringArray(item.aliases).map(alias => repairText(alias)),
+    streams: arrayRecords(item.streams)
+      .map(stream => ({
+        region: repairText(stream.region),
+        platform: repairText(stream.platform),
+        url: nullableString(stream.url)
+      })),
+    titleJa: repairText(
+      titles.find(title => title.locale === 'ja')?.title
+    ),
+    themes: arrayRecords(item.themes).map(theme => ({
+      type: stringValue(theme.type),
+      title: stringValue(theme.title),
+      artist: stringValue(theme.artist)
+    })),
+    trailers: arrayRecords(item.trailers).map(trailer => ({
+      url: stringValue(trailer.url),
+      thumbnail: nullableString(trailer.thumbnail)
+    })),
+    cast: cast.map(entry => ({
+      character: repairText(entry.character),
+      actor: repairText(entry.actor)
+    })),
+    staff: arrayRecords(item.staff).map(member => ({
+      role: repairText(member.role),
+      name: repairText(member.name)
+    })),
+    links: arrayRecords(item.links).map(link => ({
+      category: stringValue(link.category),
+      label: stringValue(link.label),
+      url: stringValue(link.url)
+    }))
+  }
+}
+
+export function normalizeAnimeSummary(value: unknown = {}): AnimeSummary {
+  const item = asRecord(value)
+
+  return {
+    ...normalizeAnimeCard(item),
+    source: stringValue(item.source),
+    seasonYear: nullableNumber(item.seasonYear ?? item.season_year),
+    seasonCode: stringValue(item.seasonCode) || stringValue(item.season_code),
+    status: stringValue(item.status),
+    actors: Array.isArray(item.actors)
+      ? item.actors.map(actor => repairText(actor)).filter(Boolean)
+      : []
   }
 }
 
@@ -169,13 +218,15 @@ export interface Collection {
   count: number
 }
 
-export function normalizeCollection(item: Record<string, any> = {}): Collection {
+export function normalizeCollection(value: unknown = {}): Collection {
+  const item = asRecord(value)
+
   return {
-    id: item.id,
-    name: item.name || '',
+    id: numberValue(item.id),
+    name: stringValue(item.name),
     isPublic: Boolean(item.is_public),
-    publicSlug: item.public_slug || '',
-    count: item.count ?? 0,
+    publicSlug: stringValue(item.public_slug),
+    count: numberValue(item.count),
   }
 }
 
@@ -190,18 +241,21 @@ export interface ListItem {
   anime: Anime
 }
 
-export function normalizeListItem(item: Record<string, any> = {}): ListItem {
+export function normalizeListItem(value: unknown = {}): ListItem {
+  const item = asRecord(value)
+
   return {
-    id: item.id,
+    id: numberValue(item.id),
     watched: Boolean(item.watched),
-    rating: item.rating === null || item.rating === undefined ? null : Number(item.rating),
-    note: repairText(item.note || ''),
-    createdAt: item.createdAt || item.created_at || '',
-    updatedAt: item.updatedAt || item.updated_at || '',
-    collections: Array.isArray(item.collections)
-      ? item.collections.map((c: any) => ({ id: c.id, name: c.name }))
-      : [],
-    anime: normalizeAnime(item.anime || {})
+    rating: nullableNumber(item.rating),
+    note: repairText(item.note),
+    createdAt: stringValue(item.createdAt) || stringValue(item.created_at),
+    updatedAt: stringValue(item.updatedAt) || stringValue(item.updated_at),
+    collections: arrayRecords(item.collections).map(collection => ({
+      id: numberValue(collection.id),
+      name: stringValue(collection.name)
+    })),
+    anime: normalizeAnime(item.anime)
   }
 }
 

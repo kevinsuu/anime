@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ListItem, Collection } from '../utils/normalize'
+import type { ListItemPatch } from '../types/api'
 import { tagColor } from '../utils/normalize'
 import { isGenreTag } from '../composables/useSeasonalCatalog'
 
@@ -14,7 +15,7 @@ const props = defineProps<{
 const genreTags = computed(() => props.item.anime.tags.filter(isGenreTag))
 
 const emit = defineEmits<{
-  update: [patch: Record<string, any>]
+  update: [patch: ListItemPatch]
   remove: []
   toggleCollection: [col: Collection]
 }>()

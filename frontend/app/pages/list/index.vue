@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { normalizeListItem, normalizeCollection } from '../../utils/normalize'
 import type { ListItem, Collection } from '../../utils/normalize'
-import { applyListFilters, applyTitleSearch, applyListSort } from '../../utils/listFilters'
+import { applyListFilters, applyTagFilters, applyTitleSearch, applyListSort } from '../../utils/listFilters'
 import type { ListSortKey } from '../../utils/listFilters'
 import type { TagOption } from '../../utils/listFilters'
 import { tagColor } from '../../utils/normalize'
+import type { ListItemPatch } from '../../types/api'
+import { apiErrorMessage } from '../../utils/apiError'
 
 definePageMeta({ middleware: 'auth' })
 
@@ -16,12 +18,9 @@ const router = useRouter()
 const toast = useToast()
 
 const list = ref<ListItem[]>([])
-const fullList = ref<ListItem[]>([])
 const collections = ref<Collection[]>([])
 const tagOptions = ref<TagOption[]>([])
 const loading = ref(true)
-const tagLoading = ref(false)
-let tagRequestId = 0
 
 // Active filter: 'all' | 'watched' | 'unwatched' | 'col:{id}'
 const activeFilter = computed(() => (route.query.filter as string) || 'all')
@@ -81,10 +80,19 @@ const sortKey = ref<ListSortKey>('added')
 
 const filteredList = computed(() =>
   applyListSort(
-    applyTitleSearch(applyListFilters(list.value, activeFilter.value), searchQuery.value),
+    applyTitleSearch(
+      applyListFilters(applyTagFilters(list.value, selectedTags.value), activeFilter.value),
+      searchQuery.value
+    ),
     sortKey.value
   )
 )
+
+const listCounts = computed(() => ({
+  all: list.value.length,
+  watched: list.value.filter(item => item.watched).length,
+  unwatched: list.value.filter(item => !item.watched).length
+}))
 
 // 卡片內是否有任何可清除的篩選（搜尋詞或已選分類），用來顯示「清除全部篩選」。
 const hasActiveFilters = computed(() => searchQuery.value.trim() !== '' || selectedTags.value.length > 0)
@@ -95,68 +103,40 @@ function clearAllFilters() {
   clearTags()
 }
 
-watch(selectedTags, async (tags) => {
-  const requestId = ++tagRequestId
-  tagLoading.value = true
-  try {
-    const result = tags.length > 0
-      ? await api.myList({ tags })
-      : await api.myList()
-    if (requestId !== tagRequestId) return
-    list.value = (result.items || []).map(normalizeListItem)
-  } catch (err: any) {
-    if (requestId !== tagRequestId) return
-    toast.add({ title: err.message || '載入失敗', color: 'error' })
-  } finally {
-    if (requestId === tagRequestId) tagLoading.value = false
-  }
-})
-
 // ── List operations ──
 async function loadAll() {
   loading.value = true
   try {
-    const initialTags = selectedTags.value
-    // Fire every initial request in parallel — including the tag-filtered list
-    // when a `tags` query param is present — instead of waiting for the full
-    // list before kicking off the filtered fetch.
-    const [listRes, colRes, tagsRes, filteredRes] = await Promise.all([
+    const [listRes, colRes, tagsRes] = await Promise.all([
       api.myList(),
       api.myCollections(),
-      api.myListTags(),
-      initialTags.length > 0 ? api.myList({ tags: initialTags }) : Promise.resolve(null),
+      api.myListTags()
     ])
-    const normalizedFullList = (listRes.items || []).map(normalizeListItem)
-    fullList.value = normalizedFullList
+    list.value = (listRes.items || []).map(normalizeListItem)
     collections.value = (colRes.items || []).map(normalizeCollection)
     tagOptions.value = tagsRes.tags || []
-    list.value = filteredRes
-      ? (filteredRes.items || []).map(normalizeListItem)
-      : normalizedFullList
-  } catch (err: any) {
-    toast.add({ title: err.message || '載入失敗', color: 'error' })
+  } catch (err: unknown) {
+    toast.add({ title: apiErrorMessage(err, '載入失敗'), color: 'error' })
   } finally {
     loading.value = false
   }
 }
 
-async function updateItem(item: ListItem, patch: Record<string, any>) {
-  const fullItem = fullList.value.find(entry => entry.id === item.id)
-  const previous = Object.fromEntries(Object.keys(patch).map(key => [key, (item as any)[key]]))
+async function updateItem(item: ListItem, patch: ListItemPatch) {
+  const previous: ListItemPatch = {}
+  if (patch.watched !== undefined) previous.watched = item.watched
+  if ('rating' in patch) previous.rating = item.rating
+  if (patch.note !== undefined) previous.note = item.note
   Object.assign(item, patch)
-  if (fullItem && fullItem !== item) Object.assign(fullItem, patch)
   try {
     const result = await api.updateListItem(item.id, patch)
     const normalized = normalizeListItem(result.item)
     const index = list.value.findIndex(e => e.id === item.id)
     if (index >= 0) list.value[index] = normalized
-    const fullIndex = fullList.value.findIndex(e => e.id === item.id)
-    if (fullIndex >= 0) fullList.value[fullIndex] = normalized
     toast.add({ title: '清單已更新', color: 'success' })
-  } catch (err: any) {
+  } catch (err: unknown) {
     Object.assign(item, previous)
-    if (fullItem && fullItem !== item) Object.assign(fullItem, previous)
-    toast.add({ title: err.message || '更新失敗', color: 'error' })
+    toast.add({ title: apiErrorMessage(err, '更新失敗'), color: 'error' })
   }
 }
 
@@ -164,10 +144,9 @@ async function removeItem(item: ListItem) {
   try {
     await api.deleteListItem(item.id)
     list.value = list.value.filter(e => e.id !== item.id)
-    fullList.value = fullList.value.filter(e => e.id !== item.id)
     toast.add({ title: '已從清單移除', color: 'neutral' })
-  } catch (err: any) {
-    toast.add({ title: err.message || '移除失敗', color: 'error' })
+  } catch (err: unknown) {
+    toast.add({ title: apiErrorMessage(err, '移除失敗'), color: 'error' })
   }
 }
 
@@ -184,8 +163,8 @@ async function createCollection() {
     collections.value.push(normalizeCollection(result.item))
     newColName.value = ''
     toast.add({ title: `已建立「${name}」`, color: 'success' })
-  } catch (err: any) {
-    toast.add({ title: err.message || '建立失敗', color: 'error' })
+  } catch (err: unknown) {
+    toast.add({ title: apiErrorMessage(err, '建立失敗'), color: 'error' })
   } finally {
     creatingCol.value = false
   }
@@ -197,8 +176,8 @@ async function deleteCollection(col: Collection) {
     collections.value = collections.value.filter(c => c.id !== col.id)
     if (activeFilter.value === `col:${col.id}`) setFilter('all')
     toast.add({ title: `已刪除「${col.name}」`, color: 'neutral' })
-  } catch (err: any) {
-    toast.add({ title: err.message || '刪除失敗', color: 'error' })
+  } catch (err: unknown) {
+    toast.add({ title: apiErrorMessage(err, '刪除失敗'), color: 'error' })
   }
 }
 
@@ -231,8 +210,8 @@ async function togglePublic(col: Collection) {
     const idx = collections.value.findIndex(c => c.id === col.id)
     if (idx >= 0) collections.value[idx] = normalizeCollection(result.item)
     return true
-  } catch (err: any) {
-    toast.add({ title: err.message || '更新失敗', color: 'error' })
+  } catch (err: unknown) {
+    toast.add({ title: apiErrorMessage(err, '更新失敗'), color: 'error' })
     return false
   }
 }
@@ -240,15 +219,12 @@ async function togglePublic(col: Collection) {
 async function toggleItemInCollection(item: ListItem, col: Collection) {
   const inCol = item.collections.some(c => c.id === col.id)
   const previousCollections = [...item.collections]
-  const fullItem = fullList.value.find(entry => entry.id === item.id)
-  const previousFullCollections = fullItem ? [...fullItem.collections] : null
   const targetCollection = collections.value.find(entry => entry.id === col.id)
   const previousCount = targetCollection?.count ?? null
 
   item.collections = inCol
     ? item.collections.filter(c => c.id !== col.id)
     : [...item.collections, { id: col.id, name: col.name }]
-  if (fullItem && fullItem !== item) fullItem.collections = [...item.collections]
   if (targetCollection) targetCollection.count += inCol ? -1 : 1
 
   try {
@@ -257,11 +233,10 @@ async function toggleItemInCollection(item: ListItem, col: Collection) {
     } else {
       await api.addToCollection(col.id, item.id)
     }
-  } catch (err: any) {
+  } catch (err: unknown) {
     item.collections = previousCollections
-    if (fullItem && previousFullCollections) fullItem.collections = previousFullCollections
     if (targetCollection && previousCount !== null) targetCollection.count = previousCount
-    toast.add({ title: err.message || '操作失敗', color: 'error' })
+    toast.add({ title: apiErrorMessage(err, '操作失敗'), color: 'error' })
   }
 }
 
@@ -332,7 +307,7 @@ watch(mobileCollectionsOpen, (open) => {
           >
             <span>{{ tab.label }}</span>
             <span class="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-bold text-gray-500">
-              {{ tab.value === 'all' ? fullList.length : tab.value === 'watched' ? fullList.filter(i=>i.watched).length : fullList.filter(i=>!i.watched).length }}
+              {{ listCounts[tab.value as keyof typeof listCounts] }}
             </span>
           </button>
         </nav>
@@ -433,7 +408,7 @@ watch(mobileCollectionsOpen, (open) => {
           >
             <span>{{ tab.label }}</span>
             <span class="text-[11px] opacity-60">
-              {{ tab.value === 'all' ? fullList.length : tab.value === 'watched' ? fullList.filter(item => item.watched).length : fullList.filter(item => !item.watched).length }}
+              {{ listCounts[tab.value as keyof typeof listCounts] }}
             </span>
           </button>
         </nav>
@@ -650,11 +625,7 @@ watch(mobileCollectionsOpen, (open) => {
         </div>
       </div>
 
-      <div v-if="tagLoading" class="space-y-3">
-        <div v-for="i in 5" :key="i" class="h-20 w-full animate-pulse rounded-xl bg-gray-200" />
-      </div>
-
-      <div v-else-if="filteredList.length === 0 && searchQuery.trim() !== ''" class="rounded-xl border border-dashed border-gray-200 p-8 text-center text-gray-500">
+      <div v-if="filteredList.length === 0 && searchQuery.trim() !== ''" class="rounded-xl border border-dashed border-gray-200 p-8 text-center text-gray-500">
         <UIcon name="i-lucide-search-x" class="mx-auto mb-2 size-8 text-gray-300" />
         <p class="text-sm font-medium">找不到符合「{{ searchQuery.trim() }}」的作品</p>
         <button type="button" class="mt-3 inline-block text-xs font-semibold text-primary-600 hover:underline" @click="searchQuery = ''">清除搜尋</button>

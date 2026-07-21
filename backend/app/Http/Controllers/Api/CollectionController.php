@@ -6,6 +6,7 @@ use App\Exceptions\ApiException;
 use App\Http\Controllers\Controller;
 use App\Models\UserAnimeListItem;
 use App\Models\UserCollection;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -32,27 +33,19 @@ final class CollectionController extends Controller
     public function store(Request $request): JsonResponse
     {
         $userId = (int) $request->attributes->get('auth_user_id');
-        $name = trim((string) $request->input('name', ''));
+        $name = $this->validatedUniqueName($userId, $request->input('name', ''));
 
-        if ($name === '' || mb_strlen($name) > 80) {
-            throw new ApiException(422, 'validation_failed', '清單名稱不可為空且不超過 80 字');
+        try {
+            $collection = UserCollection::query()->create([
+                'user_id' => $userId,
+                'name' => $name,
+                'is_public' => (bool) $request->input('is_public', false),
+                'public_slug' => Str::random(12),
+            ]);
+        } catch (QueryException $exception) {
+            $this->throwIfDuplicateName($exception);
+            throw $exception;
         }
-
-        $exists = UserCollection::query()
-            ->where('user_id', $userId)
-            ->where('name', $name)
-            ->exists();
-
-        if ($exists) {
-            throw new ApiException(409, 'duplicate', '已有同名清單');
-        }
-
-        $collection = UserCollection::query()->create([
-            'user_id' => $userId,
-            'name' => $name,
-            'is_public' => (bool) $request->input('is_public', false),
-            'public_slug' => Str::random(12),
-        ]);
 
         $collection->loadCount('listItems');
 
@@ -66,18 +59,19 @@ final class CollectionController extends Controller
         $collection = $this->findOwned($userId, $id);
 
         if ($request->has('name')) {
-            $name = trim((string) $request->input('name'));
-            if ($name === '' || mb_strlen($name) > 80) {
-                throw new ApiException(422, 'validation_failed', '清單名稱不可為空且不超過 80 字');
-            }
-            $collection->name = $name;
+            $collection->name = $this->validatedUniqueName($userId, $request->input('name'), $collection->id);
         }
 
         if ($request->has('is_public')) {
             $collection->is_public = (bool) $request->input('is_public');
         }
 
-        $collection->save();
+        try {
+            $collection->save();
+        } catch (QueryException $exception) {
+            $this->throwIfDuplicateName($exception);
+            throw $exception;
+        }
         $collection->loadCount('listItems');
 
         return response()->json(['item' => $this->format($collection)]);
@@ -159,6 +153,40 @@ final class CollectionController extends Controller
         }
 
         return $collection;
+    }
+
+    private function validatedUniqueName(int $userId, mixed $value, ?int $exceptId = null): string
+    {
+        $name = trim((string) $value);
+        if ($name === '' || mb_strlen($name) > 80) {
+            throw new ApiException(422, 'validation_failed', '清單名稱不可為空且不超過 80 字');
+        }
+
+        $exists = UserCollection::query()
+            ->where('user_id', $userId)
+            ->where('name', $name)
+            ->when($exceptId !== null, fn ($query) => $query->where('id', '!=', $exceptId))
+            ->exists();
+
+        if ($exists) {
+            throw new ApiException(409, 'duplicate', '已有同名清單');
+        }
+
+        return $name;
+    }
+
+    private function throwIfDuplicateName(QueryException $exception): void
+    {
+        $sqlState = (string) ($exception->errorInfo[0] ?? $exception->getCode());
+        $message = $exception->getMessage();
+        $isUniqueViolation = in_array($sqlState, ['23000', '23505'], true);
+        $isNameConstraint = str_contains($message, 'uniq_user_collection_name')
+            || (str_contains($message, 'user_collections.user_id')
+                && str_contains($message, 'user_collections.name'));
+
+        if ($isUniqueViolation && $isNameConstraint) {
+            throw new ApiException(409, 'duplicate', '已有同名清單');
+        }
     }
 
     private function format(UserCollection $c): array

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import type { AuthResponse } from '../types/api'
+import { apiErrorMessage } from '../utils/apiError'
+
 useSeoMeta({ robots: 'noindex, nofollow' })
 
 const api = useApi()
@@ -8,21 +11,40 @@ const toast = useToast()
 
 declare global {
   interface Window {
-    google?: any
+    google?: {
+      accounts: {
+        id: {
+          initialize(options: {
+            client_id: string
+            callback: (response: GoogleCredentialResponse) => void
+          }): void
+          renderButton(target: HTMLElement, options: {
+            theme: 'outline'
+            size: 'large'
+            shape: 'pill'
+            width: number
+          }): void
+        }
+      }
+    }
   }
 }
 
-async function afterLogin(result: { token: string; refreshToken: string; user: any }) {
+interface GoogleCredentialResponse {
+  credential: string
+}
+
+async function afterLogin(result: AuthResponse) {
   setSession(result.token, result.refreshToken, result.user)
   await navigateTo('/list')
 }
 
-async function handleCredentialResponse(response: { credential: string }) {
+async function handleCredentialResponse(response: GoogleCredentialResponse) {
   try {
     const result = await api.login(response.credential)
     await afterLogin(result)
-  } catch (err: any) {
-    toast.add({ title: err.message || '登入失敗', color: 'error' })
+  } catch (err: unknown) {
+    toast.add({ title: apiErrorMessage(err, '登入失敗'), color: 'error' })
   }
 }
 
@@ -30,8 +52,8 @@ async function devLogin() {
   try {
     const result = await api.login('dev:dev@example.com')
     await afterLogin(result)
-  } catch (err: any) {
-    toast.add({ title: err.message || '登入失敗', color: 'error' })
+  } catch (err: unknown) {
+    toast.add({ title: apiErrorMessage(err, '登入失敗'), color: 'error' })
   }
 }
 

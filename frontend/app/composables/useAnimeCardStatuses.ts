@@ -1,6 +1,7 @@
 import { reactive, ref, toValue, watch, type MaybeRefOrGetter } from 'vue'
 import { normalizeCollection } from '../utils/normalize'
 import type { Collection } from '../utils/normalize'
+import { apiErrorMessage } from '../utils/apiError'
 
 export interface AnimeCardStatus {
   animeId: number
@@ -66,10 +67,6 @@ function statusFromMutationResponse(
     watched: item.watched === undefined ? fallback.watched : Boolean(item.watched),
     collectionIds: normalizeAnimeIds(collections)
   }
-}
-
-function errorMessage(error: unknown, fallback: string): string {
-  return error instanceof Error && error.message ? error.message : fallback
 }
 
 export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[]>) {
@@ -198,7 +195,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
         loadedKey = key
       } catch (error: unknown) {
         if (requestId !== bootstrapRequestId) return
-        toast.add({ title: errorMessage(error, '載入卡片狀態失敗'), color: 'error' })
+        toast.add({ title: apiErrorMessage(error, '載入卡片狀態失敗'), color: 'error' })
       } finally {
         if (requestId === bootstrapRequestId) {
           loadingKey = ''
@@ -262,7 +259,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
             const collection = collections.value.find(item => item.id === collectionId)
             if (collection) collection.count = count
           })
-          toast.add({ title: errorMessage(error, '取消收藏失敗'), color: 'error' })
+          toast.add({ title: apiErrorMessage(error, '取消收藏失敗'), color: 'error' })
         }
       } finally {
         finishMutation(operationKey, operationToken, () => {
@@ -284,7 +281,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
       }
     } catch (error: unknown) {
       if (mutationIsCurrent(generation, animeId)) {
-        toast.add({ title: errorMessage(error, '加入收藏失敗'), color: 'error' })
+        toast.add({ title: apiErrorMessage(error, '加入收藏失敗'), color: 'error' })
       }
     } finally {
       finishMutation(operationKey, operationToken, () => {
@@ -348,7 +345,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
         if (existing) existing.watched = previousWatched
         else if (createdStatus) statusesByAnimeId.set(animeId, createdStatus)
         else statusesByAnimeId.delete(animeId)
-        toast.add({ title: errorMessage(error, '操作失敗，已恢復原狀態'), color: 'error' })
+        toast.add({ title: apiErrorMessage(error, '操作失敗，已恢復原狀態'), color: 'error' })
       }
     } finally {
       finishMutation(operationKey, operationToken, () => {
@@ -407,7 +404,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
         const currentStatus = statusesByAnimeId.get(animeId)
         if (currentStatus?.listItemId === status.listItemId) currentStatus.collectionIds = previousCollectionIds
         if (targetCollection && previousCount !== null) targetCollection.count = previousCount
-        toast.add({ title: errorMessage(error, '操作失敗'), color: 'error' })
+        toast.add({ title: apiErrorMessage(error, '操作失敗'), color: 'error' })
       }
     } finally {
       finishMutation(operationKey, operationToken, () => {

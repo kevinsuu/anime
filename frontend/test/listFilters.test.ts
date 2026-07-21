@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { applyListFilters, applyTitleSearch, applyListSort } from '../app/utils/listFilters'
+import { applyListFilters, applyTagFilters, applyTitleSearch, applyListSort } from '../app/utils/listFilters'
 import { normalizeListItem } from '../app/utils/normalize'
 import type { ListItem } from '../app/utils/normalize'
 
@@ -11,6 +11,7 @@ function makeListItem(opts: {
   createdAt?: string
   airDate?: string | null
   seasonYear?: number | null
+  tags?: string[]
 }): ListItem {
   return normalizeListItem({
     id: Math.random(),
@@ -20,13 +21,30 @@ function makeListItem(opts: {
     anime: {
       id: 1,
       name: opts.name ?? '測試作品',
-      tags: [],
+      tags: opts.tags ?? [],
       titles: opts.titleJa ? [{ locale: 'ja', title: opts.titleJa }] : [],
       air_date: opts.airDate ?? null,
       season_year: opts.seasonYear ?? null,
     },
   })
 }
+
+describe('applyTagFilters', () => {
+  it('returns the full list without selected tags', () => {
+    const list = [makeListItem({ tags: ['戀愛'] }), makeListItem({ tags: ['戰鬥'] })]
+    expect(applyTagFilters(list, [])).toBe(list)
+  })
+
+  it('matches any selected tag using OR semantics', () => {
+    const list = [
+      makeListItem({ name: 'A', tags: ['戀愛'] }),
+      makeListItem({ name: 'B', tags: ['戰鬥'] }),
+      makeListItem({ name: 'C', tags: ['日常'] })
+    ]
+
+    expect(applyTagFilters(list, ['戀愛', '戰鬥']).map(item => item.anime.name)).toEqual(['A', 'B'])
+  })
+})
 
 describe('applyListFilters', () => {
   it('returns the full list for the "all" filter', () => {

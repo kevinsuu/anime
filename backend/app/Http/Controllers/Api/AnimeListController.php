@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserAnimeListItem;
 use App\Services\Shared\DelimitedValues;
-use App\Services\Shared\GenreTags;
+use App\Services\Shared\GenreTagStatistics;
 use App\Services\Shared\SlugGenerator;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
@@ -34,32 +34,17 @@ final class AnimeListController extends Controller
         ]);
     }
 
-    public function tags(Request $request): JsonResponse
+    public function tags(Request $request, GenreTagStatistics $statistics): JsonResponse
     {
         $userId = (int) $request->attributes->get('auth_user_id');
 
-        $counts = [];
-        UserAnimeListItem::query()
+        $tagSets = UserAnimeListItem::query()
             ->where('user_id', $userId)
             ->with('anime:id,tags')
             ->get()
-            ->each(function (UserAnimeListItem $item) use (&$counts): void {
-                foreach ($item->anime->tags ?? [] as $tag) {
-                    if (! GenreTags::isGenreTag($tag)) {
-                        continue;
-                    }
-                    $counts[$tag] = ($counts[$tag] ?? 0) + 1;
-                }
-            });
+            ->map(fn (UserAnimeListItem $item): array => $item->anime->tags ?? []);
 
-        $tags = collect($counts)
-            ->map(fn (int $count, string $tag) => ['tag' => $tag, 'count' => $count])
-            ->values()
-            ->sortBy([['count', 'desc'], ['tag', 'asc']])
-            ->values()
-            ->all();
-
-        return response()->json(['tags' => $tags]);
+        return response()->json(['tags' => $statistics->summarize($tagSets)]);
     }
 
     public function store(Request $request): JsonResponse
@@ -83,7 +68,7 @@ final class AnimeListController extends Controller
             throw $exception;
         }
 
-        return response()->json(['item' => $this->formatItem($item->load('anime'))], 201);
+        return response()->json(['item' => $this->formatItem($item->load($this->itemRelations()))], 201);
     }
 
     public function update(Request $request, int $item): JsonResponse
@@ -120,7 +105,7 @@ final class AnimeListController extends Controller
 
         $listItem->update($updates);
 
-        return response()->json(['item' => $this->formatItem($listItem->fresh()->load('anime'))]);
+        return response()->json(['item' => $this->formatItem($listItem->fresh()->load($this->itemRelations()))]);
     }
 
     public function destroy(Request $request, int $item): JsonResponse
@@ -169,7 +154,7 @@ final class AnimeListController extends Controller
     private function listForUser(int $userId, array $tags = []): array
     {
         return UserAnimeListItem::query()
-            ->with(['anime', 'collections:id,name'])
+            ->with($this->itemRelations())
             ->where('user_id', $userId)
             ->when($tags !== [], function ($query) use ($tags): void {
                 $query->whereHas('anime', function ($q) use ($tags): void {
@@ -207,7 +192,24 @@ final class AnimeListController extends Controller
                 'tags' => $item->anime->tags ?? [],
                 'season_year' => $item->anime->season_year,
                 'air_date' => $item->anime->air_date,
+                'aliases' => $item->anime->aliases->pluck('alias')->all(),
+                'titles' => $item->anime->titles->map(fn ($title): array => [
+                    'locale' => $title->locale,
+                    'title' => $title->title,
+                    'is_primary' => (bool) $title->is_primary,
+                ])->all(),
             ],
+        ];
+    }
+
+    /** @return array<int, string> */
+    private function itemRelations(): array
+    {
+        return [
+            'anime:id,name,description,image_url,cover_image_path,tags,season_year,air_date',
+            'anime.aliases:anime_id,alias',
+            'anime.titles:anime_id,locale,title,is_primary',
+            'collections:id,name',
         ];
     }
 }

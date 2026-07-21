@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { normalizeAnime, tagColor } from '../../utils/normalize'
 import type { Anime } from '../../utils/normalize'
+import { apiErrorMessage } from '../../utils/apiError'
 import { seasonMonthLabels } from '../../utils/season'
 
 const route = useRoute()
@@ -82,8 +83,8 @@ async function addToList() {
     await api.addToList(Number(route.params.id))
     addedToList.value = true
     toast.add({ title: '已加入清單', color: 'success' })
-  } catch (err: any) {
-    toast.add({ title: err.message || '加入失敗', color: 'error' })
+  } catch (err: unknown) {
+    toast.add({ title: apiErrorMessage(err, '加入失敗'), color: 'error' })
   }
 }
 

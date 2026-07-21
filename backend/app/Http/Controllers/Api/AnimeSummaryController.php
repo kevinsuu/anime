@@ -5,14 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Exceptions\ApiException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AnimeSummaryResource;
-use App\Models\Anime;
-use App\Services\AnimeCatalog\SeasonResolver;
-use App\Services\Shared\DelimitedValues;
-use Illuminate\Database\Eloquent\Builder;
+use App\Services\AnimeCatalog\AnimeSearchCriteria;
+use App\Services\AnimeCatalog\AnimeSearchCriteriaParser;
+use App\Services\AnimeCatalog\AnimeSearchQuery;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use InvalidArgumentException;
 
 final class AnimeSummaryController extends Controller
 {
@@ -22,36 +20,16 @@ final class AnimeSummaryController extends Controller
 
     private const RECENT_LIMIT = 50;
 
-    private const MAX_QUERY_LENGTH = 100;
-
-    private const MAX_TAG_COUNT = 10;
-
-    private const MAX_TAG_LENGTH = 50;
+    public function __construct(
+        private readonly AnimeSearchCriteriaParser $searchCriteria,
+        private readonly AnimeSearchQuery $searchQuery,
+    ) {}
 
     public function index(Request $request): JsonResponse
     {
-        $query = trim($this->queryString($request, 'q', ''));
-        $yearInput = $this->queryString($request, 'year');
-        $season = trim($this->queryString($request, 'season', ''));
+        $criteria = $this->searchCriteria->parse($request, enforceSizeLimits: true);
         $pageInput = $this->queryString($request, 'page', '1');
         $perPageInput = $this->queryString($request, 'per_page', (string) self::DEFAULT_PER_PAGE);
-        $tagsInput = $this->queryString($request, 'tags', '');
-
-        if (mb_strlen($query) > self::MAX_QUERY_LENGTH) {
-            throw new ApiException(422, 'validation_failed', '搜尋文字不可超過 100 個字元');
-        }
-
-        if ($yearInput !== null && (! ctype_digit((string) $yearInput) || (int) $yearInput < 1900 || (int) $yearInput > 2100)) {
-            throw new ApiException(422, 'validation_failed', '年份格式錯誤');
-        }
-
-        if ($season !== '') {
-            try {
-                SeasonResolver::months($season);
-            } catch (InvalidArgumentException) {
-                throw new ApiException(422, 'validation_failed', '季度格式錯誤');
-            }
-        }
 
         if (! ctype_digit((string) $pageInput) || (int) $pageInput < 1) {
             throw new ApiException(422, 'validation_failed', '頁碼格式錯誤');
@@ -63,21 +41,14 @@ final class AnimeSummaryController extends Controller
             throw new ApiException(422, 'validation_failed', '每頁筆數必須介於 1 到 100');
         }
 
-        $year = $yearInput === null ? null : (int) $yearInput;
         $page = (int) $pageInput;
         $perPage = (int) $perPageInput;
-        $tags = array_values(array_unique(DelimitedValues::parse($tagsInput)));
-        if (count($tags) > self::MAX_TAG_COUNT
-            || collect($tags)->contains(fn (string $tag): bool => mb_strlen($tag) > self::MAX_TAG_LENGTH)) {
-            throw new ApiException(422, 'validation_failed', '分類最多 10 個，且每個不可超過 50 個字元');
-        }
-        sort($tags, SORT_STRING);
 
-        $cacheKey = $this->cacheKey($query, $year, $season, $tags, $page, $perPage);
+        $cacheKey = $this->cacheKey($criteria, $page, $perPage);
         $resolve = fn (): array => Cache::flexible(
             $cacheKey,
             [240, 300],
-            fn (): array => $this->summaries($query, $year, $season, $tags, $page, $perPage),
+            fn (): array => $this->summaries($criteria, $page, $perPage),
             ['seconds' => 15],
         );
         $payload = Cache::has($cacheKey)
@@ -104,48 +75,17 @@ final class AnimeSummaryController extends Controller
     }
 
     /**
-     * @param  array<int, string>  $tags
      * @return array{items: array<int, mixed>, meta: array{page: int, per_page: int, total: int, last_page: int, has_more: bool}}
      */
     private function summaries(
-        string $query,
-        ?int $year,
-        string $season,
-        array $tags,
+        AnimeSearchCriteria $criteria,
         int $page,
         int $perPage,
     ): array {
-        $term = "%{$query}%";
-        $isRecentMode = $year === null && $season === '' && $query === '' && $tags === [];
-
-        $builder = Anime::query()
-            ->when($query !== '', function (Builder $builder) use ($term): void {
-                $builder->where(function (Builder $where) use ($term): void {
-                    $where->where('name', 'like', $term)
-                        ->orWhereHas('aliases', fn (Builder $aliasQuery) => $aliasQuery->where('alias', 'like', $term))
-                        ->orWhereHas('titles', fn (Builder $titleQuery) => $titleQuery->where('title', 'like', $term));
-                });
-            })
-            ->when($year !== null, fn (Builder $builder) => $builder->where('season_year', $year))
-            ->when($season !== '', fn (Builder $builder) => $builder->where('season_code', $season))
-            ->when($tags !== [], function (Builder $builder) use ($tags): void {
-                $builder->where(function (Builder $where) use ($tags): void {
-                    foreach ($tags as $tag) {
-                        $where->orWhereJsonContains('tags', $tag);
-                    }
-                });
-            })
-            ->orderByRaw('air_date is null')
-            ->when(
-                $isRecentMode,
-                fn (Builder $builder) => $builder->orderByDesc('air_date'),
-                fn (Builder $builder) => $builder->orderBy('air_date'),
-            )
-            ->orderBy('name')
-            ->orderBy('id');
+        $builder = $this->searchQuery->build($criteria);
 
         $total = (clone $builder)->count();
-        if ($isRecentMode) {
+        if ($criteria->isRecentMode()) {
             $total = min($total, self::RECENT_LIMIT);
         }
 
@@ -188,20 +128,13 @@ final class AnimeSummaryController extends Controller
         ];
     }
 
-    /** @param array<int, string> $tags */
     private function cacheKey(
-        string $query,
-        ?int $year,
-        string $season,
-        array $tags,
+        AnimeSearchCriteria $criteria,
         int $page,
         int $perPage,
     ): string {
         $parameters = [
-            'q' => $query,
-            'year' => $year,
-            'season' => $season,
-            'tags' => $tags,
+            ...$criteria->toArray(),
             'page' => $page,
             'per_page' => $perPage,
         ];

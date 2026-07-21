@@ -8,9 +8,7 @@ const api = useApi()
 // content immediately instead of a client-side loading spinner.
 const { data, pending: loading, error: fetchError } = await useAsyncData(
   `public-collection-${route.params.slug}`,
-  async () => (await api.publicCollection(route.params.slug as string)).item as {
-    name: string; count: number; list_items: any[]
-  }
+  async () => (await api.publicCollection(route.params.slug as string)).item
 )
 
 const error = computed(() => fetchError.value ? (fetchError.value.message || '找不到此清單') : '')

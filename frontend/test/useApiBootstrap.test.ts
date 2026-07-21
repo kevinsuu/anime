@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { useApi } from '../app/composables/useApi'
+import { ApiError } from '../app/utils/apiError'
 
 describe('useApi meBootstrap', () => {
   afterEach(() => {
@@ -39,5 +40,33 @@ describe('useApi meBootstrap', () => {
         headers: expect.objectContaining({ Authorization: 'Bearer token' })
       })
     )
+  })
+
+  it('throws a typed API error with status and response body', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: false,
+      status: 409,
+      json: async () => ({ code: 'duplicate', message: '名稱已存在' })
+    })
+
+    vi.stubGlobal('fetch', fetchMock)
+    vi.stubGlobal('useRuntimeConfig', () => ({
+      apiBaseUrlInternal: 'http://backend:8080',
+      public: { apiBaseUrl: 'https://api.example.test' }
+    }))
+    vi.stubGlobal('useSession', () => ({
+      session: { token: '', refreshToken: '' },
+      updateTokens: vi.fn(),
+      clearSession: vi.fn()
+    }))
+
+    const request = useApi().createCollection('重複名稱')
+
+    await expect(request).rejects.toMatchObject({
+      name: 'ApiError',
+      message: '名稱已存在',
+      status: 409,
+      body: { code: 'duplicate', message: '名稱已存在' }
+    } satisfies Partial<ApiError>)
   })
 })

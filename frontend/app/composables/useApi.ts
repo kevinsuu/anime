@@ -1,36 +1,44 @@
+import type {
+  AnimeCardBootstrapResponse,
+  AnimeSummaryFilters,
+  AnimeSummaryResponse,
+  ApiPayload,
+  AuthResponse,
+  CollectionPatch,
+  CollectionPayload,
+  ItemResponse,
+  ItemsResponse,
+  ListItemPatch,
+  OkResponse,
+  PublicCollectionPayload,
+  PublicListResponse,
+  TagsResponse,
+  UserResponse
+} from '../types/api'
+import { ApiError } from '../utils/apiError'
+
 interface RequestOptions {
   method?: string
   body?: string
   headers?: Record<string, string>
 }
 
-interface AnimeSummaryFilters {
-  year?: number | string
-  season?: string
-  tags?: string[]
-  page?: number
-  perPage?: number
+export type {
+  AnimeCardBootstrapResponse,
+  AnimeCardBootstrapStatusPayload,
+  AnimeSummaryFilters,
+  ListItemPatch
+} from '../types/api'
+
+function asRecord(value: unknown): Record<string, unknown> | null {
+  return value !== null && typeof value === 'object' && !Array.isArray(value)
+    ? value as Record<string, unknown>
+    : null
 }
 
-export interface AnimeCardBootstrapStatusPayload {
-  anime_id: number
-  list_item_id: number
-  watched: boolean
-  collection_ids: number[]
-}
-
-export interface AnimeCardBootstrapCollectionPayload {
-  id: number
-  name: string
-  is_public: boolean
-  public_slug: string
-  count: number
-}
-
-export interface AnimeCardBootstrapResponse {
-  user: Record<string, unknown>
-  statuses: AnimeCardBootstrapStatusPayload[]
-  collections: AnimeCardBootstrapCollectionPayload[]
+function responseMessage(value: unknown, fallback: string): string {
+  const message = asRecord(value)?.message
+  return typeof message === 'string' && message ? message : fallback
 }
 
 // Serializes concurrent 401s onto a single in-flight refresh call so a page
@@ -54,14 +62,22 @@ export function useApi() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ refreshToken })
         })
-        const body = await response.json().catch(() => ({}))
+        const body: unknown = await response.json().catch(() => ({}))
         if (!response.ok) {
           clearSession()
-          throw new Error(body.message || '登入已失效，請重新登入')
+          throw new ApiError(responseMessage(body, '登入已失效，請重新登入'), response.status, body)
         }
 
-        updateTokens(body.token, body.refreshToken)
-        return body.token as string
+        const payload = asRecord(body)
+        const token = payload?.token
+        const nextRefreshToken = payload?.refreshToken
+        if (typeof token !== 'string' || typeof nextRefreshToken !== 'string') {
+          clearSession()
+          throw new Error('更新登入憑證時收到無效回應')
+        }
+
+        updateTokens(token, nextRefreshToken)
+        return token
       })().finally(() => {
         refreshPromise = null
       })
@@ -69,7 +85,7 @@ export function useApi() {
     return refreshPromise
   }
 
-  async function request<T = any>(path: string, options: RequestOptions = {}, isRetry = false): Promise<T> {
+  async function request<T>(path: string, options: RequestOptions = {}, isRetry = false): Promise<T> {
     const headers: Record<string, string> = { 'Content-Type': 'application/json', ...(options.headers || {}) }
     const token = session.token
     if (token) headers.Authorization = `Bearer ${token}`
@@ -92,33 +108,21 @@ export function useApi() {
       }
     }
 
-    const body = await response.json().catch(() => ({}))
+    const body: unknown = await response.json().catch(() => ({}))
     if (!response.ok) {
-      const error: any = new Error(body.message || '請求失敗')
-      error.status = response.status
-      error.body = body
-      throw error
+      throw new ApiError(responseMessage(body, '請求失敗'), response.status, body)
     }
 
     return body as T
   }
 
   return {
-    login: (idToken: string) => request('/auth/google', { method: 'POST', body: JSON.stringify({ idToken }) }),
-    logout: () => request('/auth/logout', { method: 'POST' }),
-    me: () => request('/me'),
+    login: (idToken: string) => request<AuthResponse>('/auth/google', { method: 'POST', body: JSON.stringify({ idToken }) }),
+    logout: () => request<OkResponse>('/auth/logout', { method: 'POST' }),
+    me: () => request<UserResponse>('/me'),
     meBootstrap: (animeIds: number[]) => request<AnimeCardBootstrapResponse>(
       `/me/bootstrap?anime_ids=${animeIds.join(',')}`
     ),
-    searchAnime: (query: string, filters: { year?: number | string; season?: string; tags?: string[] } = {}) => {
-      const params = new URLSearchParams()
-      if (query) params.set('q', query)
-      if (filters.year) params.set('year', String(filters.year))
-      if (filters.season) params.set('season', filters.season)
-      if (filters.tags?.length) params.set('tags', filters.tags.join(','))
-      const queryString = params.toString()
-      return request(`/anime${queryString ? `?${queryString}` : ''}`)
-    },
     searchAnimeSummaries: (query: string, filters: AnimeSummaryFilters = {}) => {
       const params = new URLSearchParams()
       if (query) params.set('q', query)
@@ -128,27 +132,27 @@ export function useApi() {
       if (filters.page) params.set('page', String(filters.page))
       if (filters.perPage) params.set('per_page', String(filters.perPage))
       const queryString = params.toString()
-      return request(`/anime/summaries${queryString ? `?${queryString}` : ''}`)
+      return request<AnimeSummaryResponse>(`/anime/summaries${queryString ? `?${queryString}` : ''}`)
     },
-    catalogTags: () => request('/anime/tags'),
-    getAnime: (id: number) => request(`/anime/${id}`),
+    catalogTags: () => request<TagsResponse>('/anime/tags'),
+    getAnime: (id: number) => request<ItemResponse<ApiPayload>>(`/anime/${id}`),
     myList: (params?: { tags?: string[] }) => {
       const qs = params?.tags?.length ? `?tags=${encodeURIComponent(params.tags.join(','))}` : ''
-      return request(`/my/anime-list${qs}`)
+      return request<ItemsResponse<ApiPayload>>(`/my/anime-list${qs}`)
     },
-    myListTags: () => request('/my/anime-list/tags'),
-    addToList: (animeId: number) => request('/my/anime-list', { method: 'POST', body: JSON.stringify({ animeId }) }),
-    updateListItem: (id: number, payload: Record<string, any>) => request(`/my/anime-list/${id}`, { method: 'PATCH', body: JSON.stringify(payload) }),
-    deleteListItem: (id: number) => request(`/my/anime-list/${id}`, { method: 'DELETE' }),
-    publicList: (slug: string) => request(`/public/lists/${encodeURIComponent(slug)}`),
-    regenerateSlug: () => request('/me/share-slug/regenerate', { method: 'POST' }),
+    myListTags: () => request<TagsResponse>('/my/anime-list/tags'),
+    addToList: (animeId: number) => request<ItemResponse<ApiPayload>>('/my/anime-list', { method: 'POST', body: JSON.stringify({ animeId }) }),
+    updateListItem: (id: number, payload: ListItemPatch) => request<ItemResponse<ApiPayload>>(`/my/anime-list/${id}`, { method: 'PATCH', body: JSON.stringify(payload) }),
+    deleteListItem: (id: number) => request<OkResponse>(`/my/anime-list/${id}`, { method: 'DELETE' }),
+    publicList: (slug: string) => request<PublicListResponse>(`/public/lists/${encodeURIComponent(slug)}`),
+    regenerateSlug: () => request<UserResponse>('/me/share-slug/regenerate', { method: 'POST' }),
     // Collections
-    myCollections: () => request('/my/collections'),
-    createCollection: (name: string, isPublic = false) => request('/my/collections', { method: 'POST', body: JSON.stringify({ name, is_public: isPublic }) }),
-    updateCollection: (id: number, patch: { name?: string; is_public?: boolean }) => request(`/my/collections/${id}`, { method: 'PATCH', body: JSON.stringify(patch) }),
-    deleteCollection: (id: number) => request(`/my/collections/${id}`, { method: 'DELETE' }),
-    addToCollection: (collectionId: number, listItemId: number) => request(`/my/collections/${collectionId}/items`, { method: 'POST', body: JSON.stringify({ list_item_id: listItemId }) }),
-    removeFromCollection: (collectionId: number, listItemId: number) => request(`/my/collections/${collectionId}/items/${listItemId}`, { method: 'DELETE' }),
-    publicCollection: (slug: string) => request(`/public/collections/${encodeURIComponent(slug)}`)
+    myCollections: () => request<ItemsResponse<CollectionPayload>>('/my/collections'),
+    createCollection: (name: string, isPublic = false) => request<ItemResponse<CollectionPayload>>('/my/collections', { method: 'POST', body: JSON.stringify({ name, is_public: isPublic }) }),
+    updateCollection: (id: number, patch: CollectionPatch) => request<ItemResponse<CollectionPayload>>(`/my/collections/${id}`, { method: 'PATCH', body: JSON.stringify(patch) }),
+    deleteCollection: (id: number) => request<OkResponse>(`/my/collections/${id}`, { method: 'DELETE' }),
+    addToCollection: (collectionId: number, listItemId: number) => request<ItemResponse<CollectionPayload>>(`/my/collections/${collectionId}/items`, { method: 'POST', body: JSON.stringify({ list_item_id: listItemId }) }),
+    removeFromCollection: (collectionId: number, listItemId: number) => request<ItemResponse<CollectionPayload>>(`/my/collections/${collectionId}/items/${listItemId}`, { method: 'DELETE' }),
+    publicCollection: (slug: string) => request<ItemResponse<PublicCollectionPayload>>(`/public/collections/${encodeURIComponent(slug)}`)
   }
 }

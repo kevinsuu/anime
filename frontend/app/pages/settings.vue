@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { apiErrorMessage } from '../utils/apiError'
+
 definePageMeta({ middleware: 'auth' })
 
 useSeoMeta({ robots: 'noindex, nofollow' })
@@ -27,8 +29,8 @@ async function regenerateSlug() {
     const result = await api.regenerateSlug()
     setUser(result.user)
     toast.add({ title: '分享連結已更新', color: 'success' })
-  } catch (err: any) {
-    toast.add({ title: err.message || '更新失敗', color: 'error' })
+  } catch (err: unknown) {
+    toast.add({ title: apiErrorMessage(err, '更新失敗'), color: 'error' })
   }
 }
 

@@ -51,7 +51,7 @@ services:
       DB_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD is required}
       CACHE_STORE: file
       SESSION_DRIVER: file
-      QUEUE_CONNECTION: database
+      QUEUE_CONNECTION: sync
       JWT_SECRET: ${JWT_SECRET:?JWT_SECRET is required}
       JWT_TTL_SECONDS: ${JWT_TTL_SECONDS}
       JWT_REFRESH_TTL_SECONDS: ${JWT_REFRESH_TTL_SECONDS}
@@ -92,7 +92,7 @@ services:
       DB_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD is required}
       CACHE_STORE: file
       SESSION_DRIVER: file
-      QUEUE_CONNECTION: database
+      QUEUE_CONNECTION: sync
       JWT_SECRET: ${JWT_SECRET:?JWT_SECRET is required}
       JWT_TTL_SECONDS: ${JWT_TTL_SECONDS}
       JWT_REFRESH_TTL_SECONDS: ${JWT_REFRESH_TTL_SECONDS}

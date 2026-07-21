@@ -2,78 +2,44 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Exceptions\ApiException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AnimeResource;
 use App\Models\Anime;
-use App\Services\AnimeCatalog\SeasonResolver;
-use App\Services\Shared\DelimitedValues;
-use App\Services\Shared\GenreTags;
+use App\Services\AnimeCatalog\AnimeSearchCriteriaParser;
+use App\Services\AnimeCatalog\AnimeSearchQuery;
+use App\Services\Shared\GenreTagStatistics;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use InvalidArgumentException;
 
 final class AnimeController extends Controller
 {
+    public function __construct(
+        private readonly AnimeSearchCriteriaParser $searchCriteria,
+        private readonly AnimeSearchQuery $searchQuery,
+    ) {}
+
     public function index(Request $request): JsonResponse
     {
-        $query = trim((string) $request->query('q', ''));
-        $year = $request->query('year');
-        $season = trim((string) $request->query('season', ''));
-        $term = "%{$query}%";
-
-        $tags = DelimitedValues::parse((string) $request->query('tags', ''));
-
-        if ($year !== null && (! ctype_digit((string) $year) || (int) $year < 1900 || (int) $year > 2100)) {
-            throw new ApiException(422, 'validation_failed', '年份格式錯誤');
-        }
-
-        if ($season !== '') {
-            try {
-                SeasonResolver::months($season);
-            } catch (InvalidArgumentException) {
-                throw new ApiException(422, 'validation_failed', '季度格式錯誤');
-            }
-        }
+        $criteria = $this->searchCriteria->parse($request);
 
         // Year-scoped queries (catalog year browsing, seasonal pages) load
         // the full year/season without a cap. Unscoped keyword search across
         // the whole catalog is capped to avoid an excessive payload.
-        $isYearScoped = $year !== null;
-        // Recent mode: no year/season/keyword → newest-first, capped to 50.
-        $isRecentMode = $year === null && $season === '' && $query === '';
+        $isYearScoped = $criteria->year !== null;
+        // Preserve the legacy catalog behavior: tags narrow the current recent
+        // catalog but do not switch it to oldest-first ordering or the 200 cap.
+        $isRecentMode = $criteria->year === null
+            && $criteria->season === ''
+            && $criteria->query === '';
 
-        $items = Anime::query()
+        $items = $this->searchQuery->build($criteria, $isRecentMode)
             ->with([
                 'streams:id,anime_id,region,platform,url',
                 'aliases:id,anime_id,alias',
                 'titles:id,anime_id,locale,title,is_primary',
                 'cast:id,anime_id,character,actor,sort_order',
             ])
-            ->when($query !== '', function ($builder) use ($term): void {
-                $builder->where(function ($where) use ($term): void {
-                    $where->where('name', 'like', $term)
-                        ->orWhereHas('aliases', fn ($q) => $q->where('alias', 'like', $term))
-                        ->orWhereHas('titles', fn ($q) => $q->where('title', 'like', $term));
-                });
-            })
-            ->when($year !== null, fn ($builder) => $builder->where('season_year', (int) $year))
-            ->when($season !== '', fn ($builder) => $builder->where('season_code', $season))
-            ->when($tags !== [], function ($builder) use ($tags): void {
-                $builder->where(function ($where) use ($tags): void {
-                    foreach ($tags as $tag) {
-                        $where->orWhereJsonContains('tags', $tag);
-                    }
-                });
-            })
-            ->orderByRaw('air_date is null')
-            ->when(
-                $isRecentMode,
-                fn ($builder) => $builder->orderByDesc('air_date'),
-                fn ($builder) => $builder->orderBy('air_date'),
-            )
-            ->orderBy('name')
             ->when($isRecentMode, fn ($builder) => $builder->limit(50))
             ->when(! $isRecentMode && ! $isYearScoped, fn ($builder) => $builder->limit(200))
             ->get([
@@ -107,31 +73,16 @@ final class AnimeController extends Controller
         ]);
     }
 
-    public function tags(): JsonResponse
+    public function tags(GenreTagStatistics $statistics): JsonResponse
     {
         $cacheKey = 'anime:tags:v1';
-        $resolve = fn (): array => Cache::flexible($cacheKey, [240, 300], function (): array {
-            $counts = [];
-            Anime::query()
+        $resolve = fn (): array => Cache::flexible($cacheKey, [240, 300], function () use ($statistics): array {
+            $tagSets = Anime::query()
                 ->select(['id', 'tags'])
                 ->get()
-                ->each(function (Anime $anime) use (&$counts): void {
-                    foreach ($anime->tags ?? [] as $tag) {
-                        if (! GenreTags::isGenreTag($tag)) {
-                            continue;
-                        }
-                        $counts[$tag] = ($counts[$tag] ?? 0) + 1;
-                    }
-                });
+                ->map(fn (Anime $anime): array => $anime->tags ?? []);
 
-            $tags = collect($counts)
-                ->map(fn (int $count, string $tag) => ['tag' => $tag, 'count' => $count])
-                ->values()
-                ->sortBy([['count', 'desc'], ['tag', 'asc']])
-                ->values()
-                ->all();
-
-            return ['tags' => $tags];
+            return ['tags' => $statistics->summarize($tagSets)];
         }, ['seconds' => 15]);
         $payload = Cache::has($cacheKey)
             ? $resolve()

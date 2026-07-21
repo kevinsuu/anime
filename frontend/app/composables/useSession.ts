@@ -1,21 +1,36 @@
 import { computed, reactive } from 'vue'
+import type { ApiUser } from '../types/api'
 
 const SESSION_KEY = 'animeTrackerSession'
 
-export interface SessionUser {
-  id: number
-  email?: string
-  display_name?: string
-  avatar_url?: string
-  public_slug?: string
-  [key: string]: any
+export interface SessionUser extends ApiUser {}
+
+function asRecord(value: unknown): Record<string, unknown> | null {
+  return value !== null && typeof value === 'object' && !Array.isArray(value)
+    ? value as Record<string, unknown>
+    : null
+}
+
+function storedUser(value: unknown): SessionUser | undefined {
+  const record = asRecord(value)
+  const id = Number(record?.id)
+  if (!record || !Number.isInteger(id) || id <= 0) return undefined
+
+  return { ...record, id }
 }
 
 function readStoredSession(): { token?: string; refreshToken?: string; user?: SessionUser } {
   if (typeof window === 'undefined') return {}
   try {
-    const value = JSON.parse(localStorage.getItem(SESSION_KEY) || '{}')
-    return value && typeof value === 'object' ? value : {}
+    const value: unknown = JSON.parse(localStorage.getItem(SESSION_KEY) || '{}')
+    const record = asRecord(value)
+    if (!record) return {}
+
+    return {
+      token: typeof record.token === 'string' ? record.token : undefined,
+      refreshToken: typeof record.refreshToken === 'string' ? record.refreshToken : undefined,
+      user: storedUser(record.user)
+    }
   } catch {
     localStorage.removeItem(SESSION_KEY)
     return {}

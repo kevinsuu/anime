@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { normalizeAnimeSummary, tagColor } from '../utils/normalize'
 import type { AnimeSummary } from '../utils/normalize'
+import { apiErrorMessage } from '../utils/apiError'
 import { HIGH_PRIORITY_IMAGE_COUNT } from '../composables/useLazyLoad'
 
 const api = useApi()
@@ -50,14 +51,6 @@ let requestId = 0
 let updatingRoute = false
 const PAGE_SIZE = 40
 
-interface CatalogMeta {
-  page: number
-  per_page: number
-  total: number
-  last_page: number
-  has_more: boolean
-}
-
 function filtersForRequest(requestedPage = page.value) {
   const filters: { year?: number; tags?: string[]; page: number; perPage: number } = {
     page: requestedPage,
@@ -94,7 +87,7 @@ async function loadCatalog() {
   try {
     const result = await api.searchAnimeSummaries(query.value.trim(), filtersForRequest())
     if (id !== requestId) return
-    const responseMeta = result.meta as CatalogMeta
+    const responseMeta = result.meta
     if (page.value > responseMeta.last_page) {
       page.value = responseMeta.last_page
       await syncRoute('replace')
@@ -103,9 +96,9 @@ async function loadCatalog() {
     }
     catalog.value = (result.items || []).map(normalizeAnimeSummary)
     catalogMeta.value = responseMeta
-  } catch (err: any) {
+  } catch (err: unknown) {
     if (id !== requestId) return
-    error.value = err.message || '載入失敗'
+    error.value = apiErrorMessage(err, '載入失敗')
     catalog.value = []
   } finally {
     if (id === requestId) loading.value = false
@@ -123,15 +116,15 @@ const { data: initialData, pending: initialPending } = await useAsyncData(
       result = await api.searchAnimeSummaries(query.value.trim(), filtersForRequest(lastPage))
     }
     return {
-      items: (result.items || []) as Record<string, any>[],
-      meta: result.meta as CatalogMeta
+      items: result.items,
+      meta: result.meta
     }
   }
 )
 
 // catalog 以初始資料為基礎；後續互動由 loadCatalog 直接覆寫。
 const catalog = ref<AnimeSummary[]>((initialData.value?.items || []).map(normalizeAnimeSummary))
-const catalogMeta = ref<CatalogMeta>(initialData.value?.meta ?? {
+const catalogMeta = ref(initialData.value?.meta ?? {
   page: page.value,
   per_page: PAGE_SIZE,
   total: catalog.value.length,

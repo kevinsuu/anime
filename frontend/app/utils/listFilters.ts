@@ -5,6 +5,11 @@ export interface TagOption {
   count: number
 }
 
+export function applyTagFilters(list: ListItem[], tags: readonly string[]): ListItem[] {
+  if (tags.length === 0) return list
+  return list.filter(item => tags.some(tag => item.anime.tags.includes(tag)))
+}
+
 // Composes with the tag filter (now server-side, see useApi.ts myList()) —
 // this only applies the status filter (all/watched/unwatched/col:{id}).
 export function applyListFilters(list: ListItem[], statusFilter: string): ListItem[] {

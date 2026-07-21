@@ -78,6 +78,22 @@ describe('normalizeAnime', () => {
     const result = normalizeAnime({})
     expect(result.name).toBe('未命名作品')
   })
+
+  it('safely narrows malformed unknown payload fields', () => {
+    const result = normalizeAnime({
+      id: 'invalid',
+      tags: 'not-an-array',
+      streams: [null, 'invalid'],
+      cast: [{ actor: 123 }],
+      titles: [{ locale: 'ja', title: 456 }]
+    })
+
+    expect(result).toMatchObject({ id: 0, tags: [], actors: [], titleJa: '' })
+    expect(result.streams).toEqual([
+      { region: '', platform: '', url: null },
+      { region: '', platform: '', url: null }
+    ])
+  })
 })
 
 describe('normalizeAnimeSummary', () => {
@@ -121,5 +137,26 @@ describe('normalizeListItem', () => {
   it('keeps rating null when absent', () => {
     const result = normalizeListItem({ id: 1, anime: {} })
     expect(result.rating).toBeNull()
+  })
+
+  it('parses Japanese titles and aliases from the real list response shape', () => {
+    const result = normalizeListItem({
+      id: 12,
+      watched: false,
+      rating: null,
+      note: null,
+      createdAt: '2026-07-01 12:00:00',
+      updatedAt: '2026-07-02 12:00:00',
+      collections: [{ id: 3, name: '進行中' }],
+      anime: {
+        id: 42,
+        name: '葬送的芙莉蓮',
+        aliases: ['Frieren'],
+        titles: [{ locale: 'ja', title: '葬送のフリーレン', is_primary: true }]
+      }
+    })
+
+    expect(result.anime.aliases).toEqual(['Frieren'])
+    expect(result.anime.titleJa).toBe('葬送のフリーレン')
   })
 })
