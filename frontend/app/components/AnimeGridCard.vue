@@ -194,19 +194,6 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
           : 'from-transparent via-transparent to-gray-200/80'"
       />
 
-      <!-- Four translucent corner marks communicate completion without
-           tinting or covering the artwork. -->
-      <div
-        v-if="watched"
-        class="pointer-events-none absolute inset-0 z-10"
-        aria-hidden="true"
-      >
-        <span class="absolute left-0 top-0 size-7 rounded-tl-lg border-l-4 border-t-4 border-emerald-400/80" />
-        <span class="absolute right-0 top-0 size-7 rounded-tr-lg border-r-4 border-t-4 border-emerald-400/80" />
-        <span class="absolute bottom-0 left-0 size-7 rounded-bl-lg border-b-4 border-l-4 border-emerald-400/80" />
-        <span class="absolute bottom-0 right-0 size-7 rounded-br-lg border-b-4 border-r-4 border-emerald-400/80" />
-      </div>
-
       <!-- Top-left: date label -->
       <div class="absolute left-0 top-0 p-1.5">
         <span class="block rounded-sm bg-black/50 px-1.5 py-0.5 text-[10px] font-bold leading-tight text-white backdrop-blur-sm">
@@ -248,16 +235,16 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
       >
         已加入
       </UBadge>
-      <!-- Watched badge (only when no green ring is enough) -->
-      <UBadge
+      <!-- Watched state: a compact glass pill stays legible over light and dark covers. -->
+      <div
         v-if="watched"
-        color="success"
-        class="absolute left-1.5 top-9 border border-white/50 shadow-md shadow-emerald-950/20"
-        size="sm"
+        class="absolute left-1.5 top-9 z-10 inline-flex items-center gap-1 rounded-full border border-emerald-200/70 bg-emerald-950/80 py-1 pl-1 pr-2 text-[10px] font-extrabold tracking-wide text-emerald-50 shadow-lg shadow-emerald-950/30 backdrop-blur-md"
       >
-        <UIcon name="i-lucide-badge-check" class="mr-0.5 size-3" />
-        已收錄
-      </UBadge>
+        <span class="grid size-4 place-items-center rounded-full bg-emerald-300 text-emerald-950 shadow-sm" aria-hidden="true">
+          <UIcon name="i-lucide-check" class="size-2.5 stroke-3" />
+        </span>
+        已觀看
+      </div>
 
       <!-- Streams badge -->
       <UBadge

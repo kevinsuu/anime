@@ -35,7 +35,7 @@ const statusOptions = [
   { value: 'all', label: '全部作品' },
   { value: 'listed', label: '已加入清單' },
   { value: 'unlisted', label: '未加入清單' },
-  { value: 'watched', label: '已看' },
+  { value: 'watched', label: '已觀看' },
   { value: 'queued', label: '待補' },
   { value: 'with-cover', label: '有封面' },
 ]

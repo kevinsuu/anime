@@ -3,6 +3,8 @@ import { weekdayTabs, useSeasonalCatalog, deriveFilterOptions } from '../composa
 import { HIGH_PRIORITY_IMAGE_COUNT } from '../composables/useLazyLoad'
 import { normalizeAnimeSummary, tagColor } from '../utils/normalize'
 import type { AnimeSummary } from '../utils/normalize'
+import { seasonMonthLabels, seasonSelection, shiftSeason } from '../utils/season'
+import type { SeasonSelection } from '../utils/season'
 
 const api = useApi()
 const route = useRoute()
@@ -10,50 +12,55 @@ const router = useRouter()
 const { state: filterState, filterSeasonal, activeFilterCount, resetFilters, toggleGenreTag } = useSeasonalCatalog()
 const toast = useToast()
 
-const seasonLabels: Record<string, string> = {
-  winter: '1月', spring: '4月', summer: '7月', fall: '10月'
-}
-
-const SEASONS = ['winter', 'spring', 'summer', 'fall'] as const
-type Season = typeof SEASONS[number]
-
-function currentSeason(): Season {
-  const month = new Date().getMonth() + 1
-  return month <= 3 ? 'winter' : month <= 6 ? 'spring' : month <= 9 ? 'summer' : 'fall'
-}
-
-const queryYear = Number(route.query.year)
-const querySeason = route.query.season as Season | undefined
-
-const seasonalControls = reactive({
-  year: Number.isInteger(queryYear) ? queryYear : new Date().getFullYear(),
-  season: querySeason && SEASONS.includes(querySeason) ? querySeason : currentSeason()
-})
+const initialSeason = seasonSelection(route.query.year, route.query.season)
+const seasonalControls = reactive<SeasonSelection>({ ...initialSeason })
 
 function prevSeason() {
-  const idx = SEASONS.indexOf(seasonalControls.season)
-  if (idx === 0) { seasonalControls.season = 'fall'; seasonalControls.year-- }
-  else seasonalControls.season = SEASONS[idx - 1] ?? 'winter'
+  Object.assign(seasonalControls, shiftSeason(seasonalControls, -1))
 }
 
 function nextSeason() {
-  const idx = SEASONS.indexOf(seasonalControls.season)
-  if (idx === 3) { seasonalControls.season = 'winter'; seasonalControls.year++ }
-  else seasonalControls.season = SEASONS[idx + 1] ?? 'fall'
+  Object.assign(seasonalControls, shiftSeason(seasonalControls, 1))
 }
 
-const { data: seasonal, pending: loading, error: fetchError } = await useAsyncData(
-  `seasonal:${seasonalControls.year}:${seasonalControls.season}`,
+interface SeasonalPayload extends SeasonSelection {
+  items: AnimeSummary[]
+}
+
+const seasonalDataKey = computed(() => `seasonal:${seasonalControls.year}:${seasonalControls.season}`)
+const { data: seasonalPayload, pending: loading, error: fetchError } = await useAsyncData(
+  seasonalDataKey,
   async () => {
+    // Capture one immutable selection per request. A later arrow click must not
+    // relabel an older response as if it belonged to the newly selected season.
+    const requestedYear = seasonalControls.year
+    const requestedSeason = seasonalControls.season
     const result = await api.searchAnimeSummaries('', {
-      year: seasonalControls.year,
-      season: seasonalControls.season,
+      year: requestedYear,
+      season: requestedSeason,
       perPage: 100
     })
-    return (result.items || []).map(normalizeAnimeSummary)
+    return {
+      year: requestedYear,
+      season: requestedSeason,
+      items: (result.items || []).map(normalizeAnimeSummary)
+    }
   },
-  { default: () => [] as AnimeSummary[], watch: [() => seasonalControls.year, () => seasonalControls.season] }
+  {
+    default: (): SeasonalPayload => ({
+      year: seasonalControls.year,
+      season: seasonalControls.season,
+      items: []
+    })
+  }
 )
+
+const seasonal = computed(() => {
+  const payload = seasonalPayload.value
+  return payload.year === seasonalControls.year && payload.season === seasonalControls.season
+    ? payload.items
+    : []
+})
 
 const seasonalAnimeIds = computed(() => seasonal.value.map((anime: AnimeSummary) => anime.id))
 const {
@@ -86,7 +93,7 @@ const activeChips = computed(() => {
   }
   if (filterState.actor) chips.push({ label: filterState.actor, clear: () => { filterState.actor = '' } })
   if (filterState.seasonalStatus !== 'all') {
-    const labels: Record<string, string> = { listed: '已加入清單', unlisted: '未加入清單', watched: '已看', queued: '待補', 'with-cover': '有封面' }
+    const labels: Record<string, string> = { listed: '已加入清單', unlisted: '未加入清單', watched: '已觀看', queued: '待補', 'with-cover': '有封面' }
     chips.push({ label: labels[filterState.seasonalStatus] ?? filterState.seasonalStatus, clear: () => { filterState.seasonalStatus = 'all' } })
   }
   return chips
@@ -94,12 +101,21 @@ const activeChips = computed(() => {
 
 watch(() => [seasonalControls.year, seasonalControls.season], () => {
   resetFilters()
-  router.replace({ query: { ...route.query, year: String(seasonalControls.year), season: seasonalControls.season } })
+  const routeYear = typeof route.query.year === 'string' ? route.query.year : ''
+  const routeSeason = typeof route.query.season === 'string' ? route.query.season : ''
+  if (routeYear === String(seasonalControls.year) && routeSeason === seasonalControls.season) return
+  void router.replace({ query: { ...route.query, year: String(seasonalControls.year), season: seasonalControls.season } })
+})
+
+watch(() => [route.query.year, route.query.season], () => {
+  const selection = seasonSelection(route.query.year, route.query.season)
+  if (selection.year === seasonalControls.year && selection.season === seasonalControls.season) return
+  Object.assign(seasonalControls, selection)
 })
 
 useSeoMeta({
-  title: () => `${seasonalControls.year}年${seasonLabels[seasonalControls.season]}新番表｜動畫新番、動漫庫`,
-  description: () => `${seasonalControls.year}年${seasonLabels[seasonalControls.season]}季動畫新番總覽，追蹤最新動漫新番放送時間、角色資訊與觀看平台。`,
+  title: () => `${seasonalControls.year}年${seasonMonthLabels[seasonalControls.season]}新番表｜動畫新番、動漫庫`,
+  description: () => `${seasonalControls.year}年${seasonMonthLabels[seasonalControls.season]}季動畫新番總覽，追蹤最新動漫新番放送時間、角色資訊與觀看平台。`,
   ogType: 'website'
 })
 useHead({
@@ -114,7 +130,7 @@ useHead({
       <div class="space-y-0.5">
         <p class="text-xs font-extrabold uppercase tracking-widest text-primary-700">新番表</p>
         <h1 class="text-xl font-extrabold tracking-tight text-gray-950 md:text-2xl">
-          {{ seasonalControls.year }}年 {{ seasonLabels[seasonalControls.season] }} 新番表
+          {{ seasonalControls.year }}年 {{ seasonMonthLabels[seasonalControls.season] }} 新番表
         </h1>
       </div>
       <!-- Season prev/next arrows -->
@@ -129,7 +145,7 @@ useHead({
         </button>
         <div class="hidden min-w-28 text-center md:block">
           <span class="text-sm font-bold text-gray-700">
-            {{ seasonalControls.year }} · {{ seasonLabels[seasonalControls.season] }}
+            {{ seasonalControls.year }} · {{ seasonMonthLabels[seasonalControls.season] }}
           </span>
         </div>
         <button
