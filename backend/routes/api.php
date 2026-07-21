@@ -22,6 +22,7 @@ Route::middleware('jwt')->group(function (): void {
     Route::get('/me/bootstrap', MeBootstrapController::class);
     Route::post('/me/share-slug/regenerate', [AnimeListController::class, 'regenerateSlug']);
     Route::get('/my/anime-list', [AnimeListController::class, 'index']);
+    Route::get('/my/anime-list/counts', [AnimeListController::class, 'counts']);
     Route::get('/my/anime-list/tags', [AnimeListController::class, 'tags']);
     Route::post('/my/anime-list', [AnimeListController::class, 'store']);
     Route::patch('/my/anime-list/{item}', [AnimeListController::class, 'update']);

@@ -1,5 +1,8 @@
 import type {
   AnimeCardBootstrapResponse,
+  AnimeListCountsResponse,
+  AnimeListFilters,
+  AnimeListResponse,
   AnimeSummaryFilters,
   AnimeSummaryResponse,
   ApiPayload,
@@ -136,10 +139,18 @@ export function useApi() {
     },
     catalogTags: () => request<TagsResponse>('/anime/tags'),
     getAnime: (id: number) => request<ItemResponse<ApiPayload>>(`/anime/${id}`),
-    myList: (params?: { tags?: string[] }) => {
-      const qs = params?.tags?.length ? `?tags=${encodeURIComponent(params.tags.join(','))}` : ''
-      return request<ItemsResponse<ApiPayload>>(`/my/anime-list${qs}`)
+    myList: (filters: AnimeListFilters = {}) => {
+      const params = new URLSearchParams()
+      if (filters.page) params.set('page', String(filters.page))
+      if (filters.q) params.set('q', filters.q)
+      if (filters.tags?.length) params.set('tags', filters.tags.join(','))
+      if (filters.status && filters.status !== 'all') params.set('status', filters.status)
+      if (filters.collectionId) params.set('collection_id', String(filters.collectionId))
+      if (filters.sort) params.set('sort', filters.sort)
+      const queryString = params.toString()
+      return request<AnimeListResponse>(`/my/anime-list${queryString ? `?${queryString}` : ''}`)
     },
+    myListCounts: () => request<AnimeListCountsResponse>('/my/anime-list/counts'),
     myListTags: () => request<TagsResponse>('/my/anime-list/tags'),
     addToList: (animeId: number) => request<ItemResponse<ApiPayload>>('/my/anime-list', { method: 'POST', body: JSON.stringify({ animeId }) }),
     updateListItem: (id: number, payload: ListItemPatch) => request<ItemResponse<ApiPayload>>(`/my/anime-list/${id}`, { method: 'PATCH', body: JSON.stringify(payload) }),

@@ -9,12 +9,15 @@ use App\Models\UserAnimeListItem;
 use App\Services\Shared\DelimitedValues;
 use App\Services\Shared\GenreTagStatistics;
 use App\Services\Shared\SlugGenerator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 final class AnimeListController extends Controller
 {
+    private const PAGE_SIZE = 50;
+
     public function me(Request $request): JsonResponse
     {
         $user = User::query()->find((int) $request->attributes->get('auth_user_id'));
@@ -28,9 +31,89 @@ final class AnimeListController extends Controller
     public function index(Request $request): JsonResponse
     {
         $tags = DelimitedValues::parse((string) $request->query('tags', ''));
+        $page = $this->positiveQueryInteger($request, 'page', 1);
+        $status = $this->queryString($request, 'status', 'all');
+        $sort = $this->queryString($request, 'sort', 'airDate');
+        $search = trim($this->queryString($request, 'q', ''));
+        $collectionId = $request->query->has('collection_id')
+            ? $this->positiveQueryInteger($request, 'collection_id')
+            : null;
+
+        if (! in_array($status, ['all', 'watched', 'unwatched'], true)) {
+            throw new ApiException(422, 'validation_failed', '觀看狀態格式錯誤');
+        }
+        if (! in_array($sort, ['airDate', 'year', 'added'], true)) {
+            throw new ApiException(422, 'validation_failed', '排序方式格式錯誤');
+        }
+        if (mb_strlen($search) > 200) {
+            throw new ApiException(422, 'validation_failed', '搜尋文字不可超過 200 字');
+        }
+
+        $query = UserAnimeListItem::query()
+            ->select('user_anime_list_items.*')
+            ->join('anime', 'anime.id', '=', 'user_anime_list_items.anime_id')
+            ->with($this->itemRelations())
+            ->where('user_anime_list_items.user_id', (int) $request->attributes->get('auth_user_id'))
+            ->when($status === 'watched', fn ($builder) => $builder->where('user_anime_list_items.watched', true))
+            ->when($status === 'unwatched', fn ($builder) => $builder->where('user_anime_list_items.watched', false))
+            ->when($collectionId !== null, function ($builder) use ($collectionId): void {
+                $builder->whereHas('collections', fn ($collection) => $collection
+                    ->where('user_collections.id', $collectionId));
+            })
+            ->when($tags !== [], function ($builder) use ($tags): void {
+                $builder->where(function ($tagQuery) use ($tags): void {
+                    foreach ($tags as $tag) {
+                        $tagQuery->orWhereJsonContains('anime.tags', $tag);
+                    }
+                });
+            })
+            ->when($search !== '', function ($builder) use ($search): void {
+                $builder->where(function ($searchQuery) use ($search): void {
+                    $searchQuery
+                        ->where('anime.name', 'like', "%{$search}%")
+                        ->orWhereHas('anime.aliases', fn ($aliases) => $aliases->where('alias', 'like', "%{$search}%"))
+                        ->orWhereHas('anime.titles', fn ($titles) => $titles->where('title', 'like', "%{$search}%"));
+                });
+            });
+
+        $total = (clone $query)->count('user_anime_list_items.id');
+        $lastPage = max(1, (int) ceil($total / self::PAGE_SIZE));
+        $this->applySort($query, $sort);
+        $items = $page > $lastPage
+            ? collect()
+            : $query
+                ->forPage($page, self::PAGE_SIZE)
+                ->get()
+                ->map(fn (UserAnimeListItem $item): array => $this->formatItem($item));
 
         return response()->json([
-            'items' => $this->listForUser((int) $request->attributes->get('auth_user_id'), $tags),
+            'items' => $items->all(),
+            'meta' => [
+                'page' => $page,
+                'per_page' => self::PAGE_SIZE,
+                'total' => $total,
+                'last_page' => $lastPage,
+                'has_more' => $page < $lastPage,
+            ],
+        ]);
+    }
+
+    public function counts(Request $request): JsonResponse
+    {
+        $totals = UserAnimeListItem::query()
+            ->where('user_id', (int) $request->attributes->get('auth_user_id'))
+            ->selectRaw('COUNT(*) AS total')
+            ->selectRaw('COALESCE(SUM(CASE WHEN watched = 1 THEN 1 ELSE 0 END), 0) AS watched_count')
+            ->first();
+        $all = (int) ($totals?->total ?? 0);
+        $watched = (int) ($totals?->watched_count ?? 0);
+
+        return response()->json([
+            'counts' => [
+                'all' => $all,
+                'watched' => $watched,
+                'unwatched' => $all - $watched,
+            ],
         ]);
     }
 
@@ -170,6 +253,40 @@ final class AnimeListController extends Controller
             ->get()
             ->map(fn (UserAnimeListItem $item): array => $this->formatItem($item))
             ->all();
+    }
+
+    private function applySort(Builder $query, string $sort): void
+    {
+        if ($sort === 'added') {
+            $query->orderByDesc('user_anime_list_items.created_at');
+        } elseif ($sort === 'year') {
+            $query->orderByDesc('anime.season_year')
+                ->orderByDesc('anime.air_date');
+        } else {
+            $query->orderByDesc('anime.air_date');
+        }
+
+        $query->orderByDesc('user_anime_list_items.id');
+    }
+
+    private function positiveQueryInteger(Request $request, string $key, int $default = 0): int
+    {
+        $value = $request->query($key, (string) $default);
+        if (! is_string($value) || ! ctype_digit($value) || (int) $value < 1) {
+            throw new ApiException(422, 'validation_failed', "{$key} 格式錯誤");
+        }
+
+        return (int) $value;
+    }
+
+    private function queryString(Request $request, string $key, string $default): string
+    {
+        $value = $request->query($key, $default);
+        if (! is_string($value)) {
+            throw new ApiException(422, 'validation_failed', "{$key} 格式錯誤");
+        }
+
+        return $value;
     }
 
     private function formatItem(UserAnimeListItem $item): array

@@ -8,11 +8,18 @@ const listPageSource = readFileSync(
 )
 
 describe('list page data-flow contract', () => {
-  it('loads the complete list once and filters selected tags locally', () => {
-    expect(listPageSource.match(/api\.myList\(/g)).toHaveLength(1)
-    expect(listPageSource).toContain('applyTagFilters(list.value, selectedTags.value)')
-    expect(listPageSource).not.toContain('api.myList({ tags })')
-    expect(listPageSource).not.toContain('watch(selectedTags')
+  it('loads only the requested page and delegates filters to the list API', () => {
+    expect(listPageSource).toContain('page: page.value')
+    expect(listPageSource).toContain('tags: selectedTags.value')
+    expect(listPageSource).toContain('filters.status = activeFilter.value')
+    expect(listPageSource).not.toContain('applyTagFilters(list.value')
+    expect(listPageSource).not.toContain('applyListFilters(')
+  })
+
+  it('loads global collection status counts from the dedicated endpoint', () => {
+    expect(listPageSource).toContain('api.myListCounts()')
+    expect(listPageSource).toContain("{ value: 'all', label: '全部收藏' }")
+    expect(listPageSource).toContain("{ value: 'unwatched', label: '收藏未看' }")
   })
 
   it('keeps a single canonical list collection', () => {

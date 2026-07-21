@@ -51,6 +51,26 @@ export interface AnimeSummaryResponse extends ItemsResponse<ApiPayload> {
   meta: AnimeSummaryMeta
 }
 
+export type AnimeListSort = 'airDate' | 'year' | 'added'
+export type AnimeListStatus = 'all' | 'watched' | 'unwatched'
+
+export interface AnimeListFilters {
+  page?: number
+  q?: string
+  tags?: string[]
+  status?: AnimeListStatus
+  collectionId?: number
+  sort?: AnimeListSort
+}
+
+export interface AnimeListResponse extends ItemsResponse<ApiPayload> {
+  meta: AnimeSummaryMeta
+}
+
+export interface AnimeListCountsResponse {
+  counts: Record<AnimeListStatus, number>
+}
+
 export interface TagCountPayload {
   tag: string
   count: number
