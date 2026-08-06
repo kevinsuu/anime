@@ -25,18 +25,12 @@ const colPopoverOpen = ref(false)
 const mobileEditorOpen = ref(false)
 const mobileNoteDraft = ref(props.item.note)
 
-const UNRATED = 'unrated'
-const ratingOptions = [
-  { value: UNRATED, label: '未評分' },
-  ...Array.from({ length: 10 }, (_, i) => ({ value: String(i + 1), label: `★ ${i + 1} 分` }))
-]
-
 function updateWatched(value: boolean) {
   emit('update', { watched: value })
 }
 
-function updateRating(value: string | undefined) {
-  emit('update', { rating: value && value !== UNRATED ? Number(value) : null })
+function updateRating(value: number | null) {
+  emit('update', { rating: value })
 }
 
 function updateNote(value: string) {
@@ -246,15 +240,12 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
             <div class="space-y-6">
               <section :aria-labelledby="`mobile-list-rating-heading-${item.id}`" class="space-y-2">
                 <h4 :id="`mobile-list-rating-heading-${item.id}`" class="text-sm font-bold text-gray-900">評分</h4>
-                <select
-                  :value="item.rating ? String(item.rating) : UNRATED"
+                <ListRatingStars
+                  :rating="item.rating"
                   :disabled="disabled"
-                  class="min-h-11 w-full rounded-lg border border-gray-200 bg-white px-3 text-sm font-semibold text-gray-700 outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100 disabled:opacity-50"
-                  :aria-labelledby="`mobile-list-rating-heading-${item.id}`"
-                  @change="event => updateRating((event.target as HTMLSelectElement).value)"
-                >
-                  <option v-for="opt in ratingOptions" :key="opt.value" :value="opt.value">{{ opt.label }}</option>
-                </select>
+                  :labelled-by="`mobile-list-rating-heading-${item.id}`"
+                  @update:rating="updateRating"
+                />
               </section>
 
               <section :aria-labelledby="`mobile-list-note-heading-${item.id}`" class="space-y-2">
@@ -364,14 +355,12 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
           <span class="text-xs font-medium text-gray-700">已看</span>
         </label>
 
-        <select
-          :value="item.rating ? String(item.rating) : UNRATED"
+        <ListRatingStars
+          :rating="item.rating"
           :disabled="disabled"
-          class="rounded-lg border border-gray-200 bg-white px-2 py-1 text-xs font-medium text-gray-700 outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100 disabled:opacity-50"
-          @change="event => updateRating((event.target as HTMLSelectElement).value)"
-        >
-          <option v-for="opt in ratingOptions" :key="opt.value" :value="opt.value">{{ opt.label }}</option>
-        </select>
+          compact
+          @update:rating="updateRating"
+        />
 
         <div class="ml-auto">
           <template v-if="!confirmingRemove">

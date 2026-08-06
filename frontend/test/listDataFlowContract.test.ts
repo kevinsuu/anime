@@ -18,12 +18,27 @@ describe('list page data-flow contract', () => {
 
   it('loads global collection status counts from the dedicated endpoint', () => {
     expect(listPageSource).toContain('api.myListCounts()')
-    expect(listPageSource).toContain("{ value: 'all', label: '全部收藏' }")
-    expect(listPageSource).toContain("{ value: 'unwatched', label: '收藏未看' }")
+    expect(listPageSource).toContain("{ value: 'all', label: '全部收藏'")
+    expect(listPageSource).toContain("{ value: 'unwatched', label: '收藏未看'")
   })
 
   it('keeps a single canonical list collection', () => {
     expect(listPageSource).toContain('const list = ref<ListItem[]>([])')
     expect(listPageSource).not.toContain('fullList')
+  })
+
+  it('keeps category filters collapsed by default on mobile and visible on desktop', () => {
+    expect(listPageSource).toContain('const mobileTagFiltersOpen = ref(false)')
+    expect(listPageSource).toContain(':aria-expanded="mobileTagFiltersOpen"')
+    expect(listPageSource).toContain('aria-controls="list-tag-filters"')
+    expect(listPageSource).toContain("mobileTagFiltersOpen ? 'mt-1 flex rounded-xl bg-gray-50 p-3' : 'hidden'")
+    expect(listPageSource).toContain('md:flex md:rounded-none md:border-t')
+  })
+
+  it('groups mobile scope controls and prioritizes search before sort and categories', () => {
+    expect(listPageSource).toContain('顯示範圍')
+    expect(listPageSource).toContain('搜尋與篩選')
+    expect(listPageSource).toContain('order-1 flex min-w-0 w-full')
+    expect(listPageSource).toContain('<option value="airDate">最新播出</option>')
   })
 })

@@ -49,12 +49,13 @@ const page = computed(() => routePositiveInteger(route.query.page))
 const totalPages = computed(() => Math.max(1, listMeta.value.last_page))
 
 const filterTabs = [
-  { value: 'all', label: '全部收藏' },
-  { value: 'watched', label: '已看完' },
-  { value: 'unwatched', label: '收藏未看' },
+  { value: 'all', label: '全部收藏', mobileLabel: '全部' },
+  { value: 'watched', label: '已看完', mobileLabel: '已看完' },
+  { value: 'unwatched', label: '收藏未看', mobileLabel: '未觀看' },
 ]
 
 const mobileCollectionsOpen = ref(false)
+const mobileTagFiltersOpen = ref(false)
 const collectionPendingDelete = ref<Collection | null>(null)
 const deletingCollectionId = ref<number | null>(null)
 const deleteConfirmationRef = ref<HTMLElement | null>(null)
@@ -516,12 +517,13 @@ watch(mobileCollectionsOpen, (open) => {
         </div>
       </header>
 
-      <!-- Mobile list navigation: keep the primary watch states one tap away and
-           move collection management into an accessible bottom sheet. -->
-      <div class="space-y-3 md:hidden">
+      <!-- Mobile list scope: watch states and custom collections belong to the
+           same decision, so keep them together instead of presenting two cards. -->
+      <section class="rounded-2xl border border-gray-200 bg-white p-3 shadow-sm md:hidden">
+        <p class="mb-2 px-1 text-xs font-extrabold tracking-wide text-gray-500">顯示範圍</p>
         <nav
           aria-label="清單觀看狀態"
-          class="grid grid-cols-3 rounded-xl border border-gray-200 bg-gray-50 p-1 shadow-sm"
+          class="grid grid-cols-3 rounded-xl bg-gray-100 p-1"
         >
           <button
             v-for="tab in filterTabs"
@@ -534,39 +536,46 @@ watch(mobileCollectionsOpen, (open) => {
             :aria-pressed="activeFilter === tab.value"
             @click="setFilter(tab.value)"
           >
-            <span>{{ tab.label }}</span>
+            <span>{{ tab.mobileLabel }}</span>
             <span class="text-[11px] opacity-60">
               {{ listCounts[tab.value as keyof typeof listCounts] }}
             </span>
           </button>
         </nav>
 
-        <USlideover
-          v-model:open="mobileCollectionsOpen"
-          side="bottom"
-          title="收藏分類"
-          description="將收藏作品整理到自訂分類，並管理公開分享與刪除設定。"
-          :ui="{
-            content: 'max-h-[88dvh] rounded-t-3xl',
-            body: 'overflow-y-auto px-4 sm:px-6',
-            close: 'size-11',
-            footer: 'border-t border-gray-100 px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-3 sm:px-6'
-          }"
-        >
-          <button
-            type="button"
-            class="flex min-h-11 w-full items-center gap-3 rounded-xl border border-gray-200 bg-white px-3 text-left text-sm font-semibold text-gray-700 shadow-sm transition active:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
-            aria-haspopup="dialog"
+        <div class="mt-3 border-t border-gray-100 pt-3">
+          <USlideover
+            v-model:open="mobileCollectionsOpen"
+            side="bottom"
+            title="收藏分類"
+            description="將收藏作品整理到自訂分類，並管理公開分享與刪除設定。"
+            :ui="{
+              content: 'max-h-[88dvh] rounded-t-3xl',
+              body: 'overflow-y-auto px-4 sm:px-6',
+              close: 'size-11',
+              footer: 'border-t border-gray-100 px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-3 sm:px-6'
+            }"
           >
-            <span class="grid size-8 shrink-0 place-items-center rounded-lg bg-primary-50 text-primary-700">
-              <UIcon name="i-lucide-library" class="size-4" />
-            </span>
-            <span class="min-w-0 flex-1 truncate">
-              {{ activeCollection ? `收藏分類：${activeCollection.name}` : '選擇與管理收藏分類' }}
-            </span>
-            <span class="shrink-0 text-xs font-bold text-gray-400">{{ collections.length }}</span>
-            <UIcon name="i-lucide-chevron-up" class="size-4 shrink-0 text-gray-400" />
-          </button>
+            <button
+              type="button"
+              class="flex min-h-12 w-full items-center gap-3 rounded-xl px-2 text-left transition active:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+              :class="activeCollection ? 'bg-primary-50' : 'bg-gray-50'"
+              aria-haspopup="dialog"
+            >
+              <span class="grid size-9 shrink-0 place-items-center rounded-lg bg-white text-primary-700 shadow-sm ring-1 ring-gray-100">
+                <UIcon :name="activeCollection ? 'i-lucide-folder-open' : 'i-lucide-folders'" class="size-4" />
+              </span>
+              <span class="min-w-0 flex-1">
+                <span class="block text-sm font-bold text-gray-800">收藏分類</span>
+                <span class="block truncate text-xs font-medium" :class="activeCollection ? 'text-primary-700' : 'text-gray-500'">
+                  {{ activeCollection?.name ?? '選擇或管理分類' }}
+                </span>
+              </span>
+              <span class="shrink-0 rounded-full bg-white px-2 py-1 text-[11px] font-bold text-gray-500 shadow-sm">
+                {{ collections.length }} 個
+              </span>
+              <UIcon name="i-lucide-chevron-up" class="size-4 shrink-0 text-gray-400" />
+            </button>
 
           <template #body>
             <div class="space-y-5">
@@ -677,55 +686,107 @@ watch(mobileCollectionsOpen, (open) => {
               完成
             </button>
           </template>
-        </USlideover>
-      </div>
+          </USlideover>
+        </div>
+      </section>
 
       <!-- 搜尋 + 排序 + 分類卡片：查詢交由後端在分頁前套用，避免只篩選當頁資料。 -->
-      <div class="min-w-0 max-w-full space-y-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
-        <div class="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-center">
-          <!-- 排序下拉（對齊 catalog 左控制項位置） -->
-          <div class="shrink-0">
-            <label for="list-sort" class="sr-only">排序方式</label>
-            <select
-              id="list-sort"
-              v-model="sortKey"
-              @change="changeSort"
-              class="w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm font-semibold text-gray-700 shadow-sm outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100 sm:w-auto"
-            >
-              <option value="airDate">播出日期</option>
-              <option value="year">年份</option>
-              <option value="added">加入日期</option>
-            </select>
-          </div>
+      <section class="min-w-0 max-w-full space-y-3 rounded-2xl border border-gray-200 bg-white p-3 shadow-sm md:p-4">
+        <header class="flex items-center justify-between gap-3 px-1 md:hidden">
+          <h2 class="inline-flex items-center gap-2 text-sm font-extrabold text-gray-800">
+            <UIcon name="i-lucide-list-filter" class="size-4 text-primary-600" />
+            搜尋與篩選
+          </h2>
+          <button
+            v-if="hasActiveFilters"
+            type="button"
+            class="inline-flex min-h-9 items-center gap-1 rounded-lg px-2 text-xs font-bold text-gray-500 transition active:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+            @click="clearAllFilters"
+          >
+            <UIcon name="i-lucide-rotate-ccw" class="size-3.5" />
+            重設
+          </button>
+        </header>
 
-          <!-- 搜尋框 + 綠色搜尋鈕 -->
-          <form class="flex min-w-0 flex-1 gap-2" @submit.prevent="applySearch">
+        <div class="flex min-w-0 flex-wrap gap-2 md:flex-nowrap md:items-center md:gap-3">
+          <!-- 搜尋是手機上的主要操作，固定排在排序與分類之前。 -->
+          <form class="order-1 flex min-w-0 w-full gap-2 md:order-2 md:w-auto md:flex-1" @submit.prevent="applySearch">
             <div class="relative min-w-0 flex-1">
               <label for="list-search" class="sr-only">搜尋清單內作品</label>
               <UIcon
                 name="i-lucide-search"
-                class="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-400 pointer-events-none"
+                class="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-400"
               />
               <input
                 id="list-search"
                 v-model="searchQuery"
                 type="search"
                 placeholder="搜尋清單內作品…"
-                class="min-w-0 w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-9 pr-4 text-sm text-gray-900 placeholder:text-gray-400 shadow-sm outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
+                class="min-h-11 min-w-0 w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-9 pr-4 text-sm text-gray-900 placeholder:text-gray-400 shadow-sm outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100 md:min-h-0 md:rounded-lg"
               />
             </div>
             <button
               type="submit"
-              class="rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+              class="min-h-11 shrink-0 rounded-xl bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 md:min-h-0 md:rounded-lg"
             >
               搜尋
             </button>
           </form>
 
+          <!-- 排序與分類是次要控制，手機上並列以縮短操作區高度。 -->
+          <div class="relative order-2 min-w-0 flex-1 md:order-1 md:flex-none">
+            <label for="list-sort" class="sr-only">排序方式</label>
+            <UIcon
+              name="i-lucide-arrow-down-wide-narrow"
+              class="pointer-events-none absolute left-3 top-1/2 z-10 size-4 -translate-y-1/2 text-gray-500"
+            />
+            <select
+              id="list-sort"
+              v-model="sortKey"
+              @change="changeSort"
+              class="min-h-11 w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 py-2.5 pl-9 pr-8 text-sm font-bold text-gray-700 outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100 md:min-h-0 md:rounded-lg md:bg-white md:shadow-sm"
+            >
+              <option value="airDate">最新播出</option>
+              <option value="year">年份新到舊</option>
+              <option value="added">最近加入</option>
+            </select>
+            <UIcon
+              name="i-lucide-chevron-down"
+              class="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-gray-400"
+            />
+          </div>
+
+          <button
+            v-if="tagOptions.length > 0"
+            type="button"
+            class="order-2 flex min-h-11 min-w-0 flex-1 items-center justify-between gap-2 rounded-xl border px-3 text-left text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 md:hidden"
+            :class="mobileTagFiltersOpen || selectedTags.length > 0
+              ? 'border-primary-200 bg-primary-50 text-primary-700'
+              : 'border-gray-200 bg-gray-50 text-gray-700 active:bg-gray-100'"
+            :aria-expanded="mobileTagFiltersOpen"
+            aria-controls="list-tag-filters"
+            @click="mobileTagFiltersOpen = !mobileTagFiltersOpen"
+          >
+            <span class="inline-flex min-w-0 items-center gap-2">
+              <UIcon name="i-lucide-tags" class="size-4 shrink-0" />
+              <span class="truncate">作品分類</span>
+            </span>
+            <span class="inline-flex shrink-0 items-center gap-1.5">
+              <span v-if="selectedTags.length > 0" class="rounded-full bg-white px-1.5 py-0.5 text-[11px] font-extrabold shadow-sm">
+                {{ selectedTags.length }}
+              </span>
+              <UIcon
+                name="i-lucide-chevron-down"
+                class="size-4 text-gray-400 transition-transform"
+                :class="mobileTagFiltersOpen ? 'rotate-180' : ''"
+              />
+            </span>
+          </button>
+
           <button
             v-if="hasActiveFilters"
             type="button"
-            class="inline-flex shrink-0 items-center gap-1 rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm font-semibold text-gray-600 shadow-sm transition hover:bg-gray-50"
+            class="order-3 hidden shrink-0 items-center gap-1 rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm font-semibold text-gray-600 shadow-sm transition hover:bg-gray-50 md:inline-flex"
             @click="clearAllFilters"
           >
             <UIcon name="i-lucide-x" class="size-4" />
@@ -733,7 +794,12 @@ watch(mobileCollectionsOpen, (open) => {
           </button>
         </div>
 
-        <div v-if="tagOptions.length > 0" class="flex min-w-0 flex-wrap items-center gap-1.5 border-t border-gray-100 pt-3">
+        <div
+          v-if="tagOptions.length > 0"
+          id="list-tag-filters"
+          class="min-w-0 flex-wrap items-center gap-1.5 md:mt-0 md:flex md:rounded-none md:border-t md:border-gray-100 md:bg-transparent md:p-0 md:pt-3"
+          :class="mobileTagFiltersOpen ? 'mt-1 flex rounded-xl bg-gray-50 p-3' : 'hidden'"
+        >
           <button
             v-for="opt in tagOptions"
             :key="opt.tag"
@@ -749,7 +815,7 @@ watch(mobileCollectionsOpen, (open) => {
             <span class="opacity-70">{{ opt.count }}</span>
           </button>
         </div>
-      </div>
+      </section>
 
       <div v-if="filteredList.length === 0 && routeString(route.query.q).trim() !== ''" class="rounded-xl border border-dashed border-gray-200 p-8 text-center text-gray-500">
         <UIcon name="i-lucide-search-x" class="mx-auto mb-2 size-8 text-gray-300" />
