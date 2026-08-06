@@ -52,6 +52,19 @@ async function logout() {
       <h1 class="text-3xl font-extrabold tracking-tight text-gray-950">設定</h1>
     </header>
 
+    <section aria-labelledby="product-philosophy-title" class="rounded-xl border border-gray-200 bg-white px-5 py-4 shadow-sm md:flex md:items-center md:justify-between md:gap-8 md:px-6">
+      <div class="shrink-0">
+        <p class="text-[11px] font-extrabold uppercase tracking-[0.2em] text-primary-700">Anime Library</p>
+        <h2 id="product-philosophy-title" class="mt-1 text-xl font-extrabold tracking-tight text-gray-950">動漫庫</h2>
+      </div>
+      <div class="mt-3 border-t border-gray-100 pt-3 md:mt-0 md:max-w-xl md:border-l md:border-t-0 md:py-1 md:pl-6">
+        <p class="text-xs font-bold tracking-wide text-gray-400">產品理念</p>
+        <p class="mt-1 text-sm font-medium leading-6 text-gray-600">
+          查找每季新番播出時間，瀏覽動畫、角色與聲優資料，收藏下一部想追的作品。
+        </p>
+      </div>
+    </section>
+
     <div class="grid gap-4 md:grid-cols-2">
       <!-- Profile card -->
       <div class="flex flex-col items-center gap-4 rounded-xl border border-gray-200 bg-white p-8 shadow-sm text-center">
