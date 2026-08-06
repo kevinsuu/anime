@@ -264,14 +264,22 @@ async function dispatchTouchTap(locator: Locator) {
   const touch = { clientX: 40, clientY: 40, isPrimary: true, pointerId: 1, pointerType: 'touch' }
   await locator.dispatchEvent('pointerdown', touch)
   await locator.dispatchEvent('pointerup', touch)
+  await locator.dispatchEvent('pointerleave', touch)
   await locator.dispatchEvent('click', { detail: 1 })
 }
 
-test('393px card gestures map double tap to favorite and long press to watched', async ({ page }) => {
+test('393px card gestures map single tap, double tap and long press correctly', async ({ page }) => {
   await page.setViewportSize(mobileViewport)
   await openReadyPage(page, '/seasonal?year=2026&season=summer', 'cards')
 
-  const firstCard = page.locator('[data-mobile-gesture-card]').first()
+  let firstCard = page.locator('[data-mobile-gesture-card]').first()
+  const detailPath = await firstCard.getAttribute('href')
+  expect(detailPath).toMatch(/^\/anime\/\d+$/)
+  await dispatchTouchTap(firstCard)
+  await expect(page).toHaveURL(new RegExp(`${detailPath}$`), { timeout: 2000 })
+
+  await openReadyPage(page, '/seasonal?year=2026&season=summer', 'cards')
+  firstCard = page.locator('[data-mobile-gesture-card]').first()
   await dispatchTouchTap(firstCard)
   await dispatchTouchTap(firstCard)
   await expect(page).toHaveURL(/\/login$/)

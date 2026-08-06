@@ -185,7 +185,7 @@ onBeforeUnmount(() => {
       @contextmenu="mobileGestures.onContextMenu"
       @pointercancel="mobileGestures.onPointerCancel"
       @pointerdown="mobileGestures.onPointerDown"
-      @pointerleave="mobileGestures.onPointerCancel"
+      @pointerleave="mobileGestures.onPointerLeave"
       @pointermove="mobileGestures.onPointerMove"
       @pointerup="mobileGestures.onPointerUp"
     >

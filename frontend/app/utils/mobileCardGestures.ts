@@ -22,6 +22,7 @@ export function createMobileCardGestureHandlers(callbacks: MobileCardGestureCall
   let gestureSequence = false
   let gestureCancelled = false
   let longPressTriggered = false
+  let pointerPressed = false
   let activePointerType = ''
   let pressX = 0
   let pressY = 0
@@ -50,6 +51,7 @@ export function createMobileCardGestureHandlers(callbacks: MobileCardGestureCall
     gestureSequence = callbacks.isEnabled() && supportedPointer && event.isPrimary
     gestureCancelled = false
     longPressTriggered = false
+    pointerPressed = gestureSequence
     activePointerType = gestureSequence ? event.pointerType : ''
     clearLongPressTimer()
     if (!gestureSequence) return
@@ -78,11 +80,23 @@ export function createMobileCardGestureHandlers(callbacks: MobileCardGestureCall
   }
 
   function onPointerUp() {
+    pointerPressed = false
     clearLongPressTimer()
   }
 
   function onPointerCancel() {
+    pointerPressed = false
     gestureCancelled = true
+    clearLongPressTimer()
+  }
+
+  function onPointerLeave() {
+    // Touch browsers can emit pointerleave after pointerup but before click.
+    // At that point the tap is already complete and must still reach the
+    // single/double-tap resolver. Only leaving while actively pressed cancels.
+    if (!pointerPressed) return
+    gestureCancelled = true
+    pointerPressed = false
     clearLongPressTimer()
   }
 
@@ -131,6 +145,7 @@ export function createMobileCardGestureHandlers(callbacks: MobileCardGestureCall
     onContextMenu,
     onPointerCancel,
     onPointerDown,
+    onPointerLeave,
     onPointerMove,
     onPointerUp,
     dispose

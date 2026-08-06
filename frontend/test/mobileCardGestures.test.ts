@@ -47,6 +47,9 @@ describe('mobile card gestures', () => {
   function tap(handlers: ReturnType<typeof createMobileCardGestureHandlers>, pointerType: 'touch' | 'mouse' = 'touch') {
     handlers.onPointerDown(pointerEvent({ pointerType }))
     handlers.onPointerUp()
+    // Mobile browsers may dispatch pointerleave after releasing the pointer
+    // but before the synthesized click.
+    handlers.onPointerLeave()
     const event = clickEvent()
     handlers.onClick(event)
     return event
@@ -93,6 +96,19 @@ describe('mobile card gestures', () => {
     const { callbacks, handlers } = setup()
     handlers.onPointerDown(pointerEvent())
     handlers.onPointerMove(pointerEvent({ clientY: 50 }))
+    handlers.onPointerUp()
+    handlers.onClick(clickEvent())
+    vi.runAllTimers()
+
+    expect(callbacks.onLongPress).not.toHaveBeenCalled()
+    expect(callbacks.onNavigate).not.toHaveBeenCalled()
+    expect(callbacks.onDoubleTap).not.toHaveBeenCalled()
+  })
+
+  it('cancels a press that leaves the card before release', () => {
+    const { callbacks, handlers } = setup()
+    handlers.onPointerDown(pointerEvent())
+    handlers.onPointerLeave()
     handlers.onPointerUp()
     handlers.onClick(clickEvent())
     vi.runAllTimers()
