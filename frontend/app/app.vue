@@ -1,5 +1,5 @@
 <template>
-  <UApp>
+  <UApp :toaster="toasterOptions">
     <NuxtRouteAnnouncer />
     <a
       href="#main-content"
@@ -14,6 +14,29 @@
       </main>
       <AppMobileNav />
     </div>
-    <UToaster />
   </UApp>
 </template>
+
+<script setup lang="ts">
+const isMobileViewport = ref(false)
+const toasterOptions = computed(() => ({
+  position: isMobileViewport.value ? 'top-right' as const : 'bottom-right' as const,
+  expand: !isMobileViewport.value
+}))
+
+let mobileViewport: MediaQueryList | undefined
+
+function updateToasterLayout() {
+  isMobileViewport.value = mobileViewport?.matches ?? false
+}
+
+onMounted(() => {
+  mobileViewport = window.matchMedia('(max-width: 639px)')
+  updateToasterLayout()
+  mobileViewport.addEventListener('change', updateToasterLayout)
+})
+
+onBeforeUnmount(() => {
+  mobileViewport?.removeEventListener('change', updateToasterLayout)
+})
+</script>
