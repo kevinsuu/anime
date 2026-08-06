@@ -8,6 +8,8 @@ const api = useApi()
 const { setSession } = useSession()
 const config = useRuntimeConfig()
 const toast = useToast()
+const googleStatus = ref<'loading' | 'ready' | 'missing-config' | 'error'>('loading')
+let googleLoadTimer: ReturnType<typeof setTimeout> | undefined
 
 declare global {
   interface Window {
@@ -58,36 +60,81 @@ async function devLogin() {
 }
 
 function renderGoogleButton() {
-  if (!window.google || !config.public.googleClientId) return
-  window.google.accounts.id.initialize({
-    client_id: config.public.googleClientId,
-    callback: handleCredentialResponse
-  })
-  const target = document.getElementById('google-signin')
-  if (target && target.childElementCount === 0) {
+  if (!config.public.googleClientId) {
+    googleStatus.value = 'missing-config'
+    return
+  }
+  if (!window.google) {
+    googleStatus.value = 'error'
+    return
+  }
+
+  try {
+    window.google.accounts.id.initialize({
+      client_id: config.public.googleClientId,
+      callback: handleCredentialResponse
+    })
+    const target = document.getElementById('google-signin')
+    if (!target) return
+    target.replaceChildren()
     window.google.accounts.id.renderButton(target, {
       theme: 'outline',
       size: 'large',
       shape: 'pill',
       width: Math.min(320, target.clientWidth || 320)
     })
+    googleStatus.value = target.childElementCount > 0 ? 'ready' : 'error'
+    clearTimeout(googleLoadTimer)
+  } catch {
+    googleStatus.value = 'error'
   }
 }
 
-onMounted(() => {
+function loadGoogleButton() {
+  if (!config.public.googleClientId) {
+    googleStatus.value = 'missing-config'
+    return
+  }
+
+  googleStatus.value = 'loading'
   if (window.google) {
     renderGoogleButton()
     return
   }
-  if (!document.getElementById('google-gsi-script')) {
-    const script = document.createElement('script')
+
+  let script = document.getElementById('google-gsi-script') as HTMLScriptElement | null
+  let shouldAppendScript = false
+  if (!script) {
+    script = document.createElement('script')
     script.id = 'google-gsi-script'
     script.src = 'https://accounts.google.com/gsi/client'
     script.async = true
     script.defer = true
-    script.onload = renderGoogleButton
-    document.head.appendChild(script)
+    shouldAppendScript = true
   }
+
+  script.addEventListener('load', renderGoogleButton, { once: true })
+  script.addEventListener('error', () => {
+    clearTimeout(googleLoadTimer)
+    googleStatus.value = 'error'
+  }, { once: true })
+  if (shouldAppendScript) document.head.appendChild(script)
+
+  clearTimeout(googleLoadTimer)
+  googleLoadTimer = setTimeout(() => {
+    if (googleStatus.value === 'loading') googleStatus.value = 'error'
+  }, 8000)
+}
+
+function retryGoogleButton() {
+  document.getElementById('google-gsi-script')?.remove()
+  loadGoogleButton()
+}
+
+onMounted(loadGoogleButton)
+
+onUnmounted(() => {
+  clearTimeout(googleLoadTimer)
 })
 </script>
 
@@ -111,7 +158,24 @@ onMounted(() => {
 
       <!-- Sign-in card -->
       <div class="rounded-2xl border border-gray-200/80 bg-white/90 p-7 shadow-xl shadow-gray-900/5 backdrop-blur-sm">
-        <div id="google-signin" class="flex min-h-[46px] justify-center" />
+        <div class="relative min-h-[46px]">
+          <div id="google-signin" class="flex min-h-[46px] justify-center" />
+
+          <div v-if="googleStatus === 'loading'" class="absolute inset-0 flex items-center justify-center gap-2 text-sm text-gray-500">
+            <UIcon name="i-lucide-loader-circle" class="size-4 animate-spin" />
+            正在載入 Google 登入…
+          </div>
+
+          <div v-else-if="googleStatus === 'missing-config'" class="absolute inset-0 flex items-center justify-center text-center text-sm text-red-600">
+            Google 登入尚未設定，請檢查 Client ID。
+          </div>
+
+          <div v-else-if="googleStatus === 'error'" class="absolute inset-0 flex items-center justify-center">
+            <UButton variant="outline" color="neutral" icon="i-lucide-refresh-cw" @click="retryGoogleButton">
+              重新載入 Google 登入
+            </UButton>
+          </div>
+        </div>
 
         <div v-if="config.public.enableDevLogin" class="mt-4">
           <div class="mb-4 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-wider text-gray-400">

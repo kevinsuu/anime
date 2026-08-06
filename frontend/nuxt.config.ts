@@ -13,6 +13,11 @@ const publicRouteRules = process.env.NODE_ENV === 'development'
 export default defineNuxtConfig({
   compatibilityDate: '2026-06-29',
   devtools: { enabled: true },
+  vite: {
+    optimizeDeps: {
+      include: ['@vue/devtools-core', '@vue/devtools-kit']
+    }
+  },
   ssr: true,
   modules: ['@nuxt/ui', '@nuxtjs/sitemap'],
   css: ['~/assets/css/main.css'],
@@ -61,7 +66,11 @@ export default defineNuxtConfig({
     apiBaseUrlInternal: internalApiBaseUrl,
     public: {
       apiBaseUrl: publicApiBaseUrl,
-      googleClientId: process.env.NUXT_PUBLIC_GOOGLE_CLIENT_ID || '',
+      // `npm run dev` loads the repository-level .env. Reuse its
+      // GOOGLE_CLIENT_ID so local development follows the same single-source
+      // configuration as Docker Compose. Production builds still provide the
+      // public-prefixed variable explicitly.
+      googleClientId: process.env.NUXT_PUBLIC_GOOGLE_CLIENT_ID || process.env.GOOGLE_CLIENT_ID || '',
       enableDevLogin: process.env.NUXT_PUBLIC_ENABLE_DEV_LOGIN === 'true'
     }
   }
