@@ -151,6 +151,27 @@ describe('useAnimeCardStatuses', () => {
     await vi.waitFor(() => expect(state.bootstrapLoading.value).toBe(false))
   })
 
+  it('exposes a bootstrap failure, blocks mutations and retries the current scope', async () => {
+    api.meBootstrap
+      .mockRejectedValueOnce(new Error('同步連線中斷'))
+      .mockResolvedValueOnce({ user: { id: 1 }, statuses: [], collections: [] })
+    api.addToList.mockResolvedValue({ item: { id: 11, watched: false, collections: [] } })
+    const state = useAnimeCardStatuses(ref([1]))
+
+    await vi.waitFor(() => expect(state.bootstrapError.value).toBe('同步連線中斷'))
+    expect(state.bootstrapLoading.value).toBe(false)
+
+    await state.toggleAnimeInList(1)
+    expect(api.addToList).not.toHaveBeenCalled()
+
+    await state.retryCardStatuses()
+    expect(api.meBootstrap).toHaveBeenCalledTimes(2)
+    expect(state.bootstrapError.value).toBe('')
+
+    await state.toggleAnimeInList(1)
+    expect(api.addToList).toHaveBeenCalledWith(1)
+  })
+
   it('does not issue the second watched request or restore state after logout', async () => {
     const created = deferred<any>()
     api.addToList.mockReturnValue(created.promise)

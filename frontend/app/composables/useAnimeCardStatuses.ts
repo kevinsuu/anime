@@ -77,6 +77,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
   const statusesByAnimeId = reactive(new Map<number, AnimeCardStatus>())
   const collections = ref<Collection[]>([])
   const bootstrapLoading = ref(false)
+  const bootstrapError = ref('')
   const pendingInList = reactive(new Set<number>())
   const pendingWatched = reactive(new Set<number>())
   const pendingCollections = reactive(new Set<string>())
@@ -127,6 +128,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
     loadedKey = ''
     statusesByAnimeId.clear()
     collections.value = []
+    bootstrapError.value = ''
     clearPendingMutations()
   }
 
@@ -136,6 +138,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
       scopeGeneration++
       scopeKey = key
       scopedAnimeIds = new Set(ids)
+      bootstrapError.value = ''
       clearPendingMutations()
     }
     return scopeGeneration
@@ -161,6 +164,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
     const generation = setStatusScope(ids)
     if (key === loadedKey) {
       if (bootstrapLoading.value || loadingKey) cancelBootstrap()
+      bootstrapError.value = ''
       return
     }
     if (key === loadingKey && bootstrapPromise) return bootstrapPromise
@@ -168,6 +172,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
     const requestId = ++bootstrapRequestId
     loadingKey = key
     bootstrapLoading.value = true
+    bootstrapError.value = ''
 
     const task = (async () => {
       try {
@@ -195,7 +200,8 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
         loadedKey = key
       } catch (error: unknown) {
         if (requestId !== bootstrapRequestId) return
-        toast.add({ title: apiErrorMessage(error, '載入卡片狀態失敗'), color: 'error' })
+        bootstrapError.value = apiErrorMessage(error, '載入卡片狀態失敗')
+        toast.add({ title: bootstrapError.value, color: 'error' })
       } finally {
         if (requestId === bootstrapRequestId) {
           loadingKey = ''
@@ -207,6 +213,10 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
 
     bootstrapPromise = task
     return task
+  }
+
+  function retryCardStatuses() {
+    return loadCardStatuses(normalizeAnimeIds(toValue(animeIds)))
   }
 
   function hasPendingCollectionOperation(animeId: number): boolean {
@@ -230,7 +240,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
 
   async function toggleAnimeInList(animeId: number) {
     if (!isAuthed.value) return navigateTo('/login')
-    if (bootstrapLoading.value || !scopedAnimeIds.has(animeId)) return
+    if (bootstrapLoading.value || bootstrapError.value || !scopedAnimeIds.has(animeId)) return
     if (pendingListOperations.has(animeId) || pendingWatched.has(animeId) || hasPendingCollectionOperation(animeId)) return
 
     const generation = scopeGeneration
@@ -299,7 +309,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
 
   async function markWatched(animeId: number) {
     if (!isAuthed.value) return navigateTo('/login')
-    if (bootstrapLoading.value || !scopedAnimeIds.has(animeId)) return
+    if (bootstrapLoading.value || bootstrapError.value || !scopedAnimeIds.has(animeId)) return
     if (pendingWatched.has(animeId) || pendingListOperations.has(animeId) || hasPendingCollectionOperation(animeId)) return
 
     const generation = scopeGeneration
@@ -363,7 +373,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
 
   async function toggleCollection(animeId: number, collection: Collection) {
     if (!isAuthed.value) return
-    if (bootstrapLoading.value || !scopedAnimeIds.has(animeId)) return
+    if (bootstrapLoading.value || bootstrapError.value || !scopedAnimeIds.has(animeId)) return
     if (
       pendingListOperations.has(animeId)
       || pendingWatched.has(animeId)
@@ -438,9 +448,11 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
     statusesByAnimeId,
     collections,
     bootstrapLoading,
+    bootstrapError,
     pendingInList,
     pendingWatched,
     loadCardStatuses,
+    retryCardStatuses,
     isInList,
     isWatched,
     isStatusPending,

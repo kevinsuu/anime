@@ -72,9 +72,12 @@ const seasonalAnimeIds = computed(() => seasonal.value.map((anime: AnimeSummary)
 const {
   statusesByAnimeId,
   collections,
+  bootstrapLoading,
+  bootstrapError,
   isInList,
   isWatched,
   isStatusPending,
+  retryCardStatuses,
   toggleAnimeInList,
   markWatched,
   toggleCollection
@@ -207,7 +210,7 @@ useHead({
           <p class="text-sm text-gray-500">
             顯示 <strong class="font-extrabold text-gray-900">{{ filteredSeasonal.length }}</strong> / {{ seasonal.length }} 部
           </p>
-          <MobileCardGestureHint />
+          <MobileCardGestureHint v-if="!bootstrapError" />
         </div>
         <button
           type="button"
@@ -277,18 +280,28 @@ useHead({
     </div>
 
     <!-- Loading skeleton: fills roughly one viewport at the widest (5-col) breakpoint -->
-    <div v-if="loading" class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5 md:gap-3">
+    <div
+      v-if="loading || bootstrapLoading"
+      data-anime-card-grid-loading
+      class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5 md:gap-3"
+    >
       <div v-for="i in 20" :key="i" class="aspect-3/4 w-full animate-pulse rounded-lg bg-gray-200" />
     </div>
 
-    <div v-else-if="!loading && filteredSeasonal.length === 0" class="rounded-xl border border-dashed border-gray-200 p-8 text-center text-gray-500">
-      <UIcon name="i-lucide-calendar-x" class="mx-auto mb-2 size-8 text-gray-300" />
-      <p class="text-sm font-medium">這個篩選條件目前沒有資料</p>
-      <p class="mt-1 text-xs text-gray-400">試試切換星期或清除篩選條件</p>
-    </div>
-
     <template v-else>
-      <AnimeVirtualGrid :items="filteredSeasonal">
+      <AnimeCardStatusError
+        v-if="bootstrapError"
+        :message="bootstrapError"
+        @retry="retryCardStatuses"
+      />
+
+      <div v-if="filteredSeasonal.length === 0" class="rounded-xl border border-dashed border-gray-200 p-8 text-center text-gray-500">
+        <UIcon name="i-lucide-calendar-x" class="mx-auto mb-2 size-8 text-gray-300" />
+        <p class="text-sm font-medium">這個篩選條件目前沒有資料</p>
+        <p class="mt-1 text-xs text-gray-400">試試切換星期或清除篩選條件</p>
+      </div>
+
+      <AnimeVirtualGrid v-else :items="filteredSeasonal">
         <template #default="{ item: anime, index }">
           <AnimeGridCard
             :key="anime.id"
@@ -300,6 +313,7 @@ useHead({
             :collections="collections"
             :popover-open="activePopoverAnimeId === anime.id"
             :eager-load="index < HIGH_PRIORITY_IMAGE_COUNT"
+            :show-actions="!bootstrapError"
             @add-to-list="toggleAnimeInList"
             @mark-watched="markWatched"
             @toggle-collection="(col) => toggleCollection(anime.id, col)"

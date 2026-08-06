@@ -138,9 +138,12 @@ const catalogAnimeIds = computed(() => catalog.value.map(anime => anime.id))
 const {
   statusesByAnimeId,
   collections,
+  bootstrapLoading,
+  bootstrapError,
   isInList,
   isWatched,
   isStatusPending,
+  retryCardStatuses,
   toggleAnimeInList,
   markWatched,
   toggleCollection
@@ -276,7 +279,7 @@ useHead({
             <span> · 顯示 <strong class="font-extrabold text-gray-900">{{ resultTotal }}</strong> 部</span>
             <span v-if="selectedTags.length > 0"> · {{ selectedTags.length }} 個分類</span>
           </p>
-          <MobileCardGestureHint />
+          <MobileCardGestureHint v-if="!bootstrapError" />
         </div>
         <CatalogFilterPanel
           :active-year="activeYear"
@@ -398,7 +401,11 @@ useHead({
     </div>
 
     <!-- Loading skeleton: matches PAGE_SIZE so the layout doesn't jump when real content arrives -->
-    <div v-if="loading || initialPending" class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5 md:gap-3">
+    <div
+      v-if="loading || initialPending || bootstrapLoading"
+      data-anime-card-grid-loading
+      class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5 md:gap-3"
+    >
       <div v-for="i in PAGE_SIZE" :key="i" class="aspect-3/4 w-full animate-pulse rounded-md bg-gray-200" />
     </div>
 
@@ -412,6 +419,12 @@ useHead({
     </div>
 
     <template v-else>
+      <AnimeCardStatusError
+        v-if="bootstrapError"
+        :message="bootstrapError"
+        @retry="retryCardStatuses"
+      />
+
       <AnimeVirtualGrid :items="catalog">
         <template #default="{ item: anime, index }">
           <AnimeGridCard
@@ -424,6 +437,7 @@ useHead({
             :collections="collections"
             :popover-open="activePopoverAnimeId === anime.id"
             :eager-load="index < HIGH_PRIORITY_IMAGE_COUNT"
+            :show-actions="!bootstrapError"
             @add-to-list="toggleAnimeInList"
             @mark-watched="markWatched"
             @toggle-collection="(col) => toggleCollection(anime.id, col)"

@@ -296,6 +296,68 @@ test('393px card gestures map single tap, double tap and long press correctly', 
   await expect(page).toHaveURL(/\/login$/, { timeout: 2000 })
 })
 
+test('authenticated cards wait for bootstrap before accepting the first double tap', async ({ page }) => {
+  await page.setViewportSize(mobileViewport)
+  await page.addInitScript(() => {
+    localStorage.setItem('animeTrackerSession', JSON.stringify({
+      token: 'playwright-token',
+      refreshToken: 'playwright-refresh-token',
+      user: {
+        id: 1,
+        display_name: 'Playwright 使用者',
+        email: 'playwright@example.com',
+        public_slug: 'playwright-user'
+      }
+    }))
+  })
+
+  let releaseBootstrap!: () => void
+  let bootstrapRequested = false
+  const bootstrapHold = new Promise<void>((resolve) => {
+    releaseBootstrap = resolve
+  })
+  await page.route('**/public/me/bootstrap?**', async (route) => {
+    bootstrapRequested = true
+    await bootstrapHold
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ user: { id: 1 }, statuses: [], collections: [] })
+    })
+  })
+
+  let addToListRequests = 0
+  await page.route('**/public/my/anime-list', async (route) => {
+    if (route.request().method() !== 'POST') {
+      await route.fallback()
+      return
+    }
+    addToListRequests++
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ item: { id: 9001, watched: false, collections: [] } })
+    })
+  })
+
+  await page.goto('/seasonal?year=2026&season=summer', { waitUntil: 'domcontentloaded' })
+  await expect.poll(() => bootstrapRequested).toBe(true)
+  await expect(page.locator('[data-anime-card-grid-loading]')).toBeVisible()
+  await expect(page.locator('[data-mobile-gesture-card]')).toHaveCount(0)
+
+  releaseBootstrap()
+  const firstCard = page.locator('[data-mobile-gesture-card]').first()
+  await expect(firstCard).toBeVisible()
+  await expect(page.locator('[data-anime-card-grid-loading]')).toHaveCount(0)
+
+  await dispatchTouchTap(firstCard)
+  await dispatchTouchTap(firstCard)
+  await expect.poll(() => addToListRequests).toBe(1)
+  await expect(page.locator('li[data-slot="base"]')).toContainText('已加入收藏')
+})
+
 test('desktop card pointer detection maps click, double click and hold correctly', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1024 })
   await openReadyPage(page, '/seasonal?year=2026&season=summer', 'cards')
