@@ -4,7 +4,7 @@ const { navItems, isActive, targetFor } = useNav()
 </script>
 
 <template>
-  <header class="sticky top-0 z-30 border-b border-gray-200 bg-white md:bg-white/96 md:backdrop-blur">
+  <header class="z-30 border-b border-gray-200 bg-white md:sticky md:top-0 md:bg-white/96 md:backdrop-blur">
     <div class="mx-auto flex h-14 max-w-6xl items-center gap-4 px-4 md:h-16">
       <NuxtLink to="/" class="flex items-center gap-3 font-bold text-gray-900">
         <img src="/favicon-180.png" alt="Anime Library" width="40" height="40" class="h-9 w-9 shrink-0 rounded-xl object-cover md:h-10 md:w-10 md:rounded-2xl">

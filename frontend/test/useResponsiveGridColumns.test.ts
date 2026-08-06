@@ -49,24 +49,25 @@ describe('calculateGridLayout', () => {
     expect(result.columnWidth * result.columns).toBeCloseTo(1024, 5)
   })
 
-  it('sizes itemSize from the visible card width (stride minus one gap) to keep aspect-3/4', () => {
+  it('sizes itemSize from the card height plus one vertical gap', () => {
     // stride = 1024 / 5 = 204.8（含 gutter 的整欄寬，餵給 item-secondary-size）
     // 可見卡片寬 = stride - gap = 204.8 - 12 = 192.8
-    // itemSize（列高）= 192.8 * 4/3 = 257.0666...
+    // 卡片高度 = 192.8 * 4/3 = 257.0666...；列高再加 12px row gap。
     const result = calculateGridLayout(1024, 1024, 12)
     expect(result.columnWidth).toBeCloseTo(204.8, 3)
-    expect(result.itemSize).toBeCloseTo(257.0666, 3)
+    expect(result.gapPx).toBe(12)
+    expect(result.itemSize).toBeCloseTo(269.0666, 3)
   })
 
   it('fills container width and sizes itemSize from container width, not viewport width', () => {
     // viewport=1440（用於欄數判斷 → 5 欄），但容器只有 700px 寬。
     // stride = 700 / 5 = 140
     // 可見卡片寬 = 140 - 12 = 128
-    // itemSize = 128 * 4/3 = 170.666...
+    // itemSize = 128 * 4/3 + 12px row gap = 182.666...
     const result = calculateGridLayout(1440, 700, 12)
     expect(result.columns).toBe(5)
     expect(result.columnWidth * result.columns).toBeCloseTo(700, 5)
-    expect(result.itemSize).toBeCloseTo(170.6666, 3)
+    expect(result.itemSize).toBeCloseTo(182.6666, 3)
   })
 
   it('calculates itemSize correctly for 2-column layout with zero gap', () => {
@@ -77,6 +78,15 @@ describe('calculateGridLayout', () => {
     expect(result.columns).toBe(2)
     expect(result.columnWidth * result.columns).toBeCloseTo(300, 5)
     expect(result.itemSize).toBeCloseTo(200, 3)
+  })
+
+  it('uses a roomier 16px gap below the md breakpoint when provided', () => {
+    const result = calculateGridLayout(393, 361, 12, 16)
+    // stride = 180.5；可見卡片寬 = 164.5；卡片高度 = 219.333...
+    // itemSize = 卡片高度 + 16px row gap。
+    expect(result.columns).toBe(2)
+    expect(result.gapPx).toBe(16)
+    expect(result.itemSize).toBeCloseTo(235.3333, 3)
   })
 
   it('returns columnWidth distinct from itemSize (regression: WindowScroller needs both)', () => {
@@ -90,7 +100,7 @@ describe('calculateGridLayout', () => {
     // 不同的值，防止未來又漏接 item-secondary-size。
     const result = calculateGridLayout(1024, 1024, 12)
     expect(result.columnWidth).toBeCloseTo(204.8, 3)
-    expect(result.itemSize).toBeCloseTo(257.0666, 3)
+    expect(result.itemSize).toBeCloseTo(269.0666, 3)
     expect(result.columnWidth).not.toBeCloseTo(result.itemSize, 0)
   })
 })

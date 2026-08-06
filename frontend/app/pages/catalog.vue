@@ -140,6 +140,7 @@ const {
   collections,
   isInList,
   isWatched,
+  isStatusPending,
   toggleAnimeInList,
   markWatched,
   toggleCollection
@@ -227,22 +228,22 @@ useHead({
 </script>
 
 <template>
-  <div class="space-y-5">
-    <header class="space-y-1">
-      <p class="text-xs font-extrabold uppercase tracking-widest text-primary-700">資料庫</p>
-      <div class="flex items-center justify-between gap-4">
-        <h1 class="text-2xl font-extrabold tracking-tight text-gray-950 md:text-3xl">搜尋動漫資料庫</h1>
-        <span class="shrink-0 rounded-full bg-gray-100 px-3 py-1 text-sm font-semibold text-gray-700">
-          {{ resultTotal }} 筆
-        </span>
+  <div class="space-y-3 md:space-y-4">
+    <header class="flex items-center justify-between gap-3 md:gap-4">
+      <div class="space-y-0.5">
+        <p class="text-xs font-extrabold uppercase tracking-widest text-primary-700">資料庫</p>
+        <h1 class="text-xl font-extrabold tracking-tight text-gray-950 md:text-2xl">搜尋動漫資料庫</h1>
       </div>
+      <span class="shrink-0 rounded-full bg-gray-100 px-3 py-1 text-sm font-semibold text-gray-700">
+        {{ resultTotal }} 筆
+      </span>
     </header>
 
     <UAlert v-if="error" color="error" :title="error" />
 
     <!-- 手機版只保留搜尋與篩選入口，年份及分類放進 bottom sheet，
          避免大量 chip 將首批作品推到首屏之外。 -->
-    <div class="space-y-3 rounded-2xl border border-gray-200 bg-white p-3 shadow-sm md:hidden">
+    <div class="min-h-[9.5625rem] space-y-3 rounded-2xl border border-gray-200 bg-white p-3 shadow-sm md:hidden">
       <form class="flex min-w-0 gap-2" @submit.prevent="search">
         <div class="relative min-w-0 flex-1">
           <label for="catalog-search-mobile" class="sr-only">搜尋動漫資料庫</label>
@@ -269,10 +270,14 @@ useHead({
       </form>
 
       <div class="flex min-h-11 items-center justify-between gap-3 border-t border-gray-100 pt-3">
-        <p class="min-w-0 truncate text-xs font-medium text-gray-500">
-          <span>{{ isSearchMode ? '搜尋結果' : activeYear === null ? '近期作品' : `${activeYear} 年` }}</span>
-          <span v-if="selectedTags.length > 0"> · {{ selectedTags.length }} 個分類</span>
-        </p>
+        <div class="min-w-0 space-y-2">
+          <p class="truncate text-xs font-medium text-gray-500">
+            <span>{{ isSearchMode ? '搜尋結果' : activeYear === null ? '近期作品' : `${activeYear} 年` }}</span>
+            <span> · 顯示 <strong class="font-extrabold text-gray-900">{{ resultTotal }}</strong> 部</span>
+            <span v-if="selectedTags.length > 0"> · {{ selectedTags.length }} 個分類</span>
+          </p>
+          <MobileCardGestureHint />
+        </div>
         <CatalogFilterPanel
           :active-year="activeYear"
           :current-year="currentYear"
@@ -393,7 +398,7 @@ useHead({
     </div>
 
     <!-- Loading skeleton: matches PAGE_SIZE so the layout doesn't jump when real content arrives -->
-    <div v-if="loading || initialPending" class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
+    <div v-if="loading || initialPending" class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5 md:gap-3">
       <div v-for="i in PAGE_SIZE" :key="i" class="aspect-3/4 w-full animate-pulse rounded-md bg-gray-200" />
     </div>
 
@@ -414,6 +419,7 @@ useHead({
             :anime="anime"
             :in-list="isInList(anime.id)"
             :watched="isWatched(anime.id)"
+            :status-pending="isStatusPending(anime.id)"
             :status="statusesByAnimeId.get(anime.id)"
             :collections="collections"
             :popover-open="activePopoverAnimeId === anime.id"

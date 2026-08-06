@@ -9,12 +9,19 @@ import type { AnimeCardData } from '../utils/normalize'
 const props = withDefaults(defineProps<{
   items: AnimeCardData[]
   gapPx?: number
+  mobileGapPx?: number
 }>(), {
-  gapPx: 12
+  gapPx: 12,
+  mobileGapPx: 16
 })
 
 const containerRef = ref<HTMLElement | null>(null)
-const { columns, itemSize, columnWidth } = useResponsiveGridColumns(containerRef, props.gapPx)
+const {
+  columns,
+  gapPx: resolvedGapPx,
+  itemSize,
+  columnWidth
+} = useResponsiveGridColumns(containerRef, props.gapPx, props.mobileGapPx)
 const SSR_FALLBACK_CARD_COUNT = 12
 const fallbackItems = computed(() => props.items.slice(0, SSR_FALLBACK_CARD_COUNT))
 
@@ -40,14 +47,14 @@ defineSlots<{
                左右各半個 gap 的內邊距形成：相鄰卡片內容之間剛好間隔一個
                完整 gap，最外側各留半個 gap，讓整排格線在容器內置中、右緣
                與上方篩選卡片對齊。 -->
-          <div :style="{ paddingLeft: `${gapPx / 2}px`, paddingRight: `${gapPx / 2}px` }">
+          <div :style="{ paddingLeft: `${resolvedGapPx / 2}px`, paddingRight: `${resolvedGapPx / 2}px` }">
             <slot :item="item" :index="index" />
           </div>
         </template>
       </WindowScroller>
 
       <template #fallback>
-        <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
+        <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5 md:gap-3">
           <div v-for="(item, index) in fallbackItems" :key="item.id">
             <slot :item="item" :index="index" />
           </div>

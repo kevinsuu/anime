@@ -222,6 +222,12 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
     return statusesByAnimeId.get(animeId)?.watched ?? pendingWatched.has(animeId)
   }
 
+  function isStatusPending(animeId: number): boolean {
+    return pendingListOperations.has(animeId)
+      || pendingInList.has(animeId)
+      || pendingWatched.has(animeId)
+  }
+
   async function toggleAnimeInList(animeId: number) {
     if (!isAuthed.value) return navigateTo('/login')
     if (bootstrapLoading.value || !scopedAnimeIds.has(animeId)) return
@@ -437,6 +443,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
     loadCardStatuses,
     isInList,
     isWatched,
+    isStatusPending,
     toggleAnimeInList,
     markWatched,
     toggleCollection

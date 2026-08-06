@@ -244,6 +244,30 @@ describe('useAnimeCardStatuses', () => {
     expect(state.isWatched(2)).toBe(true)
   })
 
+  it('keeps the card status pending across the intermediate favorite state', async () => {
+    const created = deferred<any>()
+    const watched = deferred<any>()
+    api.addToList.mockReturnValue(created.promise)
+    api.updateListItem.mockReturnValue(watched.promise)
+    const state = useAnimeCardStatuses(ref([2]))
+    await vi.waitFor(() => expect(state.bootstrapLoading.value).toBe(false))
+
+    const mutation = state.markWatched(2)
+    await vi.waitFor(() => expect(api.addToList).toHaveBeenCalledWith(2))
+    expect(state.isStatusPending(2)).toBe(true)
+
+    created.resolve({ item: { id: 22, watched: false, collections: [] } })
+    await vi.waitFor(() => expect(api.updateListItem).toHaveBeenCalledWith(22, { watched: true }))
+    expect(state.statusesByAnimeId.get(2)?.watched).toBe(false)
+    expect(state.isStatusPending(2)).toBe(true)
+
+    watched.resolve({ item: { id: 22, watched: true, collections: [] } })
+    await mutation
+
+    expect(state.statusesByAnimeId.get(2)?.watched).toBe(true)
+    expect(state.isStatusPending(2)).toBe(false)
+  })
+
   it('locks duplicate collection mutations while keeping the optimistic state', async () => {
     api.meBootstrap.mockResolvedValue({
       user: { id: 1 },

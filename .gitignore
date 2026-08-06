@@ -14,7 +14,7 @@ frontend/.output/
 frontend/dist
 vendor/
 backups/
-
+.playwright-cli
 # Credentials and private key material
 *.pem
 *.key

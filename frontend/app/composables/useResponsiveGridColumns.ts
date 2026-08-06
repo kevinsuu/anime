@@ -14,6 +14,8 @@ const CARD_ASPECT_HEIGHT_OVER_WIDTH = 4 / 3
 
 export interface GridLayout {
   columns: number
+  /** 目前斷點實際採用的卡片間距。 */
+  gapPx: number
   /** 列高（grid 主軸尺寸），對應 WindowScroller 的 item-size prop。 */
   itemSize: number
   /**
@@ -44,12 +46,18 @@ export interface GridLayout {
  * columnWidth/itemSize 則必須用 containerWidth 計算，因為卡片實際佔用
  * 的寬度是容器內的可用空間，不是整個視窗寬度。
  */
-export function calculateGridLayout(viewportWidth: number, containerWidth: number, gapPx: number): GridLayout {
+export function calculateGridLayout(
+  viewportWidth: number,
+  containerWidth: number,
+  gapPx: number,
+  mobileGapPx = gapPx
+): GridLayout {
   const columns = viewportWidth >= MD_BREAKPOINT_PX
     ? 5
     : viewportWidth >= SM_BREAKPOINT_PX
       ? 3
       : 2
+  const resolvedGapPx = viewportWidth < MD_BREAKPOINT_PX ? mobileGapPx : gapPx
 
   // WindowScroller 把第 i 欄的 item 放在 `i * itemSecondarySize`、寬度設為
   // itemSecondarySize，欄與欄之間沒有額外 gap。所以 columnWidth（餵給
@@ -60,23 +68,30 @@ export function calculateGridLayout(viewportWidth: number, containerWidth: numbe
   const columnWidth = containerWidth / columns
   // 列高依「可見卡片寬度」（整欄 stride 扣掉一個 gutter 寬 gapPx）維持 3:4 比例，
   // 讓卡片實際內容區的高寬比正確。
-  const visibleCardWidth = columnWidth - gapPx
-  const itemSize = visibleCardWidth * CARD_ASPECT_HEIGHT_OVER_WIDTH
+  const visibleCardWidth = columnWidth - resolvedGapPx
+  // WindowScroller 沒有原生 row-gap；把一個 gap 納入列高，卡片本身仍由
+  // aspect-3/4 決定高度，剩餘空間便成為上下兩排之間的留白。
+  const itemSize = visibleCardWidth * CARD_ASPECT_HEIGHT_OVER_WIDTH + resolvedGapPx
 
-  return { columns, itemSize, columnWidth }
+  return { columns, gapPx: resolvedGapPx, itemSize, columnWidth }
 }
 
 /**
  * 監聽 containerRef 的實際寬度變化，回傳響應式的欄數與列高，供
  * AnimeVirtualGrid 傳給 WindowScroller 的 grid-items / item-size。
  */
-export function useResponsiveGridColumns(containerRef: Ref<HTMLElement | null>, gapPx: number) {
+export function useResponsiveGridColumns(
+  containerRef: Ref<HTMLElement | null>,
+  gapPx: number,
+  mobileGapPx = gapPx
+) {
   const columns = ref(2)
+  const resolvedGapPx = ref(mobileGapPx)
   const itemSize = ref(0)
   const columnWidth = ref(0)
 
   if (!import.meta.client) {
-    return { columns, itemSize, columnWidth }
+    return { columns, gapPx: resolvedGapPx, itemSize, columnWidth }
   }
 
   let observer: ResizeObserver | null = null
@@ -84,8 +99,9 @@ export function useResponsiveGridColumns(containerRef: Ref<HTMLElement | null>, 
   function recalculate() {
     const el = containerRef.value
     if (!el) return
-    const layout = calculateGridLayout(window.innerWidth, el.clientWidth, gapPx)
+    const layout = calculateGridLayout(window.innerWidth, el.clientWidth, gapPx, mobileGapPx)
     columns.value = layout.columns
+    resolvedGapPx.value = layout.gapPx
     itemSize.value = layout.itemSize
     columnWidth.value = layout.columnWidth
   }
@@ -113,5 +129,5 @@ export function useResponsiveGridColumns(containerRef: Ref<HTMLElement | null>, 
     window.removeEventListener('resize', recalculate)
   })
 
-  return { columns, itemSize, columnWidth }
+  return { columns, gapPx: resolvedGapPx, itemSize, columnWidth }
 }

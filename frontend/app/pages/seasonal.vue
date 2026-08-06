@@ -74,6 +74,7 @@ const {
   collections,
   isInList,
   isWatched,
+  isStatusPending,
   toggleAnimeInList,
   markWatched,
   toggleCollection
@@ -152,9 +153,9 @@ useHead({
     <header class="flex items-center justify-between gap-3 md:gap-4">
       <div class="space-y-0.5">
         <p class="text-xs font-extrabold uppercase tracking-widest text-primary-700">新番表</p>
-        <component :is="props.homepage ? 'h2' : 'h1'" class="text-xl font-extrabold tracking-tight text-gray-950 md:text-2xl">
+        <h1 class="text-xl font-extrabold tracking-tight text-gray-950 md:text-2xl">
           {{ seasonalControls.year }}年 {{ seasonMonthLabels[seasonalControls.season] }} 新番表
-        </component>
+        </h1>
       </div>
       <!-- Season prev/next arrows -->
       <div class="flex items-center gap-1 shrink-0">
@@ -202,9 +203,12 @@ useHead({
       </div>
 
       <div class="flex items-center justify-between gap-3 border-t border-gray-100 pt-3 md:hidden">
-        <p class="text-sm text-gray-500">
-          顯示 <strong class="font-extrabold text-gray-900">{{ filteredSeasonal.length }}</strong> / {{ seasonal.length }} 部
-        </p>
+        <div class="min-w-0 space-y-2">
+          <p class="text-sm text-gray-500">
+            顯示 <strong class="font-extrabold text-gray-900">{{ filteredSeasonal.length }}</strong> / {{ seasonal.length }} 部
+          </p>
+          <MobileCardGestureHint />
+        </div>
         <button
           type="button"
           class="flex min-h-11 shrink-0 items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 text-sm font-bold text-gray-700 shadow-sm"
@@ -273,7 +277,7 @@ useHead({
     </div>
 
     <!-- Loading skeleton: fills roughly one viewport at the widest (5-col) breakpoint -->
-    <div v-if="loading" class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
+    <div v-if="loading" class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5 md:gap-3">
       <div v-for="i in 20" :key="i" class="aspect-3/4 w-full animate-pulse rounded-lg bg-gray-200" />
     </div>
 
@@ -291,6 +295,7 @@ useHead({
             :anime="anime"
             :in-list="isInList(anime.id)"
             :watched="isWatched(anime.id)"
+            :status-pending="isStatusPending(anime.id)"
             :status="statusesByAnimeId.get(anime.id)"
             :collections="collections"
             :popover-open="activePopoverAnimeId === anime.id"

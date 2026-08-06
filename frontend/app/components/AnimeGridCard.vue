@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import type { AnimeCardData, Collection } from '../utils/normalize'
 import type { AnimeCardStatus } from '../composables/useAnimeCardStatuses'
+import { createMobileCardGestureHandlers } from '../utils/mobileCardGestures'
 
 const props = withDefaults(defineProps<{
   anime: AnimeCardData
   inList: boolean
   watched: boolean
+  statusPending?: boolean
   status?: AnimeCardStatus
   collections?: Collection[]
   popoverOpen?: boolean
@@ -15,7 +17,8 @@ const props = withDefaults(defineProps<{
   collections: () => [],
   popoverOpen: false,
   eagerLoad: false,
-  showActions: true
+  showActions: true,
+  statusPending: false
 })
 
 const emit = defineEmits<{
@@ -102,9 +105,7 @@ function isInCollection(col: Collection): boolean {
   return props.status?.collectionIds.includes(col.id) ?? false
 }
 
-function onAddToList(e: Event) {
-  e.preventDefault()
-  e.stopPropagation()
+function toggleFavorite() {
   emit('addToList', props.anime.id)
   // Removing from the main list also removes collection memberships, so close
   // the popover. Only a newly-added title should offer collection choices.
@@ -115,12 +116,22 @@ function onAddToList(e: Event) {
   }
 }
 
-function onMarkWatched(e: Event) {
-  e.preventDefault()
-  e.stopPropagation()
+function toggleWatched() {
   emit('markWatched', props.anime.id)
   // Don't open popover on mark-watched — just toggle watched state silently
   emit('closePopover')
+}
+
+function onAddToList(e: Event) {
+  e.preventDefault()
+  e.stopPropagation()
+  toggleFavorite()
+}
+
+function onMarkWatched(e: Event) {
+  e.preventDefault()
+  e.stopPropagation()
+  toggleWatched()
 }
 
 function onToggleCollection(e: Event, col: Collection) {
@@ -131,6 +142,16 @@ function onToggleCollection(e: Event, col: Collection) {
 }
 
 const airInfo = computed(() => parseAirInfo(props.anime.airDateText, props.anime.airDate))
+const cardStatus = computed(() => {
+  if (props.statusPending) return null
+  return props.watched ? 'watched' : props.inList ? 'favorite' : null
+})
+const mobileGestures = createMobileCardGestureHandlers({
+  isEnabled: () => props.showActions,
+  onDoubleTap: toggleFavorite,
+  onLongPress: toggleWatched,
+  onNavigate: () => { void navigateTo(`/anime/${props.anime.id}`) }
+})
 
 function onKeydown(e: KeyboardEvent) {
   if (e.key === 'Escape' && props.popoverOpen) emit('closePopover')
@@ -141,14 +162,32 @@ watch(() => props.popoverOpen, (open) => {
   else window.removeEventListener('keydown', onKeydown)
 })
 
-onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', onKeydown)
+  mobileGestures.dispose()
+})
 </script>
 
 <template>
-  <div ref="cardRef" class="group/card relative">
+  <div
+    ref="cardRef"
+    class="anime-card-shell group/card relative"
+    :class="cardStatus ? `anime-card-shell--${cardStatus}` : undefined"
+    :data-card-status="cardStatus"
+    :data-card-status-pending="statusPending || undefined"
+  >
     <NuxtLink
       :to="`/anime/${anime.id}`"
-      class="group relative block aspect-3/4 w-full overflow-hidden rounded-lg bg-gray-800 transition-all duration-300"
+      class="anime-card-link group relative block aspect-3/4 w-full touch-manipulation overflow-hidden rounded-lg bg-gray-800 transition-all duration-300"
+      data-mobile-gesture-card
+      draggable="false"
+      @click.capture="mobileGestures.onClick"
+      @contextmenu="mobileGestures.onContextMenu"
+      @pointercancel="mobileGestures.onPointerCancel"
+      @pointerdown="mobileGestures.onPointerDown"
+      @pointerleave="mobileGestures.onPointerCancel"
+      @pointermove="mobileGestures.onPointerMove"
+      @pointerup="mobileGestures.onPointerUp"
     >
       <template v-if="hasUsableImage">
         <!-- Persistent placeholder layer sitting *under* the image. It is never
@@ -188,10 +227,8 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
 
       <!-- Gradient overlay -->
       <div
-        class="pointer-events-none absolute inset-0 bg-linear-to-b"
-        :class="hasUsableImage
-          ? 'from-black/60 via-transparent to-black/80'
-          : 'from-transparent via-transparent to-gray-200/80'"
+        data-card-gradient
+        class="pointer-events-none absolute inset-0 bg-linear-to-b from-black/60 via-transparent to-black/80"
       />
 
       <!-- Top-left: date label -->
@@ -201,29 +238,31 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
         </span>
       </div>
 
-      <!-- Top-right: weekday + time + episode count -->
+      <!-- Top-right metadata: schedule, episode count, then streaming resources. -->
       <div
-        v-if="airInfo.weekday"
-        class="absolute right-0 top-0 flex flex-col items-center overflow-hidden rounded-bl-lg text-white"
+        v-if="airInfo.weekday || anime.episodeCount || anime.streamCount > 0"
+        data-card-meta-stack
+        class="absolute right-0 top-0 z-10 flex min-w-11 flex-col items-stretch overflow-hidden rounded-bl-lg text-white shadow-sm"
       >
-        <div class="flex flex-col items-center p-1.5" :class="airInfo.weekdayColor">
+        <div v-if="airInfo.weekday" class="flex flex-col items-center p-1.5" :class="airInfo.weekdayColor">
           <span class="text-[11px] font-extrabold leading-tight">{{ airInfo.weekday }}</span>
           <span class="text-[10px] font-bold leading-tight">{{ airInfo.time }}</span>
         </div>
         <span
           v-if="anime.episodeCount"
-          class="w-full bg-gray-500 px-1.5 py-0.5 text-center text-[10px] font-bold leading-tight"
+          data-episode-badge
+          class="w-full bg-green-600 px-1.5 py-0.5 text-center text-[10px] font-bold leading-tight"
         >
           全{{ anime.episodeCount }}集
         </span>
-      </div>
-
-      <!-- Top-right, episode count (only when no weekday badge to attach to) -->
-      <div
-        v-if="anime.episodeCount && !airInfo.weekday"
-        class="absolute right-1.5 top-1.5 rounded-sm bg-black/50 px-1.5 py-0.5 text-[10px] font-bold leading-tight text-white backdrop-blur-sm"
-      >
-        全{{ anime.episodeCount }}集
+        <span
+          v-if="anime.streamCount > 0"
+          data-stream-badge
+          class="anime-card-stream flex w-full items-center justify-center gap-0.5 bg-gray-600 px-1.5 py-0.5 text-center text-[10px] font-bold leading-tight"
+        >
+          <UIcon name="i-lucide-play" class="size-3" aria-hidden="true" />
+          {{ anime.streamCount }}
+        </span>
       </div>
 
       <!-- In-list status badge -->
@@ -246,23 +285,10 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
         已觀看
       </div>
 
-      <!-- Streams badge -->
-      <UBadge
-        v-if="anime.streamCount > 0"
-        color="primary"
-        variant="solid"
-        icon="i-lucide-play"
-        class="absolute bottom-1 right-1 max-md:bottom-[3.25rem]"
-        size="sm"
-      >
-        {{ anime.streamCount }}
-      </UBadge>
-
       <!-- Title -->
-      <div class="absolute inset-x-1.5 bottom-1 pr-7 max-md:bottom-[3.25rem] max-md:pr-8">
+      <div data-mobile-card-title class="anime-card-title absolute inset-x-1.5 bottom-1">
         <h3
-          class="line-clamp-3 text-xs font-bold leading-snug max-md:line-clamp-2 max-md:text-sm"
-          :class="hasUsableImage ? 'text-white drop-shadow' : 'text-gray-800'"
+          class="anime-card-heading line-clamp-3 text-xs font-bold leading-snug text-white drop-shadow max-md:line-clamp-2"
         >
           {{ anime.name }}
         </h3>
@@ -275,17 +301,22 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
            height remains unchanged. -->
       <div
         v-if="showActions"
-        class="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex translate-y-2 justify-end gap-1 p-1.5 opacity-0 transition-[opacity,transform] duration-150 group-hover/card:pointer-events-auto group-hover/card:translate-y-0 group-hover/card:opacity-100 group-focus-within/card:pointer-events-auto group-focus-within/card:translate-y-0 group-focus-within/card:opacity-100 max-md:pointer-events-auto max-md:translate-y-0 max-md:rounded-b-lg max-md:bg-linear-to-t max-md:from-black/80 max-md:to-transparent max-md:pt-4 max-md:opacity-100"
+        class="anime-card-actions pointer-events-none absolute inset-x-0 bottom-0 z-20 flex translate-y-2 justify-end gap-1 p-1.5 opacity-0 transition-[opacity,transform] duration-150 group-hover/card:pointer-events-auto group-hover/card:translate-y-0 group-hover/card:opacity-100 group-focus-within/card:pointer-events-auto group-focus-within/card:translate-y-0 group-focus-within/card:opacity-100 max-md:pointer-events-auto max-md:translate-y-0 max-md:opacity-100"
       >
         <!-- Heart -->
         <button
           type="button"
-          class="group/btn relative flex h-7 w-7 items-center justify-center rounded-full shadow-md transition-transform active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white max-md:h-11 max-md:w-11"
-          :class="inList ? 'bg-rose-500 text-white' : 'bg-white/90 text-gray-700 hover:bg-rose-500 hover:text-white'"
+          class="group/btn relative flex h-7 w-7 touch-manipulation items-center justify-center rounded-full transition-transform active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white max-md:h-11 max-md:w-11"
           :aria-label="inList ? '取消收藏' : '加入收藏'"
           @click="onAddToList"
         >
-          <UIcon name="i-lucide-heart" class="size-3.5 max-md:size-5" :class="inList ? 'fill-current' : ''" />
+          <span
+            data-action-surface
+            class="grid size-7 place-items-center rounded-full shadow-md transition-colors max-md:size-9"
+            :class="inList ? 'bg-rose-500 text-white' : 'bg-white/90 text-gray-700 group-hover/btn:bg-rose-500 group-hover/btn:text-white'"
+          >
+            <UIcon name="i-lucide-heart" class="size-3.5 max-md:size-[1.125rem]" :class="inList ? 'fill-current' : ''" />
+          </span>
           <span class="pointer-events-none absolute bottom-full right-0 mb-1.5 whitespace-nowrap rounded bg-gray-900 px-2 py-0.5 text-[11px] font-semibold text-white opacity-0 transition-opacity group-hover/btn:opacity-100">
             {{ inList ? '取消收藏' : '加入收藏' }}
           </span>
@@ -294,12 +325,17 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
         <!-- Check -->
         <button
           type="button"
-          class="group/btn relative flex h-7 w-7 items-center justify-center rounded-full shadow-md transition-transform active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white max-md:h-11 max-md:w-11"
-          :class="watched ? 'bg-green-500 text-white' : 'bg-white/90 text-gray-700 hover:bg-green-500 hover:text-white'"
+          class="group/btn relative flex h-7 w-7 touch-manipulation items-center justify-center rounded-full transition-transform active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white max-md:h-11 max-md:w-11"
           :aria-label="watched ? '已看完' : '標記已看'"
           @click="onMarkWatched"
         >
-          <UIcon name="i-lucide-check" class="size-3.5 max-md:size-5" />
+          <span
+            data-action-surface
+            class="grid size-7 place-items-center rounded-full shadow-md transition-colors max-md:size-9"
+            :class="watched ? 'bg-green-500 text-white' : 'bg-white/90 text-gray-700 group-hover/btn:bg-green-500 group-hover/btn:text-white'"
+          >
+            <UIcon name="i-lucide-check" class="size-3.5 max-md:size-[1.125rem]" />
+          </span>
           <span class="pointer-events-none absolute bottom-full right-0 mb-1.5 whitespace-nowrap rounded bg-gray-900 px-2 py-0.5 text-[11px] font-semibold text-white opacity-0 transition-opacity group-hover/btn:opacity-100">
             {{ watched ? '取消已看' : '標記已看' }}
           </span>
@@ -355,6 +391,114 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
 </template>
 
 <style scoped>
+@property --status-border-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.anime-card-shell::before {
+  --status-border-a: transparent;
+  --status-border-b: transparent;
+  --status-border-c: transparent;
+  content: '';
+  position: absolute;
+  z-index: 15;
+  inset: 0;
+  padding: 3px;
+  border-radius: 0.5rem;
+  background: repeating-conic-gradient(
+    from var(--status-border-angle),
+    var(--status-border-a) 0turn,
+    var(--status-border-b) 0.125turn,
+    var(--status-border-c) 0.25turn,
+    var(--status-border-b) 0.375turn,
+    var(--status-border-a) 0.5turn
+  );
+  opacity: 0;
+  pointer-events: none;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.anime-card-shell--watched::before,
+.anime-card-shell--favorite::before {
+  opacity: 1;
+  animation: status-border-flow 4s linear infinite;
+}
+
+.anime-card-shell--watched::before {
+  --status-border-a: #16a34a;
+  --status-border-b: #4ade80;
+  --status-border-c: #86efac;
+}
+
+.anime-card-shell--favorite::before {
+  --status-border-a: #db2777;
+  --status-border-b: #f472b6;
+  --status-border-c: #f9a8d4;
+}
+
+@keyframes status-border-flow {
+  to {
+    --status-border-angle: 360deg;
+  }
+}
+
+@media (max-width: 47.999rem) {
+  .anime-card-link {
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
+
+  .anime-card-title {
+    inset-inline: 0.5rem;
+    bottom: 0.5rem;
+    padding: 0;
+  }
+
+  .anime-card-heading {
+    color: white;
+    font-size: 0.8125rem;
+    line-height: 1.35;
+  }
+
+  .anime-card-actions {
+    top: auto;
+    right: 0.25rem;
+    bottom: 3.75rem;
+    left: auto;
+    width: 1px;
+    height: 1px;
+    gap: 0;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .anime-card-actions:focus-within {
+    width: auto;
+    height: auto;
+    gap: 0.25rem;
+    padding: 0.25rem;
+    margin: 0;
+    overflow: visible;
+    border-radius: 9999px;
+    background: rgb(0 0 0 / 68%);
+    clip: auto;
+    clip-path: none;
+    white-space: normal;
+    pointer-events: auto;
+  }
+}
+
 .pop-fade-enter-active,
 .pop-fade-leave-active {
   transition: opacity 0.12s ease, transform 0.12s ease;
@@ -363,6 +507,13 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
 .pop-fade-leave-to {
   opacity: 0;
   transform: translateY(-4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anime-card-shell--watched::before,
+  .anime-card-shell--favorite::before {
+    animation: none;
+  }
 }
 
 </style>
