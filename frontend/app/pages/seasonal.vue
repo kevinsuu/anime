@@ -5,6 +5,7 @@ import { normalizeAnimeSummary, tagColor } from '../utils/normalize'
 import type { AnimeSummary } from '../utils/normalize'
 import { isSeasonSelection, seasonMonthLabels, seasonSelection, shiftSeason } from '../utils/season'
 import type { SeasonSelection } from '../utils/season'
+import { serializeJsonLd, SITE_URL } from '../utils/seo'
 
 const props = withDefaults(defineProps<{
   homepage?: boolean
@@ -134,8 +135,42 @@ const pageDescription = computed(() => isBrandHomepage.value
   ? '動漫庫提供每季動畫新番表、完整動漫資料庫、播出時間、角色聲優資訊與個人追番收藏功能。'
   : seasonalDescription.value)
 const canonicalUrl = computed(() => hasExplicitSeasonQuery.value
-  ? `https://anime.kaistarstudio.me/?year=${seasonalControls.year}&season=${seasonalControls.season}`
-  : 'https://anime.kaistarstudio.me/')
+  ? `${SITE_URL}/?year=${seasonalControls.year}&season=${seasonalControls.season}`
+  : `${SITE_URL}/`)
+const seasonalQuestion = computed(() => `${seasonalControls.year}年${seasonMonthLabels[seasonalControls.season]}新番有哪些？`)
+const seasonalAnswer = computed(() => `動漫庫目前收錄 ${seasonal.value.length} 部${seasonalControls.year}年${seasonMonthLabels[seasonalControls.season]}動畫，可依播出星期、作品類型、聲優與觀看狀態篩選。`)
+const seasonalStructuredData = computed(() => {
+  const pageId = `${canonicalUrl.value}#page`
+  const itemListId = `${canonicalUrl.value}#anime-list`
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        '@id': pageId,
+        url: canonicalUrl.value,
+        name: pageTitle.value,
+        description: pageDescription.value,
+        inLanguage: 'zh-Hant',
+        isPartOf: { '@id': `${SITE_URL}/#website` },
+        mainEntity: { '@id': itemListId }
+      },
+      {
+        '@type': 'ItemList',
+        '@id': itemListId,
+        name: `${seasonalControls.year}年${seasonMonthLabels[seasonalControls.season]}新番表`,
+        numberOfItems: seasonal.value.length,
+        itemListElement: seasonal.value.map((item, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          url: `${SITE_URL}/anime/${item.id}`,
+          name: item.name
+        }))
+      }
+    ]
+  }
+})
 
 useSeoMeta({
   title: () => pageTitle.value,
@@ -146,7 +181,12 @@ useSeoMeta({
   ogType: 'website'
 })
 useHead({
-  link: [{ rel: 'canonical', href: () => canonicalUrl.value }]
+  link: [{ rel: 'canonical', href: () => canonicalUrl.value }],
+  script: [{
+    key: 'seasonal-anime-list',
+    type: 'application/ld+json',
+    innerHTML: () => serializeJsonLd(seasonalStructuredData.value)
+  }]
 })
 </script>
 
@@ -185,6 +225,16 @@ useHead({
         </button>
       </div>
     </header>
+
+    <section
+      aria-labelledby="seasonal-answer-title"
+      class="rounded-xl border border-primary-100 bg-primary-50/60 px-4 py-3"
+    >
+      <h2 id="seasonal-answer-title" class="text-sm font-extrabold text-gray-900">
+        {{ seasonalQuestion }}
+      </h2>
+      <p class="mt-1 text-sm leading-6 text-gray-700">{{ seasonalAnswer }}</p>
+    </section>
 
     <!-- 篩選卡片：星期 tabs + 分類篩選 + 已選 chips 集中在一張白底卡片，
          與資料庫/我的清單頁的搜尋卡片一致，統一產品樣式 -->

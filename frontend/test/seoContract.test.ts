@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
+import { serializeJsonLd } from '../app/utils/seo'
 
 const readSource = (path: string) => readFileSync(resolve(process.cwd(), path), 'utf8')
 
@@ -10,13 +11,14 @@ describe('site identity SEO contract', () => {
     const seasonalSource = readSource('app/pages/seasonal.vue')
 
     expect(indexSource).toContain("'@type': 'WebSite'")
+    expect(indexSource).toContain("'@type': 'Organization'")
     expect(indexSource).toContain("name: '動漫庫'")
     expect(indexSource).toContain("alternateName: 'Anime Library'")
-    expect(indexSource).toContain("url: 'https://anime.kaistarstudio.me/'")
+    expect(indexSource).toContain('url: `${SITE_URL}/`')
     expect(indexSource).toContain('<SeasonalPage homepage />')
     expect(indexSource).not.toContain('查找每季新番播出時間')
     expect(seasonalSource).toContain("'動漫庫｜動畫新番表、動漫資料庫與追番收藏'")
-    expect(seasonalSource).toContain("'https://anime.kaistarstudio.me/'")
+    expect(seasonalSource).toContain(': `${SITE_URL}/`)')
     expect(seasonalSource).toContain('<h1 class="text-xl')
   })
 
@@ -34,7 +36,7 @@ describe('site identity SEO contract', () => {
     const seasonalSource = readSource('app/pages/seasonal.vue')
     const sitemapSource = readSource('server/api/__sitemap__/anime-urls.ts')
 
-    expect(seasonalSource).toContain('https://anime.kaistarstudio.me/?year=')
+    expect(seasonalSource).toContain('`${SITE_URL}/?year=')
     expect(sitemapSource).toContain('loc: `/?year=${year}&season=${season}`')
     expect(seasonalSource).not.toContain('https://anime.kaistarstudio.me/seasonal?year=')
   })
@@ -45,5 +47,51 @@ describe('site identity SEO contract', () => {
     expect(configSource).toContain("exclude: ['/seasonal', '/list', '/list/**', '/settings', '/login']")
     expect(configSource).not.toContain("exclude: ['/',")
     expect(configSource).toContain("{ property: 'og:site_name', content: '動漫庫' }")
+  })
+
+  it('separates AI search crawlers from model-training crawlers', () => {
+    const robotsSource = readSource('public/robots.txt')
+
+    expect(robotsSource).toContain('User-agent: OAI-SearchBot\nDisallow: /list')
+    expect(robotsSource).toContain('User-agent: Claude-SearchBot\nDisallow: /list')
+    expect(robotsSource).toContain('User-agent: PerplexityBot\nDisallow: /list')
+    expect(robotsSource).toContain('User-agent: GPTBot\nDisallow: /')
+    expect(robotsSource).toContain('User-agent: ClaudeBot\nDisallow: /')
+    expect(robotsSource).not.toContain('User-agent: Googlebot\nDisallow: /')
+  })
+
+  it('publishes answer-first copy and structured entities on public pages', () => {
+    const seasonalSource = readSource('app/pages/seasonal.vue')
+    const catalogSource = readSource('app/pages/catalog.vue')
+    const animeSource = readSource('app/pages/anime/[id].vue')
+
+    expect(seasonalSource).toContain('seasonal-answer-title')
+    expect(seasonalSource).toContain("'@type': 'ItemList'")
+    expect(catalogSource).toContain('catalog-answer-title')
+    expect(catalogSource).toContain("'noindex, follow'")
+    expect(animeSource).toContain('anime-answer-title')
+    expect(animeSource).toContain("'@type': 'TVSeries'")
+    expect(animeSource).toContain('dateModified: anime.value.updatedAt')
+    expect(animeSource).toContain('sameAs: anime.value.externalIds')
+  })
+
+  it('returns a real 404 for invalid or missing anime detail pages', () => {
+    const animeSource = readSource('app/pages/anime/[id].vue')
+
+    expect(animeSource).toContain("throw createError({ statusCode: 404")
+    expect(animeSource).toContain('fetchError.value?.statusCode === 404')
+    expect(animeSource).toContain('Number.isInteger(animeId)')
+  })
+
+  it('uses the actual catalog update time for sitemap freshness', () => {
+    const sitemapSource = readSource('server/api/__sitemap__/anime-urls.ts')
+
+    expect(sitemapSource).toContain('updated_at: string | null')
+    expect(sitemapSource).toContain('lastmod: item.updated_at || item.air_date || undefined')
+  })
+
+  it('escapes HTML delimiters in dynamic JSON-LD', () => {
+    expect(serializeJsonLd({ name: '</script><script>alert(1)</script>' }))
+      .toBe('{"name":"\\u003c/script>\\u003cscript>alert(1)\\u003c/script>"}')
   })
 })

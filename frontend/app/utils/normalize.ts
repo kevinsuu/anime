@@ -60,6 +60,12 @@ export interface AnimeLink {
   url: string
 }
 
+export interface AnimeExternalId {
+  provider: string
+  externalId: string
+  url: string
+}
+
 export interface AnimeCardData {
   id: number
   name: string
@@ -82,6 +88,7 @@ export interface AnimeSummary extends AnimeCardData {
 export interface Anime extends AnimeCardData {
   description: string
   source: string
+  updatedAt: string
   seasonYear: number | null
   seasonCode: string
   status: string
@@ -94,6 +101,7 @@ export interface Anime extends AnimeCardData {
   cast: AnimeCastEntry[]
   staff: AnimeStaffEntry[]
   links: AnimeLink[]
+  externalIds: AnimeExternalId[]
 }
 
 function asRecord(value: unknown): Record<string, unknown> {
@@ -156,6 +164,7 @@ export function normalizeAnime(value: unknown = {}): Anime {
     ...normalizeAnimeCard(item),
     description: repairText(item.description, '尚未整理作品介紹。'),
     source: stringValue(item.source),
+    updatedAt: stringValue(item.updatedAt) || stringValue(item.updated_at),
     seasonYear: nullableNumber(item.seasonYear ?? item.season_year),
     seasonCode: stringValue(item.seasonCode) || stringValue(item.season_code),
     status: stringValue(item.status),
@@ -191,6 +200,11 @@ export function normalizeAnime(value: unknown = {}): Anime {
       category: stringValue(link.category),
       label: stringValue(link.label),
       url: stringValue(link.url)
+    })),
+    externalIds: arrayRecords(item.externalIds ?? item.external_ids).map(externalId => ({
+      provider: stringValue(externalId.provider),
+      externalId: stringValue(externalId.externalId) || stringValue(externalId.external_id),
+      url: stringValue(externalId.url)
     }))
   }
 }

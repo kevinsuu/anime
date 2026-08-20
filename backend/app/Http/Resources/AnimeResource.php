@@ -23,6 +23,7 @@ final class AnimeResource extends JsonResource
             'episode_count' => $this->episode_count,
             'status' => $this->status,
             'tags' => $this->tags ?? [],
+            'updated_at' => $this->updated_at?->toAtomString(),
             'aliases' => $this->whenLoaded('aliases', fn () => $this->aliases->pluck('alias')->all()),
             'streams' => $this->whenLoaded('streams', fn () => $this->streams->map(fn ($stream) => [
                 'region' => $stream->region,

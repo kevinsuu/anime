@@ -9,7 +9,9 @@ export default defineSitemapEventHandler(async () => {
   const results = await Promise.all(
     years.map(async (year) => {
       try {
-        const res = await $fetch<{ items: { id: number; air_date: string | null }[] }>(`${apiBaseUrl}/anime`, { query: { year } })
+        const res = await $fetch<{
+          items: { id: number; air_date: string | null; updated_at: string | null }[]
+        }>(`${apiBaseUrl}/anime`, { query: { year } })
         return res.items || []
       } catch {
         return []
@@ -22,7 +24,7 @@ export default defineSitemapEventHandler(async () => {
   })))
   const animeUrls = results.flat().map((item) => ({
     loc: `/anime/${item.id}`,
-    lastmod: item.air_date || undefined
+    lastmod: item.updated_at || item.air_date || undefined
   }))
 
   return [...seasonalUrls, ...animeUrls]

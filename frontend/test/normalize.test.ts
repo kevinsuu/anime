@@ -29,6 +29,7 @@ describe('normalizeAnime', () => {
       description: '尚未整理作品介紹。',
       imageUrl: 'https://example.com/cover.jpg',
       source: '',
+      updatedAt: '',
       seasonYear: 2026,
       seasonCode: 'spring',
       airDate: '2026-04-05T23:00:00',
@@ -45,7 +46,8 @@ describe('normalizeAnime', () => {
       trailers: [],
       cast: [],
       staff: [],
-      links: []
+      links: [],
+      externalIds: []
     })
   })
 
@@ -54,6 +56,12 @@ describe('normalizeAnime', () => {
       id: 1,
       name: '測試',
       aliases: ['別名A'],
+      updated_at: '2026-08-20T12:00:00+08:00',
+      external_ids: [{
+        provider: 'bangumi',
+        external_id: '12345',
+        url: 'https://bgm.tv/subject/12345'
+      }],
       streams: [{ region: '台灣', platform: '巴哈', url: 'https://a' }],
       titles: [
         { locale: 'ja', title: 'テスト', is_primary: false },
@@ -65,6 +73,12 @@ describe('normalizeAnime', () => {
     expect(result.streams[0].platform).toBe('巴哈')
     expect(result.aliases).toContain('別名A')
     expect(result.titleJa).toBe('テスト')
+    expect(result.updatedAt).toBe('2026-08-20T12:00:00+08:00')
+    expect(result.externalIds).toEqual([{
+      provider: 'bangumi',
+      externalId: '12345',
+      url: 'https://bgm.tv/subject/12345'
+    }])
   })
 
   it('defaults new fields when absent', () => {
@@ -72,6 +86,8 @@ describe('normalizeAnime', () => {
     expect(result.streams).toEqual([])
     expect(result.aliases).toEqual([])
     expect(result.titleJa).toBe('')
+    expect(result.updatedAt).toBe('')
+    expect(result.externalIds).toEqual([])
   })
 
   it('falls back to placeholder name when missing', () => {

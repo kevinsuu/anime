@@ -45,6 +45,7 @@ final class AnimeController extends Controller
             ->get([
                 'id', 'name', 'description', 'image_url', 'cover_image_path', 'source',
                 'season_year', 'season_code', 'air_date', 'air_date_text', 'episode_count', 'status', 'tags',
+                'updated_at',
             ]);
 
         return response()->json([

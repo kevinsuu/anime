@@ -3,6 +3,7 @@ import { normalizeAnimeSummary, tagColor } from '../utils/normalize'
 import type { AnimeSummary } from '../utils/normalize'
 import { apiErrorMessage } from '../utils/apiError'
 import { HIGH_PRIORITY_IMAGE_COUNT } from '../composables/useLazyLoad'
+import { serializeJsonLd, SITE_URL } from '../utils/seo'
 
 const api = useApi()
 const toast = useToast()
@@ -210,6 +211,54 @@ watch(() => route.query, async () => {
   await loadCatalog()
 }, { deep: true })
 
+const isIndexableCatalog = computed(() => !isSearchMode.value
+  && selectedTags.value.length === 0
+  && page.value === 1)
+const canonicalUrl = computed(() => activeYear.value === null
+  ? `${SITE_URL}/catalog`
+  : `${SITE_URL}/catalog?year=${activeYear.value}`)
+const catalogQuestion = computed(() => isSearchMode.value
+  ? `有哪些「${query.value.trim()}」相關動畫？`
+  : activeYear.value !== null
+    ? `${activeYear.value}年有哪些動畫作品？`
+    : '近期有哪些動畫作品？')
+const catalogAnswer = computed(() => isSearchMode.value
+  ? `動漫庫找到 ${resultTotal.value} 部與「${query.value.trim()}」相關的動畫作品，可再依分類縮小結果。`
+  : activeYear.value !== null
+    ? `動漫庫目前收錄 ${resultTotal.value} 部${activeYear.value}年動畫，可從作品名稱、分類與播出資訊繼續查看詳情。`
+    : `動漫庫目前列出 ${resultTotal.value} 部近期動畫，並依播出日期由新到舊排序。`)
+const catalogStructuredData = computed(() => {
+  const pageId = `${canonicalUrl.value}#page`
+  const itemListId = `${canonicalUrl.value}#anime-list`
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        '@id': pageId,
+        url: canonicalUrl.value,
+        name: activeYear.value !== null ? `${activeYear.value}年動漫作品列表` : '近期動漫作品',
+        description: catalogAnswer.value,
+        inLanguage: 'zh-Hant',
+        isPartOf: { '@id': `${SITE_URL}/#website` },
+        mainEntity: { '@id': itemListId }
+      },
+      {
+        '@type': 'ItemList',
+        '@id': itemListId,
+        numberOfItems: resultTotal.value,
+        itemListElement: catalog.value.map((item, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          url: `${SITE_URL}/anime/${item.id}`,
+          name: item.name
+        }))
+      }
+    ]
+  }
+})
+
 useSeoMeta({
   title: () => isSearchMode.value
     ? `搜尋「${query.value}」的結果｜動漫庫`
@@ -221,13 +270,19 @@ useSeoMeta({
     : activeYear.value !== null
       ? `瀏覽${activeYear.value}年度動畫作品完整列表，探索動漫新番與經典動畫資料庫。`
       : '瀏覽近期動畫作品，依播出日期排序，探索最新動漫新番。',
-  ogType: 'website'
+  ogType: 'website',
+  robots: () => isIndexableCatalog.value ? 'index, follow' : 'noindex, follow'
 })
-useHead({
-  link: [{ rel: 'canonical', href: () => isSearchMode.value || activeYear.value === null
-    ? 'https://anime.kaistarstudio.me/catalog'
-    : `https://anime.kaistarstudio.me/catalog?year=${activeYear.value}` }]
-})
+useHead(() => ({
+  link: [{ rel: 'canonical', href: canonicalUrl.value }],
+  script: isIndexableCatalog.value
+    ? [{
+        key: 'catalog-anime-list',
+        type: 'application/ld+json',
+        innerHTML: serializeJsonLd(catalogStructuredData.value)
+      }]
+    : []
+}))
 </script>
 
 <template>
@@ -241,6 +296,16 @@ useHead({
         {{ resultTotal }} 筆
       </span>
     </header>
+
+    <section
+      aria-labelledby="catalog-answer-title"
+      class="rounded-xl border border-primary-100 bg-primary-50/60 px-4 py-3"
+    >
+      <h2 id="catalog-answer-title" class="text-sm font-extrabold text-gray-900">
+        {{ catalogQuestion }}
+      </h2>
+      <p class="mt-1 text-sm leading-6 text-gray-700">{{ catalogAnswer }}</p>
+    </section>
 
     <UAlert v-if="error" color="error" :title="error" />
 

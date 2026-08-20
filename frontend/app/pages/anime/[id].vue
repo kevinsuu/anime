@@ -3,17 +3,28 @@ import { normalizeAnime, tagColor } from '../../utils/normalize'
 import type { Anime } from '../../utils/normalize'
 import { apiErrorMessage } from '../../utils/apiError'
 import { seasonMonthLabels } from '../../utils/season'
+import { serializeJsonLd, SITE_URL } from '../../utils/seo'
 
 const route = useRoute()
 const router = useRouter()
 const api = useApi()
 const { isAuthed } = useSession()
 const toast = useToast()
+const animeId = Number(route.params.id)
+
+if (!Number.isInteger(animeId) || animeId <= 0) {
+  throw createError({ statusCode: 404, statusMessage: 'Not Found', message: '找不到動畫作品' })
+}
 
 const { data: anime, pending: loading, error: fetchError } = await useAsyncData(
   `anime-${route.params.id}`,
-  async () => normalizeAnime((await api.getAnime(Number(route.params.id))).item)
+  async () => normalizeAnime((await api.getAnime(animeId)).item)
 )
+
+if (fetchError.value?.statusCode === 404 || fetchError.value?.status === 404) {
+  throw createError({ statusCode: 404, statusMessage: 'Not Found', message: '找不到動畫作品' })
+}
+
 const error = computed(() => fetchError.value ? (fetchError.value.message || '載入失敗') : '')
 const addedToList = ref(false)
 
@@ -80,7 +91,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onTrailerKeydown))
 async function addToList() {
   if (!isAuthed.value) return navigateTo('/login')
   try {
-    await api.addToList(Number(route.params.id))
+    await api.addToList(animeId)
     addedToList.value = true
     toast.add({ title: '已加入清單', color: 'success' })
   } catch (err: unknown) {
@@ -99,31 +110,120 @@ const linksByCategory = computed(() => {
   }, {} as Record<string, typeof anime.value.links>)
 })
 
+const canonicalUrl = computed(() => `${SITE_URL}/anime/${route.params.id}`)
+const seasonText = computed(() => anime.value?.seasonYear
+  ? `${anime.value.seasonYear}年${seasonMonthLabels[anime.value.seasonCode] ?? anime.value.seasonCode}`
+  : '')
+const streamingPlatforms = computed(() => [...new Set(
+  (anime.value?.streams ?? []).map(stream => stream.platform).filter(Boolean)
+)])
+const answerSummary = computed(() => {
+  if (!anime.value) return ''
+
+  const parts = [seasonText.value
+    ? `${anime.value.name} 是一部於${seasonText.value}播出的動畫作品`
+    : `${anime.value.name} 是動漫庫收錄的動畫作品`]
+  if (anime.value.episodeCount) parts[0] += `，全 ${anime.value.episodeCount} 集`
+  parts[0] += '。'
+  if (anime.value.tags.length > 0) parts.push(`收錄標籤包含${anime.value.tags.slice(0, 4).join('、')}。`)
+  if (streamingPlatforms.value.length > 0) {
+    parts.push(`可透過${streamingPlatforms.value.slice(0, 3).join('、')}等平台觀看。`)
+  }
+  return parts.join('')
+})
+const quickFacts = computed(() => {
+  if (!anime.value) return []
+  return [
+    seasonText.value ? { label: '播出季度', value: seasonText.value } : null,
+    anime.value.episodeCount ? { label: '集數', value: `全 ${anime.value.episodeCount} 集` } : null,
+    streamingPlatforms.value.length > 0
+      ? { label: '觀看平台', value: streamingPlatforms.value.join('、') }
+      : null
+  ].filter((fact): fact is { label: string; value: string } => fact !== null)
+})
+const updatedDateText = computed(() => {
+  if (!anime.value?.updatedAt) return ''
+  const date = new Date(anime.value.updatedAt)
+  if (Number.isNaN(date.getTime())) return ''
+  return new Intl.DateTimeFormat('zh-TW', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'Asia/Taipei'
+  }).format(date)
+})
+const providerLabels: Record<string, string> = {
+  bangumi: 'Bangumi 番組計畫',
+  mal: 'MyAnimeList'
+}
+const externalSourceLinks = computed(() => (anime.value?.externalIds ?? [])
+  .filter(source => source.url)
+  .map(source => ({
+    label: providerLabels[source.provider] ?? source.provider,
+    url: source.url
+  })))
+const seoDescription = computed(() => answerSummary.value.slice(0, 160))
+const animeStructuredData = computed(() => {
+  if (!anime.value) return {}
+  const seriesId = `${canonicalUrl.value}#series`
+  const alternateNames = [anime.value.titleJa, ...anime.value.aliases].filter(Boolean)
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${canonicalUrl.value}#page`,
+        url: canonicalUrl.value,
+        name: `${anime.value.name}｜動畫介紹與播出資訊`,
+        description: seoDescription.value,
+        inLanguage: 'zh-Hant',
+        dateModified: anime.value.updatedAt || undefined,
+        isPartOf: { '@id': `${SITE_URL}/#website` },
+        publisher: { '@id': `${SITE_URL}/#organization` },
+        about: { '@id': seriesId },
+        mainEntity: { '@id': seriesId }
+      },
+      {
+        '@type': 'TVSeries',
+        '@id': seriesId,
+        url: canonicalUrl.value,
+        name: anime.value.name,
+        alternateName: alternateNames.length > 0 ? alternateNames : undefined,
+        description: anime.value.description,
+        image: anime.value.imageUrl || undefined,
+        genre: anime.value.tags,
+        keywords: anime.value.tags.join('、') || undefined,
+        datePublished: anime.value.airDate || undefined,
+        numberOfEpisodes: anime.value.episodeCount || undefined,
+        actor: anime.value.actors.map(actor => ({
+          '@type': 'Person',
+          name: actor
+        })),
+        sameAs: anime.value.externalIds.map(source => source.url).filter(Boolean),
+        mainEntityOfPage: { '@id': `${canonicalUrl.value}#page` }
+      }
+    ]
+  }
+})
+
 useSeoMeta({
-  title: () => anime.value ? `${anime.value.name} － 動畫新番介紹｜動漫庫` : '動漫庫',
-  description: () => anime.value ? (anime.value.description || '').slice(0, 120) : undefined,
+  title: () => anime.value ? `${anime.value.name}｜動畫介紹、播出資訊與觀看平台｜動漫庫` : '動漫庫',
+  description: () => seoDescription.value || undefined,
   ogTitle: () => anime.value?.name,
-  ogDescription: () => (anime.value?.description || '').slice(0, 200),
+  ogDescription: () => seoDescription.value || undefined,
   ogImage: () => anime.value?.imageUrl || undefined,
+  ogUrl: () => canonicalUrl.value,
   ogType: 'video.tv_show',
   twitterCard: 'summary_large_image'
 })
 
 useHead({
-  link: [{ rel: 'canonical', href: () => `https://anime.kaistarstudio.me/anime/${route.params.id}` }],
+  link: [{ rel: 'canonical', href: () => canonicalUrl.value }],
   script: [{
+    key: 'anime-entity',
     type: 'application/ld+json',
-    innerHTML: computed(() => anime.value ? JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'TVSeries',
-      name: anime.value.name,
-      alternateName: anime.value.titleJa || undefined,
-      description: anime.value.description,
-      image: anime.value.imageUrl || undefined,
-      genre: anime.value.tags,
-      datePublished: anime.value.airDate || undefined,
-      numberOfEpisodes: anime.value.episodeCount || undefined
-    }) : '{}')
+    innerHTML: computed(() => serializeJsonLd(animeStructuredData.value))
   }]
 })
 </script>
@@ -285,6 +385,21 @@ useHead({
             </div>
           </div>
 
+          <section aria-labelledby="anime-answer-title" class="space-y-2">
+            <h2 id="anime-answer-title" class="text-[11px] font-bold uppercase tracking-widest text-gray-500">
+              這部動畫是什麼？
+            </h2>
+            <div class="rounded-xl border border-primary-100 bg-primary-50/60 px-5 py-4">
+              <p class="text-sm font-semibold leading-6 text-gray-800">{{ answerSummary }}</p>
+              <dl v-if="quickFacts.length > 0" class="mt-3 grid gap-2 border-t border-primary-100 pt-3 sm:grid-cols-3">
+                <div v-for="fact in quickFacts" :key="fact.label">
+                  <dt class="text-[11px] font-bold text-gray-500">{{ fact.label }}</dt>
+                  <dd class="mt-0.5 text-sm font-medium text-gray-800">{{ fact.value }}</dd>
+                </div>
+              </dl>
+            </div>
+          </section>
+
           <!-- Air info -->
           <div v-if="anime.airDateText || anime.airDate" class="flex items-start gap-2 rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
             <UIcon name="i-lucide-calendar" class="mt-0.5 size-4 shrink-0 text-primary-500" />
@@ -437,6 +552,25 @@ useHead({
               </div>
             </div>
           </section>
+
+          <footer class="rounded-xl border border-gray-200 bg-white px-5 py-4 text-xs leading-5 text-gray-500 shadow-sm">
+            <p>
+              資料說明：作品資料由動漫庫定期彙整
+              <template v-if="updatedDateText">，本頁更新於 {{ updatedDateText }}</template>。
+            </p>
+            <p v-if="externalSourceLinks.length > 0" class="mt-1">
+              外部資料庫：
+              <template v-for="(source, index) in externalSourceLinks" :key="source.url">
+                <span v-if="index > 0">、</span>
+                <a
+                  :href="source.url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="font-semibold text-primary-700 underline underline-offset-2"
+                >{{ source.label }}</a>
+              </template>
+            </p>
+          </footer>
 
         </div>
       </div>
