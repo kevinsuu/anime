@@ -30,4 +30,10 @@ describe('list item rating stars', () => {
     expect(listItemRowSource).not.toContain('<select')
     expect(listItemRowSource).not.toContain('ratingOptions')
   })
+
+  it('does not prefetch every detail page or cover in a list page', () => {
+    expect(listItemRowSource.match(/no-prefetch/g)).toHaveLength(2)
+    expect(listItemRowSource).toContain('useLazyLoad(rowRef)')
+    expect(listItemRowSource).toContain(":src=\"shouldLoadCover ? item.anime.imageUrl : undefined\"")
+  })
 })

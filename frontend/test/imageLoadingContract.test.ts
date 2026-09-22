@@ -1,7 +1,12 @@
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { HIGH_PRIORITY_IMAGE_COUNT, IMAGE_PRELOAD_DISTANCE_PX, VIRTUAL_RENDER_BUFFER_PX } from '../app/composables/useLazyLoad'
+import {
+  HIGH_PRIORITY_IMAGE_COUNT,
+  IMAGE_PRELOAD_DISTANCE_PX,
+  INITIAL_EAGER_IMAGE_COUNT,
+  VIRTUAL_RENDER_BUFFER_PX
+} from '../app/composables/useLazyLoad'
 
 const virtualGridSource = readFileSync(
   resolve(process.cwd(), 'app/components/AnimeVirtualGrid.vue'),
@@ -19,10 +24,11 @@ describe('anime image loading contract', () => {
     expect(virtualGridSource).toContain(':buffer="VIRTUAL_RENDER_BUFFER_PX"')
   })
 
-  it('prioritizes only the LCP candidate and decodes the rest asynchronously', () => {
+  it('starts the first two desktop rows during SSR while prioritizing only the LCP candidate', () => {
     expect(HIGH_PRIORITY_IMAGE_COUNT).toBe(1)
-    expect(gridCardSource).toContain(":loading=\"eagerLoad ? 'eager' : 'lazy'\"")
-    expect(gridCardSource).toContain(":fetchpriority=\"eagerLoad ? 'high' : 'low'\"")
+    expect(INITIAL_EAGER_IMAGE_COUNT).toBe(10)
+    expect(gridCardSource).toContain(":loading=\"shouldLoad ? 'eager' : 'lazy'\"")
+    expect(gridCardSource).toContain(":fetchpriority=\"highPriority ? 'high' : shouldLoad ? 'auto' : 'low'\"")
     expect(gridCardSource).toContain('decoding="async"')
   })
 

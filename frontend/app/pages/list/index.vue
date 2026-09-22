@@ -19,6 +19,7 @@ const list = ref<ListItem[]>([])
 const collections = ref<Collection[]>([])
 const tagOptions = ref<TagOption[]>([])
 const loading = ref(true)
+const initialLoading = ref(true)
 const PAGE_SIZE = 50
 const listMeta = ref<AnimeSummaryMeta>({
   page: 1,
@@ -175,31 +176,26 @@ async function loadCollections() {
   collections.value = (result.items || []).map(normalizeCollection)
 }
 
+async function loadTags() {
+  const result = await api.myListTags()
+  tagOptions.value = result.tags || []
+}
+
+function loadSupplementalData() {
+  // Counts, collections, and tags decorate the list but must never block the
+  // currently requested page from being displayed.
+  void Promise.allSettled([
+    loadCounts(),
+    loadCollections(),
+    loadTags()
+  ])
+}
+
 async function loadAll() {
-  loading.value = true
-  try {
-    const [listRes, countsRes, colRes, tagsRes] = await Promise.all([
-      api.myList(listRequestFilters()),
-      api.myListCounts(),
-      api.myCollections(),
-      api.myListTags()
-    ])
-    list.value = (listRes.items || []).map(normalizeListItem)
-    listMeta.value = listRes.meta
-    listCounts.value = countsRes.counts
-    collections.value = (colRes.items || []).map(normalizeCollection)
-    tagOptions.value = tagsRes.tags || []
-    if (page.value > listRes.meta.last_page) {
-      const query = { ...route.query }
-      if (listRes.meta.last_page > 1) query.page = String(listRes.meta.last_page)
-      else delete query.page
-      await router.replace({ path: '/list', query })
-    }
-  } catch (err: unknown) {
-    toast.add({ title: apiErrorMessage(err, '載入失敗'), color: 'error' })
-  } finally {
-    loading.value = false
-  }
+  await loadList()
+  initialLoading.value = false
+  // Let Vue commit the requested page before starting non-essential requests.
+  void nextTick().then(loadSupplementalData)
 }
 
 async function updateItem(item: ListItem, patch: ListItemPatch) {
@@ -380,7 +376,7 @@ async function changePage(nextPage: number) {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
-onMounted(loadAll)
+onMounted(() => { void loadAll() })
 
 watch(() => route.query, async () => {
   searchQuery.value = routeString(route.query.q)
@@ -396,7 +392,7 @@ watch(mobileCollectionsOpen, (open) => {
 <template>
   <div class="relative grid w-full min-w-0 max-w-full gap-6 lg:grid-cols-[clamp(180px,20vw,220px)_minmax(0,1fr)]">
     <div
-      v-if="loading"
+      v-if="initialLoading"
       class="fixed inset-0 z-40 grid place-items-center bg-white/80 backdrop-blur-sm"
       role="status"
       aria-live="polite"

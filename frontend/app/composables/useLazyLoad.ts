@@ -21,10 +21,14 @@ export const IMAGE_PRELOAD_DISTANCE_PX = 300
 // every cover in that render window.
 export const VIRTUAL_RENDER_BUFFER_PX = 700
 
-// Five cards is one full desktop row. Remaining near-viewport cards still get
-// a src immediately, but stay at normal/low browser priority so the first row
-// wins the initial network contention.
+// Only one image should receive high fetch priority: it is the LCP candidate.
 export const HIGH_PRIORITY_IMAGE_COUNT = 1
+
+// The SSR fallback renders the first twelve cards. Give the first two desktop
+// rows their src during SSR so the browser can start their small WebP requests
+// while Nuxt is still downloading and hydrating; the remainder stays observer
+// driven. This is intentionally separate from HIGH_PRIORITY_IMAGE_COUNT.
+export const INITIAL_EAGER_IMAGE_COUNT = 10
 
 function getObserver(): IntersectionObserver {
   if (!sharedObserver) {

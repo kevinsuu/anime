@@ -53,7 +53,12 @@ seasonal.vue / catalog.vue（改動）
   └─ 其餘邏輯（篩選狀態、清單/收藏互動、分頁按鈕、SEO meta）完全不變
 
 AnimeGridCard.vue（不改動業務邏輯）
-  └─ useLazyLoad 保留：套件回收/重用 DOM 節點時，Vue 的元件生命週期
+  └─ useLazyLoad 保留，並作為是否設定圖片 src 的唯一延遲載入控制：卡片
+     前 10 張（約兩列桌機卡片）在 SSR 階段就輸出 src，讓瀏覽器可在
+     Nuxt hydration 前開始下載；其餘卡片進入 300px 預載範圍後，以
+     eager/auto 立即下載，避免再被原生 loading=lazy 與 low
+     fetchpriority 二次延後；只有第一張 LCP 候選圖使用 high priority。
+     套件回收/重用 DOM 節點時，Vue 的元件生命週期
      （unmount 舊卡片、mount 新卡片，或是 prop 更新同一個元件實例）
      仍會正確觸發 useLazyLoad 的 onMounted/watch 邏輯，不需要特別處理
      虛擬滾動的節點重用

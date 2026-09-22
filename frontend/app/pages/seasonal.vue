@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { weekdayTabs, useSeasonalCatalog, deriveFilterOptions } from '../composables/useSeasonalCatalog'
-import { HIGH_PRIORITY_IMAGE_COUNT } from '../composables/useLazyLoad'
+import { HIGH_PRIORITY_IMAGE_COUNT, INITIAL_EAGER_IMAGE_COUNT } from '../composables/useLazyLoad'
 import { normalizeAnimeSummary, tagColor } from '../utils/normalize'
 import type { AnimeSummary } from '../utils/normalize'
 import { isSeasonSelection, seasonMonthLabels, seasonSelection, shiftSeason } from '../utils/season'
@@ -362,7 +362,8 @@ useHead({
             :status="statusesByAnimeId.get(anime.id)"
             :collections="collections"
             :popover-open="activePopoverAnimeId === anime.id"
-            :eager-load="index < HIGH_PRIORITY_IMAGE_COUNT"
+            :eager-load="index < INITIAL_EAGER_IMAGE_COUNT"
+            :high-priority="index < HIGH_PRIORITY_IMAGE_COUNT"
             :show-actions="!bootstrapError"
             @add-to-list="toggleAnimeInList"
             @mark-watched="markWatched"

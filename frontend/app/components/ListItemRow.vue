@@ -3,6 +3,7 @@ import type { ListItem, Collection } from '../utils/normalize'
 import type { ListItemPatch } from '../types/api'
 import { tagColor } from '../utils/normalize'
 import { isGenreTag } from '../composables/useSeasonalCatalog'
+import { useLazyLoad } from '../composables/useLazyLoad'
 
 const props = defineProps<{
   item: ListItem
@@ -24,6 +25,8 @@ const confirmingRemove = ref(false)
 const colPopoverOpen = ref(false)
 const mobileEditorOpen = ref(false)
 const mobileNoteDraft = ref(props.item.note)
+const rowRef = ref<HTMLElement | null>(null)
+const shouldLoadCover = useLazyLoad(rowRef)
 
 function updateWatched(value: boolean) {
   emit('update', { watched: value })
@@ -71,14 +74,16 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
 </script>
 
 <template>
-  <div class="flex w-full min-w-0 max-w-full gap-3 rounded-xl border border-gray-200 bg-white p-3 shadow-sm transition hover:shadow-md md:gap-4 md:p-4">
+  <div ref="rowRef" class="flex w-full min-w-0 max-w-full gap-3 rounded-xl border border-gray-200 bg-white p-3 shadow-sm transition hover:shadow-md md:gap-4 md:p-4">
     <!-- Cover -->
-    <NuxtLink :to="`/anime/${item.anime.id}`" class="shrink-0">
+    <NuxtLink :to="`/anime/${item.anime.id}`" no-prefetch class="shrink-0">
       <img
         v-if="item.anime.imageUrl"
-        :src="item.anime.imageUrl"
+        :src="shouldLoadCover ? item.anime.imageUrl : undefined"
         :alt="item.anime.name"
-        loading="lazy"
+        :loading="shouldLoadCover ? 'eager' : 'lazy'"
+        :fetchpriority="shouldLoadCover ? 'auto' : 'low'"
+        decoding="async"
         width="80"
         height="112"
         class="h-24 w-[72px] rounded-lg object-cover shadow-sm md:h-28 md:w-20"
@@ -95,7 +100,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
     <div class="min-w-0 flex-1 space-y-2">
       <div class="flex items-start justify-between gap-2">
         <div class="min-w-0">
-          <NuxtLink :to="`/anime/${item.anime.id}`" class="hover:underline">
+          <NuxtLink :to="`/anime/${item.anime.id}`" no-prefetch class="hover:underline">
             <h3 class="line-clamp-2 text-sm font-bold leading-5 text-gray-950 md:line-clamp-none md:truncate md:text-base md:leading-normal">{{ item.anime.name }}</h3>
           </NuxtLink>
           <p v-if="item.anime.aliases?.length" class="mt-0.5 hidden truncate text-xs text-gray-400 md:block">

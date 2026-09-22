@@ -12,11 +12,13 @@ const props = withDefaults(defineProps<{
   collections?: Collection[]
   popoverOpen?: boolean
   eagerLoad?: boolean
+  highPriority?: boolean
   showActions?: boolean
 }>(), {
   collections: () => [],
   popoverOpen: false,
   eagerLoad: false,
+  highPriority: false,
   showActions: true,
   statusPending: false
 })
@@ -202,12 +204,16 @@ onBeforeUnmount(() => {
           :class="imageLoaded ? '' : 'animate-pulse'"
           aria-hidden="true"
         />
+        <!-- useLazyLoad already controls when src is assigned. Once a cover
+             enters that window, don't apply native lazy-loading or a low
+             network priority a second time: visible covers should start
+             immediately, while only the LCP candidate is promoted to high. -->
         <img
           ref="imgEl"
           :src="shouldLoad ? anime.imageUrl : undefined"
           :alt="anime.name"
-          :loading="eagerLoad ? 'eager' : 'lazy'"
-          :fetchpriority="eagerLoad ? 'high' : 'low'"
+          :loading="shouldLoad ? 'eager' : 'lazy'"
+          :fetchpriority="highPriority ? 'high' : shouldLoad ? 'auto' : 'low'"
           decoding="async"
           width="300"
           height="400"

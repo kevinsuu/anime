@@ -27,6 +27,13 @@ describe('list page data-flow contract', () => {
     expect(listPageSource).not.toContain('fullList')
   })
 
+  it('renders the requested page before loading sidebar metadata', () => {
+    expect(listPageSource).toContain('await loadList()')
+    expect(listPageSource).toContain('initialLoading.value = false')
+    expect(listPageSource).toContain('loadSupplementalData()')
+    expect(listPageSource).toContain('Promise.allSettled([')
+  })
+
   it('keeps category filters collapsed by default on mobile and visible on desktop', () => {
     expect(listPageSource).toContain('const mobileTagFiltersOpen = ref(false)')
     expect(listPageSource).toContain(':aria-expanded="mobileTagFiltersOpen"')

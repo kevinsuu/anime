@@ -2,7 +2,7 @@
 import { normalizeAnimeSummary, tagColor } from '../utils/normalize'
 import type { AnimeSummary } from '../utils/normalize'
 import { apiErrorMessage } from '../utils/apiError'
-import { HIGH_PRIORITY_IMAGE_COUNT } from '../composables/useLazyLoad'
+import { HIGH_PRIORITY_IMAGE_COUNT, INITIAL_EAGER_IMAGE_COUNT } from '../composables/useLazyLoad'
 import { serializeJsonLd, SITE_URL } from '../utils/seo'
 
 const api = useApi()
@@ -501,7 +501,8 @@ useHead(() => ({
             :status="statusesByAnimeId.get(anime.id)"
             :collections="collections"
             :popover-open="activePopoverAnimeId === anime.id"
-            :eager-load="index < HIGH_PRIORITY_IMAGE_COUNT"
+            :eager-load="index < INITIAL_EAGER_IMAGE_COUNT"
+            :high-priority="index < HIGH_PRIORITY_IMAGE_COUNT"
             :show-actions="!bootstrapError"
             @add-to-list="toggleAnimeInList"
             @mark-watched="markWatched"
