@@ -217,6 +217,7 @@ Authorization: Bearer <jwt>
 - push `vX.Y.Z` 格式的 tag → `.github/workflows/deploy.yml` 建置並推送 image，再 SSH 進主機執行 `docker compose pull && up -d`。
 
 `backend/Dockerfile.production`（PHP-FPM + nginx）與 `backend/Dockerfile.scheduler` 跟本機開發用的 `backend/Dockerfile`（`php artisan serve`）是分開的——開發用伺服器不適合正式環境的並發流量。
+三者都必須維持 Laravel 所需的 PHP extensions；目前共用 `pdo_mysql`、`mbstring` 與 Imagick。
 
 不要提交任何 `.env`。Repository 只保留 `.env.example`、`deploy/.env.production.example`。
 
