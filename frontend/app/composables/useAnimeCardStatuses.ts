@@ -139,13 +139,21 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
       scopeKey = key
       scopedAnimeIds = new Set(ids)
       bootstrapError.value = ''
-      clearPendingMutations()
     }
     return scopeGeneration
   }
 
-  function mutationIsCurrent(generation: number, animeId: number): boolean {
-    return generation === scopeGeneration && isAuthed.value && scopedAnimeIds.has(animeId)
+  function mutationIsCurrent(operationKey: string, token: number, animeId: number): boolean {
+    return mutationTokens.get(operationKey) === token
+      && isAuthed.value
+      && scopedAnimeIds.has(animeId)
+  }
+
+  function hasPendingStatusMutation(animeId: number): boolean {
+    return pendingListOperations.has(animeId)
+      || pendingInList.has(animeId)
+      || pendingWatched.has(animeId)
+      || hasPendingCollectionOperation(animeId)
   }
 
   async function loadCardStatuses(requestedAnimeIds: readonly number[]) {
@@ -191,6 +199,17 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
           if (status && requestedIds.has(status.animeId)) nextStatuses.set(status.animeId, status)
         }
 
+        // A scope change can start a new bootstrap while a card mutation from
+        // the previous scope is still in flight. Keep its optimistic state:
+        // the bootstrap snapshot may predate the mutation and would otherwise
+        // make the card briefly revert (or overwrite the final response).
+        for (const animeId of requestedIds) {
+          if (!hasPendingStatusMutation(animeId)) continue
+          const currentStatus = statusesByAnimeId.get(animeId)
+          if (currentStatus) nextStatuses.set(animeId, currentStatus)
+          else nextStatuses.delete(animeId)
+        }
+
         statusesByAnimeId.clear()
         nextStatuses.forEach((status, animeId) => statusesByAnimeId.set(animeId, status))
         collections.value = (Array.isArray(result.collections) ? result.collections : [])
@@ -233,9 +252,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
   }
 
   function isStatusPending(animeId: number): boolean {
-    return pendingListOperations.has(animeId)
-      || pendingInList.has(animeId)
-      || pendingWatched.has(animeId)
+    return hasPendingStatusMutation(animeId)
   }
 
   async function toggleAnimeInList(animeId: number) {
@@ -243,7 +260,6 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
     if (bootstrapLoading.value || bootstrapError.value || !scopedAnimeIds.has(animeId)) return
     if (pendingListOperations.has(animeId) || pendingWatched.has(animeId) || hasPendingCollectionOperation(animeId)) return
 
-    const generation = scopeGeneration
     const operationKey = `list:${animeId}`
     const operationToken = beginMutation(operationKey)
     pendingListOperations.add(animeId)
@@ -265,11 +281,11 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
 
       try {
         await api.deleteListItem(existing.listItemId)
-        if (mutationIsCurrent(generation, animeId)) {
+        if (mutationIsCurrent(operationKey, operationToken, animeId)) {
           toast.add({ title: '已取消收藏', color: 'warning' })
         }
       } catch (error: unknown) {
-        if (mutationIsCurrent(generation, animeId)) {
+        if (mutationIsCurrent(operationKey, operationToken, animeId)) {
           statusesByAnimeId.set(animeId, previousStatus)
           previousCounts.forEach((count, collectionId) => {
             const collection = collections.value.find(item => item.id === collectionId)
@@ -288,7 +304,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
     pendingInList.add(animeId)
     try {
       const result = await api.addToList(animeId)
-      if (mutationIsCurrent(generation, animeId)) {
+      if (mutationIsCurrent(operationKey, operationToken, animeId)) {
         statusesByAnimeId.set(animeId, statusFromMutationResponse(animeId, result, {
           watched: false,
           collectionIds: []
@@ -296,7 +312,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
         toast.add({ title: '已加入收藏', color: 'success' })
       }
     } catch (error: unknown) {
-      if (mutationIsCurrent(generation, animeId)) {
+      if (mutationIsCurrent(operationKey, operationToken, animeId)) {
         toast.add({ title: apiErrorMessage(error, '加入收藏失敗'), color: 'error' })
       }
     } finally {
@@ -312,7 +328,6 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
     if (bootstrapLoading.value || bootstrapError.value || !scopedAnimeIds.has(animeId)) return
     if (pendingWatched.has(animeId) || pendingListOperations.has(animeId) || hasPendingCollectionOperation(animeId)) return
 
-    const generation = scopeGeneration
     const operationKey = `watched:${animeId}`
     const operationToken = beginMutation(operationKey)
     pendingWatched.add(animeId)
@@ -327,7 +342,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
     try {
       if (existing) {
         const result = await api.updateListItem(existing.listItemId, { watched: nextWatched })
-        if (mutationIsCurrent(generation, animeId)) {
+        if (mutationIsCurrent(operationKey, operationToken, animeId)) {
           statusesByAnimeId.set(animeId, statusFromMutationResponse(animeId, result, {
             watched: nextWatched,
             collectionIds: existing.collectionIds
@@ -335,14 +350,14 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
         }
       } else {
         const created = await api.addToList(animeId)
-        if (!mutationIsCurrent(generation, animeId)) return
+        if (!mutationIsCurrent(operationKey, operationToken, animeId)) return
         createdStatus = statusFromMutationResponse(animeId, created, {
           watched: false,
           collectionIds: []
         })
-        if (mutationIsCurrent(generation, animeId)) statusesByAnimeId.set(animeId, createdStatus)
+        if (mutationIsCurrent(operationKey, operationToken, animeId)) statusesByAnimeId.set(animeId, createdStatus)
         const result = await api.updateListItem(createdStatus.listItemId, { watched: true })
-        if (mutationIsCurrent(generation, animeId)) {
+        if (mutationIsCurrent(operationKey, operationToken, animeId)) {
           statusesByAnimeId.set(animeId, statusFromMutationResponse(animeId, result, {
             watched: true,
             collectionIds: createdStatus.collectionIds
@@ -350,14 +365,14 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
         }
       }
 
-      if (mutationIsCurrent(generation, animeId)) {
+      if (mutationIsCurrent(operationKey, operationToken, animeId)) {
         toast.add({
           title: nextWatched ? '已標記為看完' : '已取消已看',
           color: nextWatched ? 'success' : 'warning'
         })
       }
     } catch (error: unknown) {
-      if (mutationIsCurrent(generation, animeId)) {
+      if (mutationIsCurrent(operationKey, operationToken, animeId)) {
         if (existing) existing.watched = previousWatched
         else if (createdStatus) statusesByAnimeId.set(animeId, createdStatus)
         else statusesByAnimeId.delete(animeId)
@@ -385,7 +400,6 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
 
     const pendingKey = `${animeId}:${collection.id}`
     pendingCollections.add(pendingKey)
-    const generation = scopeGeneration
     const operationKey = `collection:${pendingKey}`
     const operationToken = beginMutation(operationKey)
 
@@ -409,14 +423,14 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
       } else {
         await api.addToCollection(collection.id, status.listItemId)
       }
-      if (mutationIsCurrent(generation, animeId)) {
+      if (mutationIsCurrent(operationKey, operationToken, animeId)) {
         toast.add({
           title: inCollection ? `已從「${collection.name}」移除` : `已加入「${collection.name}」`,
           color: inCollection ? 'warning' : 'success'
         })
       }
     } catch (error: unknown) {
-      if (mutationIsCurrent(generation, animeId)) {
+      if (mutationIsCurrent(operationKey, operationToken, animeId)) {
         const currentStatus = statusesByAnimeId.get(animeId)
         if (currentStatus?.listItemId === status.listItemId) currentStatus.collectionIds = previousCollectionIds
         if (targetCollection && previousCount !== null) targetCollection.count = previousCount

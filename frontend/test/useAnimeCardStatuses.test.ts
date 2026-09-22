@@ -196,12 +196,9 @@ describe('useAnimeCardStatuses', () => {
     expect(toastAdd).not.toHaveBeenCalled()
   })
 
-  it('ignores an old mutation after the card id scope changes without clearing the new lock', async () => {
+  it('keeps an in-flight mutation authoritative across a card id scope change', async () => {
     const oldMutationResponse = deferred<any>()
-    const newMutationResponse = deferred<any>()
-    api.addToList
-      .mockReturnValueOnce(oldMutationResponse.promise)
-      .mockReturnValueOnce(newMutationResponse.promise)
+    api.addToList.mockReturnValue(oldMutationResponse.promise)
     const animeIds = ref([1])
     const state = useAnimeCardStatuses(animeIds)
     await vi.waitFor(() => expect(state.bootstrapLoading.value).toBe(false))
@@ -209,23 +206,54 @@ describe('useAnimeCardStatuses', () => {
     const oldMutation = state.toggleAnimeInList(1)
     await vi.waitFor(() => expect(api.addToList).toHaveBeenCalledTimes(1))
 
+    api.meBootstrap.mockResolvedValueOnce({
+      user: { id: 1 },
+      // This response was created before the POST completed.
+      statuses: [],
+      collections: []
+    })
     animeIds.value = [1, 2]
     await vi.waitFor(() => expect(api.meBootstrap).toHaveBeenCalledTimes(2))
     await vi.waitFor(() => expect(state.bootstrapLoading.value).toBe(false))
 
-    const newMutation = state.toggleAnimeInList(1)
-    await vi.waitFor(() => expect(api.addToList).toHaveBeenCalledTimes(2))
+    await state.toggleAnimeInList(1)
+    expect(api.addToList).toHaveBeenCalledOnce()
     expect(state.pendingInList.has(1)).toBe(true)
 
     oldMutationResponse.resolve({ item: { id: 11, watched: false, collections: [] } })
     await oldMutation
-    expect(state.pendingInList.has(1)).toBe(true)
-    expect(state.statusesByAnimeId.has(1)).toBe(false)
-
-    newMutationResponse.resolve({ item: { id: 22, watched: false, collections: [] } })
-    await newMutation
     expect(state.pendingInList.has(1)).toBe(false)
-    expect(state.statusesByAnimeId.get(1)?.listItemId).toBe(22)
+    expect(state.statusesByAnimeId.get(1)?.listItemId).toBe(11)
+  })
+
+  it('does not let a scope bootstrap replace an optimistic watched state', async () => {
+    api.meBootstrap.mockResolvedValueOnce({
+      user: { id: 1 },
+      statuses: [{ anime_id: 1, list_item_id: 11, watched: false, collection_ids: [] }],
+      collections: []
+    })
+    const watched = deferred<any>()
+    api.updateListItem.mockReturnValue(watched.promise)
+    const animeIds = ref([1])
+    const state = useAnimeCardStatuses(animeIds)
+    await vi.waitFor(() => expect(state.statusesByAnimeId.get(1)?.watched).toBe(false))
+
+    const mutation = state.markWatched(1)
+    await vi.waitFor(() => expect(api.updateListItem).toHaveBeenCalledWith(11, { watched: true }))
+    expect(state.statusesByAnimeId.get(1)?.watched).toBe(true)
+
+    api.meBootstrap.mockResolvedValueOnce({
+      user: { id: 1 },
+      statuses: [{ anime_id: 1, list_item_id: 11, watched: false, collection_ids: [] }],
+      collections: []
+    })
+    animeIds.value = [1, 2]
+    await vi.waitFor(() => expect(state.bootstrapLoading.value).toBe(false))
+    expect(state.statusesByAnimeId.get(1)?.watched).toBe(true)
+
+    watched.resolve({ item: { id: 11, watched: true, collections: [] } })
+    await mutation
+    expect(state.statusesByAnimeId.get(1)?.watched).toBe(true)
   })
 
   it('rolls a failed optimistic removal and collection counts back', async () => {
