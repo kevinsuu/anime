@@ -164,7 +164,10 @@ const externalSourceLinks = computed(() => (anime.value?.externalIds ?? [])
     url: source.url
   })))
 const seoDescription = computed(() => answerSummary.value.slice(0, 160))
-const isIndexablePage = computed(() => anime.value !== null && isIndexableAnime(anime.value))
+const isIndexablePage = computed(() => {
+  const currentAnime = anime.value
+  return currentAnime !== undefined && isIndexableAnime(currentAnime)
+})
 const animeStructuredData = computed(() => {
   if (!anime.value) return {}
   const seriesId = `${canonicalUrl.value}#series`
