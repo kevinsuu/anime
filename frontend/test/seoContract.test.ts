@@ -60,12 +60,11 @@ describe('site identity SEO contract', () => {
     expect(robotsSource).not.toContain('User-agent: Googlebot\nDisallow: /')
   })
 
-  it('publishes answer-first copy and structured entities on public pages', () => {
+  it('publishes structured entities and answer-first copy where detail is needed', () => {
     const seasonalSource = readSource('app/pages/seasonal.vue')
     const catalogSource = readSource('app/pages/catalog.vue')
     const animeSource = readSource('app/pages/anime/[id].vue')
 
-    expect(seasonalSource).toContain('seasonal-answer-title')
     expect(seasonalSource).toContain("'@type': 'ItemList'")
     expect(catalogSource).toContain('catalog-answer-title')
     expect(catalogSource).toContain("'noindex, follow'")

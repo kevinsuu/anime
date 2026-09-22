@@ -9,7 +9,8 @@
 - Nuxt SSR 直接輸出首頁、季度列表、資料庫列表與作品詳情內容。
 - sitemap 收錄季度與作品頁；作品 `lastmod` 使用資料實際更新時間，舊資料才以播出日補位。
 - 首頁以 JSON-LD 定義「動漫庫 / Anime Library」的 `Organization` 與 `WebSite` 實體。
-- 季度與資料庫頁用可見的問答式摘要及 `CollectionPage`、`ItemList` JSON-LD 描述列表。
+- 季度與資料庫頁以 `CollectionPage`、`ItemList` JSON-LD 描述列表；資料庫頁另提供可見的問答式摘要，
+  季度頁則維持精簡的新番篩選介面。
 - 作品頁先給可獨立閱讀的答案摘要，再提供故事、集數、平台、聲優及資料來源；JSON-LD 以
   `WebPage` 連結 `TVSeries`，並用 Bangumi、MyAnimeList URL 協助實體對應。
 - 搜尋、分類篩選與第二頁以後的資料庫 URL 使用 `noindex, follow`，避免低價值參數頁分散索引。

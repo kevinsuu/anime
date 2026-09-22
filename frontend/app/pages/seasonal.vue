@@ -137,8 +137,6 @@ const pageDescription = computed(() => isBrandHomepage.value
 const canonicalUrl = computed(() => hasExplicitSeasonQuery.value
   ? `${SITE_URL}/?year=${seasonalControls.year}&season=${seasonalControls.season}`
   : `${SITE_URL}/`)
-const seasonalQuestion = computed(() => `${seasonalControls.year}年${seasonMonthLabels[seasonalControls.season]}新番有哪些？`)
-const seasonalAnswer = computed(() => `動漫庫目前收錄 ${seasonal.value.length} 部${seasonalControls.year}年${seasonMonthLabels[seasonalControls.season]}動畫，可依播出星期、作品類型、聲優與觀看狀態篩選。`)
 const seasonalStructuredData = computed(() => {
   const pageId = `${canonicalUrl.value}#page`
   const itemListId = `${canonicalUrl.value}#anime-list`
@@ -225,16 +223,6 @@ useHead({
         </button>
       </div>
     </header>
-
-    <section
-      aria-labelledby="seasonal-answer-title"
-      class="rounded-xl border border-primary-100 bg-primary-50/60 px-4 py-3"
-    >
-      <h2 id="seasonal-answer-title" class="text-sm font-extrabold text-gray-900">
-        {{ seasonalQuestion }}
-      </h2>
-      <p class="mt-1 text-sm leading-6 text-gray-700">{{ seasonalAnswer }}</p>
-    </section>
 
     <!-- 篩選卡片：星期 tabs + 分類篩選 + 已選 chips 集中在一張白底卡片，
          與資料庫/我的清單頁的搜尋卡片一致，統一產品樣式 -->
