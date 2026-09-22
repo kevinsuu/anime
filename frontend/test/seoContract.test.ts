@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
+import { isIndexableAnime } from '../app/utils/indexability'
 import { serializeJsonLd } from '../app/utils/seo'
 
 const readSource = (path: string) => readFileSync(resolve(process.cwd(), path), 'utf8')
@@ -85,8 +86,19 @@ describe('site identity SEO contract', () => {
   it('uses the actual catalog update time for sitemap freshness', () => {
     const sitemapSource = readSource('server/api/__sitemap__/anime-urls.ts')
 
+    expect(sitemapSource).toContain('const MINIMUM_INDEXABLE_DESCRIPTION_LENGTH = 160')
+    expect(sitemapSource).toContain('.filter(isIndexableAnime)')
+    expect(sitemapSource).toContain('description: string | null')
     expect(sitemapSource).toContain('updated_at: string | null')
     expect(sitemapSource).toContain('lastmod: item.updated_at || item.air_date || undefined')
+  })
+
+  it('only grants indexing signals to detail pages with a substantive synopsis', () => {
+    const animeSource = readSource('app/pages/anime/[id].vue')
+
+    expect(isIndexableAnime({ description: '精簡介紹' })).toBe(false)
+    expect(isIndexableAnime({ description: '作品介紹'.repeat(40) })).toBe(true)
+    expect(animeSource).toContain("robots: () => isIndexablePage.value ? 'index, follow' : 'noindex, follow'")
   })
 
   it('escapes HTML delimiters in dynamic JSON-LD', () => {

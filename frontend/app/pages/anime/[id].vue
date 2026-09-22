@@ -3,6 +3,7 @@ import { normalizeAnime, tagColor } from '../../utils/normalize'
 import type { Anime } from '../../utils/normalize'
 import { apiErrorMessage } from '../../utils/apiError'
 import { seasonMonthLabels } from '../../utils/season'
+import { isIndexableAnime } from '../../utils/indexability'
 import { serializeJsonLd, SITE_URL } from '../../utils/seo'
 
 const route = useRoute()
@@ -163,6 +164,7 @@ const externalSourceLinks = computed(() => (anime.value?.externalIds ?? [])
     url: source.url
   })))
 const seoDescription = computed(() => answerSummary.value.slice(0, 160))
+const isIndexablePage = computed(() => anime.value !== null && isIndexableAnime(anime.value))
 const animeStructuredData = computed(() => {
   if (!anime.value) return {}
   const seriesId = `${canonicalUrl.value}#series`
@@ -215,7 +217,8 @@ useSeoMeta({
   ogImage: () => anime.value?.imageUrl || undefined,
   ogUrl: () => canonicalUrl.value,
   ogType: 'video.tv_show',
-  twitterCard: 'summary_large_image'
+  twitterCard: 'summary_large_image',
+  robots: () => isIndexablePage.value ? 'index, follow' : 'noindex, follow'
 })
 
 useHead({
