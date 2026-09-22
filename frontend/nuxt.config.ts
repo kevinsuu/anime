@@ -20,6 +20,11 @@ export default defineNuxtConfig({
   },
   ssr: true,
   modules: ['@nuxt/ui', '@nuxtjs/sitemap'],
+  // Nuxt Icon defaults to /api/_nuxt_icon, which the host nginx routes to
+  // Laravel. Keep icon requests on the Nuxt frontend instead.
+  icon: {
+    localApiEndpoint: '/_nuxt_icon'
+  },
   css: ['~/assets/css/main.css'],
   // The whole UI is designed for light mode; pin color-mode to light so
   // Nuxt UI doesn't add `.dark` to <html> when the OS is in dark mode

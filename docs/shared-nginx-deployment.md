@@ -13,7 +13,7 @@ host ports:
 | Service | Loopback port | Public route |
 |---|---|---|
 | backend | `127.0.0.1:8080` | `/api/`, `/storage/` |
-| frontend | `127.0.0.1:3000` | `/` |
+| frontend | `127.0.0.1:3000` | `/`, `/_nuxt_icon/` |
 
 Binding to `127.0.0.1` prevents direct external access to the containers.
 Do not use a host mapping such as `8080:8080`, which binds on every interface.
@@ -97,6 +97,16 @@ server {
     # Laravel public disk (anime cover thumbnails)
     location /storage/ {
         proxy_pass http://anime_backend/storage/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Nuxt Icon serves locally bundled icons here. It must not be nested below
+    # /api/, which is reserved for Laravel.
+    location /_nuxt_icon/ {
+        proxy_pass http://anime_frontend;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
