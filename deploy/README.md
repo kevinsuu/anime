@@ -129,7 +129,7 @@ docker compose up -d
 
 ## 首次部署：匯入正式資料
 
-`scheduler` 每週日 05:00 執行 `anime:scrape-acgsecrets` 並自動匯入資料。因此，首次部署後若不手動匯入，動漫資料庫會維持空白直到下一次週日排程。若要立即建立資料，請執行：
+`scheduler` 每週日 05:00 執行 `anime:scrape-acgsecrets` 並自動匯入資料。新季度自開季前七天起會納入例行爬取。因此，首次部署後若不手動匯入，動漫資料庫會維持空白直到下一次週日排程。若要立即建立資料，請執行：
 
 ```
 docker compose exec backend php artisan anime:scrape-acgsecrets --all

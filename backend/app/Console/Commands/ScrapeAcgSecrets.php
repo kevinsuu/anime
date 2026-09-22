@@ -62,18 +62,21 @@ final class ScrapeAcgSecrets extends Command
             return $parser->parseSeasonIndex($client->fetchIndex());
         }
 
-        // Default: scrape all seasons within the past 2 years up to current season.
+        // Default: scrape the past two years plus a season that starts within
+        // the next week. ACG Secrets commonly publishes an upcoming season's
+        // page before its first day, so fetch it on the preceding weekly run.
         // Seasons start in Jan(01), Apr(04), Jul(07), Oct(10).
         $now = new DateTimeImmutable('now');
         $currentYear = (int) $now->format('Y');
-        $currentMonth = (int) $now->format('n');
+        $latestSeasonStart = $now->modify('+7 days');
+        $latestSeasonYear = (int) $latestSeasonStart->format('Y');
         $seasonMonths = [1, 4, 7, 10];
 
         $seasons = [];
-        for ($year = $currentYear - 1; $year <= $currentYear; $year++) {
+        for ($year = $currentYear - 1; $year <= $latestSeasonYear; $year++) {
             foreach ($seasonMonths as $month) {
-                // Skip future seasons
-                if ($year === $currentYear && $month > $currentMonth) {
+                $seasonStart = new DateTimeImmutable(sprintf('%04d-%02d-01', $year, $month));
+                if ($seasonStart > $latestSeasonStart) {
                     continue;
                 }
                 $seasons[] = sprintf('%04d%02d', $year, $month);

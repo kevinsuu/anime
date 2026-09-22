@@ -127,7 +127,7 @@ cd frontend && npm run test   # 前端測試（Vitest，不需要 Docker）
   → 匯入（ImportAcgSecrets） → upsert 進 anime 與相關明細表
 ```
 
-排程容器（`scheduler`，執行 `php artisan schedule:work`）每週日 05:00 自動執行。手動執行：
+排程容器（`scheduler`，執行 `php artisan schedule:work`）每週日 05:00 自動執行。預設會爬取近兩年資料，並在新季度開始前七天起納入下一季；例如 10 月番表會從 9 月 24 日起的例行同步開始擷取。手動執行：
 
 ```bash
 docker compose exec backend php artisan anime:scrape-acgsecrets [--all]
