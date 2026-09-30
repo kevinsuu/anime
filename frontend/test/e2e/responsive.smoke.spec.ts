@@ -345,6 +345,10 @@ test('authenticated cards accept the first double tap while bootstrap syncs', as
   await page.goto('/seasonal?year=2026&season=summer', { waitUntil: 'domcontentloaded' })
   await expect.poll(() => bootstrapRequested).toBe(true)
   await expect(page.locator('[data-anime-card-grid-loading]')).toHaveCount(0)
+  // ClientOnly replaces its SSR fallback with the virtual grid on the next
+  // render tick. Wait for that replacement before retaining a card locator;
+  // otherwise dispatchEvent can keep waiting on a detached fallback node.
+  await settleLayout(page)
   const firstCard = page.locator('[data-mobile-gesture-card]').first()
   await expect(firstCard).toBeVisible()
 
