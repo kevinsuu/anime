@@ -5,6 +5,7 @@ import {
   HIGH_PRIORITY_IMAGE_COUNT,
   IMAGE_PRELOAD_DISTANCE_PX,
   INITIAL_EAGER_IMAGE_COUNT,
+  INITIAL_IMAGE_GATE_COUNT,
   VIRTUAL_RENDER_BUFFER_PX
 } from '../app/composables/useLazyLoad'
 
@@ -16,6 +17,8 @@ const gridCardSource = readFileSync(
   resolve(process.cwd(), 'app/components/AnimeGridCard.vue'),
   'utf8'
 )
+const seasonalSource = readFileSync(resolve(process.cwd(), 'app/pages/seasonal.vue'), 'utf8')
+const catalogSource = readFileSync(resolve(process.cwd(), 'app/pages/catalog.vue'), 'utf8')
 
 describe('anime image loading contract', () => {
   it('keeps the virtual render buffer separate from image preload distance', () => {
@@ -27,9 +30,12 @@ describe('anime image loading contract', () => {
   it('starts the first two desktop rows during SSR while prioritizing only the LCP candidate', () => {
     expect(HIGH_PRIORITY_IMAGE_COUNT).toBe(1)
     expect(INITIAL_EAGER_IMAGE_COUNT).toBe(10)
+    expect(INITIAL_IMAGE_GATE_COUNT).toBe(4)
     expect(gridCardSource).toContain(":loading=\"shouldLoad ? 'eager' : 'lazy'\"")
     expect(gridCardSource).toContain(":fetchpriority=\"highPriority ? 'high' : shouldLoad ? 'auto' : 'low'\"")
     expect(gridCardSource).toContain('decoding="async"')
+    expect(gridCardSource).toContain('imageReady: [animeId: number]')
+    expect(gridCardSource).toContain("emit('imageReady', props.anime.id)")
   })
 
   it('limits the SSR fallback to the first twelve cards', () => {
@@ -40,7 +46,7 @@ describe('anime image loading contract', () => {
   it('uses a quiet neutral fallback when a cover is unavailable', () => {
     expect(gridCardSource).toContain('data-image-fallback')
     expect(gridCardSource).toContain('v-if="hasUsableImage"')
-    expect(gridCardSource).toContain('@error="imageError = true"')
+    expect(gridCardSource).toContain('@error="handleImageError"')
     expect(gridCardSource).toContain('bg-gray-100 text-3xl font-bold text-gray-400 ring-1 ring-inset ring-gray-200')
     expect(gridCardSource).toContain('data-card-gradient')
     expect(gridCardSource).toContain('from-black/60 via-transparent to-black/80')
@@ -52,5 +58,13 @@ describe('anime image loading contract', () => {
     expect(gridCardSource).toContain('group-focus-within/card:pointer-events-auto')
     expect(gridCardSource).toContain('group-focus-within/card:translate-y-0')
     expect(gridCardSource).toContain('group-focus-within/card:opacity-100')
+  })
+
+  it('keeps the first screen as skeleton-or-complete instead of exposing half-loaded cards', () => {
+    for (const source of [seasonalSource, catalogSource]) {
+      expect(source).toContain('data-anime-image-gate')
+      expect(source).toContain('@image-ready="onInitialImageReady"')
+      expect(source).toContain(":class=\"initialImagesReady ? undefined : 'invisible'\"")
+    }
   })
 })

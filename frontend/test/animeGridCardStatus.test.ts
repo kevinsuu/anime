@@ -18,8 +18,8 @@ describe('anime grid card status border', () => {
   it('hides intermediate borders until the status mutation finishes', () => {
     expect(gridCardSource).toContain('if (props.statusPending) return null')
     expect(gridCardSource).toContain(':data-card-status-pending="statusPending || undefined"')
-    expect(seasonalSource).toContain(':status-pending="isStatusPending(anime.id)"')
-    expect(catalogSource).toContain(':status-pending="isStatusPending(anime.id)"')
+    expect(seasonalSource).toContain(':status-pending="bootstrapLoading || isStatusPending(anime.id)"')
+    expect(catalogSource).toContain(':status-pending="bootstrapLoading || isStatusPending(anime.id)"')
   })
 
   it('animates distinct watched and favorite-only borders', () => {

@@ -92,10 +92,12 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
   let bootstrapPromise: Promise<void> | null = null
   let mutationTokenSequence = 0
   const mutationTokens = new Map<string, number>()
+  const lastMutationSequenceByAnimeId = new Map<number, number>()
 
-  function beginMutation(operationKey: string): number {
+  function beginMutation(operationKey: string, animeId: number): number {
     const token = ++mutationTokenSequence
     mutationTokens.set(operationKey, token)
+    lastMutationSequenceByAnimeId.set(animeId, token)
     return token
   }
 
@@ -111,6 +113,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
     pendingWatched.clear()
     pendingCollections.clear()
     pendingListOperations.clear()
+    lastMutationSequenceByAnimeId.clear()
   }
 
   function cancelBootstrap() {
@@ -181,6 +184,9 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
     loadingKey = key
     bootstrapLoading.value = true
     bootstrapError.value = ''
+    // Mutations that start after this request must remain authoritative even
+    // when the bootstrap response was already in flight before the mutation.
+    const mutationSequenceAtRequest = mutationTokenSequence
 
     const task = (async () => {
       try {
@@ -204,7 +210,9 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
         // the bootstrap snapshot may predate the mutation and would otherwise
         // make the card briefly revert (or overwrite the final response).
         for (const animeId of requestedIds) {
-          if (!hasPendingStatusMutation(animeId)) continue
+          const mutationStartedAfterRequest =
+            (lastMutationSequenceByAnimeId.get(animeId) ?? 0) > mutationSequenceAtRequest
+          if (!hasPendingStatusMutation(animeId) && !mutationStartedAfterRequest) continue
           const currentStatus = statusesByAnimeId.get(animeId)
           if (currentStatus) nextStatuses.set(animeId, currentStatus)
           else nextStatuses.delete(animeId)
@@ -257,11 +265,11 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
 
   async function toggleAnimeInList(animeId: number) {
     if (!isAuthed.value) return navigateTo('/login')
-    if (bootstrapLoading.value || bootstrapError.value || !scopedAnimeIds.has(animeId)) return
+    if (bootstrapError.value || !scopedAnimeIds.has(animeId)) return
     if (pendingListOperations.has(animeId) || pendingWatched.has(animeId) || hasPendingCollectionOperation(animeId)) return
 
     const operationKey = `list:${animeId}`
-    const operationToken = beginMutation(operationKey)
+    const operationToken = beginMutation(operationKey, animeId)
     pendingListOperations.add(animeId)
     const existing = statusesByAnimeId.get(animeId)
 
@@ -325,11 +333,11 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
 
   async function markWatched(animeId: number) {
     if (!isAuthed.value) return navigateTo('/login')
-    if (bootstrapLoading.value || bootstrapError.value || !scopedAnimeIds.has(animeId)) return
+    if (bootstrapError.value || !scopedAnimeIds.has(animeId)) return
     if (pendingWatched.has(animeId) || pendingListOperations.has(animeId) || hasPendingCollectionOperation(animeId)) return
 
     const operationKey = `watched:${animeId}`
-    const operationToken = beginMutation(operationKey)
+    const operationToken = beginMutation(operationKey, animeId)
     pendingWatched.add(animeId)
     const existing = statusesByAnimeId.get(animeId)
     const previousWatched = existing?.watched ?? false
@@ -349,20 +357,15 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
           }))
         }
       } else {
-        const created = await api.addToList(animeId)
+        // The create endpoint accepts the initial watched state, so an
+        // unlisted card only needs one round trip instead of POST + PATCH.
+        const created = await api.addToList(animeId, { watched: true })
         if (!mutationIsCurrent(operationKey, operationToken, animeId)) return
         createdStatus = statusFromMutationResponse(animeId, created, {
-          watched: false,
+          watched: true,
           collectionIds: []
         })
         if (mutationIsCurrent(operationKey, operationToken, animeId)) statusesByAnimeId.set(animeId, createdStatus)
-        const result = await api.updateListItem(createdStatus.listItemId, { watched: true })
-        if (mutationIsCurrent(operationKey, operationToken, animeId)) {
-          statusesByAnimeId.set(animeId, statusFromMutationResponse(animeId, result, {
-            watched: true,
-            collectionIds: createdStatus.collectionIds
-          }))
-        }
       }
 
       if (mutationIsCurrent(operationKey, operationToken, animeId)) {
@@ -401,7 +404,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
     const pendingKey = `${animeId}:${collection.id}`
     pendingCollections.add(pendingKey)
     const operationKey = `collection:${pendingKey}`
-    const operationToken = beginMutation(operationKey)
+    const operationToken = beginMutation(operationKey, animeId)
 
     const inCollection = status.collectionIds.includes(collection.id)
     const previousCollectionIds = [...status.collectionIds]

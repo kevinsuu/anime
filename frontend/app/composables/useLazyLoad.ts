@@ -30,6 +30,11 @@ export const HIGH_PRIORITY_IMAGE_COUNT = 1
 // driven. This is intentionally separate from HIGH_PRIORITY_IMAGE_COUNT.
 export const INITIAL_EAGER_IMAGE_COUNT = 10
 
+// The page-level image gate only waits for the first two mobile rows. This
+// keeps the first meaningful paint fast while preventing a partially painted
+// first screen from looking like a broken card grid.
+export const INITIAL_IMAGE_GATE_COUNT = 4
+
 function getObserver(): IntersectionObserver {
   if (!sharedObserver) {
     sharedObserver = new IntersectionObserver(

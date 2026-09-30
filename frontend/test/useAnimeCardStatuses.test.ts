@@ -126,9 +126,11 @@ describe('useAnimeCardStatuses', () => {
     await vi.waitFor(() => expect(api.meBootstrap).toHaveBeenCalledWith([1, 2]))
   })
 
-  it('rejects card mutations while the bootstrap request is still loading', async () => {
+  it('allows card mutations while bootstrap is loading but keeps collections gated', async () => {
     const bootstrap = deferred<any>()
     api.meBootstrap.mockReturnValue(bootstrap.promise)
+    api.addToList.mockResolvedValue({ item: { id: 11, watched: false, collections: [] } })
+    api.updateListItem.mockResolvedValue({ item: { id: 11, watched: true, collections: [] } })
     const state = useAnimeCardStatuses(ref([1]))
     await vi.waitFor(() => expect(state.bootstrapLoading.value).toBe(true))
 
@@ -142,13 +144,17 @@ describe('useAnimeCardStatuses', () => {
       count: 0
     })
 
-    expect(api.addToList).not.toHaveBeenCalled()
-    expect(api.updateListItem).not.toHaveBeenCalled()
+    expect(api.addToList).toHaveBeenCalledWith(1)
+    expect(api.updateListItem).toHaveBeenCalledWith(11, { watched: true })
     expect(api.addToCollection).not.toHaveBeenCalled()
     expect(api.removeFromCollection).not.toHaveBeenCalled()
 
     bootstrap.resolve({ user: { id: 1 }, statuses: [], collections: [] })
     await vi.waitFor(() => expect(state.bootstrapLoading.value).toBe(false))
+    expect(state.statusesByAnimeId.get(1)).toMatchObject({
+      listItemId: 11,
+      watched: true
+    })
   })
 
   it('exposes a bootstrap failure, blocks mutations and retries the current scope', async () => {
@@ -179,7 +185,7 @@ describe('useAnimeCardStatuses', () => {
     await vi.waitFor(() => expect(state.bootstrapLoading.value).toBe(false))
 
     const mutation = state.markWatched(1)
-    await vi.waitFor(() => expect(api.addToList).toHaveBeenCalledWith(1))
+    await vi.waitFor(() => expect(api.addToList).toHaveBeenCalledWith(1, { watched: true }))
     expect(state.pendingInList.has(1)).toBe(true)
 
     isAuthed.value = false
@@ -188,7 +194,7 @@ describe('useAnimeCardStatuses', () => {
     expect(state.pendingInList.size).toBe(0)
     expect(state.pendingWatched.size).toBe(0)
 
-    created.resolve({ item: { id: 11, watched: false, collections: [] } })
+    created.resolve({ item: { id: 11, watched: true, collections: [] } })
     await mutation
 
     expect(api.updateListItem).not.toHaveBeenCalled()
@@ -274,15 +280,14 @@ describe('useAnimeCardStatuses', () => {
   })
 
   it('creates a lightweight status when marking an unlisted anime as watched', async () => {
-    api.addToList.mockResolvedValue({ item: { id: 22, watched: false, collections: [] } })
-    api.updateListItem.mockResolvedValue({ item: { id: 22, watched: true, collections: [] } })
+    api.addToList.mockResolvedValue({ item: { id: 22, watched: true, collections: [] } })
     const state = useAnimeCardStatuses(ref([2]))
     await vi.waitFor(() => expect(api.meBootstrap).toHaveBeenCalledOnce())
 
     await state.markWatched(2)
 
-    expect(api.addToList).toHaveBeenCalledWith(2)
-    expect(api.updateListItem).toHaveBeenCalledWith(22, { watched: true })
+    expect(api.addToList).toHaveBeenCalledWith(2, { watched: true })
+    expect(api.updateListItem).not.toHaveBeenCalled()
     expect(state.statusesByAnimeId.get(2)).toEqual({
       animeId: 2,
       listItemId: 22,
@@ -295,22 +300,15 @@ describe('useAnimeCardStatuses', () => {
 
   it('keeps the card status pending across the intermediate favorite state', async () => {
     const created = deferred<any>()
-    const watched = deferred<any>()
     api.addToList.mockReturnValue(created.promise)
-    api.updateListItem.mockReturnValue(watched.promise)
     const state = useAnimeCardStatuses(ref([2]))
     await vi.waitFor(() => expect(state.bootstrapLoading.value).toBe(false))
 
     const mutation = state.markWatched(2)
-    await vi.waitFor(() => expect(api.addToList).toHaveBeenCalledWith(2))
+    await vi.waitFor(() => expect(api.addToList).toHaveBeenCalledWith(2, { watched: true }))
     expect(state.isStatusPending(2)).toBe(true)
 
-    created.resolve({ item: { id: 22, watched: false, collections: [] } })
-    await vi.waitFor(() => expect(api.updateListItem).toHaveBeenCalledWith(22, { watched: true }))
-    expect(state.statusesByAnimeId.get(2)?.watched).toBe(false)
-    expect(state.isStatusPending(2)).toBe(true)
-
-    watched.resolve({ item: { id: 22, watched: true, collections: [] } })
+    created.resolve({ item: { id: 22, watched: true, collections: [] } })
     await mutation
 
     expect(state.statusesByAnimeId.get(2)?.watched).toBe(true)

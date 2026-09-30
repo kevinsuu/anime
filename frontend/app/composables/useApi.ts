@@ -11,6 +11,7 @@ import type {
   CollectionPayload,
   ItemResponse,
   ItemsResponse,
+  ListItemCreate,
   ListItemPatch,
   OkResponse,
   PublicCollectionPayload,
@@ -152,7 +153,10 @@ export function useApi() {
     },
     myListCounts: () => request<AnimeListCountsResponse>('/my/anime-list/counts'),
     myListTags: () => request<TagsResponse>('/my/anime-list/tags'),
-    addToList: (animeId: number) => request<ItemResponse<ApiPayload>>('/my/anime-list', { method: 'POST', body: JSON.stringify({ animeId }) }),
+    addToList: (animeId: number, payload: ListItemCreate = {}) => request<ItemResponse<ApiPayload>>(
+      '/my/anime-list',
+      { method: 'POST', body: JSON.stringify({ animeId, ...payload }) }
+    ),
     updateListItem: (id: number, payload: ListItemPatch) => request<ItemResponse<ApiPayload>>(`/my/anime-list/${id}`, { method: 'PATCH', body: JSON.stringify(payload) }),
     deleteListItem: (id: number) => request<OkResponse>(`/my/anime-list/${id}`, { method: 'DELETE' }),
     publicList: (slug: string) => request<PublicListResponse>(`/public/lists/${encodeURIComponent(slug)}`),

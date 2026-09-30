@@ -29,6 +29,7 @@ const emit = defineEmits<{
   toggleCollection: [col: Collection]
   openPopover: []
   closePopover: []
+  imageReady: [animeId: number]
 }>()
 
 const cardRef = ref<HTMLElement | null>(null)
@@ -37,17 +38,35 @@ const shouldLoad = useLazyLoad(cardRef, props.eagerLoad)
 const imageLoaded = ref(props.eagerLoad)
 const imageError = ref(false)
 const imgEl = ref<HTMLImageElement | null>(null)
+const imageReadyEmitted = ref(false)
 const hasUsableImage = computed(() => Boolean(props.anime.imageUrl) && !imageError.value)
+
+function announceImageReady() {
+  if (imageReadyEmitted.value) return
+  imageReadyEmitted.value = true
+  emit('imageReady', props.anime.id)
+}
 
 // `load` already guarantees the bytes are available. Reveal immediately rather
 // than waiting on decode(), which can remain pending while the main thread is
 // busy during a fast scroll and unnecessarily keep the placeholder visible.
 function revealImage() {
-  if (!imgEl.value) return
   imageLoaded.value = true
+  announceImageReady()
+}
+
+function handleImageError() {
+  imageError.value = true
+  announceImageReady()
 }
 
 onMounted(() => {
+  // A missing cover is already in its final state and must not hold the page
+  // gate open. Failed requests follow the same rule in handleImageError().
+  if (!hasUsableImage.value) {
+    announceImageReady()
+    return
+  }
   // Image may already be cached/complete before @load can fire.
   if (imgEl.value?.complete && imgEl.value.naturalWidth > 0) revealImage()
 })
@@ -220,7 +239,7 @@ onBeforeUnmount(() => {
           class="relative h-full w-full object-cover transition-[opacity,transform] duration-300 group-hover:scale-105"
           :class="imageLoaded ? 'opacity-100' : 'opacity-0'"
           @load="revealImage"
-          @error="imageError = true"
+          @error="handleImageError"
         />
       </template>
       <div

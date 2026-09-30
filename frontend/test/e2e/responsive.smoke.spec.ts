@@ -296,7 +296,7 @@ test('393px card gestures map single tap, double tap and long press correctly', 
   await expect(page).toHaveURL(/\/login$/, { timeout: 2000 })
 })
 
-test('authenticated cards wait for bootstrap before accepting the first double tap', async ({ page }) => {
+test('authenticated cards accept the first double tap while bootstrap syncs', async ({ page }) => {
   await page.setViewportSize(mobileViewport)
   await page.addInitScript(() => {
     localStorage.setItem('animeTrackerSession', JSON.stringify({
@@ -344,17 +344,17 @@ test('authenticated cards wait for bootstrap before accepting the first double t
 
   await page.goto('/seasonal?year=2026&season=summer', { waitUntil: 'domcontentloaded' })
   await expect.poll(() => bootstrapRequested).toBe(true)
-  await expect(page.locator('[data-anime-card-grid-loading]')).toBeVisible()
-  await expect(page.locator('[data-mobile-gesture-card]')).toHaveCount(0)
-
-  releaseBootstrap()
+  await expect(page.locator('[data-anime-card-grid-loading]')).toHaveCount(0)
   const firstCard = page.locator('[data-mobile-gesture-card]').first()
   await expect(firstCard).toBeVisible()
-  await expect(page.locator('[data-anime-card-grid-loading]')).toHaveCount(0)
 
+  // Personal status sync is intentionally non-blocking: card actions remain
+  // usable while bootstrap is held by the test server.
   await dispatchTouchTap(firstCard)
   await dispatchTouchTap(firstCard)
   await expect.poll(() => addToListRequests).toBe(1)
+
+  releaseBootstrap()
   await expect(page.locator('li[data-slot="base"]')).toContainText('已加入收藏')
 })
 

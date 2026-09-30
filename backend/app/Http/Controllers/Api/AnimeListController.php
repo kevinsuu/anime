@@ -137,11 +137,15 @@ final class AnimeListController extends Controller
             throw new ApiException(422, 'validation_failed', '缺少動漫 ID', ['animeId' => 'required']);
         }
 
+        $watched = $request->has('watched')
+            ? filter_var($request->input('watched'), FILTER_VALIDATE_BOOL)
+            : false;
+
         try {
             $item = UserAnimeListItem::query()->create([
                 'user_id' => (int) $request->attributes->get('auth_user_id'),
                 'anime_id' => $animeId,
-                'watched' => false,
+                'watched' => $watched,
             ]);
         } catch (QueryException $exception) {
             if ($exception->getCode() === '23000') {

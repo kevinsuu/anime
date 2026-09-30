@@ -159,7 +159,6 @@ async function loadList() {
     listMeta.value = result.meta
   } catch (err: unknown) {
     if (requestId !== listRequestId) return
-    list.value = []
     toast.add({ title: apiErrorMessage(err, '載入失敗'), color: 'error' })
   } finally {
     if (requestId === listRequestId) loading.value = false
@@ -391,29 +390,6 @@ watch(mobileCollectionsOpen, (open) => {
 
 <template>
   <div class="relative grid w-full min-w-0 max-w-full gap-6 lg:grid-cols-[clamp(180px,20vw,220px)_minmax(0,1fr)]">
-    <div
-      v-if="initialLoading"
-      class="fixed inset-0 z-40 grid place-items-center bg-white/80 backdrop-blur-sm"
-      role="status"
-      aria-live="polite"
-      aria-label="正在載入我的清單"
-    >
-      <div class="list-loading-card flex min-w-64 flex-col items-center rounded-3xl border border-emerald-100 bg-white/95 px-9 py-8 shadow-2xl shadow-emerald-950/10">
-        <div class="list-loading-orbit relative grid size-20 place-items-center" aria-hidden="true">
-          <span class="absolute inset-0 rounded-full border-2 border-emerald-100" />
-          <span class="list-loading-ring absolute inset-0 rounded-full border-2 border-transparent border-t-emerald-500 border-r-emerald-300" />
-          <span class="list-loading-ring-reverse absolute inset-2 rounded-full border border-transparent border-b-emerald-300" />
-          <img src="/favicon-180.png" alt="" class="size-11 rounded-xl object-cover shadow-lg shadow-emerald-500/20" />
-          <span class="list-loading-dot absolute -right-0.5 top-8 size-2.5 rounded-full bg-emerald-500 ring-4 ring-white" />
-        </div>
-        <p class="mt-5 text-base font-extrabold tracking-tight text-gray-900">正在整理你的收藏櫃</p>
-        <p class="mt-1 text-xs font-medium text-gray-400">同步收藏、觀看進度與收藏分類</p>
-        <div class="mt-4 flex gap-1.5" aria-hidden="true">
-          <span v-for="i in 3" :key="i" class="list-loading-pip size-1.5 rounded-full bg-emerald-400" :style="{ animationDelay: `${(i - 1) * 160}ms` }" />
-        </div>
-      </div>
-    </div>
-
     <!-- ── Left: Collections sidebar ── -->
     <aside class="hidden min-w-0 space-y-4 md:block">
       <div class="sticky top-24 min-w-0 space-y-3">
@@ -500,7 +476,19 @@ watch(mobileCollectionsOpen, (open) => {
     </aside>
 
     <!-- ── Right: List items ── -->
-    <div class="min-w-0 space-y-5">
+    <div class="min-w-0 space-y-5" :aria-busy="loading || initialLoading">
+      <div v-if="initialLoading" class="space-y-4" role="status" aria-live="polite" aria-label="正在載入我的清單">
+        <div class="space-y-2">
+          <div class="h-3 w-20 animate-pulse rounded bg-gray-200" />
+          <div class="h-9 w-44 animate-pulse rounded bg-gray-200" />
+        </div>
+        <div class="h-28 animate-pulse rounded-2xl border border-gray-200 bg-white" />
+        <div class="space-y-3">
+          <div v-for="i in 4" :key="i" class="h-36 animate-pulse rounded-xl border border-gray-200 bg-white" />
+        </div>
+      </div>
+
+      <template v-else>
       <header class="space-y-1">
         <p class="text-xs font-extrabold uppercase tracking-widest text-primary-600">追番清單</p>
         <div class="flex min-w-0 items-center justify-between gap-4">
@@ -861,6 +849,7 @@ watch(mobileCollectionsOpen, (open) => {
           <UIcon name="i-lucide-chevron-right" class="size-4" />
         </button>
       </nav>
+      </template>
     </div>
   </div>
 </template>
@@ -879,52 +868,4 @@ watch(mobileCollectionsOpen, (open) => {
   transition: transform 0.2s ease;
 }
 
-.list-loading-card {
-  animation: loading-card-arrive 0.35s ease-out both;
-}
-
-.list-loading-ring {
-  animation: list-loading-spin 1s linear infinite;
-}
-
-.list-loading-ring-reverse {
-  animation: list-loading-spin 1.5s linear infinite reverse;
-}
-
-.list-loading-dot {
-  animation: list-loading-pulse 1.2s ease-in-out infinite;
-}
-
-.list-loading-pip {
-  animation: list-loading-pip 1s ease-in-out infinite;
-}
-
-@keyframes list-loading-spin {
-  to { transform: rotate(360deg); }
-}
-
-@keyframes list-loading-pulse {
-  50% { transform: scale(0.72); opacity: 0.55; }
-}
-
-@keyframes list-loading-pip {
-  0%, 100% { transform: translateY(0); opacity: 0.35; }
-  50% { transform: translateY(-3px); opacity: 1; }
-}
-
-@keyframes loading-card-arrive {
-  from { transform: translateY(8px) scale(0.98); opacity: 0; }
-  to { transform: translateY(0) scale(1); opacity: 1; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .list-loading-card,
-  .list-loading-ring,
-  .list-loading-ring-reverse,
-  .list-loading-dot,
-  .list-loading-pip {
-    animation-duration: 0.01ms;
-    animation-iteration-count: 1;
-  }
-}
 </style>

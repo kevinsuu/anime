@@ -86,6 +86,10 @@ export interface ListItemPatch {
   note?: string
 }
 
+export interface ListItemCreate {
+  watched?: boolean
+}
+
 export interface CollectionPatch {
   name?: string
   is_public?: boolean
