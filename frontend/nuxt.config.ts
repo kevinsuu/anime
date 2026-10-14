@@ -13,6 +13,11 @@ const publicRouteRules = process.env.NODE_ENV === 'development'
 export default defineNuxtConfig({
   compatibilityDate: '2026-06-29',
   devtools: { enabled: true },
+  experimental: {
+    // Cached payload URLs omit the original query string, while these pages
+    // render different anime lists from year, season, and catalog filters.
+    payloadExtraction: false
+  },
   vite: {
     optimizeDeps: {
       include: ['@vue/devtools-core', '@vue/devtools-kit']
