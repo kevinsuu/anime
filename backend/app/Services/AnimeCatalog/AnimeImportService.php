@@ -56,12 +56,15 @@ final class AnimeImportService
                 return new ImportOutcome($anime->refresh(), wasUnchanged: ! $mergedDuplicate);
             }
 
-            $coverImage = $record['cover_image'] ?? null;
+            $coverImage = trim((string) ($record['cover_image'] ?? ''));
+            $imageUrl = $coverImage !== ''
+                ? $coverImage
+                : ($anime->getRawOriginal('image_url') ?: null);
 
             $anime->fill([
                 'name' => (string) $record['title_zh'],
                 'description' => $record['summary'] ?? null,
-                'image_url' => $coverImage,
+                'image_url' => $imageUrl,
                 'source' => $source,
                 'season_year' => $record['season_year'] ?? null,
                 'season_code' => $record['season_code'] ?? null,
@@ -75,7 +78,7 @@ final class AnimeImportService
 
             // 縮圖檔名需要 anime->id，必須在第一次 save() 之後（id 已確定）
             // 才產生，因此這裡二次寫入 cover_image_path 並再 save 一次。
-            if ($coverImage !== null) {
+            if ($coverImage !== '') {
                 $anime->cover_image_path = $this->thumbnails->generate($coverImage, $anime->id);
                 $anime->save();
             }

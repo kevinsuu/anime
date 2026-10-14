@@ -172,19 +172,40 @@ final class AcgSecretsParser
 
     private function coverImage(DOMXPath $xpath): string
     {
-        $imgs = $xpath->query('.//div[contains(@class,"anime_cover_image")]//img');
-        if ($imgs === false) {
+        $coverElements = $xpath->query(
+            './/*[contains(concat(" ", normalize-space(@class), " "), " anime_cover_image ")]'
+        );
+        if ($coverElements === false) {
             return '';
         }
 
-        foreach ($imgs as $img) {
-            if (! $img instanceof DOMElement) {
+        foreach ($coverElements as $coverElement) {
+            if (! $coverElement instanceof DOMElement) {
                 continue;
             }
+
             foreach (['src', 'data-src', 'acgs-img-data-url'] as $attr) {
-                $value = trim($img->getAttribute($attr));
+                $value = trim($coverElement->getAttribute($attr));
                 if (str_starts_with($value, 'http')) {
                     return $value;
+                }
+            }
+
+            $imgs = $xpath->query('.//img', $coverElement);
+            if ($imgs === false) {
+                continue;
+            }
+
+            foreach ($imgs as $img) {
+                if (! $img instanceof DOMElement) {
+                    continue;
+                }
+
+                foreach (['src', 'data-src', 'acgs-img-data-url'] as $attr) {
+                    $value = trim($img->getAttribute($attr));
+                    if (str_starts_with($value, 'http')) {
+                        return $value;
+                    }
                 }
             }
         }

@@ -138,6 +138,24 @@ docker compose exec backend php artisan anime:scrape-acgsecrets --all
 docker compose exec backend php artisan anime:import-acgsecrets
 ```
 
+## 修復新番封面
+
+acgsecrets 將作品封面從 `div.anime_cover_image` 改放在
+`picture.anime_cover_image`。解析器需同時支援兩種容器；匯入時若來源沒有封面，會保留資料庫
+原本的圖片網址，避免短暫的來源解析問題清空既有封面。
+
+部署包含修正的 `backend` 與 `scheduler` 映像檔後，在 backend 容器重抓近兩年資料，再匯入：
+
+```bash
+docker compose exec backend php artisan anime:scrape-acgsecrets
+docker compose exec backend cat database/seed/acgsecrets/summary.json
+docker compose exec backend php artisan anime:import-acgsecrets
+```
+
+先確認 `summary.json` 中各季度的 `missing_cover` 數量合理，再執行匯入。匯入後以
+`/api/anime/summaries?year=2026&season=summer&per_page=100` 確認作品回傳非空的 `image_url`，
+並確認縮圖網址回應 `200 image/webp`。
+
 ## 首次啟用縮圖功能
 
 產生縮圖前，先將 [`docs/shared-nginx-deployment.md`](../docs/shared-nginx-deployment.md) 中的 `/storage/` 反向代理加入主機 nginx 設定，完成設定檢查並重新載入 nginx。新版 `backend` 映像檔啟動後，執行一次既有資料縮圖補齊：
