@@ -261,11 +261,22 @@ test('393px catalog title and search card match the seasonal filter layout', asy
 })
 
 async function dispatchTouchTap(locator: Locator) {
-  const touch = { clientX: 40, clientY: 40, isPrimary: true, pointerId: 1, pointerType: 'touch' }
-  await locator.dispatchEvent('pointerdown', touch)
-  await locator.dispatchEvent('pointerup', touch)
-  await locator.dispatchEvent('pointerleave', touch)
-  await locator.dispatchEvent('click', { detail: 1 })
+  await locator.evaluate((element) => {
+    const pointer = {
+      bubbles: true,
+      cancelable: true,
+      clientX: 40,
+      clientY: 40,
+      isPrimary: true,
+      pointerId: 1,
+      pointerType: 'touch'
+    }
+
+    element.dispatchEvent(new PointerEvent('pointerdown', pointer))
+    element.dispatchEvent(new PointerEvent('pointerup', pointer))
+    element.dispatchEvent(new PointerEvent('pointerleave', pointer))
+    element.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, detail: 1 }))
+  })
 }
 
 test('393px card gestures map single tap, double tap and long press correctly', async ({ page }) => {
