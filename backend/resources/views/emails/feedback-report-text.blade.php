@@ -11,7 +11,7 @@ Anime Library｜動漫庫問題回報
 回報時間：{{ $submittedAt }}
 
 回報內容：
-{{ $message }}
+{{ $reportMessage }}
 
 直接回覆此信即可聯絡回報者。
 

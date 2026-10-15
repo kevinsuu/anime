@@ -38,7 +38,7 @@ final class FeedbackController extends Controller
             'reporterEmail' => $user->email,
             'userId' => $user->id,
             'submittedAt' => $submittedAt->toDateTimeString(),
-            'message' => $validated['message'],
+            'reportMessage' => $validated['message'],
             'year' => $submittedAt->year,
         ];
 

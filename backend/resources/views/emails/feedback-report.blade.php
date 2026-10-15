@@ -53,7 +53,7 @@
 
                             <div style="margin-top: 28px;">
                                 <h2 style="margin: 0 0 10px; font-size: 17px; line-height: 1.5;">回報內容</h2>
-                                <div style="padding: 16px; border-left: 4px solid #16a34a; background-color: #f6f8fa; font-size: 15px; line-height: 1.8; white-space: pre-wrap; word-break: break-word;">{{ $message }}</div>
+                                <div style="padding: 16px; border-left: 4px solid #16a34a; background-color: #f6f8fa; font-size: 15px; line-height: 1.8; white-space: pre-wrap; word-break: break-word;">{{ $reportMessage }}</div>
                             </div>
 
                             <p style="margin: 28px 0 0; font-size: 15px; line-height: 1.8;">直接回覆此信即可聯絡回報者。</p>

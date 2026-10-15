@@ -123,9 +123,22 @@ async function logout() {
 
 <template>
   <div class="space-y-4 sm:space-y-6">
-    <header class="space-y-1">
-      <p class="text-xs font-extrabold uppercase tracking-widest text-primary-600">帳號</p>
-      <h1 class="text-2xl font-extrabold tracking-tight text-gray-950 sm:text-3xl">設定</h1>
+    <header class="flex items-end justify-between gap-3">
+      <div class="space-y-1">
+        <p class="text-xs font-extrabold uppercase tracking-widest text-primary-600">帳號</p>
+        <h1 class="text-2xl font-extrabold tracking-tight text-gray-950 sm:text-3xl">設定</h1>
+      </div>
+      <button
+        type="button"
+        aria-haspopup="dialog"
+        aria-controls="feedback-dialog"
+        :aria-expanded="feedbackDialogOpen"
+        class="mb-0.5 inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-lg border border-primary-200 bg-white px-3 py-1.5 text-xs font-semibold text-primary-700 shadow-sm transition hover:bg-primary-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+        @click="openFeedbackDialog($event)"
+      >
+        <UIcon name="i-lucide-message-square-warning" class="size-3.5" />
+        問題回報
+      </button>
     </header>
 
     <section aria-labelledby="product-philosophy-title" class="grid gap-3 rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:grid-cols-[auto_minmax(0,1fr)] sm:items-center sm:gap-6 sm:px-6">
@@ -211,26 +224,6 @@ async function logout() {
           </NuxtLink>
         </div>
       </div>
-    </div>
-
-    <div>
-      <button
-        type="button"
-        aria-haspopup="dialog"
-        aria-controls="feedback-dialog"
-        :aria-expanded="feedbackDialogOpen"
-        class="group flex min-h-20 w-full items-center gap-3 rounded-xl border border-gray-200 bg-white p-4 text-left shadow-sm transition hover:border-primary-200 hover:bg-primary-50/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 sm:p-5"
-        @click="openFeedbackDialog($event)"
-      >
-        <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-600">
-          <UIcon name="i-lucide-message-square-warning" class="size-5" />
-        </span>
-        <span class="min-w-0 flex-1">
-          <span class="block text-base font-bold text-gray-950">問題回報</span>
-          <span class="mt-0.5 block text-sm leading-5 text-gray-500">告訴我們遇到的問題或你希望新增的功能。</span>
-        </span>
-        <UIcon name="i-lucide-chevron-right" class="size-5 shrink-0 text-gray-400 transition group-hover:text-primary-600" />
-      </button>
     </div>
   </div>
 
