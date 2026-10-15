@@ -30,20 +30,23 @@ final class FeedbackController extends Controller
 
         $user = User::query()->findOrFail((int) $request->attributes->get('auth_user_id'));
         $category = self::CATEGORIES[$validated['category']];
-        $body = implode("\n", [
-            '類別：'.$category,
-            '主旨：'.$validated['subject'],
-            '回報者：'.$user->display_name,
-            '電子郵件：'.$user->email,
-            '使用者 ID：'.$user->id,
-            '回報時間：'.now()->toDateTimeString(),
-            '',
-            '內容：',
-            $validated['message'],
-        ]);
+        $submittedAt = now();
+        $data = [
+            'category' => $category,
+            'subject' => $validated['subject'],
+            'reporterName' => $user->display_name,
+            'reporterEmail' => $user->email,
+            'userId' => $user->id,
+            'submittedAt' => $submittedAt->toDateTimeString(),
+            'message' => $validated['message'],
+            'year' => $submittedAt->year,
+        ];
 
         try {
-            Mail::raw($body, function (Message $mail) use ($user): void {
+            Mail::send([
+                'html' => 'emails.feedback-report',
+                'text' => 'emails.feedback-report-text',
+            ], $data, function (Message $mail) use ($user): void {
                 $mail->to((string) config('services.feedback.email'))
                     ->subject('[動漫庫] 問題回報')
                     ->replyTo($user->email, $user->display_name ?: $user->email);

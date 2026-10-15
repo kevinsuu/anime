@@ -12,6 +12,9 @@ const toast = useToast()
 
 const copied = ref(false)
 const regenerating = ref(false)
+const feedbackDialogOpen = ref(false)
+const feedbackDialogRef = ref<HTMLElement | null>(null)
+const feedbackTriggerRef = ref<HTMLButtonElement | null>(null)
 const feedback = reactive({
   category: 'bug' as FeedbackSubmission['category'],
   subject: '',
@@ -23,6 +26,49 @@ const shareUrl = computed(() => {
   if (typeof window === 'undefined' || !session.user) return ''
   return `${window.location.origin}/public/${session.user.public_slug}`
 })
+
+function openFeedbackDialog(event: MouseEvent) {
+  feedbackTriggerRef.value = event.currentTarget instanceof HTMLButtonElement
+    ? event.currentTarget
+    : null
+  feedbackDialogOpen.value = true
+  nextTick(() => feedbackDialogRef.value?.querySelector<HTMLElement>('select')?.focus())
+}
+
+function closeFeedbackDialog() {
+  if (sendingFeedback.value) return
+  const trigger = feedbackTriggerRef.value
+  feedbackDialogOpen.value = false
+  nextTick(() => trigger?.focus())
+}
+
+function onFeedbackDialogKeydown(event: KeyboardEvent) {
+  if (!feedbackDialogOpen.value || !feedbackDialogRef.value) return
+  if (event.key === 'Escape') {
+    event.preventDefault()
+    closeFeedbackDialog()
+    return
+  }
+  if (event.key !== 'Tab') return
+
+  const focusable = Array.from(feedbackDialogRef.value.querySelectorAll<HTMLElement>(
+    'button, input, select, textarea, a[href], [tabindex]:not([tabindex="-1"])'
+  )).filter(element => !element.hasAttribute('disabled'))
+  const first = focusable[0]
+  const last = focusable[focusable.length - 1]
+  const focusIsAtStart = document.activeElement === first
+    || document.activeElement === feedbackDialogRef.value
+  if (event.shiftKey && focusIsAtStart && last) {
+    event.preventDefault()
+    last.focus()
+  } else if (!event.shiftKey && document.activeElement === last && first) {
+    event.preventDefault()
+    first.focus()
+  }
+}
+
+onMounted(() => window.addEventListener('keydown', onFeedbackDialogKeydown))
+onBeforeUnmount(() => window.removeEventListener('keydown', onFeedbackDialogKeydown))
 
 async function copyShareUrl() {
   if (!shareUrl.value) return
@@ -55,6 +101,8 @@ async function sendFeedback() {
     feedback.subject = ''
     feedback.message = ''
     toast.add({ title: '問題回報已寄出', color: 'success' })
+    sendingFeedback.value = false
+    closeFeedbackDialog()
   } catch (err: unknown) {
     toast.add({ title: apiErrorMessage(err, '寄送失敗'), color: 'error' })
   } finally {
@@ -165,71 +213,138 @@ async function logout() {
       </div>
     </div>
 
-    <section aria-labelledby="feedback-title" class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
-      <div class="flex items-start gap-3 border-b border-gray-100 px-4 py-4 sm:px-6">
-        <div class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary-50 text-primary-600">
+    <div>
+      <button
+        type="button"
+        aria-haspopup="dialog"
+        aria-controls="feedback-dialog"
+        :aria-expanded="feedbackDialogOpen"
+        class="group flex min-h-20 w-full items-center gap-3 rounded-xl border border-gray-200 bg-white p-4 text-left shadow-sm transition hover:border-primary-200 hover:bg-primary-50/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 sm:p-5"
+        @click="openFeedbackDialog($event)"
+      >
+        <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-600">
           <UIcon name="i-lucide-message-square-warning" class="size-5" />
-        </div>
-        <div class="min-w-0">
-          <h2 id="feedback-title" class="text-base font-bold text-gray-950">問題回報</h2>
-          <p class="mt-0.5 text-sm leading-5 text-gray-500">告訴我們遇到的問題或你希望新增的功能。</p>
-        </div>
-      </div>
-
-      <form class="space-y-4 p-4 sm:p-6" @submit.prevent="sendFeedback">
-        <label class="block space-y-1.5">
-          <span class="text-sm font-semibold text-gray-700">回報類別</span>
-          <select
-            v-model="feedback.category"
-            required
-            class="min-h-11 w-full rounded-lg border border-gray-200 bg-white px-3 text-sm text-gray-800 outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100 sm:max-w-xs"
-          >
-            <option value="bug">問題回報</option>
-            <option value="data">資料錯誤</option>
-            <option value="suggestion">功能建議</option>
-            <option value="other">其他</option>
-          </select>
-        </label>
-
-        <label class="block space-y-1.5">
-          <span class="text-sm font-semibold text-gray-700">主旨</span>
-          <input
-            v-model="feedback.subject"
-            type="text"
-            required
-            maxlength="120"
-            autocomplete="off"
-            placeholder="簡短描述你遇到的狀況"
-            class="min-h-11 w-full rounded-lg border border-gray-200 bg-white px-3 text-sm text-gray-800 outline-none transition placeholder:text-gray-400 focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
-          >
-        </label>
-
-        <label class="block space-y-1.5">
-          <span class="text-sm font-semibold text-gray-700">詳細內容</span>
-          <textarea
-            v-model="feedback.message"
-            required
-            maxlength="5000"
-            rows="5"
-            placeholder="請描述操作步驟、預期結果，或提供相關作品名稱。"
-            class="w-full resize-y rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm leading-6 text-gray-800 outline-none transition placeholder:text-gray-400 focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
-          />
-          <span class="block text-xs text-gray-500">我們會使用 {{ session.user?.email }} 作為回覆信箱。</span>
-        </label>
-
-        <div class="flex flex-col gap-3 border-t border-gray-100 pt-4 sm:flex-row sm:items-center sm:justify-between">
-          <p class="text-xs leading-5 text-gray-500">回報內容會寄送給動漫庫開發者。</p>
-          <button
-            type="submit"
-            :disabled="sendingFeedback"
-            class="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-primary-600 px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-60 sm:w-auto"
-          >
-            <UIcon v-if="sendingFeedback" name="i-lucide-loader-circle" class="size-4 animate-spin" />
-            <UIcon v-else name="i-lucide-send" class="size-4" />
-            {{ sendingFeedback ? '寄送中…' : '送出回報' }}
-          </button>
-        </div>
-      </form>
-    </section>
+        </span>
+        <span class="min-w-0 flex-1">
+          <span class="block text-base font-bold text-gray-950">問題回報</span>
+          <span class="mt-0.5 block text-sm leading-5 text-gray-500">告訴我們遇到的問題或你希望新增的功能。</span>
+        </span>
+        <UIcon name="i-lucide-chevron-right" class="size-5 shrink-0 text-gray-400 transition group-hover:text-primary-600" />
+      </button>
+    </div>
   </div>
+
+  <Teleport to="body">
+    <Transition name="feedback-dialog">
+      <div
+        v-if="feedbackDialogOpen"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-gray-950/45 p-3 backdrop-blur-sm sm:p-6"
+        @click.self="closeFeedbackDialog"
+      >
+        <section
+          id="feedback-dialog"
+          ref="feedbackDialogRef"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="feedback-dialog-title"
+          aria-describedby="feedback-dialog-description"
+          tabindex="-1"
+          class="max-h-[calc(100dvh-1.5rem)] w-full max-w-2xl overflow-y-auto rounded-2xl border border-gray-200 bg-white shadow-2xl outline-none sm:max-h-[calc(100dvh-3rem)]"
+        >
+          <div class="flex items-start gap-3 border-b border-gray-100 px-5 py-4 sm:px-6">
+            <div class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-600">
+              <UIcon name="i-lucide-message-square-warning" class="size-5" />
+            </div>
+            <div class="min-w-0 flex-1">
+              <h2 id="feedback-dialog-title" class="text-lg font-bold text-gray-950">問題回報</h2>
+              <p id="feedback-dialog-description" class="mt-0.5 text-sm leading-5 text-gray-500">告訴我們遇到的問題或你希望新增的功能。</p>
+            </div>
+            <button
+              type="button"
+              aria-label="關閉問題回報"
+              :disabled="sendingFeedback"
+              class="flex size-9 shrink-0 items-center justify-center rounded-lg text-gray-500 transition hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 disabled:opacity-50"
+              @click="closeFeedbackDialog"
+            >
+              <UIcon name="i-lucide-x" class="size-4" />
+            </button>
+          </div>
+
+          <form class="space-y-4 p-5 sm:p-6" @submit.prevent="sendFeedback">
+            <label class="block space-y-1.5">
+              <span class="text-sm font-semibold text-gray-700">回報類別</span>
+              <select
+                v-model="feedback.category"
+                required
+                class="min-h-11 w-full rounded-lg border border-gray-200 bg-white px-3 text-sm text-gray-800 outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100 sm:max-w-xs"
+              >
+                <option value="bug">問題回報</option>
+                <option value="data">資料錯誤</option>
+                <option value="suggestion">功能建議</option>
+                <option value="other">其他</option>
+              </select>
+            </label>
+
+            <label class="block space-y-1.5">
+              <span class="text-sm font-semibold text-gray-700">主旨</span>
+              <input
+                v-model="feedback.subject"
+                type="text"
+                required
+                maxlength="120"
+                autocomplete="off"
+                placeholder="簡短描述你遇到的狀況"
+                class="min-h-11 w-full rounded-lg border border-gray-200 bg-white px-3 text-sm text-gray-800 outline-none transition placeholder:text-gray-400 focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
+              >
+            </label>
+
+            <label class="block space-y-1.5">
+              <span class="text-sm font-semibold text-gray-700">詳細內容</span>
+              <textarea
+                v-model="feedback.message"
+                required
+                maxlength="5000"
+                rows="5"
+                placeholder="請描述操作步驟、預期結果，或提供相關作品名稱。"
+                class="w-full resize-y rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm leading-6 text-gray-800 outline-none transition placeholder:text-gray-400 focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
+              />
+              <span class="block text-xs text-gray-500">我們會使用 {{ session.user?.email }} 作為回覆信箱。</span>
+            </label>
+
+            <div class="flex flex-col gap-3 border-t border-gray-100 pt-4 sm:flex-row sm:items-center sm:justify-between">
+              <p class="text-xs leading-5 text-gray-500">回報內容會寄送給動漫庫開發者。</p>
+              <button
+                type="submit"
+                :disabled="sendingFeedback"
+                class="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-primary-600 px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-60 sm:w-auto"
+              >
+                <UIcon v-if="sendingFeedback" name="i-lucide-loader-circle" class="size-4 animate-spin" />
+                <UIcon v-else name="i-lucide-send" class="size-4" />
+                {{ sendingFeedback ? '寄送中…' : '送出回報' }}
+              </button>
+            </div>
+          </form>
+        </section>
+      </div>
+    </Transition>
+  </Teleport>
 </template>
+
+<style scoped>
+.feedback-dialog-enter-active,
+.feedback-dialog-leave-active {
+  transition: opacity 0.18s ease;
+}
+
+.feedback-dialog-enter-from,
+.feedback-dialog-leave-to {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feedback-dialog-enter-active,
+  .feedback-dialog-leave-active {
+    transition: none;
+  }
+}
+</style>
