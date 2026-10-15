@@ -9,6 +9,7 @@ import type {
   AuthResponse,
   CollectionPatch,
   CollectionPayload,
+  FeedbackSubmission,
   ItemResponse,
   ItemsResponse,
   ListItemCreate,
@@ -161,6 +162,10 @@ export function useApi() {
     deleteListItem: (id: number) => request<OkResponse>(`/my/anime-list/${id}`, { method: 'DELETE' }),
     publicList: (slug: string) => request<PublicListResponse>(`/public/lists/${encodeURIComponent(slug)}`),
     regenerateSlug: () => request<UserResponse>('/me/share-slug/regenerate', { method: 'POST' }),
+    sendFeedback: (payload: FeedbackSubmission) => request<OkResponse>(
+      '/feedback',
+      { method: 'POST', body: JSON.stringify(payload) }
+    ),
     // Collections
     myCollections: () => request<ItemsResponse<CollectionPayload>>('/my/collections'),
     createCollection: (name: string, isPublic = false) => request<ItemResponse<CollectionPayload>>('/my/collections', { method: 'POST', body: JSON.stringify({ name, is_public: isPublic }) }),

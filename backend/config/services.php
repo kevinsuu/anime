@@ -47,6 +47,10 @@ return [
 
     'dev_auth_bypass' => (bool) env('DEV_AUTH_BYPASS', false),
 
+    'feedback' => [
+        'email' => env('FEEDBACK_TO_EMAIL', 'kaistarstudio@gmail.com'),
+    ],
+
     'acgsecrets' => [
         'base_url' => rtrim(env('ACGSECRETS_BASE_URL', 'https://acgsecrets.hk'), '/'),
         'user_agent' => env('ACGSECRETS_USER_AGENT', 'anime-tracker/1.0 (+https://github.com/anime-tracker)'),

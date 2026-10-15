@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AnimeListController;
 use App\Http\Controllers\Api\AnimeSummaryController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CollectionController;
+use App\Http\Controllers\Api\FeedbackController;
 use App\Http\Controllers\Api\MeBootstrapController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,7 @@ Route::get('/anime/{id}', [AnimeController::class, 'show']);
 Route::middleware('jwt')->group(function (): void {
     Route::get('/me', [AnimeListController::class, 'me']);
     Route::get('/me/bootstrap', MeBootstrapController::class);
+    Route::post('/feedback', [FeedbackController::class, 'store'])->middleware('throttle:feedback');
     Route::post('/me/share-slug/regenerate', [AnimeListController::class, 'regenerateSlug']);
     Route::get('/my/anime-list', [AnimeListController::class, 'index']);
     Route::get('/my/anime-list/counts', [AnimeListController::class, 'counts']);

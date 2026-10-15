@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { FeedbackSubmission } from '../types/api'
 import { apiErrorMessage } from '../utils/apiError'
 
 definePageMeta({ middleware: 'auth' })
@@ -11,6 +12,12 @@ const toast = useToast()
 
 const copied = ref(false)
 const regenerating = ref(false)
+const feedback = reactive({
+  category: 'bug' as FeedbackSubmission['category'],
+  subject: '',
+  message: ''
+})
+const sendingFeedback = ref(false)
 
 const shareUrl = computed(() => {
   if (typeof window === 'undefined' || !session.user) return ''
@@ -36,6 +43,22 @@ async function regenerateSlug() {
     toast.add({ title: apiErrorMessage(err, '更新失敗'), color: 'error' })
   } finally {
     regenerating.value = false
+  }
+}
+
+async function sendFeedback() {
+  if (sendingFeedback.value) return
+  sendingFeedback.value = true
+  try {
+    await api.sendFeedback(feedback)
+    feedback.category = 'bug'
+    feedback.subject = ''
+    feedback.message = ''
+    toast.add({ title: '問題回報已寄出', color: 'success' })
+  } catch (err: unknown) {
+    toast.add({ title: apiErrorMessage(err, '寄送失敗'), color: 'error' })
+  } finally {
+    sendingFeedback.value = false
   }
 }
 
@@ -141,5 +164,72 @@ async function logout() {
         </div>
       </div>
     </div>
+
+    <section aria-labelledby="feedback-title" class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+      <div class="flex items-start gap-3 border-b border-gray-100 px-4 py-4 sm:px-6">
+        <div class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary-50 text-primary-600">
+          <UIcon name="i-lucide-message-square-warning" class="size-5" />
+        </div>
+        <div class="min-w-0">
+          <h2 id="feedback-title" class="text-base font-bold text-gray-950">問題回報</h2>
+          <p class="mt-0.5 text-sm leading-5 text-gray-500">告訴我們遇到的問題或你希望新增的功能。</p>
+        </div>
+      </div>
+
+      <form class="space-y-4 p-4 sm:p-6" @submit.prevent="sendFeedback">
+        <label class="block space-y-1.5">
+          <span class="text-sm font-semibold text-gray-700">回報類別</span>
+          <select
+            v-model="feedback.category"
+            required
+            class="min-h-11 w-full rounded-lg border border-gray-200 bg-white px-3 text-sm text-gray-800 outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-100 sm:max-w-xs"
+          >
+            <option value="bug">問題回報</option>
+            <option value="data">資料錯誤</option>
+            <option value="suggestion">功能建議</option>
+            <option value="other">其他</option>
+          </select>
+        </label>
+
+        <label class="block space-y-1.5">
+          <span class="text-sm font-semibold text-gray-700">主旨</span>
+          <input
+            v-model="feedback.subject"
+            type="text"
+            required
+            maxlength="120"
+            autocomplete="off"
+            placeholder="簡短描述你遇到的狀況"
+            class="min-h-11 w-full rounded-lg border border-gray-200 bg-white px-3 text-sm text-gray-800 outline-none transition placeholder:text-gray-400 focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
+          >
+        </label>
+
+        <label class="block space-y-1.5">
+          <span class="text-sm font-semibold text-gray-700">詳細內容</span>
+          <textarea
+            v-model="feedback.message"
+            required
+            maxlength="5000"
+            rows="5"
+            placeholder="請描述操作步驟、預期結果，或提供相關作品名稱。"
+            class="w-full resize-y rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm leading-6 text-gray-800 outline-none transition placeholder:text-gray-400 focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
+          />
+          <span class="block text-xs text-gray-500">我們會使用 {{ session.user?.email }} 作為回覆信箱。</span>
+        </label>
+
+        <div class="flex flex-col gap-3 border-t border-gray-100 pt-4 sm:flex-row sm:items-center sm:justify-between">
+          <p class="text-xs leading-5 text-gray-500">回報內容會寄送給動漫庫開發者。</p>
+          <button
+            type="submit"
+            :disabled="sendingFeedback"
+            class="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-primary-600 px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-60 sm:w-auto"
+          >
+            <UIcon v-if="sendingFeedback" name="i-lucide-loader-circle" class="size-4 animate-spin" />
+            <UIcon v-else name="i-lucide-send" class="size-4" />
+            {{ sendingFeedback ? '寄送中…' : '送出回報' }}
+          </button>
+        </div>
+      </form>
+    </section>
   </div>
 </template>

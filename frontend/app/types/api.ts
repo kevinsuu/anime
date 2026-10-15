@@ -19,6 +19,12 @@ export interface OkResponse {
   ok: boolean
 }
 
+export interface FeedbackSubmission {
+  category: 'bug' | 'data' | 'suggestion' | 'other'
+  subject: string
+  message: string
+}
+
 export interface ItemResponse<T> {
   item: T
 }

@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Console\Events\ArtisanStarting;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use RuntimeException;
 
@@ -51,6 +54,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        RateLimiter::for('feedback', static function (Request $request): Limit {
+            $userId = $request->attributes->get('auth_user_id');
+            $key = $userId === null ? 'ip:'.$request->ip() : 'user:'.$userId;
+
+            return Limit::perMinute(5)->by($key);
+        });
+
         $this->assertProductionJwtSecretIsSecure();
 
         $this->app['events']->listen(ArtisanStarting::class, function (): void {
