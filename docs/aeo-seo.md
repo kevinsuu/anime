@@ -6,7 +6,10 @@
 
 ## 目前實作
 
-- Nuxt SSR 直接輸出首頁、季度列表、資料庫列表與作品詳情內容。
+- Nuxt SSR 直接輸出首頁、季度列表、資料庫列表與作品詳情內容；季度列表的完整作品清單會先出現在 HTML，
+  瀏覽器端再以虛擬列表呈現，避免搜尋爬蟲只讀到首屏少量作品。季度前後頁以一般連結互相連接，讓搜尋爬蟲
+  能沿站內連結發現歷史季度。
+- 公開收藏分享頁由 SSR 載入集合與作品評分，並以作品題材標籤提供前端分類篩選；多選分類採符合任一分類。
 - 首頁、季度與資料庫頁會依 query 顯示不同資料。保留 SSR HTML 快取，但停用 Nuxt payload 抽取，避免
   不含原始 query 的 payload URL 將另一個年份、季度或篩選結果套到目前頁面。
 - sitemap 收錄季度與具獨立閱讀價值的作品頁；作品須有至少 160 個非空白字元的故事介紹才會進入
@@ -19,13 +22,13 @@
   `WebPage` 連結 `TVSeries`，並用 Bangumi、MyAnimeList URL 協助實體對應。
 - 搜尋、分類篩選與第二頁以後的資料庫 URL 使用 `noindex, follow`，避免低價值參數頁分散索引。
 - 不存在或無效的作品 ID 回傳 HTTP `404`，避免可被抓取的 soft 404 浪費索引資源。
-- 登入及私人功能頁同時受登入保護、`noindex` 與 robots.txt 路徑規則約束。
+- 登入頁允許爬蟲讀取 `noindex` 指令；私人清單與設定頁仍受登入保護、`noindex` 與 robots.txt 路徑規則約束。
 
 ## AI 爬蟲政策
 
 `frontend/public/robots.txt` 將搜尋引用與模型訓練分開：
 
-- 允許 `OAI-SearchBot`、`Claude-SearchBot`、`PerplexityBot` 讀取公開內容，但不讀取登入與私人路徑。
+- 允許 `OAI-SearchBot`、`Claude-SearchBot`、`PerplexityBot` 讀取公開內容；登入頁由 `noindex` 排除，私人路徑不開放抓取。
 - 封鎖訓練用途的 `GPTBot`、`ClaudeBot`。
 - 不封鎖一般 `Googlebot`，避免影響 Google Search 與 AI 搜尋介面。
 - `Google-Extended` 暫時沿用一般規則。Google 將 Gemini 模型訓練與 Gemini grounding 放在同一控制項；
