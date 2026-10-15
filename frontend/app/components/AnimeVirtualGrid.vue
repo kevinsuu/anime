@@ -22,8 +22,7 @@ const {
   itemSize,
   columnWidth
 } = useResponsiveGridColumns(containerRef, props.gapPx, props.mobileGapPx)
-const SSR_FALLBACK_CARD_COUNT = 12
-const fallbackItems = computed(() => props.items.slice(0, SSR_FALLBACK_CARD_COUNT))
+const fallbackItems = computed(() => props.items)
 
 defineSlots<{
   default(props: { item: AnimeCardData; index: number }): unknown

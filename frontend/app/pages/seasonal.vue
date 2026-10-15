@@ -26,12 +26,20 @@ const toast = useToast()
 const initialSeason = seasonSelection(route.query.year, route.query.season)
 const seasonalControls = reactive<SeasonSelection>({ ...initialSeason })
 
-function prevSeason() {
-  Object.assign(seasonalControls, shiftSeason(seasonalControls, -1))
+function seasonRoute(offset: number) {
+  const selection = shiftSeason(seasonalControls, offset)
+  return {
+    path: '/',
+    query: {
+      ...route.query,
+      year: String(selection.year),
+      season: selection.season
+    }
+  }
 }
 
-function nextSeason() {
-  Object.assign(seasonalControls, shiftSeason(seasonalControls, 1))
+function preventSeasonNavigationWhileLoading(event: MouseEvent) {
+  if (loading.value) event.preventDefault()
 }
 
 interface SeasonalPayload extends SeasonSelection {
@@ -214,27 +222,35 @@ useHead({
       </div>
       <!-- Season prev/next arrows -->
       <div class="flex items-center gap-1 shrink-0">
-        <button
-          :disabled="loading"
-          class="flex h-11 w-11 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:bg-gray-50 disabled:opacity-40 md:h-9 md:w-9"
+        <NuxtLink
+          :to="seasonRoute(-1)"
+          replace
+          :aria-disabled="loading"
+          :tabindex="loading ? -1 : undefined"
+          class="flex h-11 w-11 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:bg-gray-50 md:h-9 md:w-9"
+          :class="loading ? 'pointer-events-none opacity-40' : undefined"
           aria-label="上一季"
-          @click="prevSeason"
+          @click="preventSeasonNavigationWhileLoading"
         >
           <UIcon name="i-lucide-chevron-left" class="size-4" />
-        </button>
+        </NuxtLink>
         <div class="hidden min-w-28 text-center md:block">
           <span class="text-sm font-bold text-gray-700">
             {{ seasonalControls.year }} · {{ seasonMonthLabels[seasonalControls.season] }}
           </span>
         </div>
-        <button
-          :disabled="loading"
-          class="flex h-11 w-11 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:bg-gray-50 disabled:opacity-40 md:h-9 md:w-9"
+        <NuxtLink
+          :to="seasonRoute(1)"
+          replace
+          :aria-disabled="loading"
+          :tabindex="loading ? -1 : undefined"
+          class="flex h-11 w-11 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 shadow-sm transition hover:bg-gray-50 md:h-9 md:w-9"
+          :class="loading ? 'pointer-events-none opacity-40' : undefined"
           aria-label="下一季"
-          @click="nextSeason"
+          @click="preventSeasonNavigationWhileLoading"
         >
           <UIcon name="i-lucide-chevron-right" class="size-4" />
-        </button>
+        </NuxtLink>
       </div>
     </header>
 

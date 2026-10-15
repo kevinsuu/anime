@@ -2,17 +2,14 @@
 User-agent: OAI-SearchBot
 Disallow: /list
 Disallow: /settings
-Disallow: /login
 
 User-agent: Claude-SearchBot
 Disallow: /list
 Disallow: /settings
-Disallow: /login
 
 User-agent: PerplexityBot
 Disallow: /list
 Disallow: /settings
-Disallow: /login
 
 # Model-training crawlers are managed separately from AI search.
 User-agent: GPTBot
@@ -24,6 +21,5 @@ Disallow: /
 User-Agent: *
 Disallow: /list
 Disallow: /settings
-Disallow: /login
 
 Sitemap: https://anime.kaistarstudio.me/sitemap.xml
