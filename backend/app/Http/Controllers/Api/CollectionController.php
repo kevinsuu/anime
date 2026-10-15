@@ -139,6 +139,7 @@ final class CollectionController extends Controller
                         'image_url' => $li->anime->image_url,
                         'season_year' => $li->anime->season_year,
                         'season_code' => $li->anime->season_code,
+                        'tags' => $li->anime->tags ?? [],
                     ],
                 ])->all(),
             ],

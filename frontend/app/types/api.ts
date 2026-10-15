@@ -126,6 +126,7 @@ export interface PublicCollectionAnimePayload {
   image_url: string
   season_year: number | null
   season_code: string
+  tags: string[]
 }
 
 export interface PublicCollectionListItemPayload {
