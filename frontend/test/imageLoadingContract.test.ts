@@ -38,9 +38,8 @@ describe('anime image loading contract', () => {
     expect(gridCardSource).toContain("emit('imageReady', props.anime.id)")
   })
 
-  it('limits the SSR fallback to the first twelve cards', () => {
-    expect(virtualGridSource).toContain('SSR_FALLBACK_CARD_COUNT = 12')
-    expect(virtualGridSource).toContain('props.items.slice(0, SSR_FALLBACK_CARD_COUNT)')
+  it('keeps the full result list in the SSR fallback for crawlers', () => {
+    expect(virtualGridSource).toContain('const fallbackItems = computed(() => props.items)')
   })
 
   it('uses a quiet neutral fallback when a cover is unavailable', () => {
