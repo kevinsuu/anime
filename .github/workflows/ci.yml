@@ -107,6 +107,7 @@ jobs:
         with:
           context: backend
           file: backend/Dockerfile.production
+          pull: true
           push: false
           cache-from: type=gha,scope=backend
           cache-to: type=gha,mode=max,scope=backend
@@ -116,6 +117,7 @@ jobs:
         with:
           context: backend
           file: backend/Dockerfile.scheduler
+          pull: true
           push: false
           cache-from: type=gha,scope=scheduler
           cache-to: type=gha,mode=max,scope=scheduler

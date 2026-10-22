@@ -52,6 +52,9 @@ GitHub Actions 的 SSH 部署命令上限為 30 分鐘，包含 Docker 映像拉
 
 映像檔：`ghcr.io/kevinsuu/anime-{backend,scheduler,frontend}:vX.Y.Z`，以及 `:latest`。
 
+PHP 執行環境的安全更新、正式映像重建與版本驗證步驟見
+[`docs/php-runtime-maintenance.md`](../docs/php-runtime-maintenance.md)。
+
 ## 一次性主機設定
 
 本專案的 `deploy/docker-compose.yml` **不會**自行啟動 nginx 或 certbot。主機原生的 nginx（systemd 服務）負責 TLS 與反向代理；應用程式容器只綁定 `127.0.0.1:<port>`，不直接暴露於外部網路。
