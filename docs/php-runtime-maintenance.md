@@ -23,6 +23,7 @@ git push origin vX.Y.Z
 
 將 `vX.Y.Z` 換成下一個未使用的版本號。此 tag 會觸發 `.github/workflows/deploy.yml`，建置
 backend、scheduler、frontend 映像，推送至 GHCR，並透過 SSH 更新正式主機。
+部署主機會以單一併發度拉取映像，遇到暫時性錯誤時最多重試五次。
 
 在 GitHub Actions 確認建置與部署工作成功後，於正式主機確認容器已替換：
 

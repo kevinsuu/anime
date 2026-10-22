@@ -126,9 +126,9 @@ jobs:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_SSH_KEY }}
-          # Pulling and extracting all production images can exceed the
-          # action's 10-minute default on a busy or bandwidth-limited host.
-          command_timeout: 30m
+          # Sequential image pulls with retries can exceed the default timeout
+          # on a busy or bandwidth-limited host.
+          command_timeout: 60m
           envs: DEPLOY_PATH,RELEASE_TAG,COMPOSE_B64
           script: |
             set -e
@@ -173,6 +173,21 @@ jobs:
             set_env_var BACKEND_IMAGE "ghcr.io/kevinsuu/anime-backend:${RELEASE_TAG}"
             set_env_var SCHEDULER_IMAGE "ghcr.io/kevinsuu/anime-scheduler:${RELEASE_TAG}"
             set_env_var FRONTEND_IMAGE "ghcr.io/kevinsuu/anime-frontend:${RELEASE_TAG}"
-            docker compose pull
+            pull_attempt=1
+            max_pull_attempts=5
+            while true; do
+              echo "Pulling production images (attempt ${pull_attempt}/${max_pull_attempts})..."
+              if docker compose --parallel 1 pull; then
+                break
+              fi
+              if [ "$pull_attempt" -ge "$max_pull_attempts" ]; then
+                echo "Failed to pull production images after ${max_pull_attempts} attempts." >&2
+                exit 1
+              fi
+              retry_delay=$((pull_attempt * 15))
+              echo "Image pull failed; retrying in ${retry_delay}s." >&2
+              sleep "$retry_delay"
+              pull_attempt=$((pull_attempt + 1))
+            done
             docker compose up -d --remove-orphans
             cleanup_unused_images
