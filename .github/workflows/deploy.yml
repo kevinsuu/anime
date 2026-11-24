@@ -150,6 +150,37 @@ jobs:
                 echo "Warning: failed to prune unused Docker images." >&2
               fi
             }
+            # Read the release tag currently recorded in .env (the version that
+            # is running before this deploy), e.g. BACKEND_IMAGE=...:v1.0.39.
+            image_tag_from_env() {
+              sed -n "s|^$1=.*:||p" .env 2>/dev/null | tail -n 1 | tr -d '\r'
+            }
+            # Keep only this release and the previous one for each app image,
+            # so a rollback stays possible while older releases cannot fill
+            # the disk. Runs before the pull as well: a full disk otherwise
+            # fails the pull and the post-deploy cleanup never gets to run.
+            # Volumes (MySQL data, cover thumbnails) are never touched.
+            prune_old_release_images() {
+              for spec in \
+                "anime-backend:${PREVIOUS_BACKEND_TAG}" \
+                "anime-scheduler:${PREVIOUS_SCHEDULER_TAG}" \
+                "anime-frontend:${PREVIOUS_FRONTEND_TAG}"; do
+                repo="ghcr.io/kevinsuu/${spec%%:*}"
+                previous="${spec#*:}"
+                for tag in $(docker image ls "$repo" --format '{{.Tag}}'); do
+                  case "$tag" in
+                    "<none>"|latest|"$RELEASE_TAG"|"$previous") continue ;;
+                  esac
+                  echo "Removing old release image ${repo}:${tag}"
+                  docker image rm "${repo}:${tag}" > /dev/null \
+                    || echo "Warning: could not remove ${repo}:${tag}" >&2
+                done
+              done
+              docker image prune -f > /dev/null \
+                || echo "Warning: failed to prune dangling images." >&2
+              docker builder prune -a -f > /dev/null \
+                || echo "Warning: failed to prune build cache." >&2
+            }
             if [ -z "${COMPOSE_B64:-}" ]; then
               echo "Encoded docker-compose.yml is empty." >&2
               exit 1
@@ -161,6 +192,12 @@ jobs:
             fi
             mv docker-compose.yml.tmp docker-compose.yml
             touch .env
+            PREVIOUS_BACKEND_TAG="$(image_tag_from_env BACKEND_IMAGE)"
+            PREVIOUS_SCHEDULER_TAG="$(image_tag_from_env SCHEDULER_IMAGE)"
+            PREVIOUS_FRONTEND_TAG="$(image_tag_from_env FRONTEND_IMAGE)"
+            echo "Freeing disk space before pulling ${RELEASE_TAG}..."
+            df -h / || true
+            prune_old_release_images || echo "Warning: pre-pull image cleanup failed." >&2
             set_env_var() {
               key="$1"
               value="$2"
@@ -190,4 +227,6 @@ jobs:
               pull_attempt=$((pull_attempt + 1))
             done
             docker compose up -d --remove-orphans
+            prune_old_release_images || echo "Warning: post-deploy image cleanup failed." >&2
             cleanup_unused_images
+            df -h / || true

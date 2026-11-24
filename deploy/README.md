@@ -48,7 +48,9 @@ Bangumi API ─────→ scheduler ──→ 集數資料補充
 - 推送至任何分支：只執行 CI（後端測試、前端建置檢查、Docker 映像檔建置檢查），不會部署。
 - 執行 `git tag vX.Y.Z && git push origin vX.Y.Z`：建置三個映像檔並推送至 GHCR，接著透過 SSH 連線至部署主機，依序拉取映像檔（失敗時最多重試五次）並執行 `docker compose up -d`。
 
-GitHub Actions 的 SSH 部署命令上限為 60 分鐘，包含 Docker 映像拉取重試、容器啟動，以及部署成功後清理超過 7 天的未使用映像；若仍超時，應先檢查部署主機的磁碟空間與 GHCR 網路連線。
+GitHub Actions 的 SSH 部署命令上限為 60 分鐘，包含 Docker 映像拉取重試、容器啟動與映像清理；若仍超時，應先檢查部署主機的磁碟空間與 GHCR 網路連線。
+
+部署腳本在拉取新映像**之前**與部署成功**之後**各清理一次：`anime-{backend,scheduler,frontend}` 只保留本次版本與前一版（前一版從部署主機 `.env` 的 `*_IMAGE` 讀取，方便回滾），其餘舊版本映像、懸空映像與 build cache 一律刪除；部署成功後另外清除超過 7 天的其他未使用映像。拉取前先清理，是為了避免磁碟已滿時拉取失敗、導致部署後的清理永遠跑不到。清理不會動到任何具名儲存卷（`mysql-data`、`backend-storage-public`）。
 
 映像檔：`ghcr.io/kevinsuu/anime-{backend,scheduler,frontend}:vX.Y.Z`，以及 `:latest`。
 
