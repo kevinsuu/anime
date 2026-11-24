@@ -92,6 +92,45 @@ describe('mobile card gestures', () => {
     expect(callbacks.haptic).toHaveBeenCalledOnce()
   })
 
+  it('treats the platform long-press contextmenu as watched before the timer fires', () => {
+    // Android Chrome fires contextmenu (≈400–500ms) before our timer; if the
+    // browser then starts its own drag it sends pointercancel and the timer
+    // would never fire, so the long press silently did nothing.
+    const { callbacks, handlers } = setup()
+    handlers.onPointerDown(pointerEvent())
+    vi.advanceTimersByTime(420)
+    const menu = { preventDefault: vi.fn() } as unknown as MouseEvent
+    handlers.onContextMenu(menu)
+    handlers.onPointerCancel()
+    vi.runAllTimers()
+
+    expect(menu.preventDefault).toHaveBeenCalledOnce()
+    expect(callbacks.onLongPress).toHaveBeenCalledOnce()
+    expect(callbacks.haptic).toHaveBeenCalledOnce()
+  })
+
+  it('does not toggle watched twice when the timer and contextmenu both fire', () => {
+    const { callbacks, handlers } = setup()
+    handlers.onPointerDown(pointerEvent())
+    vi.advanceTimersByTime(MOBILE_CARD_LONG_PRESS_DELAY_MS)
+    handlers.onContextMenu({ preventDefault: vi.fn() } as unknown as MouseEvent)
+    handlers.onPointerUp()
+    handlers.onClick(clickEvent())
+    vi.runAllTimers()
+
+    expect(callbacks.onLongPress).toHaveBeenCalledOnce()
+    expect(callbacks.onNavigate).not.toHaveBeenCalled()
+  })
+
+  it('ignores a mouse right-click contextmenu', () => {
+    const { callbacks, handlers } = setup()
+    handlers.onPointerDown(pointerEvent({ pointerType: 'mouse', button: 2 }))
+    handlers.onContextMenu({ preventDefault: vi.fn() } as unknown as MouseEvent)
+    vi.runAllTimers()
+
+    expect(callbacks.onLongPress).not.toHaveBeenCalled()
+  })
+
   it('cancels gestures when the finger moves far enough to scroll', () => {
     const { callbacks, handlers } = setup()
     handlers.onPointerDown(pointerEvent())

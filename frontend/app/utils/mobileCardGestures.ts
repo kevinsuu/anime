@@ -58,14 +58,17 @@ export function createMobileCardGestureHandlers(callbacks: MobileCardGestureCall
 
     pressX = event.clientX
     pressY = event.clientY
-    longPressTimer = setTimeout(() => {
-      longPressTimer = null
-      longPressTriggered = true
-      clearSingleTapTimer()
-      lastTapAt = 0
-      callbacks.onLongPress()
-      if (activePointerType !== 'mouse') haptic()
-    }, MOBILE_CARD_LONG_PRESS_DELAY_MS)
+    longPressTimer = setTimeout(triggerLongPress, MOBILE_CARD_LONG_PRESS_DELAY_MS)
+  }
+
+  function triggerLongPress() {
+    clearLongPressTimer()
+    if (longPressTriggered) return
+    longPressTriggered = true
+    clearSingleTapTimer()
+    lastTapAt = 0
+    callbacks.onLongPress()
+    if (activePointerType !== 'mouse') haptic()
   }
 
   function onPointerMove(event: PointerLikeEvent) {
@@ -132,7 +135,12 @@ export function createMobileCardGestureHandlers(callbacks: MobileCardGestureCall
   }
 
   function onContextMenu(event: ContextMenuLikeEvent) {
-    if (gestureSequence && callbacks.isEnabled()) event.preventDefault()
+    if (!gestureSequence || !callbacks.isEnabled()) return
+    event.preventDefault()
+    // On touch devices contextmenu *is* the platform's long-press signal. It
+    // can arrive before our timer, and Android may then start a drag that
+    // cancels the pointer, so the timer alone is not reliable there.
+    if (activePointerType !== 'mouse' && pointerPressed && !gestureCancelled) triggerLongPress()
   }
 
   function dispose() {

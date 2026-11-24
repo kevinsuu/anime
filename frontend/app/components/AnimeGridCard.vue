@@ -218,6 +218,7 @@ onBeforeUnmount(() => {
           :loading="shouldLoad ? 'eager' : 'lazy'"
           :fetchpriority="highPriority ? 'high' : shouldLoad ? 'auto' : 'low'"
           decoding="async"
+          draggable="false"
           width="300"
           height="400"
           class="relative h-full w-full object-cover transition-[opacity,transform] duration-300 group-hover:scale-105"
@@ -460,6 +461,7 @@ onBeforeUnmount(() => {
 @media (max-width: 47.999rem) {
   .anime-card-link {
     -webkit-touch-callout: none;
+    -webkit-user-drag: none;
     user-select: none;
   }
 
