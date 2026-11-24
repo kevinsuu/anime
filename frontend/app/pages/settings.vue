@@ -125,7 +125,7 @@ async function logout() {
   <div class="space-y-4 sm:space-y-6">
     <header class="flex items-end justify-between gap-3">
       <div class="space-y-1">
-        <p class="text-xs font-extrabold uppercase tracking-widest text-primary-600">帳號</p>
+        <p class="text-xs font-extrabold uppercase tracking-widest text-primary-700">帳號</p>
         <h1 class="text-2xl font-extrabold tracking-tight text-gray-950 sm:text-3xl">設定</h1>
       </div>
       <button
@@ -133,7 +133,7 @@ async function logout() {
         aria-haspopup="dialog"
         aria-controls="feedback-dialog"
         :aria-expanded="feedbackDialogOpen"
-        class="mb-0.5 inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-lg border border-primary-200 bg-white px-3 py-1.5 text-xs font-semibold text-primary-700 shadow-sm transition hover:bg-primary-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+        class="mb-0.5 inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-lg border border-primary-200 bg-white px-3 py-1.5 text-xs font-semibold text-primary-700 shadow-sm transition hover:bg-primary-50 md:min-h-9 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
         @click="openFeedbackDialog($event)"
       >
         <UIcon name="i-lucide-message-square-warning" class="size-3.5" />
@@ -178,7 +178,7 @@ async function logout() {
         </div>
         <button
           type="button"
-          class="mt-1 min-h-11 w-full rounded-lg border border-red-200 px-5 py-2 text-sm font-semibold text-red-500 transition hover:bg-red-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 sm:w-auto"
+          class="mt-1 min-h-11 w-full rounded-lg border border-red-200 px-5 py-2 text-sm font-semibold text-red-700 transition hover:bg-red-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 sm:w-auto"
           @click="logout"
         >
           登出
@@ -196,7 +196,7 @@ async function logout() {
           <span class="min-w-0 flex-1 break-all font-mono text-[11px] leading-5 text-gray-700 sm:text-xs">{{ shareUrl }}</span>
           <button
             type="button"
-            class="min-h-9 shrink-0 rounded-md px-2.5 py-1 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+            class="min-h-11 shrink-0 rounded-md px-3 py-1 text-xs font-semibold transition md:min-h-9 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
             :class="copied ? 'bg-green-100 text-green-700' : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-100'"
             @click="copyShareUrl"
           >

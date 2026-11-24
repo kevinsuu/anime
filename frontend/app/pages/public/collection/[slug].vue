@@ -59,7 +59,7 @@ watch(() => route.params.slug, () => {
 
     <template v-else-if="data">
       <header class="space-y-1">
-        <p class="text-xs font-extrabold uppercase tracking-widest text-primary-600">公開清單</p>
+        <p class="text-xs font-extrabold uppercase tracking-widest text-primary-700">公開清單</p>
         <h1 class="text-3xl font-extrabold tracking-tight text-gray-950">{{ data.name }}</h1>
         <p class="text-sm text-gray-500">共 {{ data.count }} 部作品</p>
       </header>
