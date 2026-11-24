@@ -254,7 +254,7 @@ useHead({
     <!-- Back -->
     <button
       type="button"
-      class="mb-3 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-gray-500 transition-colors hover:text-gray-900 md:mb-6 md:min-h-0"
+      class="mb-3 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-gray-500 transition-colors hover:text-gray-900 md:mb-6 md:min-h-6"
       @click="goBack"
     >
       <UIcon name="i-lucide-chevron-left" class="size-4" />
@@ -297,7 +297,7 @@ useHead({
         </div>
 
         <div class="flex min-w-0 flex-col">
-          <p v-if="anime.seasonYear" class="text-[11px] font-extrabold uppercase tracking-wider text-primary-700">
+          <p v-if="anime.seasonYear" class="text-xs font-extrabold uppercase tracking-wider text-primary-700">
             {{ anime.seasonYear }}年 {{ seasonMonthLabels[anime.seasonCode] ?? anime.seasonCode }}
           </p>
           <h1 class="mt-0.5 line-clamp-3 text-lg font-extrabold leading-snug tracking-tight text-gray-950">{{ anime.name }}</h1>
@@ -407,19 +407,19 @@ useHead({
           </div>
 
           <section aria-labelledby="anime-answer-title" class="space-y-2">
-            <h2 id="anime-answer-title" class="text-[11px] font-bold uppercase tracking-widest text-gray-500">
+            <h2 id="anime-answer-title" class="text-xs font-bold uppercase tracking-widest text-gray-500">
               這部動畫是什麼？
             </h2>
             <div class="rounded-xl border border-primary-100 bg-primary-50/60 px-5 py-4">
               <p class="text-sm font-semibold leading-6 text-gray-800">{{ answerSummary }}</p>
               <dl v-if="quickFacts.length > 0" class="mt-3 grid gap-2 border-t border-primary-100 pt-3 sm:grid-cols-3">
                 <div v-for="fact in quickFacts" :key="fact.label">
-                  <dt class="text-[11px] font-bold text-gray-500">{{ fact.label }}</dt>
+                  <dt class="text-xs font-bold text-gray-500">{{ fact.label }}</dt>
                   <dd class="mt-0.5 text-sm font-medium text-gray-800">
                     <NuxtLink
                       v-if="fact.to"
                       :to="fact.to"
-                      class="text-primary-700 underline-offset-2 hover:underline"
+                      class="inline-flex min-h-6 items-center text-primary-700 underline-offset-2 hover:underline"
                     >{{ fact.value }}新番</NuxtLink>
                     <template v-else>{{ fact.value }}</template>
                   </dd>
@@ -450,7 +450,7 @@ useHead({
 
           <!-- Summary -->
           <section class="space-y-2">
-            <h2 class="text-[11px] font-bold uppercase tracking-widest text-gray-500">故事介紹</h2>
+            <h2 class="text-xs font-bold uppercase tracking-widest text-gray-500">故事介紹</h2>
             <div class="rounded-xl border border-gray-200 bg-white px-5 py-4 shadow-sm">
               <p class="whitespace-pre-line text-sm leading-relaxed text-gray-700">{{ anime.description }}</p>
             </div>
@@ -458,7 +458,7 @@ useHead({
 
           <!-- Aliases -->
           <section v-if="anime.aliases.length > 0" class="space-y-2">
-            <h2 class="text-[11px] font-bold uppercase tracking-widest text-gray-500">其他名稱</h2>
+            <h2 class="text-xs font-bold uppercase tracking-widest text-gray-500">其他名稱</h2>
             <div class="rounded-xl border border-gray-200 bg-white px-5 py-4 shadow-sm">
               <p class="text-sm text-gray-600 leading-relaxed">{{ anime.aliases.join('、') }}</p>
             </div>
@@ -466,7 +466,7 @@ useHead({
 
           <!-- Streams -->
           <section v-if="anime.streams.length > 0" class="space-y-2">
-            <h2 class="text-[11px] font-bold uppercase tracking-widest text-gray-500">線上觀看</h2>
+            <h2 class="text-xs font-bold uppercase tracking-widest text-gray-500">線上觀看</h2>
             <div class="grid gap-2 sm:flex sm:flex-wrap">
               <template v-for="s in anime.streams" :key="`${s.region}-${s.platform}`">
                 <a
@@ -494,14 +494,14 @@ useHead({
 
           <!-- Theme songs -->
           <section v-if="anime.themes.length > 0" class="space-y-2">
-            <h2 class="text-[11px] font-bold uppercase tracking-widest text-gray-500">主題曲</h2>
+            <h2 class="text-xs font-bold uppercase tracking-widest text-gray-500">主題曲</h2>
             <div class="divide-y divide-gray-100 rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm">
               <div
                 v-for="theme in anime.themes"
                 :key="`${theme.type}-${theme.title}`"
                 class="flex items-center gap-3 px-4 py-3"
               >
-                <span class="w-8 shrink-0 rounded bg-gray-100 px-1.5 py-0.5 text-center text-[11px] font-bold text-gray-600">
+                <span class="w-8 shrink-0 rounded bg-gray-100 px-1.5 py-0.5 text-center text-xs font-bold text-gray-600">
                   {{ theme.type }}
                 </span>
                 <div class="min-w-0">
@@ -514,7 +514,7 @@ useHead({
 
           <!-- Trailers -->
           <section v-if="anime.trailers.length > 0" class="space-y-2">
-            <h2 class="text-[11px] font-bold uppercase tracking-widest text-gray-500">宣傳片</h2>
+            <h2 class="text-xs font-bold uppercase tracking-widest text-gray-500">宣傳片</h2>
             <div class="grid grid-cols-2 gap-2 sm:grid-cols-3">
               <button
                 v-for="(trailer, i) in anime.trailers"
@@ -545,7 +545,7 @@ useHead({
 
           <!-- Cast -->
           <section v-if="anime.cast.length > 0" class="space-y-2">
-            <h2 class="text-[11px] font-bold uppercase tracking-widest text-gray-500">配音員</h2>
+            <h2 class="text-xs font-bold uppercase tracking-widest text-gray-500">配音員</h2>
             <div class="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
               <div class="grid grid-cols-1 sm:grid-cols-2">
                 <div
@@ -554,7 +554,7 @@ useHead({
                   class="flex items-center gap-3 border-b border-r border-gray-100 px-4 py-3 last:border-b-0 odd:border-r even:border-r-0"
                 >
                   <div class="min-w-0 flex-1">
-                    <p class="truncate text-[11px] font-semibold text-gray-600">{{ entry.character }}</p>
+                    <p class="truncate text-xs font-semibold text-gray-600">{{ entry.character }}</p>
                     <p class="truncate text-sm font-bold text-gray-900">{{ entry.actor }}</p>
                   </div>
                 </div>
@@ -564,7 +564,7 @@ useHead({
 
           <!-- Staff -->
           <section v-if="anime.staff.length > 0" class="space-y-2">
-            <h2 class="text-[11px] font-bold uppercase tracking-widest text-gray-500">製作人員</h2>
+            <h2 class="text-xs font-bold uppercase tracking-widest text-gray-500">製作人員</h2>
             <div class="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
               <div class="grid grid-cols-1 sm:grid-cols-2">
                 <div
@@ -573,7 +573,7 @@ useHead({
                   class="flex items-center gap-3 border-b border-r border-gray-100 px-4 py-3 last:border-b-0 odd:border-r even:border-r-0"
                 >
                   <div class="min-w-0 flex-1">
-                    <p class="truncate text-[11px] font-semibold text-gray-600">{{ entry.role }}</p>
+                    <p class="truncate text-xs font-semibold text-gray-600">{{ entry.role }}</p>
                     <p class="text-sm font-medium text-gray-900">{{ entry.name }}</p>
                   </div>
                 </div>

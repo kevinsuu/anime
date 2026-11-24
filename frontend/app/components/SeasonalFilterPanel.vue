@@ -53,7 +53,7 @@ const activeCount = computed(() => {
 
 function btn(active: boolean) {
   return active
-    ? 'bg-primary-500 text-white shadow-sm'
+    ? 'bg-primary-700 text-white shadow-sm'
     : 'bg-white/10 text-gray-200 hover:bg-white/20 hover:text-white'
 }
 
@@ -76,7 +76,7 @@ function toggleGenre(tag: string) {
             <h2 class="text-base font-bold text-white">篩選條件</h2>
             <span
               v-if="activeCount > 0"
-              class="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-primary-500 px-1.5 text-[11px] font-bold text-white"
+              class="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-primary-700 px-1.5 text-xs font-bold text-white"
             >{{ activeCount }}</span>
           </div>
           <div class="flex items-center gap-2">
@@ -102,7 +102,7 @@ function toggleGenre(tag: string) {
 
           <!-- Season selector -->
           <section class="space-y-3">
-            <p id="filter-season-label" class="text-[11px] font-bold uppercase tracking-widest text-gray-400">季度</p>
+            <p id="filter-season-label" class="text-xs font-bold uppercase tracking-widest text-gray-400">季度</p>
             <div class="flex gap-2">
               <label for="filter-year-input" class="sr-only">年份</label>
               <input
@@ -128,7 +128,7 @@ function toggleGenre(tag: string) {
           </section>
 
           <section v-if="filterOptions.genres.length > 0" class="space-y-3">
-            <p class="text-[11px] font-bold uppercase tracking-widest text-gray-400">類型</p>
+            <p class="text-xs font-bold uppercase tracking-widest text-gray-400">類型</p>
             <div class="flex flex-wrap gap-2">
               <button
                 class="min-h-11 rounded-full px-3 py-1 text-xs font-semibold transition-all md:min-h-0"
@@ -151,7 +151,7 @@ function toggleGenre(tag: string) {
 
           <!-- Source type (種類) -->
           <section v-if="filterOptions.sources.length > 0" class="space-y-3">
-            <p class="text-[11px] font-bold uppercase tracking-widest text-gray-400">種類</p>
+            <p class="text-xs font-bold uppercase tracking-widest text-gray-400">種類</p>
             <div class="flex flex-wrap gap-2">
               <button
                 class="min-h-11 rounded-full px-3 py-1 text-xs font-semibold transition-all md:min-h-0"
@@ -174,7 +174,7 @@ function toggleGenre(tag: string) {
 
           <!-- Cast actors -->
           <section v-if="filterOptions.actors.length > 0" class="space-y-3">
-            <p class="text-[11px] font-bold uppercase tracking-widest text-gray-400">配音員</p>
+            <p class="text-xs font-bold uppercase tracking-widest text-gray-400">配音員</p>
             <div class="flex flex-wrap gap-2">
               <button
                 v-for="item in filterOptions.actors"
@@ -190,7 +190,7 @@ function toggleGenre(tag: string) {
 
           <!-- Watch status -->
           <section class="space-y-3">
-            <p class="text-[11px] font-bold uppercase tracking-widest text-gray-400">觀看狀態</p>
+            <p class="text-xs font-bold uppercase tracking-widest text-gray-400">觀看狀態</p>
             <div class="flex flex-wrap gap-2">
               <button
                 v-for="opt in statusOptions"
@@ -208,7 +208,7 @@ function toggleGenre(tag: string) {
         <!-- Footer -->
         <div class="border-t border-white/10 px-5 py-4">
           <button
-            class="min-h-11 w-full rounded-lg bg-primary-600 py-2.5 text-sm font-bold text-white transition-colors hover:bg-primary-500"
+            class="min-h-11 w-full rounded-lg bg-primary-700 py-2.5 text-sm font-bold text-white transition-colors hover:bg-primary-800"
             @click="emit('update:open', false)"
           >
             套用{{ activeCount > 0 ? `（${activeCount} 個條件）` : '' }}

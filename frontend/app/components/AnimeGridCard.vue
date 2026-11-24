@@ -242,7 +242,7 @@ onBeforeUnmount(() => {
 
       <!-- Top-left: date label -->
       <div class="absolute left-0 top-0 p-1.5">
-        <span class="block rounded-sm bg-black/50 px-1.5 py-0.5 text-[10px] font-bold leading-tight text-white backdrop-blur-sm">
+        <span class="block rounded-sm bg-black/50 px-1.5 py-0.5 text-xs font-bold leading-tight text-white backdrop-blur-sm">
           {{ airInfo.dateLabel }}
         </span>
       </div>
@@ -254,20 +254,20 @@ onBeforeUnmount(() => {
         class="absolute right-0 top-0 z-10 flex min-w-11 flex-col items-stretch overflow-hidden rounded-bl-lg text-white shadow-sm"
       >
         <div v-if="airInfo.weekday" class="flex flex-col items-center p-1.5" :class="airInfo.weekdayColor">
-          <span class="text-[11px] font-extrabold leading-tight">{{ airInfo.weekday }}</span>
-          <span class="text-[10px] font-bold leading-tight">{{ airInfo.time }}</span>
+          <span class="text-xs font-extrabold leading-tight">{{ airInfo.weekday }}</span>
+          <span class="text-xs font-bold leading-tight">{{ airInfo.time }}</span>
         </div>
         <span
           v-if="anime.episodeCount"
           data-episode-badge
-          class="w-full bg-green-600 px-1.5 py-0.5 text-center text-[10px] font-bold leading-tight"
+          class="w-full bg-gray-800 px-1.5 py-0.5 text-center text-xs font-bold leading-tight"
         >
           全{{ anime.episodeCount }}集
         </span>
         <span
           v-if="anime.streamCount > 0"
           data-stream-badge
-          class="anime-card-stream flex w-full items-center justify-center gap-0.5 bg-gray-600 px-1.5 py-0.5 text-center text-[10px] font-bold leading-tight"
+          class="anime-card-stream flex w-full items-center justify-center gap-0.5 bg-gray-600 px-1.5 py-0.5 text-center text-xs font-bold leading-tight"
         >
           <UIcon name="i-lucide-play" class="size-3" aria-hidden="true" />
           {{ anime.streamCount }}
@@ -286,7 +286,7 @@ onBeforeUnmount(() => {
       <!-- Watched state: a compact glass pill stays legible over light and dark covers. -->
       <div
         v-if="watched"
-        class="absolute left-1.5 top-9 z-10 inline-flex items-center gap-1 rounded-full border border-emerald-200/70 bg-emerald-950/80 py-1 pl-1 pr-2 text-[10px] font-extrabold tracking-wide text-emerald-50 shadow-lg shadow-emerald-950/30 backdrop-blur-md"
+        class="absolute left-1.5 top-9 z-10 inline-flex items-center gap-1 rounded-full border border-emerald-200/70 bg-emerald-950/80 py-1 pl-1 pr-2 text-xs font-extrabold tracking-wide text-emerald-50 shadow-lg shadow-emerald-950/30 backdrop-blur-md"
       >
         <span class="grid size-4 place-items-center rounded-full bg-emerald-300 text-emerald-950 shadow-sm" aria-hidden="true">
           <UIcon name="i-lucide-check" class="size-2.5 stroke-3" />
@@ -326,7 +326,7 @@ onBeforeUnmount(() => {
           >
             <UIcon name="i-lucide-heart" class="size-3.5 max-md:size-[1.125rem]" :class="inList ? 'fill-current' : ''" />
           </span>
-          <span class="pointer-events-none absolute bottom-full right-0 mb-1.5 whitespace-nowrap rounded bg-gray-900 px-2 py-0.5 text-[11px] font-semibold text-white opacity-0 transition-opacity group-hover/btn:opacity-100">
+          <span class="pointer-events-none absolute bottom-full right-0 mb-1.5 whitespace-nowrap rounded bg-gray-900 px-2 py-0.5 text-xs font-semibold text-white opacity-0 transition-opacity group-hover/btn:opacity-100">
             {{ inList ? '取消收藏' : '加入收藏' }}
           </span>
         </button>
@@ -341,11 +341,11 @@ onBeforeUnmount(() => {
           <span
             data-action-surface
             class="grid size-7 place-items-center rounded-full shadow-md transition-colors max-md:size-9"
-            :class="watched ? 'bg-green-500 text-white' : 'bg-white/90 text-gray-700 group-hover/btn:bg-green-500 group-hover/btn:text-white'"
+            :class="watched ? 'bg-green-600 text-white' : 'bg-white/90 text-gray-700 group-hover/btn:bg-green-600 group-hover/btn:text-white'"
           >
             <UIcon name="i-lucide-check" class="size-3.5 max-md:size-[1.125rem]" />
           </span>
-          <span class="pointer-events-none absolute bottom-full right-0 mb-1.5 whitespace-nowrap rounded bg-gray-900 px-2 py-0.5 text-[11px] font-semibold text-white opacity-0 transition-opacity group-hover/btn:opacity-100">
+          <span class="pointer-events-none absolute bottom-full right-0 mb-1.5 whitespace-nowrap rounded bg-gray-900 px-2 py-0.5 text-xs font-semibold text-white opacity-0 transition-opacity group-hover/btn:opacity-100">
             {{ watched ? '取消已看' : '標記已看' }}
           </span>
         </button>
@@ -360,7 +360,7 @@ onBeforeUnmount(() => {
       >
         <div class="flex items-center justify-between border-b border-gray-100 px-3 py-2">
           <p class="text-xs font-bold text-gray-700">加入自訂清單</p>
-          <button class="text-gray-400 hover:text-gray-700" @click.stop="emit('closePopover')">
+          <button class="text-gray-500 hover:text-gray-700" @click.stop="emit('closePopover')">
             <UIcon name="i-lucide-x" class="size-3" />
           </button>
         </div>
@@ -379,11 +379,11 @@ onBeforeUnmount(() => {
               <UIcon v-if="isInCollection(col)" name="i-lucide-check" class="size-2 text-white" />
             </span>
             <span class="flex-1 truncate font-medium text-gray-900 text-left">{{ col.name }}</span>
-            <span class="text-gray-400">{{ col.count }}</span>
+            <span class="text-gray-500">{{ col.count }}</span>
           </button>
         </div>
         <div class="border-t border-gray-100 px-3 py-1.5">
-          <NuxtLink to="/list" class="text-[11px] text-primary-600 hover:underline" @click.stop="emit('closePopover')">
+          <NuxtLink to="/list" class="text-xs text-primary-600 hover:underline" @click.stop="emit('closePopover')">
             管理清單 →
           </NuxtLink>
         </div>

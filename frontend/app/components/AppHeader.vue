@@ -52,7 +52,7 @@ const { navItems, isActive, targetFor } = useNav()
         </span>
         <strong class="max-w-28 truncate text-sm text-gray-700">{{ session.user?.display_name || session.user?.email }}</strong>
       </NuxtLink>
-      <NuxtLink v-else to="/login" class="hidden text-xs font-semibold text-gray-500 hover:text-gray-900 md:block">
+      <NuxtLink v-else to="/login" class="hidden min-h-6 items-center rounded px-2 text-xs font-semibold text-gray-500 hover:text-gray-900 md:inline-flex">
         訪客・登入
       </NuxtLink>
     </div>

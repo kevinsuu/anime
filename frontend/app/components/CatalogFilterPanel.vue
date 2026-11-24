@@ -51,7 +51,7 @@ function restoreTriggerFocus() {
       篩選
       <span
         v-if="activeFilterCount > 0"
-        class="inline-flex min-h-5 min-w-5 items-center justify-center rounded-full bg-primary-600 px-1 text-[11px] font-bold text-white"
+        class="inline-flex min-h-5 min-w-5 items-center justify-center rounded-full bg-primary-700 px-1 text-xs font-bold text-white"
       >
         {{ activeFilterCount }}
       </span>
@@ -135,13 +135,13 @@ function restoreTriggerFocus() {
               :key="item.tag"
               type="button"
               class="inline-flex min-h-11 items-center gap-1.5 rounded-full px-4 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
-              :class="selectedTags.includes(item.tag) ? 'ring-2 ring-primary-500' : 'active:opacity-70'"
-              :style="{ backgroundColor: tagColor(item.tag).bg, color: tagColor(item.tag).text }"
+              :class="selectedTags.includes(item.tag) ? 'bg-primary-700 text-white' : 'active:opacity-70'"
+              :style="selectedTags.includes(item.tag) ? {} : { backgroundColor: tagColor(item.tag).bg, color: tagColor(item.tag).text }"
               :aria-pressed="selectedTags.includes(item.tag)"
               @click="emit('toggleTag', item.tag)"
             >
               {{ item.tag }}
-              <span class="text-xs opacity-60">{{ item.count }}</span>
+              <span class="text-xs opacity-80">{{ item.count }}</span>
             </button>
           </div>
 
@@ -155,7 +155,7 @@ function restoreTriggerFocus() {
     <template #footer="{ close }">
       <button
         type="button"
-        class="min-h-11 w-full rounded-lg bg-primary-600 px-4 text-sm font-bold text-white shadow-sm transition active:bg-primary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+        class="min-h-11 w-full rounded-lg bg-primary-700 px-4 text-sm font-bold text-white shadow-sm transition active:bg-primary-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
         @click="close"
       >
         查看 {{ resultCount }} 筆作品

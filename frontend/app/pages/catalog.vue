@@ -422,7 +422,7 @@ useHead(() => ({
           <button
             type="submit"
             :disabled="loading"
-            class="rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:opacity-60"
+            class="rounded-lg bg-primary-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:opacity-60"
           >
             <UIcon v-if="loading" name="i-lucide-loader-circle" class="size-4 animate-spin" />
             <span v-else>搜尋</span>
@@ -447,7 +447,7 @@ useHead(() => ({
           type="button"
           class="rounded-full px-3 py-1 text-xs font-semibold transition"
           :class="selectedTags.length === 0
-            ? 'bg-primary-600 text-white'
+            ? 'bg-primary-700 text-white'
             : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
           @click="clearTags()"
         >
@@ -458,8 +458,8 @@ useHead(() => ({
           :key="item.tag"
           type="button"
           class="rounded-full px-3 py-1 text-xs font-semibold transition"
-          :class="selectedTags.includes(item.tag) ? 'ring-2 ring-primary-500' : 'hover:opacity-80'"
-          :style="{ backgroundColor: tagColor(item.tag).bg, color: tagColor(item.tag).text }"
+          :class="selectedTags.includes(item.tag) ? 'bg-primary-700 text-white' : 'hover:bg-gray-200'"
+          :style="selectedTags.includes(item.tag) ? {} : { backgroundColor: tagColor(item.tag).bg, color: tagColor(item.tag).text }"
           @click="toggleTag(item.tag)"
         >
           {{ item.tag }}
@@ -483,7 +483,7 @@ useHead(() => ({
     >
       <UIcon name="i-lucide-search-x" class="mx-auto mb-2 size-8 text-gray-300" />
       <p class="text-sm font-medium text-gray-500">沒有找到符合的作品</p>
-      <p class="mt-1 text-xs text-gray-400">換個關鍵字試試</p>
+      <p class="mt-1 text-xs text-gray-500">換個關鍵字試試</p>
     </div>
 
     <template v-else>

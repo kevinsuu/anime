@@ -85,7 +85,7 @@ watch(() => route.params.slug, () => {
             type="button"
             class="min-h-9 rounded-full px-3 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
             :class="selectedTags.length === 0
-              ? 'bg-primary-600 text-white'
+              ? 'bg-primary-700 text-white'
               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
             :aria-pressed="selectedTags.length === 0"
             @click="selectedTags = []"
@@ -97,13 +97,13 @@ watch(() => route.params.slug, () => {
             :key="option.tag"
             type="button"
             class="min-h-9 rounded-full px-3 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
-            :class="selectedTags.includes(option.tag) ? 'ring-2 ring-primary-500' : 'hover:opacity-80'"
-            :style="{ backgroundColor: tagColor(option.tag).bg, color: tagColor(option.tag).text }"
+            :class="selectedTags.includes(option.tag) ? 'bg-primary-700 text-white' : 'hover:bg-gray-200'"
+            :style="selectedTags.includes(option.tag) ? {} : { backgroundColor: tagColor(option.tag).bg, color: tagColor(option.tag).text }"
             :aria-pressed="selectedTags.includes(option.tag)"
             @click="toggleTag(option.tag)"
           >
             {{ option.tag }}
-            <span class="ml-1 text-xs opacity-60">{{ option.count }}</span>
+            <span class="ml-1 text-xs opacity-80">{{ option.count }}</span>
           </button>
         </div>
         <p class="text-xs text-gray-500">
@@ -150,7 +150,7 @@ watch(() => route.params.slug, () => {
             </div>
             <span
               v-if="li.watched"
-              class="absolute left-1 top-1 rounded-full bg-green-500 px-2 py-0.5 text-[10px] font-bold text-white"
+              class="absolute left-1 top-1 rounded-full bg-green-700 px-2 py-0.5 text-xs font-bold text-white"
             >已看</span>
           </div>
           <p
@@ -165,7 +165,7 @@ watch(() => route.params.slug, () => {
           <p class="line-clamp-2 text-xs font-semibold text-gray-800 group-hover:text-primary-600">
             {{ li.anime.name }}
           </p>
-          <p v-if="li.anime.season_year" class="text-[10px] text-gray-400">
+          <p v-if="li.anime.season_year" class="text-xs text-gray-500">
             {{ li.anime.season_year }}年 {{ seasonMonthLabels[li.anime.season_code] ?? li.anime.season_code }}
           </p>
         </NuxtLink>

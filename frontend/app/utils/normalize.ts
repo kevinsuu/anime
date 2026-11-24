@@ -273,41 +273,12 @@ export function normalizeListItem(value: unknown = {}): ListItem {
   }
 }
 
-// Source/type tags (種類) get a fixed neutral palette so they read as a
-// distinct category from genre tags, independent of season contents.
-const SOURCE_TAG_COLORS: Record<string, { bg: string; text: string }> = {
-  '新作': { bg: '#dbeafe', text: '#1d4ed8' },
-  '續作': { bg: '#e0e7ff', text: '#4338ca' },
-  '跨季續播': { bg: '#e0e7ff', text: '#4338ca' },
-  '漫畫改編': { bg: '#fef3c7', text: '#b45309' },
-  '小說改編': { bg: '#fde68a', text: '#92400e' },
-  '遊戲改編': { bg: '#dcfce7', text: '#15803d' },
-  '原創作品': { bg: '#fee2e2', text: '#b91c1c' },
-  '改編作品': { bg: '#fef9c3', text: '#a16207' },
-}
+// Tags share one neutral chip style. A per-tag rainbow competed with the
+// cover art and made a dense filter row look noisy; the selected state uses
+// the primary color instead, so selection is the only colored signal.
+// gray-100 / gray-700 keeps small chip text well above WCAG AA (≈9:1).
+const NEUTRAL_TAG_COLOR = { bg: '#f3f4f6', text: '#374151' } as const
 
-function hashString(value: string): number {
-  let hash = 0
-  for (let i = 0; i < value.length; i++) {
-    hash = (hash << 5) - hash + value.charCodeAt(i)
-    hash |= 0
-  }
-  return Math.abs(hash)
-}
-
-// Deterministic color per tag string, stable across seasons/renders since
-// each season's genre mix differs but a given tag (e.g. "奇幻") should always
-// look the same to the user. Source tags use a fixed palette; everything
-// else is spread around the hue wheel via hashing for a muted rainbow effect
-// — low saturation keeps a dense row of chips calm instead of clashing.
-export function tagColor(tag: string): { bg: string; text: string } {
-  const source = SOURCE_TAG_COLORS[tag]
-  if (source) return source
-
-  const hue = hashString(tag) % 360
-  return {
-    bg: `hsl(${hue}, 45%, 96%)`,
-    // Keep small chips above WCAG AA contrast across the full hue wheel.
-    text: `hsl(${hue}, 45%, 28%)`,
-  }
+export function tagColor(_tag: string): { bg: string; text: string } {
+  return NEUTRAL_TAG_COLOR
 }
