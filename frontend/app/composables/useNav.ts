@@ -21,7 +21,7 @@ export const NAV_ITEMS: NavItem[] = [
 
 export function useNav() {
   const route = useRoute()
-  const { isAuthed } = useSession()
+  const { isAuthed, isSessionReady } = useSession()
 
   function isActive(path: string): boolean {
     // /list has sub-routes; '/' and the legacy /seasonal route share the new-season view.
@@ -31,8 +31,11 @@ export function useNav() {
   }
 
   // Protected destinations bounce guests to /login until they authenticate.
+  // Until hydration finishes, keep the server-rendered (signed-out) target so
+  // the href is patched to the real destination afterwards instead of being
+  // left stale by a hydration mismatch.
   function targetFor(item: NavItem): string {
-    return item.protected && !isAuthed.value ? '/login' : item.to
+    return item.protected && !(isSessionReady.value && isAuthed.value) ? '/login' : item.to
   }
 
   return { navItems: NAV_ITEMS, isActive, targetFor }

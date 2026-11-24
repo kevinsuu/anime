@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { session, isAuthed } = useSession()
+const { session, isAuthed, isSessionReady } = useSession()
 const { navItems, isActive, targetFor } = useNav()
 </script>
 
@@ -26,8 +26,17 @@ const { navItems, isActive, targetFor } = useNav()
         </NuxtLink>
       </nav>
 
+      <!-- Neutral placeholder until the stored login is read after hydration,
+           so neither the guest link nor a missing account flashes for
+           signed-in users. Same footprint as the account pill. -->
+      <span
+        v-if="!isSessionReady"
+        data-session-placeholder
+        aria-hidden="true"
+        class="hidden h-10 w-32 shrink-0 animate-pulse rounded-full bg-gray-100 md:block"
+      />
       <NuxtLink
-        v-if="isAuthed"
+        v-else-if="isAuthed"
         to="/settings"
         class="hidden items-center gap-2 rounded-full p-1 pr-3 transition-colors hover:bg-gray-100 md:flex"
       >

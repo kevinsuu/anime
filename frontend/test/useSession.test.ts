@@ -52,3 +52,14 @@ describe('useSession', () => {
     })
   })
 })
+
+describe('session readiness', () => {
+  it('stays not-ready until hydration finishes, then flips once', async () => {
+    const { markSessionReady } = await import('../app/composables/useSession')
+    const { isSessionReady } = useSession()
+    expect(isSessionReady.value).toBe(false)
+
+    markSessionReady()
+    expect(isSessionReady.value).toBe(true)
+  })
+})
