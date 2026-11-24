@@ -94,6 +94,8 @@ describe('site identity SEO contract', () => {
     expect(sitemapSource).toContain('description: string | null')
     expect(sitemapSource).toContain('updated_at: string | null')
     expect(sitemapSource).toContain('lastmod: item.updated_at || item.air_date || undefined')
+    expect(sitemapSource).toContain('const lastYear = new Date().getFullYear() + 1')
+    expect(sitemapSource).toContain('seasonLastmod')
   })
 
   it('only grants indexing signals to detail pages with a substantive synopsis', () => {
