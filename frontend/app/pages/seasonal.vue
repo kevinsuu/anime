@@ -95,7 +95,6 @@ const {
   bootstrapError,
   isInList,
   isWatched,
-  isStatusPending,
   retryCardStatuses,
   toggleAnimeInList,
   markWatched,
@@ -121,7 +120,7 @@ const activeChips = computed(() => {
   }
   if (filterState.actor) chips.push({ label: filterState.actor, clear: () => { filterState.actor = '' } })
   if (filterState.seasonalStatus !== 'all') {
-    const labels: Record<string, string> = { listed: '已加入清單', unlisted: '未加入清單', watched: '已觀看', queued: '待補', 'with-cover': '有封面' }
+    const labels: Record<string, string> = { listed: '已加入清單', unlisted: '未加入清單', watched: '已看完', queued: '未看完', 'with-cover': '有封面' }
     chips.push({ label: labels[filterState.seasonalStatus] ?? filterState.seasonalStatus, clear: () => { filterState.seasonalStatus = 'all' } })
   }
   return chips
@@ -415,7 +414,7 @@ useHead({
             :anime="anime"
             :in-list="isInList(anime.id)"
             :watched="isWatched(anime.id)"
-            :status-pending="bootstrapLoading || isStatusPending(anime.id)"
+            :status-pending="bootstrapLoading"
             :status="statusesByAnimeId.get(anime.id)"
             :collections="collections"
             :popover-open="activePopoverAnimeId === anime.id"

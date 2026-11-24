@@ -146,7 +146,6 @@ const {
   bootstrapError,
   isInList,
   isWatched,
-  isStatusPending,
   retryCardStatuses,
   toggleAnimeInList,
   markWatched,
@@ -504,7 +503,7 @@ useHead(() => ({
             :anime="anime"
             :in-list="isInList(anime.id)"
             :watched="isWatched(anime.id)"
-            :status-pending="bootstrapLoading || isStatusPending(anime.id)"
+            :status-pending="bootstrapLoading"
             :status="statusesByAnimeId.get(anime.id)"
             :collections="collections"
             :popover-open="activePopoverAnimeId === anime.id"

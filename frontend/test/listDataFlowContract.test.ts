@@ -18,8 +18,8 @@ describe('list page data-flow contract', () => {
 
   it('loads global collection status counts from the dedicated endpoint', () => {
     expect(listPageSource).toContain('api.myListCounts()')
-    expect(listPageSource).toContain("{ value: 'all', label: '全部收藏'")
-    expect(listPageSource).toContain("{ value: 'unwatched', label: '收藏未看'")
+    expect(listPageSource).toContain("{ value: 'all', label: '全部'")
+    expect(listPageSource).toContain("{ value: 'unwatched', label: '未看完'")
   })
 
   it('keeps a single canonical list collection', () => {

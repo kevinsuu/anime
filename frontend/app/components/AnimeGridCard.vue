@@ -291,7 +291,7 @@ onBeforeUnmount(() => {
         <span class="grid size-4 place-items-center rounded-full bg-emerald-300 text-emerald-950 shadow-sm" aria-hidden="true">
           <UIcon name="i-lucide-check" class="size-2.5 stroke-3" />
         </span>
-        已觀看
+        已看完
       </div>
 
       <!-- Title -->
@@ -335,7 +335,7 @@ onBeforeUnmount(() => {
         <button
           type="button"
           class="group/btn relative flex h-7 w-7 touch-manipulation items-center justify-center rounded-full transition-transform active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white max-md:h-11 max-md:w-11"
-          :aria-label="watched ? '已看完' : '標記已看'"
+          :aria-label="watched ? '取消已看完' : '標記已看完'"
           @click="onMarkWatched"
         >
           <span
@@ -346,7 +346,7 @@ onBeforeUnmount(() => {
             <UIcon name="i-lucide-check" class="size-3.5 max-md:size-[1.125rem]" />
           </span>
           <span class="pointer-events-none absolute bottom-full right-0 mb-1.5 whitespace-nowrap rounded bg-gray-900 px-2 py-0.5 text-xs font-semibold text-white opacity-0 transition-opacity group-hover/btn:opacity-100">
-            {{ watched ? '取消已看' : '標記已看' }}
+            {{ watched ? '取消已看完' : '標記已看完' }}
           </span>
         </button>
       </div>
@@ -359,7 +359,7 @@ onBeforeUnmount(() => {
         @click.stop
       >
         <div class="flex items-center justify-between border-b border-gray-100 px-3 py-2">
-          <p class="text-xs font-bold text-gray-700">加入自訂清單</p>
+          <p class="text-xs font-bold text-gray-700">加入收藏分類</p>
           <button class="text-gray-500 hover:text-gray-700" @click.stop="emit('closePopover')">
             <UIcon name="i-lucide-x" class="size-3" />
           </button>
@@ -383,8 +383,8 @@ onBeforeUnmount(() => {
           </button>
         </div>
         <div class="border-t border-gray-100 px-3 py-1.5">
-          <NuxtLink to="/list" class="text-xs text-primary-600 hover:underline" @click.stop="emit('closePopover')">
-            管理清單 →
+          <NuxtLink to="/list" class="text-xs text-primary-700 hover:underline" @click.stop="emit('closePopover')">
+            管理分類 →
           </NuxtLink>
         </div>
       </div>

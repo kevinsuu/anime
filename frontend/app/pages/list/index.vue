@@ -50,9 +50,9 @@ const page = computed(() => routePositiveInteger(route.query.page))
 const totalPages = computed(() => Math.max(1, listMeta.value.last_page))
 
 const filterTabs = [
-  { value: 'all', label: '全部收藏', mobileLabel: '全部' },
+  { value: 'all', label: '全部', mobileLabel: '全部' },
   { value: 'watched', label: '已看完', mobileLabel: '已看完' },
-  { value: 'unwatched', label: '收藏未看', mobileLabel: '未觀看' },
+  { value: 'unwatched', label: '未看完', mobileLabel: '未看完' },
 ]
 
 const mobileCollectionsOpen = ref(false)
@@ -490,7 +490,7 @@ watch(mobileCollectionsOpen, (open) => {
 
       <template v-else>
       <header class="space-y-1">
-        <p class="text-xs font-extrabold uppercase tracking-widest text-primary-600">追番清單</p>
+        <p class="text-xs font-extrabold uppercase tracking-widest text-primary-700">追番清單</p>
         <div class="flex min-w-0 items-center justify-between gap-4">
           <h1 class="min-w-0 truncate text-3xl font-extrabold tracking-tight text-gray-950">
             {{ activeFilter.startsWith('col:')
@@ -516,7 +516,7 @@ watch(mobileCollectionsOpen, (open) => {
             class="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-lg px-2 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-1"
             :class="activeFilter === tab.value
               ? 'bg-white text-primary-700 shadow-sm ring-1 ring-gray-200'
-              : 'text-gray-500 active:bg-white/70'"
+              : 'text-gray-700 active:bg-white/70'"
             :aria-pressed="activeFilter === tab.value"
             @click="setFilter(tab.value)"
           >
@@ -596,7 +596,7 @@ watch(mobileCollectionsOpen, (open) => {
                     type="button"
                     :disabled="deletingCollectionId !== null"
                     :aria-label="`刪除收藏分類「${col.name}」`"
-                    class="grid min-h-11 place-items-center border-l border-gray-100 text-red-500 transition active:bg-red-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-red-500 disabled:opacity-40"
+                    class="grid min-h-11 place-items-center border-l border-gray-100 text-red-700 transition active:bg-red-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-red-500 disabled:opacity-40"
                     @click="requestCollectionDelete(col)"
                   >
                     <UIcon name="i-lucide-trash-2" class="size-4" />
@@ -753,7 +753,7 @@ watch(mobileCollectionsOpen, (open) => {
           >
             <span class="inline-flex min-w-0 items-center gap-2">
               <UIcon name="i-lucide-tags" class="size-4 shrink-0" />
-              <span class="truncate">作品分類</span>
+              <span class="truncate">題材</span>
             </span>
             <span class="inline-flex shrink-0 items-center gap-1.5">
               <span v-if="selectedTags.length > 0" class="rounded-full bg-white px-1.5 py-0.5 text-xs font-extrabold shadow-sm">
@@ -797,7 +797,7 @@ watch(mobileCollectionsOpen, (open) => {
             @click="toggleTag(opt.tag)"
           >
             {{ opt.tag }}
-            <span class="opacity-70">{{ opt.count }}</span>
+            <span class="opacity-80">{{ opt.count }}</span>
           </button>
         </div>
       </section>
@@ -805,13 +805,23 @@ watch(mobileCollectionsOpen, (open) => {
       <div v-if="filteredList.length === 0 && routeString(route.query.q).trim() !== ''" class="rounded-xl border border-dashed border-gray-200 p-8 text-center text-gray-500">
         <UIcon name="i-lucide-search-x" class="mx-auto mb-2 size-8 text-gray-300" />
         <p class="text-sm font-medium">找不到符合「{{ routeString(route.query.q).trim() }}」的作品</p>
-        <button type="button" class="mt-3 inline-block text-xs font-semibold text-primary-600 hover:underline" @click="clearAllFilters">清除搜尋</button>
+        <button type="button" class="mt-3 inline-block text-xs font-semibold text-primary-700 hover:underline" @click="clearAllFilters">清除搜尋</button>
       </div>
 
-      <div v-else-if="filteredList.length === 0" class="rounded-xl border border-dashed border-gray-200 p-8 text-center text-gray-500">
-        <UIcon name="i-lucide-inbox" class="mx-auto mb-2 size-8 text-gray-300" />
-        <p class="text-sm font-medium">這裡還沒有作品</p>
-        <NuxtLink to="/" class="mt-3 inline-block text-xs font-semibold text-primary-600 hover:underline">去新番表加入作品</NuxtLink>
+      <div v-else-if="filteredList.length === 0" class="rounded-xl border border-dashed border-gray-200 bg-white p-8 text-center text-gray-600">
+        <UIcon name="i-lucide-inbox" class="mx-auto mb-2 size-8 text-gray-400" />
+        <template v-if="activeFilter === 'all' && !activeCollection">
+          <p class="text-sm font-bold text-gray-900">清單還是空的</p>
+          <p class="mt-1 text-sm leading-6">在新番表或資料庫點作品上的愛心（手機可雙擊卡片），就會加入這裡。</p>
+          <NuxtLink
+            to="/"
+            class="mt-4 inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-primary-700 px-4 text-sm font-bold text-white shadow-sm transition hover:bg-primary-800"
+          >
+            <UIcon name="i-lucide-sparkles" class="size-4" aria-hidden="true" />
+            去新番表挑作品
+          </NuxtLink>
+        </template>
+        <p v-else class="text-sm font-medium">這個範圍目前沒有作品</p>
       </div>
 
       <TransitionGroup v-else tag="div" name="list-item" class="min-w-0 space-y-3">

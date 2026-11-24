@@ -15,11 +15,20 @@ describe('anime grid card status border', () => {
     expect(gridCardSource).toContain(':data-card-status="cardStatus"')
   })
 
-  it('hides intermediate borders until the status mutation finishes', () => {
+  it('hides borders only while personal statuses are still unknown', () => {
     expect(gridCardSource).toContain('if (props.statusPending) return null')
     expect(gridCardSource).toContain(':data-card-status-pending="statusPending || undefined"')
-    expect(seasonalSource).toContain(':status-pending="bootstrapLoading || isStatusPending(anime.id)"')
-    expect(catalogSource).toContain(':status-pending="bootstrapLoading || isStatusPending(anime.id)"')
+    expect(seasonalSource).toContain(':status-pending="bootstrapLoading"')
+    expect(catalogSource).toContain(':status-pending="bootstrapLoading"')
+  })
+
+  it('shows a mutation optimistically instead of waiting for the API', () => {
+    // The mutation already updates statusesByAnimeId before the request and
+    // rolls back on failure; hiding the border while it is in flight made
+    // every heart/watched tap feel delayed by one network round trip.
+    for (const source of [seasonalSource, catalogSource]) {
+      expect(source).not.toContain('isStatusPending(anime.id)')
+    }
   })
 
   it('animates distinct watched and favorite-only borders', () => {

@@ -189,7 +189,7 @@ test('393px seasonal keeps two columns, gesture guidance and uncluttered cards',
   const gestureHint = page.locator('[data-mobile-card-gesture-hint]').first()
   await expect(gestureHint).toBeVisible()
   await expect(gestureHint).toContainText('點兩下收藏')
-  await expect(gestureHint).toContainText('長按設為已觀看')
+  await expect(gestureHint).toContainText('長按設為已看完')
 
   const cardLink = cardLinks.first()
   await expect(cardLink).toHaveAttribute('data-mobile-gesture-card', '')
@@ -429,12 +429,12 @@ test('393px list controls group scope clearly and keep categories collapsed', as
 
   await expect(page.getByText('顯示範圍', { exact: true })).toBeVisible()
   await expect(page.getByRole('button', { name: '全部 1' })).toHaveAttribute('aria-pressed', 'true')
-  await expect(page.getByRole('button', { name: '未觀看 1' })).toBeVisible()
+  await expect(page.getByRole('button', { name: '未看完 1' })).toBeVisible()
   await expect(page.getByRole('button', { name: /收藏分類.*選擇或管理分類/ })).toBeVisible()
   await expect(page.getByRole('heading', { level: 2, name: '搜尋與篩選' })).toBeVisible()
 
   const sort = page.getByRole('combobox', { name: '排序方式' })
-  const categoryTrigger = page.getByRole('button', { name: '作品分類' })
+  const categoryTrigger = page.getByRole('button', { name: '題材' })
   await expectMinimumTarget(sort)
   await expectMinimumTarget(categoryTrigger)
   await expect(categoryTrigger).toHaveAttribute('aria-expanded', 'false')
