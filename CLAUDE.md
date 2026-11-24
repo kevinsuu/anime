@@ -91,7 +91,7 @@ Env vars are split by trust boundary: server-side config (`.env`) vs. `NUXT_PUBL
 
 Production uses Docker images built by GitHub Actions and pushed to GHCR (`ghcr.io/kevinsuu/anime-{backend,scheduler,frontend}`), deployed via `deploy/docker-compose.yml` over SSH. See `deploy/README.md` for host setup and required GitHub secrets.
 
-- Push to any branch → CI only (`~/.github/workflows/ci.yml`): backend tests, frontend build check, docker build dry-run. No deploy.
+- Push to any branch → CI only (`~/.github/workflows/ci.yml`): backend tests, frontend build check, docker build dry-run. No deploy. A `changes` job diffs the push and skips the untouched half (frontend-only → no backend tests/images; backend-only → no frontend build/Playwright/image; docs/Markdown-only → secret scan only); shared files or an unknown diff base run everything.
 - Push a `vX.Y.Z` tag → `~/.github/workflows/deploy.yml` builds+pushes images and SSHes into the deploy host to `docker compose pull && up -d`.
 
 `backend/Dockerfile.production` (PHP-FPM + nginx) and `backend/Dockerfile.scheduler` are separate from the dev `backend/Dockerfile` (`php artisan serve`, not suitable for concurrent production traffic). `backend/.dockerignore` matters here — without it, a stale `bootstrap/cache/packages.php` referencing dev-only packages (e.g. `laravel/pail`) leaks into the build context and crashes `composer dump-autoload --no-dev`.
