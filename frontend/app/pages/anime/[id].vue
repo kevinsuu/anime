@@ -132,15 +132,30 @@ const answerSummary = computed(() => {
   }
   return parts.join('')
 })
-const quickFacts = computed(() => {
+interface QuickFact {
+  label: string
+  value: string
+  to?: { path: string; query: Record<string, string> } | undefined
+}
+// Link each title back to its season chart so crawlers and readers can move
+// from a work to the「YYYY年M月新番」list it belongs to.
+const seasonRoute = computed(() => {
+  const year = anime.value?.seasonYear
+  const season = anime.value?.seasonCode
+  return year && season && season in seasonMonthLabels
+    ? { path: '/', query: { year: String(year), season } }
+    : undefined
+})
+const quickFacts = computed((): QuickFact[] => {
   if (!anime.value) return []
-  return [
-    seasonText.value ? { label: '播出季度', value: seasonText.value } : null,
+  const facts: (QuickFact | null)[] = [
+    seasonText.value ? { label: '播出季度', value: seasonText.value, to: seasonRoute.value } : null,
     anime.value.episodeCount ? { label: '集數', value: `全 ${anime.value.episodeCount} 集` } : null,
     streamingPlatforms.value.length > 0
       ? { label: '觀看平台', value: streamingPlatforms.value.join('、') }
       : null
-  ].filter((fact): fact is { label: string; value: string } => fact !== null)
+  ]
+  return facts.filter((fact): fact is QuickFact => fact !== null)
 })
 const updatedDateText = computed(() => {
   if (!anime.value?.updatedAt) return ''
@@ -400,7 +415,14 @@ useHead({
               <dl v-if="quickFacts.length > 0" class="mt-3 grid gap-2 border-t border-primary-100 pt-3 sm:grid-cols-3">
                 <div v-for="fact in quickFacts" :key="fact.label">
                   <dt class="text-[11px] font-bold text-gray-500">{{ fact.label }}</dt>
-                  <dd class="mt-0.5 text-sm font-medium text-gray-800">{{ fact.value }}</dd>
+                  <dd class="mt-0.5 text-sm font-medium text-gray-800">
+                    <NuxtLink
+                      v-if="fact.to"
+                      :to="fact.to"
+                      class="text-primary-700 underline-offset-2 hover:underline"
+                    >{{ fact.value }}新番</NuxtLink>
+                    <template v-else>{{ fact.value }}</template>
+                  </dd>
                 </div>
               </dl>
             </div>

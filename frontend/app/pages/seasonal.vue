@@ -9,6 +9,13 @@ import type { AnimeSummary } from '../utils/normalize'
 import { isSeasonSelection, seasonMonthLabels, seasonSelection, shiftSeason } from '../utils/season'
 import type { SeasonSelection } from '../utils/season'
 import { serializeJsonLd, SITE_URL } from '../utils/seo'
+import {
+  buildSeasonalFaq,
+  relatedSeasons,
+  seasonHeading,
+  seasonNameLabels,
+  summarizeSeason
+} from '../utils/seasonalSeo'
 
 const props = withDefaults(defineProps<{
   homepage?: boolean
@@ -136,17 +143,39 @@ watch(() => [route.query.year, route.query.season], () => {
 
 const hasExplicitSeasonQuery = computed(() => isSeasonSelection(route.query.year, route.query.season))
 const isBrandHomepage = computed(() => props.homepage && !hasExplicitSeasonQuery.value)
-const seasonalTitle = computed(() => `${seasonalControls.year}年${seasonMonthLabels[seasonalControls.season]}新番表｜動畫新番、動漫庫`)
-const seasonalDescription = computed(() => `${seasonalControls.year}年${seasonMonthLabels[seasonalControls.season]}季動畫新番總覽，追蹤最新動漫新番放送時間、角色資訊與觀看平台。`)
+const seasonLabel = computed(() => `${seasonalControls.year}年${seasonMonthLabels[seasonalControls.season]}`)
+const seasonName = computed(() => seasonNameLabels[seasonalControls.season])
+const seasonalSummary = computed(() => summarizeSeason(seasonal.value, seasonalControls))
+const seasonalFaq = computed(() => buildSeasonalFaq(seasonalControls, seasonalSummary.value))
+// The upcoming season is the furthest one worth linking: its line-up is
+// usually announced a few weeks before it airs.
+const upcomingSeason = shiftSeason(seasonSelection(undefined, undefined), 1)
+const relatedSeasonLinks = computed(() => relatedSeasons(seasonalControls, upcomingSeason).map(selection => ({
+  key: `${selection.year}-${selection.season}`,
+  label: `${seasonHeading(selection)}新番`,
+  to: { path: '/', query: { year: String(selection.year), season: selection.season } }
+})))
+const countText = computed(() => seasonal.value.length > 0 ? `共${seasonal.value.length}部` : '')
+const topGenresText = computed(() => seasonalSummary.value.genres.slice(0, 4).map(item => item.tag).join('、'))
+const seasonalTitle = computed(() => `${seasonLabel.value}新番表（${seasonName.value}新番）${countText.value}｜播出時間與觀看平台－動漫庫`)
+const seasonalDescription = computed(() => [
+  `${seasonHeading(seasonalControls)}動畫新番${seasonal.value.length > 0 ? `共 ${seasonal.value.length} 部` : '總覽'}，`,
+  '整理每週播出時間表、首播日期、題材分類、聲優與觀看平台。',
+  topGenresText.value ? `熱門題材：${topGenresText.value}。` : ''
+].join(''))
 const pageTitle = computed(() => isBrandHomepage.value
-  ? '動漫庫｜動畫新番表、動漫資料庫與追番收藏'
+  ? `動漫庫｜${seasonLabel.value}動漫新番表、動畫資料庫與追番收藏`
   : seasonalTitle.value)
 const pageDescription = computed(() => isBrandHomepage.value
-  ? '動漫庫提供每季動畫新番表、完整動漫資料庫、播出時間、角色聲優資訊與個人追番收藏功能。'
+  ? `動漫庫提供每季動漫新番表：本季${seasonHeading(seasonalControls)}新番${seasonal.value.length > 0 ? `共 ${seasonal.value.length} 部` : ''}，含播出時間、角色聲優、觀看平台，以及完整動漫資料庫與個人追番收藏。`
   : seasonalDescription.value)
 const canonicalUrl = computed(() => hasExplicitSeasonQuery.value
   ? `${SITE_URL}/?year=${seasonalControls.year}&season=${seasonalControls.season}`
   : `${SITE_URL}/`)
+// A season with no announced titles yet is a thin page; keep it crawlable but
+// unindexed. Only decide this from a successful response so a transient API
+// error never tells search engines to drop the page.
+const isIndexableSeason = computed(() => Boolean(fetchError.value) || loading.value || seasonal.value.length > 0)
 const seasonalStructuredData = computed(() => {
   const pageId = `${canonicalUrl.value}#page`
   const itemListId = `${canonicalUrl.value}#anime-list`
@@ -164,10 +193,22 @@ const seasonalStructuredData = computed(() => {
         isPartOf: { '@id': `${SITE_URL}/#website` },
         mainEntity: { '@id': itemListId }
       },
+      ...(seasonalFaq.value.length > 0
+        ? [{
+            '@type': 'FAQPage',
+            '@id': `${canonicalUrl.value}#faq`,
+            inLanguage: 'zh-Hant',
+            mainEntity: seasonalFaq.value.map(item => ({
+              '@type': 'Question',
+              name: item.question,
+              acceptedAnswer: { '@type': 'Answer', text: item.answer }
+            }))
+          }]
+        : []),
       {
         '@type': 'ItemList',
         '@id': itemListId,
-        name: `${seasonalControls.year}年${seasonMonthLabels[seasonalControls.season]}新番表`,
+        name: `${seasonHeading(seasonalControls)}新番表`,
         numberOfItems: seasonal.value.length,
         itemListElement: seasonal.value.map((item, index) => ({
           '@type': 'ListItem',
@@ -186,7 +227,8 @@ useSeoMeta({
   ogTitle: () => pageTitle.value,
   ogDescription: () => pageDescription.value,
   ogSiteName: '動漫庫',
-  ogType: 'website'
+  ogType: 'website',
+  robots: () => isIndexableSeason.value ? 'index, follow' : 'noindex, follow'
 })
 useHead({
   link: [{ rel: 'canonical', href: () => canonicalUrl.value }],
@@ -206,6 +248,7 @@ useHead({
         <p class="text-xs font-extrabold uppercase tracking-widest text-primary-700">新番表</p>
         <h1 class="text-xl font-extrabold tracking-tight text-gray-950 md:text-2xl">
           {{ seasonalControls.year }}年 {{ seasonMonthLabels[seasonalControls.season] }} 新番表
+          <span class="text-base font-bold text-gray-500 md:text-lg">（{{ seasonName }}）</span>
         </h1>
       </div>
       <!-- Season prev/next arrows -->
@@ -384,6 +427,39 @@ useHead({
         </template>
       </AnimeVirtualGrid>
     </template>
+
+    <!-- Answer-first season overview for search and answer engines. It sits
+         below the grid so the browsing UI stays compact, and every sentence is
+         derived from the listed titles (mirrored by the FAQPage JSON-LD). -->
+    <section
+      v-if="!loading && seasonalFaq.length > 0"
+      aria-labelledby="seasonal-answer-title"
+      class="space-y-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm md:p-5"
+    >
+      <h2 id="seasonal-answer-title" class="text-base font-extrabold text-gray-950 md:text-lg">
+        {{ seasonHeading(seasonalControls) }}新番總覽
+      </h2>
+      <dl class="space-y-3">
+        <div v-for="item in seasonalFaq" :key="item.question">
+          <dt class="text-sm font-bold text-gray-900">{{ item.question }}</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-600">{{ item.answer }}</dd>
+        </div>
+      </dl>
+    </section>
+
+    <nav aria-label="其他季度新番" class="flex flex-wrap gap-x-4 gap-y-2 text-sm">
+      <NuxtLink
+        v-for="link in relatedSeasonLinks"
+        :key="link.key"
+        :to="link.to"
+        class="font-semibold text-primary-700 underline-offset-2 hover:underline"
+      >
+        {{ link.label }}
+      </NuxtLink>
+      <NuxtLink to="/catalog" class="font-semibold text-primary-700 underline-offset-2 hover:underline">
+        動漫資料庫
+      </NuxtLink>
+    </nav>
 
     <SeasonalFilterPanel
       v-model:open="filterPanelOpen"

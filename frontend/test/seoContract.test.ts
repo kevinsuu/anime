@@ -18,7 +18,7 @@ describe('site identity SEO contract', () => {
     expect(indexSource).toContain('url: `${SITE_URL}/`')
     expect(indexSource).toContain('<SeasonalPage homepage />')
     expect(indexSource).not.toContain('查找每季新番播出時間')
-    expect(seasonalSource).toContain("'動漫庫｜動畫新番表、動漫資料庫與追番收藏'")
+    expect(seasonalSource).toContain('`動漫庫｜${seasonLabel.value}動漫新番表、動畫資料庫與追番收藏`')
     expect(seasonalSource).toContain(': `${SITE_URL}/`)')
     expect(seasonalSource).toContain('<h1 class="text-xl')
   })
@@ -67,6 +67,9 @@ describe('site identity SEO contract', () => {
     const animeSource = readSource('app/pages/anime/[id].vue')
 
     expect(seasonalSource).toContain("'@type': 'ItemList'")
+    expect(seasonalSource).toContain("'@type': 'FAQPage'")
+    expect(seasonalSource).toContain('seasonal-answer-title')
+    expect(seasonalSource).toContain("robots: () => isIndexableSeason.value ? 'index, follow' : 'noindex, follow'")
     expect(catalogSource).toContain('catalog-answer-title')
     expect(catalogSource).toContain("'noindex, follow'")
     expect(animeSource).toContain('anime-answer-title')
@@ -91,6 +94,8 @@ describe('site identity SEO contract', () => {
     expect(sitemapSource).toContain('description: string | null')
     expect(sitemapSource).toContain('updated_at: string | null')
     expect(sitemapSource).toContain('lastmod: item.updated_at || item.air_date || undefined')
+    expect(sitemapSource).toContain('const lastYear = new Date().getFullYear() + 1')
+    expect(sitemapSource).toContain('seasonLastmod')
   })
 
   it('only grants indexing signals to detail pages with a substantive synopsis', () => {
