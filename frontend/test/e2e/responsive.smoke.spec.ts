@@ -399,6 +399,28 @@ test('authenticated cards accept the first double tap while bootstrap syncs', as
   await expect(page.locator('li[data-slot="base"]')).toContainText('已加入收藏')
 })
 
+test('hovering a card prefetches its detail once and the detail page reuses it', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1024 })
+  await openReadyPage(page, '/seasonal?year=2026&season=summer', 'cards')
+
+  // The mock API serves detail data for this title only; pin the card by its
+  // link because the virtual scroller may reorder item views.
+  const detailPath = '/anime/2320'
+  const firstCard = page.locator(`[data-mobile-gesture-card][href="${detailPath}"]`)
+  const detailRequests: string[] = []
+  page.on('request', (request) => {
+    if (new URL(request.url()).pathname.endsWith(`/public${detailPath}`)) detailRequests.push(request.url())
+  })
+
+  await firstCard.hover()
+  await expect.poll(() => detailRequests.length).toBe(1)
+
+  await firstCard.click()
+  await expect(page).toHaveURL(new RegExp(`${detailPath}$`), { timeout: 2000 })
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+  expect(detailRequests).toHaveLength(1)
+})
+
 test('desktop card pointer detection maps click, double click and hold correctly', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1024 })
   await openReadyPage(page, '/seasonal?year=2026&season=summer', 'cards')

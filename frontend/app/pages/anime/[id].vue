@@ -9,6 +9,7 @@ import { serializeJsonLd, SITE_URL } from '../../utils/seo'
 const route = useRoute()
 const router = useRouter()
 const api = useApi()
+const { takeAnimeDetail } = useAnimeDetailPrefetch()
 const { isAuthed } = useSession()
 const toast = useToast()
 const animeId = Number(route.params.id)
@@ -19,7 +20,8 @@ if (!Number.isInteger(animeId) || animeId <= 0) {
 
 const { data: anime, pending: loading, error: fetchError } = await useAsyncData(
   `anime-${route.params.id}`,
-  async () => normalizeAnime((await api.getAnime(animeId)).item)
+  // Reuse the request the card started on press/hover when there is one.
+  async () => normalizeAnime((await (takeAnimeDetail(animeId) ?? api.getAnime(animeId))).item)
 )
 
 if (fetchError.value?.statusCode === 404 || fetchError.value?.status === 404) {
