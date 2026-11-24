@@ -279,6 +279,32 @@ async function dispatchTouchTap(locator: Locator) {
   })
 }
 
+// Sends both taps from inside the page so CI latency between two Playwright
+// round trips can never stretch the gap past MOBILE_CARD_DOUBLE_TAP_DELAY_MS
+// (320ms) and turn the first tap into a navigating single tap.
+async function dispatchTouchDoubleTap(locator: Locator, gapMs = 80) {
+  await locator.evaluate(async (element, gap) => {
+    const pointer = {
+      bubbles: true,
+      cancelable: true,
+      clientX: 40,
+      clientY: 40,
+      isPrimary: true,
+      pointerId: 1,
+      pointerType: 'touch'
+    }
+    const tap = () => {
+      element.dispatchEvent(new PointerEvent('pointerdown', pointer))
+      element.dispatchEvent(new PointerEvent('pointerup', pointer))
+      element.dispatchEvent(new PointerEvent('pointerleave', pointer))
+      element.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, detail: 1 }))
+    }
+    tap()
+    await new Promise(resolve => setTimeout(resolve, gap))
+    tap()
+  }, gapMs)
+}
+
 test('393px card gestures map single tap, double tap and long press correctly', async ({ page }) => {
   await page.setViewportSize(mobileViewport)
   await openReadyPage(page, '/seasonal?year=2026&season=summer', 'cards')
@@ -356,17 +382,17 @@ test('authenticated cards accept the first double tap while bootstrap syncs', as
   await page.goto('/seasonal?year=2026&season=summer', { waitUntil: 'domcontentloaded' })
   await expect.poll(() => bootstrapRequested).toBe(true)
   await expect(page.locator('[data-anime-card-grid-loading]')).toHaveCount(0)
-  // ClientOnly replaces its SSR fallback with the virtual grid on the next
-  // render tick. Wait for that replacement before retaining a card locator;
-  // otherwise dispatchEvent can keep waiting on a detached fallback node.
+  // ClientOnly replaces its SSR fallback with the virtual grid after
+  // hydration. Target a card inside the virtual grid so the taps reach the
+  // hydrated component (with gesture listeners), not the inert SSR fallback.
   await settleLayout(page)
-  const firstCard = page.locator('[data-mobile-gesture-card]').first()
+  const firstCard = page.locator('.vue-recycle-scroller__item-view [data-mobile-gesture-card]').first()
   await expect(firstCard).toBeVisible()
+  await settleLayout(page)
 
   // Personal status sync is intentionally non-blocking: card actions remain
   // usable while bootstrap is held by the test server.
-  await dispatchTouchTap(firstCard)
-  await dispatchTouchTap(firstCard)
+  await dispatchTouchDoubleTap(firstCard)
   await expect.poll(() => addToListRequests).toBe(1)
 
   releaseBootstrap()
