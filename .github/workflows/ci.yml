@@ -9,6 +9,68 @@ permissions:
   contents: read
 
 jobs:
+  # Decide which halves of the stack this push/PR touches, so a frontend-only
+  # change does not rerun backend tests or rebuild backend images (and vice
+  # versa). Anything outside frontend/, backend/ and docs runs everything;
+  # when the diff base is unknown (new branch, force push) everything runs too.
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Detect changed areas
+        id: filter
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PUSH_BEFORE: ${{ github.event.before }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          run_all() {
+            echo "$1; running every job."
+            echo "backend=true" >> "$GITHUB_OUTPUT"
+            echo "frontend=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          }
+
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            base="$PR_BASE"
+          else
+            base="$PUSH_BEFORE"
+          fi
+          if [ -z "$base" ] || [ "$base" = "0000000000000000000000000000000000000000" ]; then
+            run_all "No previous commit to compare against"
+          fi
+          if ! changed="$(git diff --name-only "$base" "$HEAD_SHA" 2>/dev/null)"; then
+            run_all "Diff base $base is not in history"
+          fi
+
+          backend=false
+          frontend=false
+          while IFS= read -r path; do
+            [ -z "$path" ] && continue
+            case "$path" in
+              backend/*) backend=true ;;
+              frontend/*) frontend=true ;;
+              docs/*|*.md) ;;
+              *) backend=true; frontend=true ;;
+            esac
+          done <<< "$changed"
+
+          echo "Changed files:"
+          printf '%s\n' "$changed"
+          echo "backend=$backend frontend=$frontend"
+          echo "backend=$backend" >> "$GITHUB_OUTPUT"
+          echo "frontend=$frontend" >> "$GITHUB_OUTPUT"
+
   secret-scan:
     runs-on: ubuntu-latest
     permissions:
@@ -32,6 +94,8 @@ jobs:
         run: gitleaks detect --source . --redact --verbose --log-opts="--all"
 
   backend-test:
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
     runs-on: ubuntu-latest
     env:
       APP_ENV: testing
@@ -54,6 +118,8 @@ jobs:
         run: php artisan test
 
   frontend-build:
+    needs: changes
+    if: needs.changes.outputs.frontend == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
@@ -94,6 +160,8 @@ jobs:
         run: npm run test:e2e:ci
 
   docker-build:
+    needs: changes
+    if: needs.changes.outputs.backend == 'true' || needs.changes.outputs.frontend == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
@@ -103,6 +171,7 @@ jobs:
       - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3.12.0
 
       - name: Build backend image
+        if: needs.changes.outputs.backend == 'true'
         uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6.19.2
         with:
           context: backend
@@ -113,6 +182,7 @@ jobs:
           cache-to: type=gha,mode=max,scope=backend
 
       - name: Build scheduler image
+        if: needs.changes.outputs.backend == 'true'
         uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6.19.2
         with:
           context: backend
@@ -123,6 +193,7 @@ jobs:
           cache-to: type=gha,mode=max,scope=scheduler
 
       - name: Build frontend image
+        if: needs.changes.outputs.frontend == 'true'
         uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6.19.2
         with:
           context: frontend

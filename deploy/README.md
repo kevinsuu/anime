@@ -45,7 +45,7 @@ Bangumi API ─────→ scheduler ──→ 集數資料補充
 
 ## 部署概覽
 
-- 推送至任何分支：只執行 CI（後端測試、前端建置檢查、Docker 映像檔建置檢查），不會部署。
+- 推送至任何分支：只執行 CI，不會部署。CI 會先比對這次推送的變動路徑：只改 `frontend/` 時跳過後端測試與 backend/scheduler 映像建置；只改 `backend/` 時跳過前端建置、Playwright 與 frontend 映像建置；只改 `docs/` 或 Markdown 時只執行金鑰掃描；改到其他共用檔案（`.github/`、`docker-compose.yml`、`deploy/` 等）或無法判斷比對基準（新分支、force push）時全部執行。金鑰掃描每次都會執行。
 - 執行 `git tag vX.Y.Z && git push origin vX.Y.Z`：建置三個映像檔並推送至 GHCR，接著透過 SSH 連線至部署主機，依序拉取映像檔（失敗時最多重試五次）並執行 `docker compose up -d`。
 
 GitHub Actions 的 SSH 部署命令上限為 60 分鐘，包含 Docker 映像拉取重試、容器啟動與映像清理；若仍超時，應先檢查部署主機的磁碟空間與 GHCR 網路連線。
