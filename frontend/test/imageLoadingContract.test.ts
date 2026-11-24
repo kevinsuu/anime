@@ -5,7 +5,6 @@ import {
   HIGH_PRIORITY_IMAGE_COUNT,
   IMAGE_PRELOAD_DISTANCE_PX,
   INITIAL_EAGER_IMAGE_COUNT,
-  INITIAL_IMAGE_GATE_COUNT,
   VIRTUAL_RENDER_BUFFER_PX
 } from '../app/composables/useLazyLoad'
 
@@ -30,12 +29,9 @@ describe('anime image loading contract', () => {
   it('starts the first two desktop rows during SSR while prioritizing only the LCP candidate', () => {
     expect(HIGH_PRIORITY_IMAGE_COUNT).toBe(1)
     expect(INITIAL_EAGER_IMAGE_COUNT).toBe(10)
-    expect(INITIAL_IMAGE_GATE_COUNT).toBe(4)
     expect(gridCardSource).toContain(":loading=\"shouldLoad ? 'eager' : 'lazy'\"")
     expect(gridCardSource).toContain(":fetchpriority=\"highPriority ? 'high' : shouldLoad ? 'auto' : 'low'\"")
     expect(gridCardSource).toContain('decoding="async"')
-    expect(gridCardSource).toContain('imageReady: [animeId: number]')
-    expect(gridCardSource).toContain("emit('imageReady', props.anime.id)")
   })
 
   it('keeps the full result list in the SSR fallback for crawlers', () => {
@@ -59,11 +55,15 @@ describe('anime image loading contract', () => {
     expect(gridCardSource).toContain('group-focus-within/card:opacity-100')
   })
 
-  it('keeps the first screen as skeleton-or-complete instead of exposing half-loaded cards', () => {
+  it('reveals covers progressively instead of hiding the grid behind a page-level gate', () => {
     for (const source of [seasonalSource, catalogSource]) {
-      expect(source).toContain('data-anime-image-gate')
-      expect(source).toContain('@image-ready="onInitialImageReady"')
-      expect(source).toContain(":class=\"initialImagesReady ? undefined : 'invisible'\"")
+      expect(source).not.toContain('data-anime-image-gate')
+      expect(source).not.toContain('initialImagesReady')
+      expect(source).not.toContain("'invisible'")
     }
+    // Each card keeps its own placeholder under the image while it loads.
+    expect(gridCardSource).toContain('data-imgph')
+    expect(gridCardSource).toContain("const imageLoaded = ref(props.eagerLoad)")
+    expect(gridCardSource).not.toContain('imageReady')
   })
 })

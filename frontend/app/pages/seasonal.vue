@@ -2,8 +2,7 @@
 import { weekdayTabs, useSeasonalCatalog, deriveFilterOptions } from '../composables/useSeasonalCatalog'
 import {
   HIGH_PRIORITY_IMAGE_COUNT,
-  INITIAL_EAGER_IMAGE_COUNT,
-  INITIAL_IMAGE_GATE_COUNT
+  INITIAL_EAGER_IMAGE_COUNT
 } from '../composables/useLazyLoad'
 import { normalizeAnimeSummary, tagColor } from '../utils/normalize'
 import type { AnimeSummary } from '../utils/normalize'
@@ -106,17 +105,6 @@ const filterPanelOpen = ref(false)
 const activePopoverAnimeId = ref<number | null>(null)
 
 const filteredSeasonal = computed(() => filterSeasonal(seasonal.value, statusesByAnimeId))
-const initialImageIds = computed(() => filteredSeasonal.value
-  .slice(0, INITIAL_IMAGE_GATE_COUNT)
-  .map(anime => anime.id))
-const readyInitialImageIds = reactive(new Set<number>())
-const initialImagesReady = computed(() => initialImageIds.value.length === 0
-  || initialImageIds.value.every(id => readyInitialImageIds.has(id)))
-
-function onInitialImageReady(animeId: number) {
-  readyInitialImageIds.add(animeId)
-}
-
 // Active filter chips to display inline
 const activeChips = computed(() => {
   const chips: { label: string; clear: () => void; genre?: boolean }[] = []
@@ -363,55 +351,38 @@ useHead({
         @retry="retryCardStatuses"
       />
 
+      <!-- No page-level image gate: like other image-heavy grids, each card owns
+           its placeholder and covers appear progressively as they arrive, so the
+           SSR-rendered covers paint before hydration instead of waiting for the
+           slowest first-screen request. -->
       <div v-if="filteredSeasonal.length === 0" class="rounded-xl border border-dashed border-gray-200 p-8 text-center text-gray-500">
         <UIcon name="i-lucide-calendar-x" class="mx-auto mb-2 size-8 text-gray-300" />
         <p class="text-sm font-medium">這個篩選條件目前沒有資料</p>
         <p class="mt-1 text-xs text-gray-400">試試切換星期或清除篩選條件</p>
       </div>
 
-      <div v-else class="relative" :aria-busy="!initialImagesReady">
-        <div
-          v-if="!initialImagesReady"
-          data-anime-image-gate
-          class="pointer-events-none absolute inset-0 z-30 overflow-hidden bg-gray-50/95"
-          role="status"
-          aria-label="正在載入首屏圖片"
-        >
-          <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5 md:gap-3">
-            <div
-              v-for="index in INITIAL_EAGER_IMAGE_COUNT"
-              :key="index"
-              class="aspect-3/4 w-full animate-pulse rounded-lg bg-gray-200"
-            />
-          </div>
-        </div>
-
-        <div :class="initialImagesReady ? undefined : 'invisible'" :aria-hidden="!initialImagesReady">
-          <AnimeVirtualGrid :items="filteredSeasonal">
-            <template #default="{ item: anime, index }">
-              <AnimeGridCard
-                :key="anime.id"
-                :anime="anime"
-                :in-list="isInList(anime.id)"
-                :watched="isWatched(anime.id)"
-                :status-pending="bootstrapLoading || isStatusPending(anime.id)"
-                :status="statusesByAnimeId.get(anime.id)"
-                :collections="collections"
-                :popover-open="activePopoverAnimeId === anime.id"
-                :eager-load="index < INITIAL_EAGER_IMAGE_COUNT"
-                :high-priority="index < HIGH_PRIORITY_IMAGE_COUNT"
-                :show-actions="!bootstrapError"
-                @add-to-list="toggleAnimeInList"
-                @mark-watched="markWatched"
-                @toggle-collection="(col) => toggleCollection(anime.id, col)"
-                @open-popover="activePopoverAnimeId = anime.id"
-                @close-popover="activePopoverAnimeId = null"
-                @image-ready="onInitialImageReady"
-              />
-            </template>
-          </AnimeVirtualGrid>
-        </div>
-      </div>
+      <AnimeVirtualGrid v-else :items="filteredSeasonal">
+        <template #default="{ item: anime, index }">
+          <AnimeGridCard
+            :key="anime.id"
+            :anime="anime"
+            :in-list="isInList(anime.id)"
+            :watched="isWatched(anime.id)"
+            :status-pending="bootstrapLoading || isStatusPending(anime.id)"
+            :status="statusesByAnimeId.get(anime.id)"
+            :collections="collections"
+            :popover-open="activePopoverAnimeId === anime.id"
+            :eager-load="index < INITIAL_EAGER_IMAGE_COUNT"
+            :high-priority="index < HIGH_PRIORITY_IMAGE_COUNT"
+            :show-actions="!bootstrapError"
+            @add-to-list="toggleAnimeInList"
+            @mark-watched="markWatched"
+            @toggle-collection="(col) => toggleCollection(anime.id, col)"
+            @open-popover="activePopoverAnimeId = anime.id"
+            @close-popover="activePopoverAnimeId = null"
+          />
+        </template>
+      </AnimeVirtualGrid>
     </template>
 
     <SeasonalFilterPanel
