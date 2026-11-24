@@ -125,6 +125,25 @@ git push --tags
 
 後端啟動腳本會在啟動 PHP-FPM 與 nginx 前執行 `php artisan migrate --force` 和 `php artisan storage:link --force`。資料庫 migration 只有這一個執行來源，首次部署後不需要另外手動執行資料庫設定。
 
+## Cloudflare 快取與監控
+
+應用程式已送出正確的快取標頭，下列設定需在 Cloudflare 後台完成（皆為免費方案可用）：
+
+| 位置 | 設定 | 目的 |
+|---|---|---|
+| Caching → Cache Rules | `URI Path` 開頭為 `/api/anime` 且 Method 為 `GET` → **Eligible for cache**，Edge TTL「Use cache-control header if present」 | 作品資料 API 回應 `public, s-maxage=300`；Cloudflare 預設不快取 JSON，需此規則 |
+| Caching → Cache Rules | 主機名稱為本站，且 `URI Path` 不以 `/api/`、`/list`、`/settings`、`/login`、`/_nuxt/` 開頭 → **Eligible for cache**，Edge TTL 依來源標頭 | 公開頁面 HTML 回應 `s-maxage=300`，邊緣快取可省去回原站的時間 |
+| Caching → Configuration | Browser Cache TTL → **Respect Existing Headers** | 讓 `/_nuxt/*` 的一年快取生效 |
+| Analytics & Logs → Web Analytics | 為本站開啟（Automatic setup） | 收集真實使用者的 Core Web Vitals（LCP、INP、CLS） |
+
+### 前端錯誤紀錄
+
+瀏覽器發生未處理的 JavaScript 錯誤時，會匿名送到 `POST /client-errors`（每個 IP 每分鐘 10 筆、每次頁面載入最多 5 筆），寫入 `storage/logs/client-errors-YYYY-MM-DD.log`，保留 30 天。`backend-logs` volume 讓紀錄在重新部署後仍保留。
+
+```
+docker compose exec backend sh -c 'tail -n 50 storage/logs/client-errors-*.log'
+```
+
 ## 回滾
 
 編輯主機上的 `.env`，將三個 `*_IMAGE` 變數改回先前版本的 tag，接著執行：
