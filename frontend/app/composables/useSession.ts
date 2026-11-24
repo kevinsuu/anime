@@ -1,4 +1,4 @@
-import { computed, reactive } from 'vue'
+import { computed, reactive, readonly, ref } from 'vue'
 import type { ApiUser } from '../types/api'
 
 const SESSION_KEY = 'animeTrackerSession'
@@ -44,6 +44,17 @@ const session = reactive({
 })
 
 let hydrated = false
+
+// The server cannot read localStorage, so SSR always renders the signed-out
+// markup. Login-dependent UI must keep matching that markup until hydration
+// finishes; otherwise the header flashes「訪客・登入」for signed-in users and
+// production hydration leaves stale attributes (e.g. nav hrefs to /login).
+// Flipped once by plugins/session-ready.client.ts on app:mounted.
+const sessionReady = ref(false)
+
+export function markSessionReady() {
+  sessionReady.value = true
+}
 
 const isAuthed = computed(() => Boolean(session.token && session.user))
 
@@ -95,6 +106,7 @@ export function useSession() {
   return {
     session,
     isAuthed,
+    isSessionReady: readonly(sessionReady),
     setSession,
     setUser,
     updateTokens,
