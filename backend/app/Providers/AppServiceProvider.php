@@ -61,6 +61,9 @@ class AppServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by($key);
         });
 
+        // Browser error reports: a broken page can loop, so cap each client.
+        RateLimiter::for('client-errors', static fn (Request $request): Limit => Limit::perMinute(10)->by('ip:'.$request->ip()));
+
         $this->assertProductionJwtSecretIsSecure();
 
         $this->app['events']->listen(ArtisanStarting::class, function (): void {

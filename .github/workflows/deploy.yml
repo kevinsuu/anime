@@ -94,6 +94,7 @@ jobs:
           build-args: |
             NUXT_PUBLIC_API_BASE_URL=https://anime.kaistarstudio.me/api
             NUXT_PUBLIC_GOOGLE_CLIENT_ID=${{ secrets.NUXT_PUBLIC_GOOGLE_CLIENT_ID }}
+            NUXT_PUBLIC_APP_VERSION=${{ github.ref_name }}
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ matrix.image }}:${{ github.ref_name }}
             ${{ env.REGISTRY }}/${{ env.IMAGE_OWNER }}/${{ matrix.image }}:latest
