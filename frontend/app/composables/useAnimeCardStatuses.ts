@@ -82,6 +82,11 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
   const pendingWatched = reactive(new Set<number>())
   const pendingCollections = reactive(new Set<string>())
   const pendingListOperations = reactive(new Set<number>())
+  // What the viewer asked for while a request for the same anime was still in
+  // flight. It is shown immediately and applied once that request settles,
+  // instead of the extra tap being silently ignored.
+  const desiredInList = reactive(new Map<number, boolean>())
+  const desiredWatched = reactive(new Map<number, boolean>())
 
   let loadedKey = ''
   let loadingKey = ''
@@ -113,6 +118,8 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
     pendingWatched.clear()
     pendingCollections.clear()
     pendingListOperations.clear()
+    desiredInList.clear()
+    desiredWatched.clear()
     lastMutationSequenceByAnimeId.clear()
   }
 
@@ -251,12 +258,41 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
     return [...pendingCollections].some(key => key.startsWith(prefix))
   }
 
-  function isInList(animeId: number): boolean {
+  function baseInList(animeId: number): boolean {
     return statusesByAnimeId.has(animeId) || pendingInList.has(animeId)
   }
 
-  function isWatched(animeId: number): boolean {
+  function baseWatched(animeId: number): boolean {
     return statusesByAnimeId.get(animeId)?.watched ?? pendingWatched.has(animeId)
+  }
+
+  function isInList(animeId: number): boolean {
+    return desiredInList.get(animeId) ?? baseInList(animeId)
+  }
+
+  function isWatched(animeId: number): boolean {
+    if (desiredInList.get(animeId) === false) return false
+    return desiredWatched.get(animeId) ?? baseWatched(animeId)
+  }
+
+  /** Runs the intent queued during the request that just settled, if any. */
+  function applyQueuedIntent(animeId: number) {
+    if (hasPendingStatusMutation(animeId)) return
+
+    const wantInList = desiredInList.get(animeId)
+    if (wantInList !== undefined) {
+      desiredInList.delete(animeId)
+      if (wantInList !== baseInList(animeId)) {
+        void toggleAnimeInList(animeId)
+        return
+      }
+    }
+
+    const wantWatched = desiredWatched.get(animeId)
+    if (wantWatched !== undefined) {
+      desiredWatched.delete(animeId)
+      if (wantWatched !== baseWatched(animeId)) void markWatched(animeId)
+    }
   }
 
   function isStatusPending(animeId: number): boolean {
@@ -266,7 +302,10 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
   async function toggleAnimeInList(animeId: number) {
     if (!isAuthed.value) return navigateTo('/login')
     if (bootstrapError.value || !scopedAnimeIds.has(animeId)) return
-    if (pendingListOperations.has(animeId) || pendingWatched.has(animeId) || hasPendingCollectionOperation(animeId)) return
+    if (hasPendingStatusMutation(animeId)) {
+      desiredInList.set(animeId, !isInList(animeId))
+      return
+    }
 
     const operationKey = `list:${animeId}`
     const operationToken = beginMutation(operationKey, animeId)
@@ -304,6 +343,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
       } finally {
         finishMutation(operationKey, operationToken, () => {
           pendingListOperations.delete(animeId)
+          applyQueuedIntent(animeId)
         })
       }
       return
@@ -327,6 +367,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
       finishMutation(operationKey, operationToken, () => {
         pendingInList.delete(animeId)
         pendingListOperations.delete(animeId)
+        applyQueuedIntent(animeId)
       })
     }
   }
@@ -334,7 +375,10 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
   async function markWatched(animeId: number) {
     if (!isAuthed.value) return navigateTo('/login')
     if (bootstrapError.value || !scopedAnimeIds.has(animeId)) return
-    if (pendingWatched.has(animeId) || pendingListOperations.has(animeId) || hasPendingCollectionOperation(animeId)) return
+    if (hasPendingStatusMutation(animeId)) {
+      desiredWatched.set(animeId, !isWatched(animeId))
+      return
+    }
 
     const operationKey = `watched:${animeId}`
     const operationToken = beginMutation(operationKey, animeId)
@@ -385,6 +429,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
       finishMutation(operationKey, operationToken, () => {
         pendingInList.delete(animeId)
         pendingWatched.delete(animeId)
+        applyQueuedIntent(animeId)
       })
     }
   }
@@ -442,6 +487,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
     } finally {
       finishMutation(operationKey, operationToken, () => {
         pendingCollections.delete(pendingKey)
+        applyQueuedIntent(animeId)
       })
     }
   }

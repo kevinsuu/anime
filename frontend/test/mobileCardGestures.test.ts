@@ -92,6 +92,57 @@ describe('mobile card gestures', () => {
     expect(callbacks.haptic).toHaveBeenCalledOnce()
   })
 
+  it('measures the double-tap gap from when the finger tapped, not when the handler ran', () => {
+    // Right after an action the phone is busy (toast, re-render, request), so
+    // the second click can be dispatched late. Its event timestamp still says
+    // when the tap actually happened.
+    const { callbacks, handlers } = setup()
+    handlers.onPointerDown(pointerEvent())
+    handlers.onPointerUp()
+    handlers.onClick({ ...clickEvent(), timeStamp: 1000 } as unknown as MouseEvent)
+    vi.advanceTimersByTime(MOBILE_CARD_DOUBLE_TAP_DELAY_MS - 20)
+    handlers.onPointerDown(pointerEvent())
+    handlers.onPointerUp()
+    // Handler runs late; the tap itself was only 200ms after the first one.
+    vi.setSystemTime(Date.now() + 400)
+    handlers.onClick({ ...clickEvent(), timeStamp: 1200 } as unknown as MouseEvent)
+    vi.runAllTimers()
+
+    expect(callbacks.onDoubleTap).toHaveBeenCalledOnce()
+    expect(callbacks.onNavigate).not.toHaveBeenCalled()
+  })
+
+  it('holds the pending navigation once a second press starts, even if its click is late', () => {
+    const { callbacks, handlers } = setup()
+    handlers.onPointerDown(pointerEvent())
+    handlers.onPointerUp()
+    handlers.onClick(clickEvent())
+    vi.advanceTimersByTime(150)
+    handlers.onPointerDown(pointerEvent())
+    handlers.onPointerUp()
+    // The single-tap timer would have fired by now if it were still armed.
+    vi.advanceTimersByTime(MOBILE_CARD_DOUBLE_TAP_DELAY_MS)
+    expect(callbacks.onNavigate).not.toHaveBeenCalled()
+    handlers.onClick({ ...clickEvent(), timeStamp: 0 } as unknown as MouseEvent)
+    vi.runAllTimers()
+
+    expect(callbacks.onDoubleTap).toHaveBeenCalledOnce()
+    expect(callbacks.onNavigate).not.toHaveBeenCalled()
+  })
+
+  it('drops the first tap navigation when the second press turns into a scroll', () => {
+    const { callbacks, handlers } = setup()
+    tap(handlers)
+    vi.advanceTimersByTime(100)
+    handlers.onPointerDown(pointerEvent())
+    handlers.onPointerMove(pointerEvent({ clientY: 200 }))
+    handlers.onPointerCancel()
+    vi.runAllTimers()
+
+    expect(callbacks.onNavigate).not.toHaveBeenCalled()
+    expect(callbacks.onDoubleTap).not.toHaveBeenCalled()
+  })
+
   it('treats the platform long-press contextmenu as watched before the timer fires', () => {
     // Android Chrome fires contextmenu (≈400–500ms) before our timer; if the
     // browser then starts its own drag it sends pointercancel and the timer

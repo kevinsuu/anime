@@ -222,7 +222,8 @@ describe('useAnimeCardStatuses', () => {
     await vi.waitFor(() => expect(api.meBootstrap).toHaveBeenCalledTimes(2))
     await vi.waitFor(() => expect(state.bootstrapLoading.value).toBe(false))
 
-    await state.toggleAnimeInList(1)
+    // The stale bootstrap snapshot must not drop the in-flight optimistic add.
+    expect(state.isInList(1)).toBe(true)
     expect(api.addToList).toHaveBeenCalledOnce()
     expect(state.pendingInList.has(1)).toBe(true)
 
@@ -313,6 +314,81 @@ describe('useAnimeCardStatuses', () => {
 
     expect(state.statusesByAnimeId.get(2)?.watched).toBe(true)
     expect(state.isStatusPending(2)).toBe(false)
+  })
+
+  it('undoes a favorite tapped again while the add request is still in flight', async () => {
+    const created = deferred<any>()
+    api.addToList.mockReturnValue(created.promise)
+    api.deleteListItem.mockResolvedValue({ ok: true })
+    const state = useAnimeCardStatuses(ref([2]))
+    await vi.waitFor(() => expect(state.bootstrapLoading.value).toBe(false))
+
+    void state.toggleAnimeInList(2)
+    expect(state.isInList(2)).toBe(true)
+    void state.toggleAnimeInList(2)
+    // The second tap shows immediately instead of being ignored.
+    expect(state.isInList(2)).toBe(false)
+
+    created.resolve({ item: { id: 22, watched: false, collections: [] } })
+    await vi.waitFor(() => expect(api.deleteListItem).toHaveBeenCalledWith(22))
+    await vi.waitFor(() => expect(state.isStatusPending(2)).toBe(false))
+    expect(state.isInList(2)).toBe(false)
+    expect(api.addToList).toHaveBeenCalledOnce()
+  })
+
+  it('an even number of extra taps while in flight leaves the first result alone', async () => {
+    const created = deferred<any>()
+    api.addToList.mockReturnValue(created.promise)
+    const state = useAnimeCardStatuses(ref([2]))
+    await vi.waitFor(() => expect(state.bootstrapLoading.value).toBe(false))
+
+    void state.toggleAnimeInList(2)
+    void state.toggleAnimeInList(2)
+    void state.toggleAnimeInList(2)
+    expect(state.isInList(2)).toBe(true)
+
+    created.resolve({ item: { id: 22, watched: false, collections: [] } })
+    await vi.waitFor(() => expect(state.isStatusPending(2)).toBe(false))
+    expect(state.isInList(2)).toBe(true)
+    expect(api.deleteListItem).not.toHaveBeenCalled()
+  })
+
+  it('does not undo after a failed add when the queued intent already matches', async () => {
+    const created = deferred<any>()
+    api.addToList.mockReturnValue(created.promise)
+    const state = useAnimeCardStatuses(ref([2]))
+    await vi.waitFor(() => expect(state.bootstrapLoading.value).toBe(false))
+
+    void state.toggleAnimeInList(2)
+    void state.toggleAnimeInList(2)
+    created.reject(new Error('offline'))
+
+    await vi.waitFor(() => expect(state.isStatusPending(2)).toBe(false))
+    expect(state.isInList(2)).toBe(false)
+    expect(api.deleteListItem).not.toHaveBeenCalled()
+    expect(api.addToList).toHaveBeenCalledOnce()
+  })
+
+  it('undoes watched tapped again while the watched request is in flight', async () => {
+    api.meBootstrap.mockResolvedValue({
+      user: { id: 1 },
+      statuses: [{ anime_id: 2, list_item_id: 22, watched: false, collection_ids: [] }],
+      collections: []
+    })
+    const updated = deferred<any>()
+    api.updateListItem.mockReturnValueOnce(updated.promise).mockResolvedValueOnce({ item: { id: 22, watched: false, collections: [] } })
+    const state = useAnimeCardStatuses(ref([2]))
+    await vi.waitFor(() => expect(state.isInList(2)).toBe(true))
+
+    void state.markWatched(2)
+    expect(state.isWatched(2)).toBe(true)
+    void state.markWatched(2)
+    expect(state.isWatched(2)).toBe(false)
+
+    updated.resolve({ item: { id: 22, watched: true, collections: [] } })
+    await vi.waitFor(() => expect(api.updateListItem).toHaveBeenLastCalledWith(22, { watched: false }))
+    await vi.waitFor(() => expect(state.isStatusPending(2)).toBe(false))
+    expect(state.isWatched(2)).toBe(false)
   })
 
   it('locks duplicate collection mutations while keeping the optimistic state', async () => {
