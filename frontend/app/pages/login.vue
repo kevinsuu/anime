@@ -153,7 +153,7 @@ onUnmounted(() => {
         <h1 class="mt-5 text-[26px] font-extrabold leading-tight tracking-tight text-gray-950">
           歡迎回來，繼續你的追番之旅
         </h1>
-        <p class="mt-2 text-sm text-gray-500">登入動漫庫，同步你的收藏與進度</p>
+        <p class="mt-2 text-sm text-gray-600">登入動漫庫，同步你的收藏與進度</p>
       </div>
 
       <!-- Sign-in card -->
@@ -178,7 +178,7 @@ onUnmounted(() => {
         </div>
 
         <div v-if="config.public.enableDevLogin" class="mt-4">
-          <div class="mb-4 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-wider text-gray-400">
+          <div class="mb-4 flex items-center gap-3 text-xs font-semibold uppercase tracking-wider text-gray-500">
             <span class="h-px flex-1 bg-gray-200" />
             開發用
             <span class="h-px flex-1 bg-gray-200" />
@@ -188,7 +188,7 @@ onUnmounted(() => {
           </UButton>
         </div>
 
-        <p class="mt-6 text-center text-xs leading-relaxed text-gray-400">
+        <p class="mt-6 text-center text-xs leading-relaxed text-gray-500">
           我們只讀取你的 Google 帳號基本資料換發登入憑證，<br class="hidden sm:inline">不會取得或保存你的 Google 密碼。
         </p>
       </div>

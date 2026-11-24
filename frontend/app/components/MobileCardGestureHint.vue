@@ -1,7 +1,7 @@
 <template>
   <p
     data-mobile-card-gesture-hint
-    class="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] font-semibold leading-none text-gray-500 md:hidden"
+    class="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold leading-none text-gray-500 md:hidden"
     aria-label="手機卡片操作：點兩下收藏，長按設為已觀看"
   >
     <span class="inline-flex items-center gap-1">

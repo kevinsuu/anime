@@ -143,11 +143,11 @@ async function logout() {
 
     <section aria-labelledby="product-philosophy-title" class="grid gap-3 rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:grid-cols-[auto_minmax(0,1fr)] sm:items-center sm:gap-6 sm:px-6">
       <div class="min-w-0">
-        <p class="text-[11px] font-extrabold uppercase tracking-[0.2em] text-primary-700">Anime Library</p>
+        <p class="text-xs font-extrabold uppercase tracking-[0.2em] text-primary-700">Anime Library</p>
         <h2 id="product-philosophy-title" class="mt-1 text-xl font-extrabold tracking-tight text-gray-950">動漫庫</h2>
       </div>
       <div class="border-t border-gray-100 pt-3 sm:border-l sm:border-t-0 sm:py-1 sm:pl-6">
-        <p class="text-xs font-bold tracking-wide text-gray-400">產品理念</p>
+        <p class="text-xs font-bold tracking-wide text-gray-500">產品理念</p>
         <p class="mt-1 text-sm font-medium leading-6 text-gray-600">
           查找每季新番播出時間，瀏覽動畫、角色與聲優資料，收藏下一部想追的作品。
         </p>
@@ -309,7 +309,7 @@ async function logout() {
               <button
                 type="submit"
                 :disabled="sendingFeedback"
-                class="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-primary-600 px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-60 sm:w-auto"
+                class="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-primary-700 px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-60 sm:w-auto"
               >
                 <UIcon v-if="sendingFeedback" name="i-lucide-loader-circle" class="size-4 animate-spin" />
                 <UIcon v-else name="i-lucide-send" class="size-4" />

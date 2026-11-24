@@ -103,7 +103,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
           <NuxtLink :to="`/anime/${item.anime.id}`" no-prefetch class="hover:underline">
             <h3 class="line-clamp-2 text-sm font-bold leading-5 text-gray-950 md:line-clamp-none md:truncate md:text-base md:leading-normal">{{ item.anime.name }}</h3>
           </NuxtLink>
-          <p v-if="item.anime.aliases?.length" class="mt-0.5 hidden truncate text-xs text-gray-400 md:block">
+          <p v-if="item.anime.aliases?.length" class="mt-0.5 hidden truncate text-xs text-gray-500 md:block">
             其他名稱：{{ item.anime.aliases.slice(0,3).join('、') }}
           </p>
         </div>
@@ -141,7 +141,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
         <div v-if="collections.length > 0" class="relative">
           <button
             type="button"
-            class="inline-flex items-center gap-1 rounded-full border border-dashed border-gray-300 px-2.5 py-0.5 text-xs font-semibold text-gray-400 transition hover:border-primary-400 hover:text-primary-600"
+            class="inline-flex items-center gap-1 rounded-full border border-dashed border-gray-300 px-2.5 py-0.5 text-xs font-semibold text-gray-500 transition hover:border-primary-400 hover:text-primary-600"
             @click="colPopoverOpen = !colPopoverOpen"
           >
             <UIcon name="i-lucide-plus" class="size-3" />
@@ -160,7 +160,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
             v-if="colPopoverOpen"
             class="absolute right-0 top-full z-20 mt-1.5 w-52 max-w-[calc(100vw-3rem)] rounded-xl border border-gray-200 bg-white py-1 shadow-lg sm:right-auto sm:left-0"
           >
-            <p class="px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-gray-400">選擇清單</p>
+            <p class="px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-gray-500">選擇清單</p>
             <button
               v-for="col in collections"
               :key="col.id"
@@ -177,12 +177,12 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
                 <UIcon v-if="isInCollection(col)" name="i-lucide-check" class="size-2.5 text-white" />
               </span>
               <span class="truncate font-medium text-gray-900">{{ col.name }}</span>
-              <span class="ml-auto text-xs text-gray-400">{{ col.count }}</span>
+              <span class="ml-auto text-xs text-gray-500">{{ col.count }}</span>
             </button>
             <div class="border-t border-gray-100 mt-1 pt-1 px-3 pb-1">
               <button
                 type="button"
-                class="text-xs text-gray-400 hover:text-gray-700"
+                class="text-xs text-gray-500 hover:text-gray-700"
                 @click="colPopoverOpen = false"
               >
                 關閉
@@ -287,7 +287,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
                       <UIcon v-if="isInCollection(col)" name="i-lucide-check" class="size-3 text-white" />
                     </span>
                     <span class="min-w-0 flex-1 truncate">{{ col.name }}</span>
-                    <span class="shrink-0 text-xs text-gray-400">{{ col.count }}</span>
+                    <span class="shrink-0 text-xs text-gray-500">{{ col.count }}</span>
                   </button>
                 </div>
               </section>
@@ -332,7 +332,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
           <template #footer="{ close }">
             <button
               type="button"
-              class="min-h-11 w-full rounded-lg bg-primary-600 px-4 text-sm font-bold text-white shadow-sm transition active:bg-primary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+              class="min-h-11 w-full rounded-lg bg-primary-700 px-4 text-sm font-bold text-white shadow-sm transition active:bg-primary-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
               @click="close"
             >
               完成

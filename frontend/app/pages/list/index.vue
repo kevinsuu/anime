@@ -393,7 +393,7 @@ watch(mobileCollectionsOpen, (open) => {
     <!-- ── Left: Collections sidebar ── -->
     <aside class="hidden min-w-0 space-y-4 md:block">
       <div class="sticky top-24 min-w-0 space-y-3">
-        <p class="text-xs font-extrabold uppercase tracking-widest text-gray-400">我的清單</p>
+        <p class="text-xs font-extrabold uppercase tracking-widest text-gray-500">我的清單</p>
 
         <!-- Built-in filters -->
         <nav class="space-y-0.5">
@@ -415,7 +415,7 @@ watch(mobileCollectionsOpen, (open) => {
 
         <!-- Divider -->
         <div class="border-t border-gray-100 pt-3">
-          <p class="mb-2 text-xs font-extrabold uppercase tracking-widest text-gray-400">收藏分類</p>
+          <p class="mb-2 text-xs font-extrabold uppercase tracking-widest text-gray-500">收藏分類</p>
 
           <!-- Collection list -->
           <nav class="space-y-0.5">
@@ -466,7 +466,7 @@ watch(mobileCollectionsOpen, (open) => {
             <button
               type="submit"
               :disabled="!newColName.trim() || creatingCol"
-              class="shrink-0 rounded-lg bg-primary-600 px-3 py-1.5 text-sm font-bold text-white transition hover:bg-primary-500 disabled:opacity-40"
+              class="shrink-0 rounded-lg bg-primary-700 px-3 py-1.5 text-sm font-bold text-white transition hover:bg-primary-800 disabled:opacity-40"
             >
               新增
             </button>
@@ -521,7 +521,7 @@ watch(mobileCollectionsOpen, (open) => {
             @click="setFilter(tab.value)"
           >
             <span>{{ tab.mobileLabel }}</span>
-            <span class="text-[11px] opacity-60">
+            <span class="text-xs opacity-80">
               {{ listCounts[tab.value as keyof typeof listCounts] }}
             </span>
           </button>
@@ -555,7 +555,7 @@ watch(mobileCollectionsOpen, (open) => {
                   {{ activeCollection?.name ?? '選擇或管理分類' }}
                 </span>
               </span>
-              <span class="shrink-0 rounded-full bg-white px-2 py-1 text-[11px] font-bold text-gray-500 shadow-sm">
+              <span class="shrink-0 rounded-full bg-white px-2 py-1 text-xs font-bold text-gray-500 shadow-sm">
                 {{ collections.length }} 個
               </span>
               <UIcon name="i-lucide-chevron-up" class="size-4 shrink-0 text-gray-400" />
@@ -581,7 +581,7 @@ watch(mobileCollectionsOpen, (open) => {
                       class="size-4 shrink-0 text-primary-600"
                     />
                     <span class="min-w-0 flex-1 truncate text-sm font-semibold text-gray-900">{{ col.name }}</span>
-                    <span class="shrink-0 text-xs font-bold text-gray-400">{{ col.count }}</span>
+                    <span class="shrink-0 text-xs font-bold text-gray-500">{{ col.count }}</span>
                   </button>
                   <button
                     type="button"
@@ -652,7 +652,7 @@ watch(mobileCollectionsOpen, (open) => {
                   <button
                     type="submit"
                     :disabled="!newColName.trim() || creatingCol"
-                    class="min-h-11 rounded-lg bg-primary-600 px-4 text-sm font-bold text-white transition active:bg-primary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:opacity-40"
+                    class="min-h-11 rounded-lg bg-primary-700 px-4 text-sm font-bold text-white transition active:bg-primary-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:opacity-40"
                   >
                     新增
                   </button>
@@ -664,7 +664,7 @@ watch(mobileCollectionsOpen, (open) => {
           <template #footer="{ close }">
             <button
               type="button"
-              class="min-h-11 w-full rounded-lg bg-primary-600 px-4 text-sm font-bold text-white shadow-sm transition active:bg-primary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+              class="min-h-11 w-full rounded-lg bg-primary-700 px-4 text-sm font-bold text-white shadow-sm transition active:bg-primary-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
               @click="close"
             >
               完成
@@ -711,7 +711,7 @@ watch(mobileCollectionsOpen, (open) => {
             </div>
             <button
               type="submit"
-              class="min-h-11 shrink-0 rounded-xl bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 md:min-h-0 md:rounded-lg"
+              class="min-h-11 shrink-0 rounded-xl bg-primary-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 md:min-h-0 md:rounded-lg"
             >
               搜尋
             </button>
@@ -756,7 +756,7 @@ watch(mobileCollectionsOpen, (open) => {
               <span class="truncate">作品分類</span>
             </span>
             <span class="inline-flex shrink-0 items-center gap-1.5">
-              <span v-if="selectedTags.length > 0" class="rounded-full bg-white px-1.5 py-0.5 text-[11px] font-extrabold shadow-sm">
+              <span v-if="selectedTags.length > 0" class="rounded-full bg-white px-1.5 py-0.5 text-xs font-extrabold shadow-sm">
                 {{ selectedTags.length }}
               </span>
               <UIcon
@@ -789,8 +789,9 @@ watch(mobileCollectionsOpen, (open) => {
             :key="opt.tag"
             type="button"
             class="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold transition"
+            :class="selectedTags.includes(opt.tag) ? 'bg-primary-700 text-white' : undefined"
             :style="selectedTags.includes(opt.tag)
-              ? { backgroundColor: tagColor(opt.tag).text, color: '#fff' }
+              ? {}
               : { backgroundColor: tagColor(opt.tag).bg, color: tagColor(opt.tag).text }"
             :aria-pressed="selectedTags.includes(opt.tag)"
             @click="toggleTag(opt.tag)"

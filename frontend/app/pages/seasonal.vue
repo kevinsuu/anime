@@ -296,7 +296,7 @@ useHead({
           role="tab"
           :aria-selected="filterState.weekday === tab.key"
           :disabled="loading"
-          class="min-h-11 shrink-0 rounded-md px-3 py-1.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:opacity-50 md:min-h-0"
+          class="min-h-11 min-w-fit flex-1 basis-0 rounded-md px-2 py-1.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:opacity-50 md:min-h-0 md:flex-none md:basis-auto md:px-3"
           :class="filterState.weekday === tab.key
             ? 'bg-primary-700 text-white shadow-sm'
             : 'bg-gray-100 text-gray-800 hover:bg-gray-200 hover:text-gray-950'"
@@ -320,7 +320,7 @@ useHead({
           篩選
           <span
             v-if="activeFilterCount > 0"
-            class="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-primary-600 px-1.5 text-[11px] font-bold text-white"
+            class="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-primary-700 px-1.5 text-xs font-bold text-white"
           >{{ activeFilterCount }}</span>
         </button>
       </div>
@@ -340,11 +340,11 @@ useHead({
             :key="item.tag"
             class="rounded border border-transparent px-2.5 py-1 text-xs font-semibold transition-colors"
             :class="filterState.genreTags.includes(item.tag)
-              ? 'border-primary-600 bg-primary-600 text-white'
+              ? 'border-primary-700 bg-primary-700 text-white'
               : 'hover:border-gray-300'"
             :style="filterState.genreTags.includes(item.tag) ? {} : { backgroundColor: tagColor(item.tag).bg, color: tagColor(item.tag).text }"
             @click="toggleGenreTag(item.tag)"
-          >{{ item.tag }}<span class="ml-1 opacity-50">({{ item.count }})</span></button>
+          >{{ item.tag }}<span class="ml-1 opacity-80">({{ item.count }})</span></button>
         </div>
 
         <button
@@ -355,7 +355,7 @@ useHead({
           更多篩選
           <span
             v-if="activeFilterCount > 0"
-            class="inline-flex h-4 w-4 items-center justify-center rounded-full bg-primary-600 text-[10px] font-bold text-white"
+            class="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-primary-700 px-1 text-xs font-bold text-white"
           >{{ activeFilterCount }}</span>
         </button>
       </div>
@@ -373,7 +373,7 @@ useHead({
           {{ chip.label }}
           <UIcon name="i-lucide-x" class="size-3" />
         </button>
-        <button class="shrink-0 text-xs text-gray-400 underline underline-offset-2 hover:text-gray-700" @click="resetFilters()">清除全部</button>
+        <button class="shrink-0 text-xs text-gray-500 underline underline-offset-2 hover:text-gray-700" @click="resetFilters()">清除全部</button>
         <span class="ml-auto text-xs text-gray-500 max-md:hidden">顯示 <strong class="text-gray-900">{{ filteredSeasonal.length }}</strong> / {{ seasonal.length }} 部</span>
       </div>
     </div>
@@ -388,6 +388,10 @@ useHead({
     </div>
 
     <template v-else>
+      <!-- Card titles are h3; this keeps the outline h1 → h2 → h3 for screen
+           readers and heading navigation. -->
+      <h2 class="sr-only">{{ seasonHeading(seasonalControls) }}新番作品列表</h2>
+
       <AnimeCardStatusError
         v-if="bootstrapError"
         :message="bootstrapError"
@@ -401,7 +405,7 @@ useHead({
       <div v-if="filteredSeasonal.length === 0" class="rounded-xl border border-dashed border-gray-200 p-8 text-center text-gray-500">
         <UIcon name="i-lucide-calendar-x" class="mx-auto mb-2 size-8 text-gray-300" />
         <p class="text-sm font-medium">這個篩選條件目前沒有資料</p>
-        <p class="mt-1 text-xs text-gray-400">試試切換星期或清除篩選條件</p>
+        <p class="mt-1 text-xs text-gray-500">試試切換星期或清除篩選條件</p>
       </div>
 
       <AnimeVirtualGrid v-else :items="filteredSeasonal">
@@ -452,11 +456,11 @@ useHead({
         v-for="link in relatedSeasonLinks"
         :key="link.key"
         :to="link.to"
-        class="font-semibold text-primary-700 underline-offset-2 hover:underline"
+        class="inline-flex min-h-6 items-center font-semibold text-primary-700 underline-offset-2 hover:underline"
       >
         {{ link.label }}
       </NuxtLink>
-      <NuxtLink to="/catalog" class="font-semibold text-primary-700 underline-offset-2 hover:underline">
+      <NuxtLink to="/catalog" class="inline-flex min-h-6 items-center font-semibold text-primary-700 underline-offset-2 hover:underline">
         動漫資料庫
       </NuxtLink>
     </nav>

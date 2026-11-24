@@ -181,7 +181,7 @@ test('393px seasonal keeps two columns, gesture guidance and uncluttered cards',
   const metadataStack = firstCardShell.locator('[data-card-meta-stack]')
   const episodeBadge = metadataStack.locator('[data-episode-badge]')
   const streamBadge = metadataStack.locator('[data-stream-badge]')
-  await expect(episodeBadge).toHaveClass(/bg-green-600/)
+  await expect(episodeBadge).toHaveClass(/bg-gray-800/)
   await expect(streamBadge).toHaveClass(/bg-gray-600/)
   const [episodeBox, streamBox] = await Promise.all([dimensions(episodeBadge), dimensions(streamBadge)])
   expect(Math.round(streamBox.y)).toBe(Math.round(episodeBox.y + episodeBox.height))
