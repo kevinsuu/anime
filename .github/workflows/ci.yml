@@ -151,9 +151,10 @@ jobs:
           NUXT_PUBLIC_API_BASE_URL: https://anime.kaistarstudio.me/api
           NUXT_PUBLIC_GOOGLE_CLIENT_ID: ci-placeholder.apps.googleusercontent.com
 
-      - name: Install Playwright Chromium
+      # WebKit runs the same smoke tests as a stand-in for iPhone Safari.
+      - name: Install Playwright browsers (Chromium + WebKit)
         working-directory: frontend
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --with-deps chromium webkit
 
       - name: Run browser smoke tests
         working-directory: frontend

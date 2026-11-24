@@ -23,7 +23,9 @@ async function openReadyPage(page: Page, path: string, ready: 'cards' | 'detail'
     ? page.waitForResponse(response => response.url().includes('/public/anime/tags') && response.ok())
     : null
   const response = await page.goto(path, { waitUntil: 'domcontentloaded' })
-  expect(response?.ok(), `${path} should return a successful document response`).toBe(true)
+  // WebKit revalidates a repeat visit and may get 304 (served from its cache).
+  const status = response?.status() ?? 0
+  expect(response?.ok() || status === 304, `${path} returned ${status}`).toBe(true)
   await expect(page.locator('#main-content')).toBeVisible()
 
   if (ready === 'cards') {
@@ -212,7 +214,11 @@ test('393px seasonal keeps two columns, gesture guidance and uncluttered cards',
 
   const filterTrigger = page.getByRole('button', { name: '篩選', exact: true })
   await expectMinimumTarget(filterTrigger)
-  await filterTrigger.click()
+  // Open from the keyboard: focus return is a keyboard contract, and Safari
+  // does not focus a button on mouse click, so a click would leave nothing to
+  // return focus to.
+  await filterTrigger.focus()
+  await page.keyboard.press('Enter')
 
   const dialog = page.getByRole('dialog')
   await expect(dialog).toBeVisible()
