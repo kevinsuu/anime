@@ -2,6 +2,7 @@
 
 use App\Exceptions\ApiException;
 use App\Http\Middleware\AuthenticateJwt;
+use App\Http\Middleware\PublicCatalogCache;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -20,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(\Illuminate\Http\Middleware\HandleCors::class);
         $middleware->alias([
             'jwt' => AuthenticateJwt::class,
+            'catalog.cache' => PublicCatalogCache::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

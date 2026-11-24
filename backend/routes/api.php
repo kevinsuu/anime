@@ -13,10 +13,13 @@ Route::post('/auth/google', [AuthController::class, 'google']);
 Route::post('/auth/refresh', [AuthController::class, 'refresh']);
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('jwt');
 
-Route::get('/anime', [AnimeController::class, 'index']);
-Route::get('/anime/tags', [AnimeController::class, 'tags']);
-Route::get('/anime/summaries', [AnimeSummaryController::class, 'index']);
-Route::get('/anime/{id}', [AnimeController::class, 'show']);
+// Catalog reads are identical for every visitor, so they may be edge-cached.
+Route::middleware('catalog.cache')->group(function (): void {
+    Route::get('/anime', [AnimeController::class, 'index']);
+    Route::get('/anime/tags', [AnimeController::class, 'tags']);
+    Route::get('/anime/summaries', [AnimeSummaryController::class, 'index']);
+    Route::get('/anime/{id}', [AnimeController::class, 'show']);
+});
 
 Route::middleware('jwt')->group(function (): void {
     Route::get('/me', [AnimeListController::class, 'me']);
