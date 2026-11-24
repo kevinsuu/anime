@@ -3,7 +3,7 @@ export const MOBILE_CARD_LONG_PRESS_DELAY_MS = 550
 const MOBILE_CARD_MOVE_TOLERANCE_PX = 12
 
 type PointerLikeEvent = Pick<PointerEvent, 'button' | 'clientX' | 'clientY' | 'isPrimary' | 'pointerType'>
-type ClickLikeEvent = Pick<MouseEvent, 'preventDefault' | 'stopPropagation'>
+type ClickLikeEvent = Pick<MouseEvent, 'preventDefault' | 'stopPropagation'> & { timeStamp?: number }
 type ContextMenuLikeEvent = Pick<MouseEvent, 'preventDefault'>
 
 interface MobileCardGestureCallbacks {
@@ -27,6 +27,9 @@ export function createMobileCardGestureHandlers(callbacks: MobileCardGestureCall
   let pressX = 0
   let pressY = 0
   let lastTapAt = 0
+  // True when a new press started while the previous tap was still waiting to
+  // navigate: that press is the second half of a double tap.
+  let secondPressStarted = false
   let singleTapTimer: ReturnType<typeof setTimeout> | null = null
   let longPressTimer: ReturnType<typeof setTimeout> | null = null
 
@@ -58,6 +61,10 @@ export function createMobileCardGestureHandlers(callbacks: MobileCardGestureCall
 
     pressX = event.clientX
     pressY = event.clientY
+    // Hold the previous tap's navigation now; this press's click decides
+    // between double tap and a new single tap even if it is dispatched late.
+    secondPressStarted = singleTapTimer !== null
+    clearSingleTapTimer()
     longPressTimer = setTimeout(triggerLongPress, MOBILE_CARD_LONG_PRESS_DELAY_MS)
   }
 
@@ -113,11 +120,19 @@ export function createMobileCardGestureHandlers(callbacks: MobileCardGestureCall
     if (gestureCancelled || longPressTriggered) {
       gestureCancelled = false
       longPressTriggered = false
+      secondPressStarted = false
+      lastTapAt = 0
       return
     }
 
-    const now = Date.now()
-    if (lastTapAt > 0 && now - lastTapAt <= MOBILE_CARD_DOUBLE_TAP_DELAY_MS) {
+    // Use when the tap happened, not when this handler got to run: right after
+    // an action the page is busy and a quick second tap can be dispatched
+    // late, which used to turn a double tap into a navigation.
+    const now = typeof event.timeStamp === 'number' && event.timeStamp > 0 ? event.timeStamp : Date.now()
+    const isSecondTap = secondPressStarted
+      || (lastTapAt > 0 && now - lastTapAt <= MOBILE_CARD_DOUBLE_TAP_DELAY_MS)
+    secondPressStarted = false
+    if (isSecondTap) {
       clearSingleTapTimer()
       lastTapAt = 0
       callbacks.onDoubleTap()

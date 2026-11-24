@@ -1,5 +1,6 @@
 import { computed, reactive, readonly, ref } from 'vue'
 import type { ApiUser } from '../types/api'
+import { clearCardStatusSnapshots } from '../utils/cardStatusSnapshot'
 
 const SESSION_KEY = 'animeTrackerSession'
 
@@ -101,6 +102,8 @@ export function useSession() {
     session.refreshToken = ''
     session.user = null
     localStorage.removeItem(SESSION_KEY)
+    // Saved card statuses belong to the signed-out user.
+    clearCardStatusSnapshots()
   }
 
   return {
