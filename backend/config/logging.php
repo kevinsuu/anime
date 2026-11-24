@@ -73,6 +73,15 @@ return [
             'replace_placeholders' => true,
         ],
 
+        // JavaScript errors reported by visitors' browsers (see ClientErrorController).
+        'client' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/client-errors.log'),
+            'level' => 'warning',
+            'days' => env('LOG_CLIENT_ERROR_DAYS', 30),
+            'replace_placeholders' => true,
+        ],
+
         'slack' => [
             'driver' => 'slack',
             'url' => env('LOG_SLACK_WEBHOOK_URL'),

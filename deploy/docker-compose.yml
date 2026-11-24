@@ -73,6 +73,8 @@ services:
       MAIL_FROM_NAME: ${MAIL_FROM_NAME:-Anime Library}
     volumes:
       - backend-storage-public:/app/storage/app/public
+      # Keeps logs (incl. browser error reports in client-errors-*.log) across deploys.
+      - backend-logs:/app/storage/logs
     ports:
       - "127.0.0.1:8080:8080"
     depends_on:
@@ -131,3 +133,4 @@ services:
 volumes:
   mysql-data:
   backend-storage-public:
+  backend-logs:

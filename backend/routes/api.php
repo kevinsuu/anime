@@ -4,19 +4,24 @@ use App\Http\Controllers\Api\AnimeController;
 use App\Http\Controllers\Api\AnimeListController;
 use App\Http\Controllers\Api\AnimeSummaryController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ClientErrorController;
 use App\Http\Controllers\Api\CollectionController;
 use App\Http\Controllers\Api\FeedbackController;
 use App\Http\Controllers\Api\MeBootstrapController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/auth/google', [AuthController::class, 'google']);
+Route::post('/client-errors', ClientErrorController::class)->middleware('throttle:client-errors');
 Route::post('/auth/refresh', [AuthController::class, 'refresh']);
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('jwt');
 
-Route::get('/anime', [AnimeController::class, 'index']);
-Route::get('/anime/tags', [AnimeController::class, 'tags']);
-Route::get('/anime/summaries', [AnimeSummaryController::class, 'index']);
-Route::get('/anime/{id}', [AnimeController::class, 'show']);
+// Catalog reads are identical for every visitor, so they may be edge-cached.
+Route::middleware('catalog.cache')->group(function (): void {
+    Route::get('/anime', [AnimeController::class, 'index']);
+    Route::get('/anime/tags', [AnimeController::class, 'tags']);
+    Route::get('/anime/summaries', [AnimeSummaryController::class, 'index']);
+    Route::get('/anime/{id}', [AnimeController::class, 'show']);
+});
 
 Route::middleware('jwt')->group(function (): void {
     Route::get('/me', [AnimeListController::class, 'me']);

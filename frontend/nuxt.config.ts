@@ -90,7 +90,9 @@ export default defineNuxtConfig({
       // configuration as Docker Compose. Production builds still provide the
       // public-prefixed variable explicitly.
       googleClientId: process.env.NUXT_PUBLIC_GOOGLE_CLIENT_ID || process.env.GOOGLE_CLIENT_ID || '',
-      enableDevLogin: process.env.NUXT_PUBLIC_ENABLE_DEV_LOGIN === 'true'
+      enableDevLogin: process.env.NUXT_PUBLIC_ENABLE_DEV_LOGIN === 'true',
+      // Release tag (e.g. v1.0.47) attached to browser error reports.
+      appVersion: process.env.NUXT_PUBLIC_APP_VERSION || 'dev'
     }
   }
 })

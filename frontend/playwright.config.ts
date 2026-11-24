@@ -27,6 +27,12 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     video: 'off'
   },
+  // WebKit stands in for iPhone Safari, whose touch, long-press and
+  // double-tap handling differs from Chrome's.
+  projects: [
+    { name: 'chromium', use: { browserName: 'chromium' } },
+    { name: 'webkit', use: { browserName: 'webkit' } }
+  ],
   webServer: [
     {
       command: 'node test/e2e/mock-api.mjs',

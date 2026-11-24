@@ -151,6 +151,32 @@ const cardStatus = computed(() => {
   if (props.statusPending) return null
   return props.watched ? 'watched' : props.inList ? 'favorite' : null
 })
+// Start loading the detail page's data as soon as the visitor shows intent:
+// on press (a tap waits for the double-tap window before navigating anyway)
+// or after a short hover, so sweeping the mouse across the grid stays quiet.
+const HOVER_PREFETCH_DELAY_MS = 120
+const { prefetchAnimeDetail } = useAnimeDetailPrefetch()
+let hoverPrefetchTimer: ReturnType<typeof setTimeout> | null = null
+
+function cancelHoverPrefetch() {
+  if (hoverPrefetchTimer === null) return
+  clearTimeout(hoverPrefetchTimer)
+  hoverPrefetchTimer = null
+}
+
+function onCardMouseEnter() {
+  cancelHoverPrefetch()
+  hoverPrefetchTimer = setTimeout(() => {
+    hoverPrefetchTimer = null
+    prefetchAnimeDetail(props.anime.id)
+  }, HOVER_PREFETCH_DELAY_MS)
+}
+
+function onCardPointerDown(event: PointerEvent) {
+  prefetchAnimeDetail(props.anime.id)
+  mobileGestures.onPointerDown(event)
+}
+
 const mobileGestures = createMobileCardGestureHandlers({
   isEnabled: () => props.showActions,
   onDoubleTap: toggleFavorite,
@@ -169,6 +195,7 @@ watch(() => props.popoverOpen, (open) => {
 
 onBeforeUnmount(() => {
   window.removeEventListener('keydown', onKeydown)
+  cancelHoverPrefetch()
   mobileGestures.dispose()
 })
 </script>
@@ -189,7 +216,9 @@ onBeforeUnmount(() => {
       @click.capture="mobileGestures.onClick"
       @contextmenu="mobileGestures.onContextMenu"
       @pointercancel="mobileGestures.onPointerCancel"
-      @pointerdown="mobileGestures.onPointerDown"
+      @pointerdown="onCardPointerDown"
+      @mouseenter="onCardMouseEnter"
+      @mouseleave="cancelHoverPrefetch"
       @pointerleave="mobileGestures.onPointerLeave"
       @pointermove="mobileGestures.onPointerMove"
       @pointerup="mobileGestures.onPointerUp"

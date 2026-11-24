@@ -1,8 +1,11 @@
 import { expect, test } from '@playwright/test'
 
-test('mobile snackbars stay compact at the viewport top-right corner', async ({ page }) => {
+test('mobile snackbars stay compact at the viewport top-right corner', async ({ page, browserName }) => {
   await page.setViewportSize({ width: 393, height: 659 })
-  await page.context().grantPermissions(['clipboard-read', 'clipboard-write'])
+  // WebKit has no clipboard permissions; it allows writes during a user gesture.
+  if (browserName === 'chromium') {
+    await page.context().grantPermissions(['clipboard-read', 'clipboard-write'])
+  }
   await page.addInitScript(() => {
     localStorage.setItem('animeTrackerSession', JSON.stringify({
       token: 'playwright-token',
