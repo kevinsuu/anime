@@ -15,11 +15,11 @@ describe('anime grid card status border', () => {
     expect(gridCardSource).toContain(':data-card-status="cardStatus"')
   })
 
-  it('hides borders only while personal statuses are still unknown', () => {
+  it('hides borders only while personal statuses are still unknown (no saved snapshot yet)', () => {
     expect(gridCardSource).toContain('if (props.statusPending) return null')
     expect(gridCardSource).toContain(':data-card-status-pending="statusPending || undefined"')
-    expect(seasonalSource).toContain(':status-pending="bootstrapLoading"')
-    expect(catalogSource).toContain(':status-pending="bootstrapLoading"')
+    expect(seasonalSource).toContain(':status-pending="statusesPending"')
+    expect(catalogSource).toContain(':status-pending="statusesPending"')
   })
 
   it('shows a mutation optimistically instead of waiting for the API', () => {

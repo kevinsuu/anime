@@ -391,6 +391,75 @@ describe('useAnimeCardStatuses', () => {
     expect(state.isWatched(2)).toBe(false)
   })
 
+  describe('saved statuses from the previous visit', () => {
+    function memoryStorage(): Storage {
+      const data = new Map<string, string>()
+      return {
+        get length() { return data.size },
+        clear: () => data.clear(),
+        getItem: key => data.get(key) ?? null,
+        key: index => [...data.keys()][index] ?? null,
+        removeItem: key => { data.delete(key) },
+        setItem: (key, value) => { data.set(key, String(value)) }
+      }
+    }
+
+    beforeEach(() => {
+      vi.stubGlobal('localStorage', memoryStorage())
+      vi.stubGlobal('useSession', () => ({ isAuthed, session: { user: { id: 7 } } }))
+    })
+
+    it('shows saved statuses before the bootstrap answers, then applies the server truth', async () => {
+      localStorage.setItem('animeCardStatuses:v1:7', JSON.stringify({
+        savedAt: Date.now(),
+        statuses: [
+          { animeId: 2, listItemId: 22, watched: true, collectionIds: [] },
+          { animeId: 3, listItemId: 33, watched: false, collectionIds: [] }
+        ],
+        collections: []
+      }))
+      const bootstrap = deferred<any>()
+      api.meBootstrap.mockReturnValue(bootstrap.promise)
+
+      const state = useAnimeCardStatuses(ref([2, 3]))
+      await vi.waitFor(() => expect(api.meBootstrap).toHaveBeenCalled())
+
+      expect(state.isWatched(2)).toBe(true)
+      expect(state.isInList(3)).toBe(true)
+      expect(state.statusesPending.value).toBe(false)
+
+      // Anime 3 was removed on another device.
+      bootstrap.resolve({ user: { id: 7 }, statuses: [{ anime_id: 2, list_item_id: 22, watched: true, collection_ids: [] }], collections: [] })
+      await vi.waitFor(() => expect(state.bootstrapLoading.value).toBe(false))
+      expect(state.isInList(3)).toBe(false)
+      const saved = JSON.parse(localStorage.getItem('animeCardStatuses:v1:7')!)
+      expect(saved.statuses.map((item: { animeId: number }) => item.animeId)).toEqual([2])
+    })
+
+    it('keeps borders hidden while loading when nothing was saved yet', async () => {
+      const bootstrap = deferred<any>()
+      api.meBootstrap.mockReturnValue(bootstrap.promise)
+
+      const state = useAnimeCardStatuses(ref([2]))
+      await vi.waitFor(() => expect(api.meBootstrap).toHaveBeenCalled())
+
+      expect(state.statusesPending.value).toBe(true)
+      bootstrap.resolve({ user: { id: 7 }, statuses: [], collections: [] })
+      await vi.waitFor(() => expect(state.statusesPending.value).toBe(false))
+    })
+
+    it('saves a finished mutation for the next visit', async () => {
+      api.addToList.mockResolvedValue({ item: { id: 22, watched: false, collections: [] } })
+      const state = useAnimeCardStatuses(ref([2]))
+      await vi.waitFor(() => expect(state.bootstrapLoading.value).toBe(false))
+
+      await state.toggleAnimeInList(2)
+
+      const saved = JSON.parse(localStorage.getItem('animeCardStatuses:v1:7')!)
+      expect(saved.statuses).toEqual([{ animeId: 2, listItemId: 22, watched: false, collectionIds: [] }])
+    })
+  })
+
   it('locks duplicate collection mutations while keeping the optimistic state', async () => {
     api.meBootstrap.mockResolvedValue({
       user: { id: 1 },

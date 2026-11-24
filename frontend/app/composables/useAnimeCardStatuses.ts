@@ -1,4 +1,5 @@
-import { reactive, ref, toValue, watch, type MaybeRefOrGetter } from 'vue'
+import { computed, reactive, ref, toValue, watch, type MaybeRefOrGetter } from 'vue'
+import { readCardStatusSnapshot, writeCardStatusSnapshot } from '../utils/cardStatusSnapshot'
 import { normalizeCollection } from '../utils/normalize'
 import type { Collection } from '../utils/normalize'
 import { apiErrorMessage } from '../utils/apiError'
@@ -71,13 +72,18 @@ function statusFromMutationResponse(
 
 export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[]>) {
   const api = useApi()
-  const { isAuthed } = useSession()
+  const sessionState = useSession()
+  const { isAuthed } = sessionState
   const toast = useToast()
 
   const statusesByAnimeId = reactive(new Map<number, AnimeCardStatus>())
   const collections = ref<Collection[]>([])
   const bootstrapLoading = ref(false)
   const bootstrapError = ref('')
+  // True once the last known statuses (saved in this browser) are on screen,
+  // so cards need not wait for the bootstrap request before showing them.
+  const snapshotShown = ref(false)
+  const statusesPending = computed(() => bootstrapLoading.value && !snapshotShown.value)
   const pendingInList = reactive(new Set<number>())
   const pendingWatched = reactive(new Set<number>())
   const pendingCollections = reactive(new Set<string>())
@@ -96,6 +102,9 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
   let bootstrapRequestId = 0
   let bootstrapPromise: Promise<void> | null = null
   let mutationTokenSequence = 0
+  let snapshotUserId: number | null = null
+  let snapshotStatuses: Map<number, AnimeCardStatus> | null = null
+  let snapshotCollections: Collection[] = []
   const mutationTokens = new Map<string, number>()
   const lastMutationSequenceByAnimeId = new Map<number, number>()
 
@@ -130,7 +139,56 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
     bootstrapLoading.value = false
   }
 
+  function currentUserId(): number | null {
+    const id = sessionState.session?.user?.id
+    return typeof id === 'number' && id > 0 ? id : null
+  }
+
+  /** The saved statuses of the signed-in user, or null when none were saved. */
+  function savedStatuses(): Map<number, AnimeCardStatus> | null {
+    const userId = currentUserId()
+    if (userId === null) return null
+    if (snapshotUserId !== userId) {
+      const snapshot = readCardStatusSnapshot(userId)
+      snapshotUserId = userId
+      snapshotStatuses = snapshot?.statuses ?? null
+      snapshotCollections = snapshot?.collections ?? []
+    }
+    return snapshotStatuses
+  }
+
+  /** Shows saved statuses for cards that have none yet. */
+  function showSavedStatuses(ids: readonly number[]) {
+    const saved = savedStatuses()
+    if (!saved) return
+    for (const animeId of ids) {
+      if (statusesByAnimeId.has(animeId) || hasPendingStatusMutation(animeId)) continue
+      const status = saved.get(animeId)
+      if (status) statusesByAnimeId.set(animeId, { ...status, collectionIds: [...status.collectionIds] })
+    }
+    if (collections.value.length === 0) collections.value = snapshotCollections.map(item => ({ ...item }))
+    snapshotShown.value = true
+  }
+
+  /** Records the current statuses of these anime for the next visit. */
+  function saveStatuses(ids: Iterable<number>) {
+    const userId = currentUserId()
+    if (userId === null) return
+    const saved = savedStatuses() ?? new Map<number, AnimeCardStatus>()
+    for (const animeId of ids) {
+      const status = statusesByAnimeId.get(animeId)
+      if (status) saved.set(animeId, { ...status, collectionIds: [...status.collectionIds] })
+      else saved.delete(animeId)
+    }
+    snapshotStatuses = saved
+    snapshotCollections = collections.value.map(item => ({ ...item }))
+    writeCardStatusSnapshot(userId, saved.values(), snapshotCollections)
+  }
+
   function resetStatusState() {
+    snapshotShown.value = false
+    snapshotUserId = null
+    snapshotStatuses = null
     scopeGeneration++
     scopeKey = ''
     scopedAnimeIds = new Set()
@@ -191,6 +249,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
     loadingKey = key
     bootstrapLoading.value = true
     bootstrapError.value = ''
+    showSavedStatuses(ids)
     // Mutations that start after this request must remain authoritative even
     // when the bootstrap response was already in flight before the mutation.
     const mutationSequenceAtRequest = mutationTokenSequence
@@ -232,6 +291,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
           .filter((collection): collection is Record<string, unknown> => collection !== null)
           .map(collection => normalizeCollection(collection))
         loadedKey = key
+        saveStatuses(ids)
       } catch (error: unknown) {
         if (requestId !== bootstrapRequestId) return
         bootstrapError.value = apiErrorMessage(error, '載入卡片狀態失敗')
@@ -343,6 +403,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
       } finally {
         finishMutation(operationKey, operationToken, () => {
           pendingListOperations.delete(animeId)
+          saveStatuses([animeId])
           applyQueuedIntent(animeId)
         })
       }
@@ -367,6 +428,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
       finishMutation(operationKey, operationToken, () => {
         pendingInList.delete(animeId)
         pendingListOperations.delete(animeId)
+        saveStatuses([animeId])
         applyQueuedIntent(animeId)
       })
     }
@@ -429,6 +491,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
       finishMutation(operationKey, operationToken, () => {
         pendingInList.delete(animeId)
         pendingWatched.delete(animeId)
+        saveStatuses([animeId])
         applyQueuedIntent(animeId)
       })
     }
@@ -487,6 +550,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
     } finally {
       finishMutation(operationKey, operationToken, () => {
         pendingCollections.delete(pendingKey)
+        saveStatuses([animeId])
         applyQueuedIntent(animeId)
       })
     }
@@ -511,6 +575,7 @@ export function useAnimeCardStatuses(animeIds: MaybeRefOrGetter<readonly number[
     statusesByAnimeId,
     collections,
     bootstrapLoading,
+    statusesPending,
     bootstrapError,
     pendingInList,
     pendingWatched,

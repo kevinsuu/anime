@@ -91,7 +91,7 @@ const seasonalAnimeIds = computed(() => seasonal.value.map((anime: AnimeSummary)
 const {
   statusesByAnimeId,
   collections,
-  bootstrapLoading,
+  statusesPending,
   bootstrapError,
   isInList,
   isWatched,
@@ -416,7 +416,7 @@ useHead({
             :anime="anime"
             :in-list="isInList(anime.id)"
             :watched="isWatched(anime.id)"
-            :status-pending="bootstrapLoading"
+            :status-pending="statusesPending"
             :status="statusesByAnimeId.get(anime.id)"
             :collections="collections"
             :popover-open="activePopoverAnimeId === anime.id"
