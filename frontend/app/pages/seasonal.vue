@@ -120,7 +120,7 @@ const activeChips = computed(() => {
   }
   if (filterState.actor) chips.push({ label: filterState.actor, clear: () => { filterState.actor = '' } })
   if (filterState.seasonalStatus !== 'all') {
-    const labels: Record<string, string> = { listed: '已加入清單', unlisted: '未加入清單', watched: '已觀看', queued: '待補', 'with-cover': '有封面' }
+    const labels: Record<string, string> = { listed: '已加入清單', unlisted: '未加入清單', watched: '已看完', queued: '未看完', 'with-cover': '有封面' }
     chips.push({ label: labels[filterState.seasonalStatus] ?? filterState.seasonalStatus, clear: () => { filterState.seasonalStatus = 'all' } })
   }
   return chips
