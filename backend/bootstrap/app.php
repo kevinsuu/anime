@@ -1,6 +1,7 @@
 <?php
 
 use App\Exceptions\ApiException;
+use App\Http\Middleware\AddServerTiming;
 use App\Http\Middleware\AuthenticateJwt;
 use App\Http\Middleware\PublicCatalogCache;
 use Illuminate\Auth\AuthenticationException;
@@ -19,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->append(\Illuminate\Http\Middleware\HandleCors::class);
+        $middleware->append(AddServerTiming::class);
         $middleware->alias([
             'jwt' => AuthenticateJwt::class,
             'catalog.cache' => PublicCatalogCache::class,
