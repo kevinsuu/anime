@@ -291,7 +291,7 @@ useHead(() => ({
     <header class="flex items-center justify-between gap-3 md:gap-4">
       <div class="space-y-0.5">
         <p class="text-xs font-extrabold uppercase tracking-widest text-primary-700">資料庫</p>
-        <h1 class="text-xl font-extrabold tracking-tight text-gray-950 md:text-2xl">搜尋動漫資料庫</h1>
+        <h1 class="text-[clamp(1rem,4.8vw,1.25rem)] leading-7 font-extrabold tracking-tight text-gray-950 md:text-2xl md:leading-8">搜尋動漫資料庫</h1>
       </div>
       <span class="shrink-0 rounded-full bg-gray-100 px-3 py-1 text-sm font-semibold text-gray-700">
         {{ resultTotal }} 筆

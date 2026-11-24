@@ -245,9 +245,11 @@ useHead({
     <header class="flex items-center justify-between gap-3 md:gap-4">
       <div class="space-y-0.5">
         <p class="text-xs font-extrabold uppercase tracking-widest text-primary-700">新番表</p>
-        <h1 class="text-xl font-extrabold tracking-tight text-gray-950 md:text-2xl">
-          {{ seasonalControls.year }}年 {{ seasonMonthLabels[seasonalControls.season] }} 新番表
-          <span class="text-base font-bold text-gray-500 md:text-lg">（{{ seasonName }}）</span>
+        <!-- Font size follows the viewport so the whole title fits on one line on
+             phones; each part is nowrap so a wrap never splits「（秋季）」. -->
+        <h1 class="text-[clamp(1rem,4.8vw,1.25rem)] leading-7 font-extrabold tracking-tight text-gray-950 md:text-2xl md:leading-8">
+          <span class="whitespace-nowrap">{{ seasonalControls.year }}年 {{ seasonMonthLabels[seasonalControls.season] }} 新番表</span>
+          <span class="whitespace-nowrap text-[0.8em] leading-none font-bold text-gray-500">（{{ seasonName }}）</span>
         </h1>
       </div>
       <!-- Season prev/next arrows -->

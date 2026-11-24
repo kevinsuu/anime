@@ -20,7 +20,7 @@ describe('site identity SEO contract', () => {
     expect(indexSource).not.toContain('查找每季新番播出時間')
     expect(seasonalSource).toContain('`動漫庫｜${seasonLabel.value}動漫新番表、動畫資料庫與追番收藏`')
     expect(seasonalSource).toContain(': `${SITE_URL}/`)')
-    expect(seasonalSource).toContain('<h1 class="text-xl')
+    expect(seasonalSource).toContain('<h1 class="text-[clamp(1rem,4.8vw,1.25rem)]')
   })
 
   it('keeps the product philosophy on the settings page, not the seasonal overview', () => {
