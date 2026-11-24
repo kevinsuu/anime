@@ -5,7 +5,22 @@ import { apiErrorMessage } from '../utils/apiError'
 useSeoMeta({ robots: 'noindex, nofollow' })
 
 const api = useApi()
-const { setSession } = useSession()
+const route = useRoute()
+const { setSession, isAuthed } = useSession()
+
+// Only same-site paths are accepted, so a crafted ?redirect= cannot send a
+// freshly signed-in user to another origin.
+const redirectTarget = computed(() => {
+  const value = route.query.redirect
+  return typeof value === 'string' && /^\/(?![\/\\])/.test(value)
+    ? value
+    : '/list'
+})
+
+// Someone who is already signed in has nothing to do here.
+onMounted(() => {
+  if (isAuthed.value) void navigateTo(redirectTarget.value, { replace: true })
+})
 const config = useRuntimeConfig()
 const toast = useToast()
 const googleStatus = ref<'loading' | 'ready' | 'missing-config' | 'error'>('loading')
@@ -38,7 +53,7 @@ interface GoogleCredentialResponse {
 
 async function afterLogin(result: AuthResponse) {
   setSession(result.token, result.refreshToken, result.user)
-  await navigateTo('/list')
+  await navigateTo(redirectTarget.value, { replace: true })
 }
 
 async function handleCredentialResponse(response: GoogleCredentialResponse) {

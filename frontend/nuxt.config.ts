@@ -9,6 +9,15 @@ const publicRouteRules = process.env.NODE_ENV === 'development'
       '/catalog': { swr: 300 },
       '/anime/**': { swr: 300 }
     }
+// Signed-in pages read the session from localStorage, which the server cannot
+// see. Rendering them on the server always looked signed-out, so a refresh or
+// bookmark of /list or /settings bounced signed-in users to /login. Render
+// them in the browser only; they are noindex and private, so SSR adds nothing.
+const privateRouteRules = {
+  '/list': { ssr: false },
+  '/list/**': { ssr: false },
+  '/settings': { ssr: false }
+}
 
 export default defineNuxtConfig({
   compatibilityDate: '2026-06-29',
@@ -46,7 +55,7 @@ export default defineNuxtConfig({
     sources: ['/api/__sitemap__/anime-urls'],
     exclude: ['/seasonal', '/list', '/list/**', '/settings', '/login']
   },
-  routeRules: publicRouteRules,
+  routeRules: { ...publicRouteRules, ...privateRouteRules },
   nitro: {
     // Emit Brotli/gzip variants for immutable JS/CSS assets. Production nginx
     // can serve these directly, and the built-in preview server stays

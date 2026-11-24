@@ -15,8 +15,8 @@ test('mobile snackbars stay compact at the viewport top-right corner', async ({ 
       }
     }))
   })
-  await page.goto('/login', { waitUntil: 'domcontentloaded' })
-  await page.getByRole('link', { name: '設定' }).click()
+  // A direct load must keep a signed-in user on /settings (it used to bounce to /login).
+  await page.goto('/settings', { waitUntil: 'domcontentloaded' })
   await expect(page.getByRole('heading', { level: 1, name: '設定' })).toBeVisible()
 
   await page.getByRole('button', { name: '複製', exact: true }).click()
