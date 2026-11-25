@@ -83,6 +83,9 @@ export default defineNuxtConfig({
     // not require Laravel/MySQL locally. Docker Compose still overrides these
     // values with its backend service URL for full-stack development.
     apiBaseUrlInternal: internalApiBaseUrl,
+    // Served at /indexnow-key.txt for IndexNow ownership checks; set at
+    // runtime with NUXT_INDEXNOW_KEY (same value as the backend's INDEXNOW_KEY).
+    indexnowKey: '',
     public: {
       apiBaseUrl: publicApiBaseUrl,
       // `npm run dev` loads the repository-level .env. Reuse its

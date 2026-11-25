@@ -59,6 +59,20 @@ describe('site identity SEO contract', () => {
     expect(robotsSource).toContain('User-agent: GPTBot\nDisallow: /')
     expect(robotsSource).toContain('User-agent: ClaudeBot\nDisallow: /')
     expect(robotsSource).not.toContain('User-agent: Googlebot\nDisallow: /')
+    for (const trainingBot of [
+      'CCBot', 'Applebot-Extended', 'meta-externalagent', 'Bytespider', 'cohere-training-data-crawler'
+    ]) {
+      expect(robotsSource).toContain(`User-agent: ${trainingBot}\n`)
+    }
+    // Google-Extended also gates Gemini grounding, so it must stay on the default rules.
+    expect(robotsSource).not.toContain('User-agent: Google-Extended')
+  })
+
+  it('renders exactly one h1 on anime detail pages', () => {
+    const animeSource = readSource('app/pages/anime/[id].vue')
+
+    expect(animeSource.match(/<h1[\s>]/g)).toHaveLength(1)
+    expect(animeSource).toContain('role="heading" aria-level="1"')
   })
 
   it('publishes structured entities and answer-first copy where detail is needed', () => {
@@ -89,9 +103,11 @@ describe('site identity SEO contract', () => {
   it('uses the actual catalog update time for sitemap freshness', () => {
     const sitemapSource = readSource('server/api/__sitemap__/anime-urls.ts')
 
-    expect(sitemapSource).toContain('const MINIMUM_INDEXABLE_DESCRIPTION_LENGTH = 160')
-    expect(sitemapSource).toContain('.filter(isIndexableAnime)')
-    expect(sitemapSource).toContain('description: string | null')
+    // The sitemap shares the detail page's indexability rule instead of keeping its own copy.
+    expect(sitemapSource).toContain("import { isIndexableAnime } from '../../../app/utils/indexability'")
+    expect(sitemapSource).not.toContain('MINIMUM_INDEXABLE_DESCRIPTION_LENGTH')
+    expect(sitemapSource).toContain('.filter(isIndexableItem)')
+    expect(sitemapSource).toContain('castCount: item.cast?.length ?? 0')
     expect(sitemapSource).toContain('updated_at: string | null')
     expect(sitemapSource).toContain('lastmod: item.updated_at || item.air_date || undefined')
     expect(sitemapSource).toContain('const lastYear = new Date().getFullYear() + 1')
@@ -101,8 +117,9 @@ describe('site identity SEO contract', () => {
   it('only grants indexing signals to detail pages with a substantive synopsis', () => {
     const animeSource = readSource('app/pages/anime/[id].vue')
 
-    expect(isIndexableAnime({ description: '精簡介紹' })).toBe(false)
-    expect(isIndexableAnime({ description: '作品介紹'.repeat(40) })).toBe(true)
+    const noFacts = { episodeCount: null, streamCount: 0, castCount: 0 }
+    expect(isIndexableAnime({ description: '精簡介紹', ...noFacts })).toBe(false)
+    expect(isIndexableAnime({ description: '作品介紹'.repeat(40), ...noFacts })).toBe(true)
     expect(animeSource).toContain("robots: () => isIndexablePage.value ? 'index, follow' : 'noindex, follow'")
   })
 

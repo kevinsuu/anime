@@ -132,6 +132,9 @@ const answerSummary = computed(() => {
   if (streamingPlatforms.value.length > 0) {
     parts.push(`可透過${streamingPlatforms.value.slice(0, 3).join('、')}等平台觀看。`)
   }
+  if (anime.value.actors.length > 0) {
+    parts.push(`主要聲優包括${anime.value.actors.slice(0, 3).join('、')}。`)
+  }
   return parts.join('')
 })
 interface QuickFact {
@@ -183,7 +186,12 @@ const externalSourceLinks = computed(() => (anime.value?.externalIds ?? [])
 const seoDescription = computed(() => answerSummary.value.slice(0, 160))
 const isIndexablePage = computed(() => {
   const currentAnime = anime.value
-  return currentAnime !== undefined && isIndexableAnime(currentAnime)
+  return currentAnime !== undefined && isIndexableAnime({
+    description: currentAnime.description,
+    episodeCount: currentAnime.episodeCount,
+    streamCount: currentAnime.streams.length,
+    castCount: currentAnime.cast.length
+  })
 })
 const animeStructuredData = computed(() => {
   if (!anime.value) return {}
@@ -394,7 +402,10 @@ useHead({
             <p v-if="anime.seasonYear" class="text-xs font-extrabold uppercase tracking-widest text-primary-700">
               {{ anime.seasonYear }}年 {{ seasonMonthLabels[anime.seasonCode] ?? anime.seasonCode }}
             </p>
-            <h1 class="mt-1 text-2xl font-extrabold tracking-tight text-gray-950">{{ anime.name }}</h1>
+            <!-- The mobile header above owns the page's only h1 (it comes first in the
+                 HTML crawlers read); this desktop copy keeps heading semantics for
+                 assistive tech without emitting a second h1. -->
+            <p role="heading" aria-level="1" class="mt-1 text-2xl font-extrabold tracking-tight text-gray-950">{{ anime.name }}</p>
             <p v-if="anime.titleJa" class="mt-0.5 text-sm text-gray-500">{{ anime.titleJa }}</p>
 
             <!-- Tags -->

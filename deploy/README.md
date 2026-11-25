@@ -209,3 +209,18 @@ docker compose exec backend php artisan anime:generate-thumbnails --year=2026 --
 ```
 MYLIST_OWNER_EMAIL=you@example.com
 ```
+
+## IndexNow 推送
+
+每週排程 import 完成後，`scheduler` 會執行 `anime:submit-indexnow`，把本次實際變動的作品頁（僅限可索引的頁面）、所屬季度頁與首頁推送給 IndexNow（Bing 等搜尋引擎共用）。未設定 key 時會直接略過。
+
+1. 產生 key：`openssl rand -hex 16`，在部署主機 `.env` 加入 `INDEXNOW_KEY=<key>`。
+2. `docker compose up -d --force-recreate frontend scheduler`，讓兩個服務都讀到新值。
+3. 確認 `curl -fsS https://anime.kaistarstudio.me/indexnow-key.txt` 回傳同一個 key。
+4. 需要立即補推時（例如首次啟用），可手動執行：
+
+```bash
+docker compose exec scheduler php artisan anime:submit-indexnow --since="2016-01-01"
+```
+
+這個 key 會公開在 `/indexnow-key.txt`，本身不是機密；更換時需同步重啟 `frontend` 與 `scheduler`。

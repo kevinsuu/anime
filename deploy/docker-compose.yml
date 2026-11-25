@@ -114,6 +114,7 @@ services:
       BANGUMI_API_BASE_URL: ${BANGUMI_API_BASE_URL}
       BANGUMI_USER_AGENT: ${BANGUMI_USER_AGENT}
       HTTP_TIMEOUT_SECONDS: ${HTTP_TIMEOUT_SECONDS}
+      INDEXNOW_KEY: ${INDEXNOW_KEY:-}
     volumes:
       - backend-storage-public:/app/storage/app/public
     depends_on:
@@ -125,6 +126,7 @@ services:
     restart: unless-stopped
     environment:
       NUXT_API_BASE_URL_INTERNAL: http://backend:8080
+      NUXT_INDEXNOW_KEY: ${INDEXNOW_KEY:-}
     ports:
       - "127.0.0.1:3000:3000"
     depends_on:

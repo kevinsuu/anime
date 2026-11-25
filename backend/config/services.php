@@ -69,6 +69,14 @@ return [
         'retry_delay_ms' => (int) env('BANGUMI_RETRY_DELAY_MS', 1000),
     ],
 
+    // IndexNow 推送：未設定 key 時 anime:submit-indexnow 直接略過（本機開發預設）。
+    // key 會由前端公開於 /indexnow-key.txt 供搜尋引擎驗證，本身不是機密。
+    'indexnow' => [
+        'key' => env('INDEXNOW_KEY', ''),
+        'site_url' => rtrim(env('INDEXNOW_SITE_URL', 'https://anime.kaistarstudio.me'), '/'),
+        'endpoint' => env('INDEXNOW_ENDPOINT', 'https://api.indexnow.org/indexnow'),
+    ],
+
     'http' => [
         'timeout_seconds' => max(1, (int) env('HTTP_TIMEOUT_SECONDS', 10)),
     ],
