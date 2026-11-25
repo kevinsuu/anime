@@ -16,8 +16,12 @@
   最新的更新時間；沒有作品的季度頁輸出 `noindex, follow`。API 暫時失敗時不輸出 noindex，避免誤讓
   搜尋引擎移除頁面。sitemap 另收錄具獨立閱讀價值的作品頁，並輸出 `index, follow`：故事介紹至少 160 個非空白字元；或介紹至少
   60 字，且「有集數」「有播出平台」「至少 3 位聲優」三項中符合兩項（這些是頁面上可查核的第一方資料）。
-  詳情頁與 sitemap 共用同一規則。其他作品詳情仍可正常瀏覽，但會輸出 `noindex, follow`，避免
+  詳情頁、sitemap 與 IndexNow 共用同一規則。其他作品詳情仍可正常瀏覽，但會輸出 `noindex, follow`，避免
   大量薄內容頁分散網站的索引訊號。作品 `lastmod` 使用資料實際更新時間，舊資料才以播出日補位。
+- 每週排程 import 後以 IndexNow 推送本次變動的首頁、季度頁與可索引作品頁（`anime:submit-indexnow`），
+  讓 Bing（ChatGPT Search、Copilot 的索引來源）不必等下次 sitemap 抓取即可發現新季度。作品頁的可索引規則在
+  後端 `AnimeIndexability` 與前端 `app/utils/indexability.ts` 各有一份（兩邊測試案例相同），調整時必須同步。設定方式見
+  `deploy/README.md`。
 - 作品詳情頁只輸出一個 `<h1>`（手機版標題，位於 HTML 前段）；桌機版標題以 `role="heading" aria-level="1"`
   保留輔助技術語意，避免重複 h1 混淆頁面主體。
 - 首頁以 JSON-LD 定義「動漫庫 / Anime Library」的 `Organization` 與 `WebSite` 實體。
