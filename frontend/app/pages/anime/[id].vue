@@ -132,6 +132,9 @@ const answerSummary = computed(() => {
   if (streamingPlatforms.value.length > 0) {
     parts.push(`可透過${streamingPlatforms.value.slice(0, 3).join('、')}等平台觀看。`)
   }
+  if (anime.value.actors.length > 0) {
+    parts.push(`主要聲優包括${anime.value.actors.slice(0, 3).join('、')}。`)
+  }
   return parts.join('')
 })
 interface QuickFact {
@@ -183,7 +186,12 @@ const externalSourceLinks = computed(() => (anime.value?.externalIds ?? [])
 const seoDescription = computed(() => answerSummary.value.slice(0, 160))
 const isIndexablePage = computed(() => {
   const currentAnime = anime.value
-  return currentAnime !== undefined && isIndexableAnime(currentAnime)
+  return currentAnime !== undefined && isIndexableAnime({
+    description: currentAnime.description,
+    episodeCount: currentAnime.episodeCount,
+    streamCount: currentAnime.streams.length,
+    castCount: currentAnime.cast.length
+  })
 })
 const animeStructuredData = computed(() => {
   if (!anime.value) return {}

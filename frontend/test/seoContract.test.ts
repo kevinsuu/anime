@@ -103,9 +103,11 @@ describe('site identity SEO contract', () => {
   it('uses the actual catalog update time for sitemap freshness', () => {
     const sitemapSource = readSource('server/api/__sitemap__/anime-urls.ts')
 
-    expect(sitemapSource).toContain('const MINIMUM_INDEXABLE_DESCRIPTION_LENGTH = 160')
-    expect(sitemapSource).toContain('.filter(isIndexableAnime)')
-    expect(sitemapSource).toContain('description: string | null')
+    // The sitemap shares the detail page's indexability rule instead of keeping its own copy.
+    expect(sitemapSource).toContain("import { isIndexableAnime } from '../../../app/utils/indexability'")
+    expect(sitemapSource).not.toContain('MINIMUM_INDEXABLE_DESCRIPTION_LENGTH')
+    expect(sitemapSource).toContain('.filter(isIndexableItem)')
+    expect(sitemapSource).toContain('castCount: item.cast?.length ?? 0')
     expect(sitemapSource).toContain('updated_at: string | null')
     expect(sitemapSource).toContain('lastmod: item.updated_at || item.air_date || undefined')
     expect(sitemapSource).toContain('const lastYear = new Date().getFullYear() + 1')
@@ -115,8 +117,9 @@ describe('site identity SEO contract', () => {
   it('only grants indexing signals to detail pages with a substantive synopsis', () => {
     const animeSource = readSource('app/pages/anime/[id].vue')
 
-    expect(isIndexableAnime({ description: '精簡介紹' })).toBe(false)
-    expect(isIndexableAnime({ description: '作品介紹'.repeat(40) })).toBe(true)
+    const noFacts = { episodeCount: null, streamCount: 0, castCount: 0 }
+    expect(isIndexableAnime({ description: '精簡介紹', ...noFacts })).toBe(false)
+    expect(isIndexableAnime({ description: '作品介紹'.repeat(40), ...noFacts })).toBe(true)
     expect(animeSource).toContain("robots: () => isIndexablePage.value ? 'index, follow' : 'noindex, follow'")
   })
 
