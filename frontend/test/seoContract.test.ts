@@ -59,6 +59,13 @@ describe('site identity SEO contract', () => {
     expect(robotsSource).toContain('User-agent: GPTBot\nDisallow: /')
     expect(robotsSource).toContain('User-agent: ClaudeBot\nDisallow: /')
     expect(robotsSource).not.toContain('User-agent: Googlebot\nDisallow: /')
+    for (const trainingBot of [
+      'CCBot', 'Applebot-Extended', 'meta-externalagent', 'Bytespider', 'cohere-training-data-crawler'
+    ]) {
+      expect(robotsSource).toContain(`User-agent: ${trainingBot}\n`)
+    }
+    // Google-Extended also gates Gemini grounding, so it must stay on the default rules.
+    expect(robotsSource).not.toContain('User-agent: Google-Extended')
   })
 
   it('publishes structured entities and answer-first copy where detail is needed', () => {

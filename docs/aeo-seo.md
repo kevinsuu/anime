@@ -36,7 +36,9 @@
 `frontend/public/robots.txt` 將搜尋引用與模型訓練分開：
 
 - 允許 `OAI-SearchBot`、`Claude-SearchBot`、`PerplexityBot` 讀取公開內容；登入頁由 `noindex` 排除，私人路徑不開放抓取。
-- 封鎖訓練用途的 `GPTBot`、`ClaudeBot`。
+- 封鎖訓練用途的 `GPTBot`、`ClaudeBot`、`CCBot`、`Applebot-Extended`、`meta-externalagent`、`Bytespider`、
+  `cohere-training-data-crawler`。`Applebot-Extended` 只控制訓練，不影響 `Applebot` 的 Siri／Spotlight 搜尋；
+  `Amazonbot` 同時服務 Alexa 等答案功能，暫不封鎖。
 - 不封鎖一般 `Googlebot`，避免影響 Google Search 與 AI 搜尋介面。
 - `Google-Extended` 暫時沿用一般規則。Google 將 Gemini 模型訓練與 Gemini grounding 放在同一控制項；
   若日後封鎖，會同時犧牲部分 Gemini 引用機會，修改前應先確認產品取捨。
