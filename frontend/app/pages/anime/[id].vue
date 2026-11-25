@@ -394,7 +394,10 @@ useHead({
             <p v-if="anime.seasonYear" class="text-xs font-extrabold uppercase tracking-widest text-primary-700">
               {{ anime.seasonYear }}年 {{ seasonMonthLabels[anime.seasonCode] ?? anime.seasonCode }}
             </p>
-            <h1 class="mt-1 text-2xl font-extrabold tracking-tight text-gray-950">{{ anime.name }}</h1>
+            <!-- The mobile header above owns the page's only h1 (it comes first in the
+                 HTML crawlers read); this desktop copy keeps heading semantics for
+                 assistive tech without emitting a second h1. -->
+            <p role="heading" aria-level="1" class="mt-1 text-2xl font-extrabold tracking-tight text-gray-950">{{ anime.name }}</p>
             <p v-if="anime.titleJa" class="mt-0.5 text-sm text-gray-500">{{ anime.titleJa }}</p>
 
             <!-- Tags -->

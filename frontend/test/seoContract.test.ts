@@ -68,6 +68,13 @@ describe('site identity SEO contract', () => {
     expect(robotsSource).not.toContain('User-agent: Google-Extended')
   })
 
+  it('renders exactly one h1 on anime detail pages', () => {
+    const animeSource = readSource('app/pages/anime/[id].vue')
+
+    expect(animeSource.match(/<h1[\s>]/g)).toHaveLength(1)
+    expect(animeSource).toContain('role="heading" aria-level="1"')
+  })
+
   it('publishes structured entities and answer-first copy where detail is needed', () => {
     const seasonalSource = readSource('app/pages/seasonal.vue')
     const catalogSource = readSource('app/pages/catalog.vue')

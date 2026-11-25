@@ -17,6 +17,8 @@
   搜尋引擎移除頁面。sitemap 另收錄具獨立閱讀價值的作品頁；作品須有至少 160 個非空白字元的故事介紹才會進入
   sitemap，並輸出 `index, follow`。介紹不足的作品詳情仍可正常瀏覽，但會輸出 `noindex, follow`，避免
   大量薄內容頁分散網站的索引訊號。作品 `lastmod` 使用資料實際更新時間，舊資料才以播出日補位。
+- 作品詳情頁只輸出一個 `<h1>`（手機版標題，位於 HTML 前段）；桌機版標題以 `role="heading" aria-level="1"`
+  保留輔助技術語意，避免重複 h1 混淆頁面主體。
 - 首頁以 JSON-LD 定義「動漫庫 / Anime Library」的 `Organization` 與 `WebSite` 實體。
 - 季度與資料庫頁以 `CollectionPage`、`ItemList` JSON-LD 描述列表；資料庫頁另提供可見的問答式摘要。
 - 季度頁鎖定「YYYY年M月新番」「X季新番」「動漫新番」等查詢：標題與描述同時寫出月份、季節名稱
