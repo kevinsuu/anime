@@ -566,8 +566,8 @@ final class AcgSecretsParser
                 if (str_contains($cls, 'hide') || str_contains($cls, 'memberonly')) {
                     continue;
                 }
-                $href = trim($anchor->getAttribute('href'));
-                if ($href === '' || $href === '#') {
+                $href = $this->absoluteLinkUrl($anchor->getAttribute('href'));
+                if ($href === null) {
                     continue;
                 }
                 // Remove icon elements to get clean label text
@@ -586,6 +586,25 @@ final class AcgSecretsParser
         }
 
         return $links;
+    }
+
+    /**
+     * Source data occasionally has scheme-less hrefs ("twitter.com/x") or
+     * copyright text in place of a URL. Rendered as-is they become relative
+     * links on our own domain (crawled as 404s), so bare domains get https://
+     * and anything else that isn't an absolute http(s) URL is dropped.
+     */
+    private function absoluteLinkUrl(string $href): ?string
+    {
+        $href = trim($href);
+        if (preg_match('#^https?://#i', $href) === 1) {
+            return $href;
+        }
+        if (preg_match('#^[a-z0-9-]+(\.[a-z0-9-]+)*\.[a-z]{2,}(/\S*)?$#i', $href) === 1) {
+            return 'https://' . $href;
+        }
+
+        return null;
     }
 
     /**

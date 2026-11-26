@@ -133,6 +133,25 @@ final class AcgSecretsParserTest extends TestCase
         $this->assertNull($record['episode_count']);
     }
 
+    public function test_parse_anime_block_normalizes_or_drops_non_absolute_link_urls(): void
+    {
+        $html = '<div class="acgs-anime-block"><div class="anime_link_group">'
+            . '<div class="link_group_name">一般</div><div class="anime_links">'
+            . '<a href="https://example.com/">官方網站</a>'
+            . '<a href="twitter.com/liar2_official">社交媒體</a>'
+            . '<a href="©LINK・宵野コタロー／集英社">wiki</a>'
+            . '<a href="/relative/path">相對</a>'
+            . '<a href="javascript:alert(1)">壞</a>'
+            . '</div></div></div>';
+
+        $record = (new AcgSecretsParser())->parseAnimeBlock($html, '202307');
+
+        $this->assertSame(
+            ['https://example.com/', 'https://twitter.com/liar2_official'],
+            array_column($record['links'], 'url'),
+        );
+    }
+
     public function test_parse_anime_block_leaves_episode_count_null_when_not_published(): void
     {
         $parser = new AcgSecretsParser();
