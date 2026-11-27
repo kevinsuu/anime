@@ -1,6 +1,6 @@
 import { SOURCE_TAGS, isGenreTag, weekdayIndexOf } from '../composables/useSeasonalCatalog'
 import type { AnimeSummary } from './normalize'
-import { seasonMonthLabels, seasons, shiftSeason } from './season'
+import { isSeasonAfter, seasonMonthLabels, seasons, shiftSeason } from './season'
 import type { Season, SeasonSelection } from './season'
 
 export const seasonNameLabels: Readonly<Record<Season, string>> = {
@@ -153,10 +153,6 @@ export function buildSeasonalFaq(selection: SeasonSelection, summary: SeasonalSu
   return faq
 }
 
-function seasonOrdinal(selection: SeasonSelection): number {
-  return selection.year * seasons.length + seasons.indexOf(selection.season)
-}
-
 /**
  * Every other season of this year plus the same season in adjacent years, for
  * internal links. Seasons after `latest` (normally the upcoming season) have no
@@ -167,5 +163,5 @@ export function relatedSeasons(selection: SeasonSelection, latest: SeasonSelecti
   const neighbours = [shiftSeason(selection, -4), shiftSeason(selection, 4)]
   return [...sameYear, ...neighbours]
     .filter(item => item.year !== selection.year || item.season !== selection.season)
-    .filter(item => seasonOrdinal(item) <= seasonOrdinal(latest))
+    .filter(item => !isSeasonAfter(item, latest))
 }

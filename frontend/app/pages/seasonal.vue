@@ -6,7 +6,7 @@ import {
 } from '../composables/useLazyLoad'
 import { normalizeAnimeSummary, tagColor } from '../utils/normalize'
 import type { AnimeSummary } from '../utils/normalize'
-import { isSeasonSelection, seasonMonthLabels, seasonSelection, shiftSeason } from '../utils/season'
+import { isSeasonAfter, isSeasonSelection, seasonMonthLabels, seasonSelection, shiftSeason } from '../utils/season'
 import type { SeasonSelection } from '../utils/season'
 import { serializeJsonLd, SITE_URL } from '../utils/seo'
 import {
@@ -149,6 +149,9 @@ const seasonalFaq = computed(() => buildSeasonalFaq(seasonalControls, seasonalSu
 // The upcoming season is the furthest one worth linking: its line-up is
 // usually announced a few weeks before it airs.
 const upcomingSeason = shiftSeason(seasonSelection(undefined, undefined), 1)
+// An unbounded "next season" link let crawlers walk into empty seasons decades
+// ahead, so the arrow stops being a link past the upcoming season.
+const hasNextSeasonLink = computed(() => !isSeasonAfter(shiftSeason(seasonalControls, 1), upcomingSeason))
 const relatedSeasonLinks = computed(() => relatedSeasons(seasonalControls, upcomingSeason).map(selection => ({
   key: `${selection.year}-${selection.season}`,
   label: `${seasonHeading(selection)}新番`,
@@ -272,6 +275,7 @@ useHead({
           </span>
         </div>
         <NuxtLink
+          v-if="hasNextSeasonLink"
           :to="seasonRoute(1)"
           replace
           :aria-disabled="loading"
@@ -283,6 +287,14 @@ useHead({
         >
           <UIcon name="i-lucide-chevron-right" class="size-4" />
         </NuxtLink>
+        <span
+          v-else
+          aria-disabled="true"
+          aria-label="下一季（尚未公布）"
+          class="flex h-11 w-11 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 opacity-40 shadow-sm md:h-9 md:w-9"
+        >
+          <UIcon name="i-lucide-chevron-right" class="size-4" />
+        </span>
       </div>
     </header>
 

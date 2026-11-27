@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { isSeasonSelection, seasonSelection, shiftSeason } from '../app/utils/season'
+import { isSeasonAfter, isSeasonSelection, seasonSelection, shiftSeason } from '../app/utils/season'
 
 describe('seasonSelection', () => {
   it('only treats complete valid route values as an explicit season selection', () => {
@@ -32,5 +32,14 @@ describe('shiftSeason', () => {
       .toEqual({ year: 2027, season: 'winter' })
     expect(shiftSeason({ year: 2026, season: 'winter' }, -1))
       .toEqual({ year: 2025, season: 'fall' })
+  })
+})
+
+describe('isSeasonAfter', () => {
+  it('orders seasons by year first, then by season within the year', () => {
+    expect(isSeasonAfter({ year: 2027, season: 'spring' }, { year: 2027, season: 'winter' })).toBe(true)
+    expect(isSeasonAfter({ year: 2027, season: 'winter' }, { year: 2026, season: 'fall' })).toBe(true)
+    expect(isSeasonAfter({ year: 2027, season: 'winter' }, { year: 2027, season: 'winter' })).toBe(false)
+    expect(isSeasonAfter({ year: 2026, season: 'fall' }, { year: 2027, season: 'winter' })).toBe(false)
   })
 })

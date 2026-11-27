@@ -44,6 +44,15 @@ export function seasonSelection(
   }
 }
 
+function seasonOrdinal(selection: SeasonSelection): number {
+  return selection.year * seasons.length + seasons.indexOf(selection.season)
+}
+
+/** True when `a` airs strictly later than `b`. */
+export function isSeasonAfter(a: SeasonSelection, b: SeasonSelection): boolean {
+  return seasonOrdinal(a) > seasonOrdinal(b)
+}
+
 export function shiftSeason(selection: SeasonSelection, offset: number): SeasonSelection {
   const currentIndex = seasons.indexOf(selection.season)
   const absoluteIndex = selection.year * seasons.length + currentIndex + offset
